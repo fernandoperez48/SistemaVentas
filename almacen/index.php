@@ -103,10 +103,28 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                             <td>
                                                 <?php echo $productos_datos['descripcion']; ?>
                                             </td>
-                                            <td>
-                                                <?php echo $productos_datos['stock']; ?>
-                                            </td>
-                                            
+                                            <?php 
+                                            $stock_actual = $productos_datos['stock'];
+                                            $stock_maximo = $productos_datos['stock_maximo'];
+                                            $stock_minimo = $productos_datos['stock_minimo'];
+                                            if($stock_actual < $stock_minimo ){?>
+                                                <td class="text-danger">
+                                                    <?php echo $productos_datos['stock']; ?>
+                                                </td>
+                                            <?php
+                                            }
+                                            else if($stock_actual > $stock_maximo ){?>
+                                                <td class="text-success">
+                                                    <?php echo $productos_datos['stock']; ?>
+                                                </td>
+                                            <?php
+                                            }else{?>
+                                                <td>
+                                                    <?php echo $productos_datos['stock']; ?>
+                                                </td>
+                                            <?php    
+                                            }
+                                            ?>                                            
                                             <td>
                                                 <center><?php echo $productos_datos['precio_compra']; ?></center>
                                             </td>

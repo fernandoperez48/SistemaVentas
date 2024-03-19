@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-03-2024 a las 01:21:10
+-- Tiempo de generación: 19-03-2024 a las 18:38:03
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -77,7 +77,7 @@ CREATE TABLE `tb_almacen` (
 INSERT INTO `tb_almacen` (`id_producto`, `codigo`, `nombre`, `descripcion`, `stock`, `stock_minimo`, `stock_maximo`, `precio_compra`, `precio_venta`, `fecha_ingreso`, `imagen`, `fyh_creacion`, `fyh_actualizacion`, `id_usuario`, `id_categoria`) VALUES
 (1, 'p-00001', 'camisa cargo', 'camisa de gabardina manga larga', 50, 20, 100, '1800', '2500', '2024-02-20', '2024-02-22-10-37-15__camisaAzulGrafa.jpg', '0000-00-00 00:00:00', '2024-02-23 15:49:13', 3, 1),
 (2, 'p-00002', 'botas de cuero', 'botas protectoras de caña alta', 50, 20, 60, '3800', '4500', '2024-03-05', '2024-03-05-02-27-33__botasSeguridad.jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, 3),
-(3, 'p-00003', 'casco', 'casco protector', 20, 10, 40, '1500', '2000', '2024-03-05', '2024-03-05-02-28-48__cascoBlanco.jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, 7);
+(3, 'p-00003', 'casco', 'casco protector', 40, 10, 40, '1500', '2000', '2024-03-05', '2024-03-05-02-28-48__cascoBlanco.jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, 7);
 
 -- --------------------------------------------------------
 
@@ -89,7 +89,7 @@ CREATE TABLE `tb_compras` (
   `id_compra` int(11) NOT NULL,
   `id_producto` int(11) NOT NULL,
   `nro_compra` int(11) NOT NULL,
-  `fecha_compra` datetime NOT NULL,
+  `fecha_compra` date NOT NULL,
   `id_proveedor` int(11) NOT NULL,
   `comprobante` varchar(255) NOT NULL,
   `id_usuario` int(11) NOT NULL,
@@ -104,7 +104,10 @@ CREATE TABLE `tb_compras` (
 --
 
 INSERT INTO `tb_compras` (`id_compra`, `id_producto`, `nro_compra`, `fecha_compra`, `id_proveedor`, `comprobante`, `id_usuario`, `precio_compra`, `cantidad`, `fyh_creacion`, `fyh_actualizacion`) VALUES
-(1, 1, 1, '2024-02-26 13:22:17', 3, 'FACTURA', 3, '2000', 50, '2024-02-26 13:22:17', '2024-02-26 13:22:17');
+(1, 1, 1, '2024-02-26', 3, 'FACTURA', 3, '1500', 50, '2024-02-26 13:22:17', '2024-03-19 12:01:30'),
+(14, 3, 2, '2024-03-06', 3, 'FACTURA A 2000', 3, '1500', 10, '2024-03-06 23:14:43', '2024-03-19 11:49:49'),
+(16, 3, 4, '2024-03-11', 1, 'FACTURA  X 2001', 3, '1500', 10, '2024-03-11 09:58:09', '2024-03-19 12:02:34'),
+(17, 3, 5, '2024-03-11', 3, 'FACTURA X 2002', 3, '3800', 25, '2024-03-11 11:19:12', '2024-03-19 11:53:18');
 
 -- --------------------------------------------------------
 
@@ -249,7 +252,7 @@ ALTER TABLE `tb_almacen`
 -- AUTO_INCREMENT de la tabla `tb_compras`
 --
 ALTER TABLE `tb_compras`
-  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_proveedores`
