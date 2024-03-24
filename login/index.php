@@ -13,7 +13,21 @@
   <link rel="stylesheet" href="../public/templates/AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../public/templates/AdminLTE-3.2.0/dist/css/adminlte.min.css">
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body {
+      background-color: black;
+    }
+    .login-box {
+      background-color: rgba(255, 255, 255, 0.9); /* Cambiar opacidad si es necesario */
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      padding: 20px;
+    }
+    .login-box img {
+      width: 300px;
+      opacity: 0.8;
+    }
+  </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -37,7 +51,7 @@
   }
   ?>
   <center>
-  <img src="../public/images/logofainsumos.jpg" alt="logo" class="brand-image  elevation-3" style="opacity: .8" width="300px">
+    <img src="../public/images/logofainsumos.jpg" alt="logo">
   </center>
   <br>
   <div class="card card-outline card-primary">

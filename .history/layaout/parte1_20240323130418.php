@@ -227,32 +227,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
 
-          
-          <li class="nav-item">
-            <a href="#" class="nav-link active">
-              <i class="fas fa-fw fa-plane"></i>
-              <p>
-                Envio y Distribución
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?php echo $URL?>/envios" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Listado de Envios</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?php echo $URL?>/envios/create.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Nuevo Envio</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-
 
 
           <li class="nav-item">
