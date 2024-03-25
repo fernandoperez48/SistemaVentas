@@ -11,9 +11,9 @@ $clientesemp_datos = $query_clientesemp->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($clientesemp_datos as $clientesemp_datos) {
     $idCliente = $clientesemp_datos['id_cliente'];
-    $dni = $clientesemp_datos['cuit'];
+    $cuit = $clientesemp_datos['cuit'];
     $nombre = $clientesemp_datos['nombre'];
-    $apellido = $clientesemp_datos['razon_social'];
+    $razon_social = $clientesemp_datos['razon_social'];
     $telefono = $clientesemp_datos['telefono'];
     $email = $clientesemp_datos['email'];
     $persona_autorizada = $clientesemp_datos['persona_autorizada'];

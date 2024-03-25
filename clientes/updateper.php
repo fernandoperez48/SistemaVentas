@@ -13,7 +13,7 @@ include '../app/controllers/clientes/update_clientesper.php';
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-12">
-          <h1 class="m-0">Actualizar cliente</h1>
+          <h1 class="m-0">Actualizar cliente persona</h1>
         </div><!-- /.col -->
 
       </div><!-- /.row -->
