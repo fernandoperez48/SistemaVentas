@@ -113,44 +113,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
 
-          <li class="nav-item">
-              <a href="#" class="nav-link active">
-                <i class="nav-icon fas fa-users"></i>
-                <p>
-                  Clientes
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="<?php echo $URL ?>/clientes" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Listado de Clientes</p>
-                  </a>
-                  <ul class="nav nav-treeview" style="margin-left: 15px;">
-                    <li class="nav-item">
-                      <a href="<?php echo $URL ?>/clientes/indexper.php" class="nav-link">
-                        <i class="far fa-circle nav-icon" style="font-size: smaller;"></i>
-                        <p>Personas</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="<?php echo $URL ?>/clientes/indexemp.php" class="nav-link">
-                        <i class="far fa-circle nav-icon" style="font-size: smaller;"></i>
-                        <p>Empresas</p>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="nav-item">
-                  <a href="<?php echo $URL ?>/clientes/create.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Creación de Clientes</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-
 
           <li class="nav-item">
             <a href="#" class="nav-link active">
