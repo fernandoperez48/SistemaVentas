@@ -116,6 +116,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
               </ul>
             </li>
+
+
             <li class="nav-item">
               <a href="#" class="nav-link active">
                 <i class="nav-icon fas fa-users"></i>
@@ -125,32 +127,52 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
               <ul class="nav nav-treeview">
+
+
                 <li class="nav-item">
                   <a href="<?php echo $URL ?>/clientes" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Listado de Clientes</p>
+                    <p>Personas</p>
                   </a>
                   <ul class="nav nav-treeview" style="margin-left: 15px;">
                     <li class="nav-item">
                       <a href="<?php echo $URL ?>/clientes/indexper.php" class="nav-link">
                         <i class="far fa-circle nav-icon" style="font-size: smaller;"></i>
-                        <p>Personas</p>
+                        <p>Listado</p>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="<?php echo $URL ?>/clientes/indexemp.php" class="nav-link">
+                      <a href="<?php echo $URL ?>/clientes/createper.php" class="nav-link">
                         <i class="far fa-circle nav-icon" style="font-size: smaller;"></i>
-                        <p>Empresas</p>
+                        <p>Crear</p>
                       </a>
                     </li>
                   </ul>
                 </li>
+
+
                 <li class="nav-item">
-                  <a href="<?php echo $URL ?>/clientes/create.php" class="nav-link">
+                  <a href="<?php echo $URL ?>/clientes" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Creación de Clientes</p>
+                    <p>Empresas</p>
                   </a>
+                  <ul class="nav nav-treeview" style="margin-left: 15px;">
+                    <li class="nav-item">
+                      <a href="<?php echo $URL ?>/clientes/indexemp.php" class="nav-link">
+                        <i class="far fa-circle nav-icon" style="font-size: smaller;"></i>
+                        <p>Listado</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?php echo $URL ?>/clientes/createemp.php" class="nav-link">
+                        <i class="far fa-circle nav-icon" style="font-size: smaller;"></i>
+                        <p>Crear</p>
+                      </a>
+                    </li>
+                  </ul>
                 </li>
+
+
               </ul>
             </li>
 
