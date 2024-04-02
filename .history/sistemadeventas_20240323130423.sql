@@ -161,17 +161,6 @@ INSERT INTO `tb_roles` (`id_rol`, `rol`, `fyh_creacion`, `fyh_actualizacion`) VA
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tb_envios`
---
-CREATE TABLE `tb_envios` (
-  `IdVenta` int(11) NOT NULL,
-  `IdCliente` int(11) NOT NULL,
-  `Direccion` varchar(50) NOT NULL,
-  `estado` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
---
 -- Estructura de tabla para la tabla `tb_usuarios`
 --
 

@@ -2,7 +2,7 @@
 include '../app/config.php';
 include '../layaout/sesion.php';
 include '../layaout/parte1.php';
-include '../app/controllers/envios/listado_de_envios.php';
+include '../app/controllers/almacen/listado_de_envios.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -68,7 +68,7 @@ include '../app/controllers/envios/listado_de_envios.php';
                                     <?php
                                     $contador = 0;
                                     foreach ($envios_datos as $envios_datos) { 
-                                        $id_envio = $envios_datos['IdVenta']; ?>
+                                        $id_envio = $envios_datos['id_envio']; ?>
                                         <tr>
                                             <td>
                                                 <?php echo $contador += 1; ?>
@@ -77,25 +77,17 @@ include '../app/controllers/envios/listado_de_envios.php';
                                                 <?php echo $envios_datos['IdVenta']; ?>
                                             </td>
                                             <td>
-                                                02-04-2023
-                                            </td>
-                                            <td>
-                                                <?php echo $envios_datos['Direccion']; ?>
-                                            </td>
-                                            <td>
                                                 <?php echo $envios_datos['IdCliente']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $envios_datos['estado']; ?>
+                                                <?php echo $productos_datos['Direccion']; ?>
                                             </td>
                                             <td>
-                                                <center>
-                                                <div class="btn-group">
-                                                    <a href="show.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>Ver</a>
-                                                    <a href="update.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-success btn-sm"><i class="fa fa-pencil-alt"></i>Editar</a>
-                                                    <a href="delete.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Borrar</a>
-                                                </div>
-                                                </center>
+                                                <?php echo $productos_datos['estado']; ?>
+                                            </td>
+                                           
+                                            <td>
+                                                <?php echo $productos_datos['nombre']; ?>
                                             </td>
                                             <td>
                                         </tr>

@@ -68,7 +68,7 @@ include '../app/controllers/envios/listado_de_envios.php';
                                     <?php
                                     $contador = 0;
                                     foreach ($envios_datos as $envios_datos) { 
-                                        $id_envio = $envios_datos['IdVenta']; ?>
+                                        $id_envio = $envios_datos['id_envio']; ?>
                                         <tr>
                                             <td>
                                                 <?php echo $contador += 1; ?>

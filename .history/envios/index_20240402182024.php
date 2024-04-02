@@ -2,7 +2,7 @@
 include '../app/config.php';
 include '../layaout/sesion.php';
 include '../layaout/parte1.php';
-include '../app/controllers/envios/listado_de_envios.php';
+include '../app/controllers/almacen/listado_de_productos.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -67,29 +67,63 @@ include '../app/controllers/envios/listado_de_envios.php';
                                 <tbody>
                                     <?php
                                     $contador = 0;
-                                    foreach ($envios_datos as $envios_datos) { 
-                                        $id_envio = $envios_datos['IdVenta']; ?>
+                                    foreach ($productos_datos as $productos_datos) { 
+                                        $id_producto = $productos_datos['id_producto']; ?>
                                         <tr>
                                             <td>
                                                 <?php echo $contador += 1; ?>
                                             </td>
                                             <td>
-                                                <?php echo $envios_datos['IdVenta']; ?>
+                                                <?php echo $productos_datos['codigo']; ?>
                                             </td>
                                             <td>
-                                                02-04-2023
+                                                <?php echo $productos_datos['nombre_categoria']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $envios_datos['Direccion']; ?>
+                                                <img src="<?php echo $URL."/almacen/img_productos".$productos_datos['imagen'] ;?>" width="50px" >
                                             </td>
                                             <td>
-                                                <?php echo $envios_datos['IdCliente']; ?>
+                                                <?php echo $productos_datos['nombre']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $envios_datos['estado']; ?>
+                                                <?php echo $productos_datos['descripcion']; ?>
+                                            </td>
+                                            <?php 
+                                            $stock_actual = $productos_datos['stock'];
+                                            $stock_maximo = $productos_datos['stock_maximo'];
+                                            $stock_minimo = $productos_datos['stock_minimo'];
+                                            if($stock_actual < $stock_minimo ){?>
+                                                <td class="text-danger">
+                                                    <?php echo $productos_datos['stock']; ?>
+                                                </td>
+                                            <?php
+                                            }
+                                            else if($stock_actual > $stock_maximo ){?>
+                                                <td class="text-success">
+                                                    <?php echo $productos_datos['stock']; ?>
+                                                </td>
+                                            <?php
+                                            }else{?>
+                                                <td>
+                                                    <?php echo $productos_datos['stock']; ?>
+                                                </td>
+                                            <?php    
+                                            }
+                                            ?>                                            
+                                            <td>
+                                                <center><?php echo $productos_datos['precio_compra']; ?></center>
                                             </td>
                                             <td>
-                                                <center>
+                                                <?php echo $productos_datos['precio_venta']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $productos_datos['fecha_ingreso']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $productos_datos['email']; ?>
+                                            </td>
+                                            <td>
+                                            <center>
                                                 <div class="btn-group">
                                                     <a href="show.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>Ver</a>
                                                     <a href="update.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-success btn-sm"><i class="fa fa-pencil-alt"></i>Editar</a>
@@ -97,7 +131,6 @@ include '../app/controllers/envios/listado_de_envios.php';
                                                 </div>
                                                 </center>
                                             </td>
-                                            <td>
                                         </tr>
                                     <?php
                                     }

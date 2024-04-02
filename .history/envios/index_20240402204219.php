@@ -68,7 +68,7 @@ include '../app/controllers/envios/listado_de_envios.php';
                                     <?php
                                     $contador = 0;
                                     foreach ($envios_datos as $envios_datos) { 
-                                        $id_envio = $envios_datos['IdVenta']; ?>
+                                        $id_envio = $envios_datos['id_envio']; ?>
                                         <tr>
                                             <td>
                                                 <?php echo $contador += 1; ?>
@@ -88,14 +88,9 @@ include '../app/controllers/envios/listado_de_envios.php';
                                             <td>
                                                 <?php echo $envios_datos['estado']; ?>
                                             </td>
+                                           
                                             <td>
-                                                <center>
-                                                <div class="btn-group">
-                                                    <a href="show.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>Ver</a>
-                                                    <a href="update.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-success btn-sm"><i class="fa fa-pencil-alt"></i>Editar</a>
-                                                    <a href="delete.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Borrar</a>
-                                                </div>
-                                                </center>
+                                                <?php echo $envios_datos['nombre']; ?>
                                             </td>
                                             <td>
                                         </tr>
