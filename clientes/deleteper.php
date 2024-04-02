@@ -52,7 +52,7 @@ include '../app/controllers/clientes/show_clienteper.php';
 
                   <br>
                   <div class="form-group">
-                    <a href="index.php" class="btn btn-secondary">Volver</a>
+                    <a href="indexper.php" class="btn btn-secondary">Volver</a>
                     <button class="btn btn-danger float-right">Eliminar</button>
                   </div>
                 </form>
