@@ -85,7 +85,19 @@ include '../app/controllers/clientes/listado_de_clientesper.php';
                                                     $query_domicilio = $pdo->prepare($sql_domicilio);
                                                     $query_domicilio->execute();
                                                     $domicilio_datos = $query_domicilio->fetch(PDO::FETCH_ASSOC);
-                                                    echo $domicilio_datos['calle'] . ' ' . $domicilio_datos['numero'] . ' ' . $domicilio_datos['piso'] . ' ' . $domicilio_datos['depto'];
+
+                                                    // Imprimir la calle y el número
+                                                    echo $domicilio_datos['calle'] . ' ' . $domicilio_datos['numero'] . ' ';
+
+                                                    // Verificar y agregar "Piso" si el valor de piso no está vacío
+                                                    if (!empty($domicilio_datos['piso'])) {
+                                                        echo 'Piso ' . $domicilio_datos['piso'] . ' ';
+                                                    }
+
+                                                    // Verificar y agregar "Depto" si el valor de depto no está vacío
+                                                    if (!empty($domicilio_datos['depto'])) {
+                                                        echo 'Depto ' . $domicilio_datos['depto'];
+                                                    }
                                                 } else {
                                                     echo "No hay domicilio";
                                                 }
