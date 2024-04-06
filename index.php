@@ -215,8 +215,11 @@ include 'app/controllers/envios/listado_de_envios.php';
               <p>Proveedores Registrados</p>
             </div>
             <a href="<?php echo $URL ?>/proveedores">
+
               <div class="icon">
-                <i class="fa fa-address-book"></i>
+                <i class="material-symbols-outlined">
+                  domain_add
+                </i>
               </div>
             </a>
             <a href="<?php echo $URL ?>/proveedores" class="small-box-footer">
