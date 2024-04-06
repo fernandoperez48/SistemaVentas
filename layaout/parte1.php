@@ -24,6 +24,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?php echo $URL; ?>/public/templates/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- jQuery -->
   <script src="<?php echo $URL; ?>/public/templates/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -93,7 +95,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <?php if ($rol_sesion == "Administrador") { ?>
               <li class="nav-item">
                 <a href="#" class="nav-link active">
-                  <i class="nav-icon fas fa-users"></i>
+                  <i class="nav-icon fas fa-user"></i>
                   <p>
                     Usuarios
                     <i class="right fas fa-angle-left"></i>
@@ -235,9 +237,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Almacen" || $rol_sesion == "Vendedor") { ?>
               <li class="nav-item">
                 <a href="#" class="nav-link active">
-                  <i class="nav-icon fas fa-list"></i>
+                  <i class="nav-icon fas fa-cubes"></i>
                   <p>
-                    Almacen
+                    Productos
                     <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
@@ -263,7 +265,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <!--Proveedores        ------Proveedores------        Proveedores-->
               <li class="nav-item">
                 <a href="#" class="nav-link active">
-                  <i class="nav-icon fas fa-car"></i>
+                  <i class="nav-icon fas fa-address-book"></i>
                   <p>
                     Proveedores
                     <i class="right fas fa-angle-left"></i>

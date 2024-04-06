@@ -3,10 +3,14 @@ include 'app/config.php';
 include 'layaout/sesion.php';
 include 'layaout/parte1.php';
 include 'app/controllers/usuarios/listado_de_usuarios.php';
+include 'app/controllers/clientes/listado_de_clientesper.php';
+include 'app/controllers/clientes/listado_de_clientesemp.php';
 include 'app/controllers/roles/listado_de_roles.php';
 include 'app/controllers/categorias/listado_de_categorias.php';
 include 'app/controllers/almacen/listado_de_productos.php';
+include 'app/controllers/compras/listado_de_compras.php';
 include 'app/controllers/proveedores/listado_de_proveedores.php';
+include 'app/controllers/envios/listado_de_envios.php';
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -30,12 +34,11 @@ include 'app/controllers/proveedores/listado_de_proveedores.php';
       <div class="row">
 
 
-
+        <!-- USUARIOS -->
         <?php if ($rol_sesion == "Administrador") { ?>
 
           <div class="col-lg-3 col-6">
-
-            <div class="small-box bg-warning">
+            <div class="small-box EEF50E" style="background-color: #FFC300;">
               <div class="inner">
                 <?php
                 $contador_de_usuarios = 0;
@@ -58,6 +61,69 @@ include 'app/controllers/proveedores/listado_de_proveedores.php';
           </div>
         <?php } ?>
 
+
+        <!-- CLIENTE -->
+
+        <?php if ($rol_sesion == "Administrador") { ?>
+          <!-------------- PERSONAS -->
+          <div class="col-lg-3 col-6">
+
+            <div class="small-box bg-info">
+              <div class="inner">
+                <?php
+                $contador_de_clientesper = 0;
+                foreach ($clientesper_datos as $clientesper_datos) {
+                  $contador_de_clientesper = $contador_de_clientesper + 1;
+                }
+                ?>
+                <h3><?php echo $contador_de_clientesper; ?></h3>
+                <p>Clientes Comunes Registrados</p>
+              </div>
+              <a href="<?php echo $URL ?>/clientes/createper.php">
+                <div class="icon">
+                  <!-- <i class="fas fa-user-plus"></i> -->
+
+                  <i class="material-symbols-outlined">
+                    group_add
+                  </i>
+                </div>
+              </a>
+
+              <a href="<?php echo $URL ?>clientes/indexper.php" class="small-box-footer">
+                Mas detalle <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+        <?php } ?>
+
+        <?php if ($rol_sesion == "Administrador") { ?>
+          <!-------------- EMPRESAS -->
+          <div class="col-lg-3 col-6">
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <?php
+                $contador_de_clientesemp = 0;
+                foreach ($clientesemp_datos as $clientesemp_datos) {
+                  $contador_de_clientesemp = $contador_de_clientesemp + 1;
+                }
+                ?>
+                <h3><?php echo $contador_de_clientesemp; ?></h3>
+                <p>Clientes empresas registradas</p>
+              </div>
+              <a href="<?php echo $URL ?>/clientes/createemp.php">
+                <div class="icon">
+                  <i class="fas fa-user-plus"></i>
+                </div>
+              </a>
+
+              <a href="<?php echo $URL ?>clientes/indexemp.php" class="small-box-footer">
+                Mas detalle <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+        <?php } ?>
+
+        <!-- ROLES -->
         <?php if ($rol_sesion == "Tecnico") { ?>
           <div class="col-lg-3 col-6">
 
@@ -84,7 +150,7 @@ include 'app/controllers/proveedores/listado_de_proveedores.php';
           </div>
         <?php } ?>
 
-
+        <!-- CATEGORIAS -->
         <div class="col-lg-3 col-6">
 
           <div class="small-box bg-success">
@@ -98,7 +164,7 @@ include 'app/controllers/proveedores/listado_de_proveedores.php';
               <h3><?php echo $contador_de_categorias ?></h3>
               <p>Categorias Registradas</p>
             </div>
-            <a href="<?php echo $URL ?>/roles/categorias">
+            <a href="#">
               <div class="icon">
                 <i class="fas fa-tags"></i>
               </div>
@@ -109,6 +175,7 @@ include 'app/controllers/proveedores/listado_de_proveedores.php';
           </div>
         </div>
 
+        <!-- PRODUCTOS -->
         <div class="col-lg-3 col-6">
 
           <div class="small-box bg-primary">
@@ -133,9 +200,10 @@ include 'app/controllers/proveedores/listado_de_proveedores.php';
           </div>
         </div>
 
+        <!-- PROVEEDORES -->
         <div class="col-lg-3 col-6">
 
-          <div class="small-box bg-dark">
+          <div class="small-box" style=" background-color: #73c6b6;">
             <div class="inner">
               <?php
               $contador_de_proveedores = 0;
@@ -148,7 +216,7 @@ include 'app/controllers/proveedores/listado_de_proveedores.php';
             </div>
             <a href="<?php echo $URL ?>/proveedores">
               <div class="icon">
-                <i class="fas fa-car"></i>
+                <i class="fa fa-address-book"></i>
               </div>
             </a>
             <a href="<?php echo $URL ?>/proveedores" class="small-box-footer">
@@ -157,6 +225,58 @@ include 'app/controllers/proveedores/listado_de_proveedores.php';
           </div>
         </div>
 
+        <!-- COMPRAS -->
+        <div class="col-lg-3 col-6">
+
+          <div class="small-box" style="background-color: #EEF50E;">
+            <div class="inner">
+              <?php
+              $contador_de_compras = 0;
+              foreach ($compras_datos as $compras_datos) {
+                $contador_de_compras = $contador_de_compras + 1;
+              }
+              ?>
+              <h3><?php echo $contador_de_compras ?></h3>
+              <p>Compras Registradas</p>
+            </div>
+            <a href="<?php echo $URL ?>/compras/create.php">
+              <div class="icon">
+
+                <i class="fas fa-cart-plus"></i>
+
+              </div>
+            </a>
+            <a href="<?php echo $URL ?>/compras" class="small-box-footer">
+              Mas detalle <i class="fas fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- ENVIOS Y DISTRIBUICIÓN -->
+        <?php if ($rol_sesion == "Administrador" || $rol_sesiom == "Vendedor" || $rol_sesiom == "EyD") { ?>
+          <div class="col-lg-3 col-6">
+            <div class="small-box" style="background-color: #aaaffE;">
+              <div class="inner">
+                <?php
+                $contador_de_envios = 0;
+                foreach ($envios_datos as $envios_datos) {
+                  $contador_de_envios = $contador_de_envios + 1;
+                }
+                ?>
+                <h3><?php echo $contador_de_envios ?></h3>
+                <p>Envios Registradas</p>
+              </div>
+              <a href="<?php echo $URL ?>/envios/create.php">
+                <div class="icon">
+                  <i class="fas fa-fw fa-plane"></i>
+                </div>
+              </a>
+              <a href="<?php echo $URL ?>/envios" class="small-box-footer">
+                Mas detalle <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+        <?php } ?>
 
       </div>
     </div>
