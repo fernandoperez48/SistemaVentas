@@ -183,7 +183,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <!--Roles        ------Roles------        Roles-->
             <?php if ($rol_sesion == "Tecnico") { ?>
-              <!--Roles -->
+
               <li class="nav-item">
                 <a href="#" class="nav-link active">
                   <i class="nav-icon fas fa-address-card"></i>
@@ -258,29 +258,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             <?php } ?>
 
+            <!--Proveedores        ------Proveedores------        Proveedores-->
+            <?php if ($rol_sesion != "Vendedor") { ?>
+              <!--Proveedores        ------Proveedores------        Proveedores-->
+              <li class="nav-item">
+                <a href="#" class="nav-link active">
+                  <i class="nav-icon fas fa-car"></i>
+                  <p>
+                    Proveedores
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="<?php echo $URL ?>/proveedores" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Listado de proveedores</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+            <?php } ?>
 
 
-            <li class="nav-item">
-              <a href="#" class="nav-link active">
-                <i class="nav-icon fas fa-car"></i>
-                <p>
-                  Proveedores
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="<?php echo $URL ?>/proveedores" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Listado de proveedores</p>
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-
-            <!-- COMPRAS     COMPRAS     COMPRAS     COMPRAS     COMPRAS -->
+            <!--Compras        ------Compras------        Compras-->
             <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Almacen" || $rol_sesion == "Vendedor") { ?>
               <!--Compras -->
               <li class="nav-item">
@@ -308,8 +310,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             <?php } ?>
 
-
-
+            <!--Envio y Distribución        ------Envio y Distribución------        Envio y Distribución-->
             <li class="nav-item">
               <a href="#" class="nav-link active">
                 <i class="fas fa-fw fa-plane"></i>
@@ -325,7 +326,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <p>Listado de Envios</p>
                   </a>
                 </li>
-                <?php if ($rol_sesion == "Administrador" || $rol_sesion == "EyD" || $rol_sesion == "Vendedor") { ?>
+                <?php if ($rol_sesion == "Administrador" || $rol_sesion == "EyD") { ?>
                   <li class="nav-item">
                     <a href="<?php echo $URL ?>/envios/create.php" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>

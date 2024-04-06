@@ -1,6 +1,9 @@
 <?php
 include '../app/config.php';
 include '../layaout/sesion.php';
+if ($rol_sesion != "Administrador") {
+    header('Location: ..//index.php');
+}
 include '../layaout/parte1.php';
 include '../app/controllers/usuarios/listado_de_usuarios.php';
 
@@ -71,11 +74,11 @@ include '../app/controllers/usuarios/listado_de_usuarios.php';
                                             <td><?php echo $usuarios_datos['rol']; ?></td>
                                             <td>
                                                 <center>
-                                                <div class="btn-group">
-                                                    <a href="show.php?id=<?php echo $id_usuario; ?>" type="button" class="btn btn-info"><i class="fa fa-eye"></i>Ver</a>
-                                                    <a href="update.php?id=<?php echo $id_usuario; ?>" type="button" class="btn btn-success"><i class="fa fa-pencil-alt"></i>Editar</a>
-                                                    <a href="delete.php?id=<?php echo $id_usuario; ?>" type="button" class="btn btn-danger"><i class="fa fa-trash"></i>Borrar</a>
-                                                </div>
+                                                    <div class="btn-group">
+                                                        <a href="show.php?id=<?php echo $id_usuario; ?>" type="button" class="btn btn-info"><i class="fa fa-eye"></i>Ver</a>
+                                                        <a href="update.php?id=<?php echo $id_usuario; ?>" type="button" class="btn btn-success"><i class="fa fa-pencil-alt"></i>Editar</a>
+                                                        <a href="delete.php?id=<?php echo $id_usuario; ?>" type="button" class="btn btn-danger"><i class="fa fa-trash"></i>Borrar</a>
+                                                    </div>
                                                 </center>
                                             </td>
                                         </tr>

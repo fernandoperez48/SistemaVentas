@@ -1,6 +1,9 @@
 <?php
 include '../app/config.php';
 include '../layaout/sesion.php';
+if ($rol_sesion == "Almacen" || $rol_sesion == "EyD") {
+    header('Location: ..//index.php');
+}
 include '../layaout/parte1.php';
 ?>
 <!-- Content Wrapper. Contains page content -->

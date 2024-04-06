@@ -1,6 +1,9 @@
 <?php
 include '../app/config.php';
 include '../layaout/sesion.php';
+if ($rol_sesion == "EyD" || $rol_sesion == "Vendedor") {
+    header('Location: ..//index.php');
+}
 include '../layaout/parte1.php';
 
 include '../app/controllers/almacen/listado_de_productos.php';
@@ -397,7 +400,7 @@ include '../app/controllers/compras/cargar_compra.php';
                                                 <div class="form-group">
                                                     <input type="text" value="<?php echo $id_proveedor_tabla; ?>" id="id_proveedor" hidden>
                                                     <label>Nombre del proveedor </label>
-                                                    <input type="text" value="<?php echo $nombre_proveedor_tabla; ?>"  id="id_proveedor" class="form-control" disabled>
+                                                    <input type="text" value="<?php echo $nombre_proveedor_tabla; ?>" id="id_proveedor" class="form-control" disabled>
 
                                                 </div>
                                             </div>

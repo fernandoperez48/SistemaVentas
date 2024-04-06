@@ -1,9 +1,17 @@
 <?php
+
+
 include '../app/config.php';
 include '../layaout/sesion.php';
+
+//si no son los roles permitidos, me manda al index
+if ($rol_sesion == "Almacen" || $rol_sesion == "EyD") {
+    header('Location: ..//index.php');
+}
 include '../layaout/parte1.php';
 
 include '../app/controllers/roles/listado_de_roles.php';
+
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">

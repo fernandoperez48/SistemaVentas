@@ -1,6 +1,9 @@
 <?php
 include '../app/config.php';
 include '../layaout/sesion.php';
+if ($rol_sesion == "EyD" || $rol_sesion == "Vendedor" || $rol_sesion == "Almacen") {
+    header('Location: ..//index.php');
+}
 include '../layaout/parte1.php';
 
 include '../app/controllers/almacen/listado_de_productos.php';
@@ -580,15 +583,15 @@ include '../app/controllers/compras/listado_de_compras.php';
                                             } else {
                                                 var url = "../app/controllers/compras/create.php";
                                                 $.get(url, {
-                                                    id_producto:id_producto,
-                                                    nro_compra:nro_compra,
-                                                    fecha_compra:fecha_compra,
-                                                    id_proveedor:id_proveedor,
-                                                    comprobante:comprobante,
-                                                    id_usuario:id_usuario,
-                                                    precio_compra:precio_compra,
-                                                    cantidad_compra:cantidad_compra,
-                                                    stock_total:stock_total
+                                                    id_producto: id_producto,
+                                                    nro_compra: nro_compra,
+                                                    fecha_compra: fecha_compra,
+                                                    id_proveedor: id_proveedor,
+                                                    comprobante: comprobante,
+                                                    id_usuario: id_usuario,
+                                                    precio_compra: precio_compra,
+                                                    cantidad_compra: cantidad_compra,
+                                                    stock_total: stock_total
                                                 }, function(datos) {
                                                     $('#respuesta_create').html(datos);
                                                 });

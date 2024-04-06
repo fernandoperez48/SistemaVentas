@@ -1,6 +1,9 @@
 <?php
 include '../app/config.php';
 include '../layaout/sesion.php';
+if ($rol_sesion == "Vendedor") {
+    header('Location: ..//index.php');
+}
 include '../layaout/parte1.php';
 include '../app/controllers/proveedores/listado_de_proveedores.php';
 ?>
@@ -12,7 +15,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1 class="m-0">Listado de Proveedores
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create">
+                        <button <?php if ($rol_sesion != "Administrador") echo 'disabled'; ?> type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create">
                             <i class="fa fa-plus"></i>
                             Agregar Nuevo
                         </button>

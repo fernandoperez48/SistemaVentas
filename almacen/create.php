@@ -1,6 +1,9 @@
 <?php
 include '../app/config.php';
 include '../layaout/sesion.php';
+if ($rol_sesion == "Vendedor" || $rol_sesion == "EyD") {
+    header('Location: ..//index.php');
+}
 include '../layaout/parte1.php';
 include '../app/controllers/almacen/listado_de_productos.php';
 include '../app/controllers/categorias/listado_de_categorias.php';
@@ -70,14 +73,14 @@ include '../app/controllers/categorias/listado_de_categorias.php';
                                             <div class="form-group">
                                                 <label for="">Categoria:</label>
                                                 <div style="display: flex;">
-                                                <select name="id_categoria" id="" class="form-control" required>
-                                                    <?php
-                                                    foreach ($categorias_datos as $categorias_datos) { ?>
-                                                        <option value="<?php echo $categorias_datos['id_categoria']; ?>"><?php echo $categorias_datos['nombre_categoria']; ?></option>
-                                                        ?>
-                                                    <?php } ?>
-                                                </select>
-                                                <a href="<?php echo $URL;?>/categorias" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+                                                    <select name="id_categoria" id="" class="form-control" required>
+                                                        <?php
+                                                        foreach ($categorias_datos as $categorias_datos) { ?>
+                                                            <option value="<?php echo $categorias_datos['id_categoria']; ?>"><?php echo $categorias_datos['nombre_categoria']; ?></option>
+                                                            ?>
+                                                        <?php } ?>
+                                                    </select>
+                                                    <a href="<?php echo $URL; ?>/categorias" class="btn btn-primary"><i class="fa fa-plus"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -130,13 +133,13 @@ include '../app/controllers/categorias/listado_de_categorias.php';
                                                 <label for="">Descripcion del producto:</label>
                                                 <textarea name="descripcion" id="" cols="30" rows="3" class="form-control"></textarea>
                                             </div>
-                                        </div>          
+                                        </div>
                                     </div>
-                                  
-                                        
-                                    
-                                  
-                                    
+
+
+
+
+
 
 
 

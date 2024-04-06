@@ -1,6 +1,9 @@
 <?php
 include '../app/config.php';
 include '../layaout/sesion.php';
+if ($rol_sesion == "EyD" || $rol_sesion == "Vendedor") {
+    header('Location: ..//index.php');
+}
 include '../layaout/parte1.php';
 
 include '../app/controllers/almacen/listado_de_productos.php';
@@ -40,8 +43,8 @@ include '../app/controllers/compras/cargar_compra.php';
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body" style="display: block;">
-                                   
-                                    
+
+
                                 </div>
                             </div>
 
@@ -62,7 +65,7 @@ include '../app/controllers/compras/cargar_compra.php';
                                                 <label for="">Categoria:</label>
                                                 <div style="display: flex;">
 
-                                                    <input type="text" value="<?php echo $nombre_categoria;?>" class="form-control" id="categoria" disabled>
+                                                    <input type="text" value="<?php echo $nombre_categoria; ?>" class="form-control" id="categoria" disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -77,7 +80,7 @@ include '../app/controllers/compras/cargar_compra.php';
                                             <div class="form-group">
                                                 <label for="">Imagen del producto:</label>
                                                 <center>
-                                                    <img src="<?php echo $URL."/almacen/img_productos".$imagen?>" id="img_producto" width="50%">
+                                                    <img src="<?php echo $URL . "/almacen/img_productos" . $imagen ?>" id="img_producto" width="50%">
                                                 </center>
                                             </div>
                                         </div>
@@ -142,7 +145,7 @@ include '../app/controllers/compras/cargar_compra.php';
                                     <div style="display:flex">
                                         <h5>Datos del Proveedor</h5>
                                         <div style="width: 20px;"></div>
-                                        
+
                                         <!-- /.modal-content -->
                                     </div>
 
@@ -250,7 +253,7 @@ include '../app/controllers/compras/cargar_compra.php';
                                                 <label for="">Precio de la compra</label>
                                                 <input type="text" value="<?php echo $precio_compra; ?>" class="form-control" id="precio_compra_controlador" style="text-align: center;" disabled>
                                             </div>
-                                        </div>                                       
+                                        </div>
 
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -274,7 +277,7 @@ include '../app/controllers/compras/cargar_compra.php';
                                         </div>
                                         <div id="respuesta_delete"></div>
                                         <script>
-                                            $('#btn_eliminar').click(function () {
+                                            $('#btn_eliminar').click(function() {
                                                 var id_compra = '<?php echo $id_compra_get; ?>';
                                                 var id_producto = $('#id_producto').val();
                                                 var cantidad_compra = '<?= $cantidad; ?>';
@@ -300,7 +303,12 @@ include '../app/controllers/compras/cargar_compra.php';
 
                                                 function eliminar() {
                                                     var url = "../app/controllers/compras/delete.php";
-                                                    $.get(url,{id_compra:id_compra,id_producto:id_producto,cantidad_compra:cantidad_compra,stock_actual:stock_actual},function (datos) {
+                                                    $.get(url, {
+                                                        id_compra: id_compra,
+                                                        id_producto: id_producto,
+                                                        cantidad_compra: cantidad_compra,
+                                                        stock_actual: stock_actual
+                                                    }, function(datos) {
                                                         $('#respuesta_delete').html(datos);
                                                     });
                                                 }
@@ -310,8 +318,8 @@ include '../app/controllers/compras/cargar_compra.php';
 
                                     <hr>
 
-                                   
-                                    
+
+
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -319,7 +327,7 @@ include '../app/controllers/compras/cargar_compra.php';
                         </div>
 
                     </div>
-                   
+
 
                 </div>
             </div>
@@ -331,5 +339,3 @@ include '../app/controllers/compras/cargar_compra.php';
     <!-- /.content-wrapper -->
     <?php include '../layaout/mensajes.php'; ?>
     <?php include '../layaout/parte2.php'; ?>
-
-   
