@@ -12,10 +12,12 @@ include '../app/controllers/categorias/listado_de_categorias.php';
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1 class="m-0">Listado de Categorias
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create">
+
+                        <button <?php if ($rol_sesion != "Administrador" || $rol_sesion != "Almacen") echo 'disabled'; ?> type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create">
                             <i class="fa fa-plus"></i>
                             Agregar Nuevo
                         </button>
+
                     </h1>
 
 
@@ -71,7 +73,7 @@ include '../app/controllers/categorias/listado_de_categorias.php';
                                             <td>
                                                 <center>
                                                     <div class="btn-group">
-                                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update<?php echo $id_categoria; ?>">
+                                                        <button <?php if ($rol_sesion != "Administrador" || $rol_sesion != "Almacen") echo 'disabled'; ?> type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update<?php echo $id_categoria; ?>">
                                                             <i class="fa fa-pencil-alt"></i>
                                                             Editar
                                                         </button>
@@ -113,20 +115,20 @@ include '../app/controllers/categorias/listado_de_categorias.php';
                                                                 var nombre_categoria = $('#nombre_categoria<?php echo $id_categoria; ?>').val();
                                                                 var id_categoria = '<?php echo $id_categoria; ?>';
 
-                                                                if(nombre_categoria ==''){
+                                                                if (nombre_categoria == '') {
                                                                     $('#nombre_categoria<?php echo $id_categoria; ?>').focus();
                                                                     $('#lbl_update<?php echo $id_categoria; ?>').css('display', 'block');
-                                                                }else{
+                                                                } else {
                                                                     var url = "../app/controllers/categorias/update_de_categorias.php";
-                                                                $.get(url, {
-                                                                    nombre_categoria: nombre_categoria,
-                                                                    id_categoria: id_categoria
-                                                                }, function(datos) {
-                                                                    $('#respuesta_update<?php echo $id_categoria; ?>').html(datos);
-                                                                });
+                                                                    $.get(url, {
+                                                                        nombre_categoria: nombre_categoria,
+                                                                        id_categoria: id_categoria
+                                                                    }, function(datos) {
+                                                                        $('#respuesta_update<?php echo $id_categoria; ?>').html(datos);
+                                                                    });
                                                                 }
 
-                                                               
+
                                                             });
                                                         </script>
                                                         <div id="respuesta_update<?php echo $id_categoria; ?>"></div>
