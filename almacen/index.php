@@ -38,120 +38,121 @@ include '../app/controllers/almacen/listado_de_productos.php';
                         <div class="card-body">
                             <div class="table table-responsive">
                                 <table id="example1" class="table table-bordered table-striped table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <center>Nro</center>
-                                        </th>
-                                        <th>
-                                            <center>Codigo</center>
-                                        </th>
-                                        <th>
-                                            <center>Categoria</center>
-                                        </th>
-                                        <th>
-                                            <center>Imagen</center>
-                                        </th>
-                                        <th>
-                                            <center>Nombre</center>
-                                        </th>
-                                        <th>
-                                            <center>Descripcion</center>
-                                        </th>
-                                        <th>
-                                            <center>Stock</center>
-                                        </th>
-                                        <th>
-                                            <center>Precio Compra</center>
-                                        </th>
-                                        <th>
-                                            <center>Precio Venta</center>
-                                        </th>
-                                        <th>
-                                            <center>Fecha Compra</center>
-                                        </th>
-                                        <th>
-                                            <center>Usuario</center>
-                                        </th>
-                                        
-                                        <th>
-                                            <center>Acciones</center>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $contador = 0;
-                                    foreach ($productos_datos as $productos_datos) { 
-                                        $id_producto = $productos_datos['id_producto']; ?>
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                <?php echo $contador += 1; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $productos_datos['codigo']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $productos_datos['nombre_categoria']; ?>
-                                            </td>
-                                            <td>
-                                                <img src="<?php echo $URL."/almacen/img_productos".$productos_datos['imagen'] ;?>" width="50px" >
-                                            </td>
-                                            <td>
-                                                <?php echo $productos_datos['nombre']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $productos_datos['descripcion']; ?>
-                                            </td>
-                                            <?php 
-                                            $stock_actual = $productos_datos['stock'];
-                                            $stock_maximo = $productos_datos['stock_maximo'];
-                                            $stock_minimo = $productos_datos['stock_minimo'];
-                                            if($stock_actual < $stock_minimo ){?>
-                                                <td class="text-danger">
-                                                    <?php echo $productos_datos['stock']; ?>
-                                                </td>
-                                            <?php
-                                            }
-                                            else if($stock_actual > $stock_maximo ){?>
-                                                <td class="text-success">
-                                                    <?php echo $productos_datos['stock']; ?>
-                                                </td>
-                                            <?php
-                                            }else{?>
-                                                <td>
-                                                    <?php echo $productos_datos['stock']; ?>
-                                                </td>
-                                            <?php    
-                                            }
-                                            ?>                                            
-                                            <td>
-                                                <center><?php echo $productos_datos['precio_compra']; ?></center>
-                                            </td>
-                                            <td>
-                                                <?php echo $productos_datos['precio_venta']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $productos_datos['fecha_ingreso']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $productos_datos['email']; ?>
-                                            </td>
-                                            <td>
-                                            <center>
-                                                <div class="btn-group">
-                                                    <a href="show.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>Ver</a>
-                                                    <a href="update.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-success btn-sm"><i class="fa fa-pencil-alt"></i>Editar</a>
-                                                    <a href="delete.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Borrar</a>
-                                                </div>
-                                                </center>
-                                            </td>
-                                        </tr>
-                                    <?php
-                                    }
-                                    ?>
+                                            <th>
+                                                <center>Nro</center>
+                                            </th>
+                                            <th>
+                                                <center>Codigo</center>
+                                            </th>
+                                            <th>
+                                                <center>Categoria</center>
+                                            </th>
+                                            <th>
+                                                <center>Imagen</center>
+                                            </th>
+                                            <th>
+                                                <center>Nombre</center>
+                                            </th>
+                                            <th>
+                                                <center>Descripcion</center>
+                                            </th>
+                                            <th>
+                                                <center>Stock</center>
+                                            </th>
+                                            <th>
+                                                <center>Precio Compra</center>
+                                            </th>
+                                            <th>
+                                                <center>Precio Venta</center>
+                                            </th>
+                                            <th>
+                                                <center>Fecha Compra</center>
+                                            </th>
+                                            <th>
+                                                <center>Usuario</center>
+                                            </th>
 
-                                </tbody>
+                                            <th>
+                                                <center>Acciones</center>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $contador = 0;
+                                        foreach ($productos_datos as $productos_datos) {
+                                            $id_producto = $productos_datos['id_producto']; ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $contador += 1; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $productos_datos['codigo']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $productos_datos['nombre_categoria']; ?>
+                                                </td>
+                                                <td>
+
+                                                    <img src="<?php echo $URL . "/almacen/img_productos" . $productos_datos['imagen']; ?>" width="50px">
+
+                                                </td>
+                                                <td>
+                                                    <?php echo $productos_datos['nombre']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $productos_datos['descripcion']; ?>
+                                                </td>
+                                                <?php
+                                                $stock_actual = $productos_datos['stock'];
+                                                $stock_maximo = $productos_datos['stock_maximo'];
+                                                $stock_minimo = $productos_datos['stock_minimo'];
+                                                if ($stock_actual < $stock_minimo) { ?>
+                                                    <td class="text-danger">
+                                                        <?php echo $productos_datos['stock']; ?>
+                                                    </td>
+                                                <?php
+                                                } else if ($stock_actual > $stock_maximo) { ?>
+                                                    <td class="text-success">
+                                                        <?php echo $productos_datos['stock']; ?>
+                                                    </td>
+                                                <?php
+                                                } else { ?>
+                                                    <td>
+                                                        <?php echo $productos_datos['stock']; ?>
+                                                    </td>
+                                                <?php
+                                                }
+                                                ?>
+                                                <td>
+                                                    <center><?php echo $productos_datos['precio_compra']; ?></center>
+                                                </td>
+                                                <td>
+                                                    <?php echo $productos_datos['precio_venta']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $productos_datos['fecha_ingreso']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $productos_datos['email']; ?>
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                        <div class="btn-group">
+                                                            <a href="show.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>Ver</a>
+                                                            <a href="update.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-success btn-sm"><i class="fa fa-pencil-alt"></i>Editar</a>
+                                                            <a href="delete.php?id=<?php echo $id_producto; ?>" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Borrar</a>
+                                                        </div>
+                                                    </center>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+
+                                    </tbody>
 
                                 </table>
                             </div>

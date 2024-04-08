@@ -255,7 +255,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         </div>
 
         <!-- ENVIOS Y DISTRIBUICIÓN -->
-        <?php if ($rol_sesion == "Administrador" || $rol_sesiom == "Vendedor" || $rol_sesiom == "EyD") { ?>
+        <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Vendedor" || $rol_sesion == "EyD") { ?>
           <div class="col-lg-3 col-6">
             <div class="small-box" style="background-color: #aaaffE;">
               <div class="inner">

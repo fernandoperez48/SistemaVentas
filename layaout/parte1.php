@@ -285,7 +285,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
             <!--Compras        ------Compras------        Compras-->
-            <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Almacen" || $rol_sesion == "Vendedor") { ?>
+            <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Almacen") { ?>
               <!--Compras -->
               <li class="nav-item">
                 <a href="#" class="nav-link active">
@@ -302,12 +302,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <p>Listado de Compras</p>
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a href="<?php echo $URL ?>/compras/create.php" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Creacion de Compra</p>
-                    </a>
-                  </li>
+                  <?php if ($rol_sesion == "Administrador") { ?>
+                    <li class="nav-item">
+                      <a href="<?php echo $URL ?>/compras/create.php" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Creacion de Compra</p>
+                      </a>
+                    </li>
+                  <?php } ?>
                 </ul>
               </li>
             <?php } ?>
