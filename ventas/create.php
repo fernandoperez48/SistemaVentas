@@ -2,9 +2,10 @@
 include '../app/config.php';
 include '../layaout/sesion.php';
 include '../layaout/parte1.php';
-include '../app/controllers/ventas/listado_de_ventas.php';
+include '../app/controllers/clientes/listado_de_clientesper.php';
+include '../app/controllers/clientes/listado_de_clientesemp.php';
 include '../app/controllers/almacen/listado_de_productos.php';
-include '../app/controllers/clientes/listado_de_clientes.php';
+
 
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -138,7 +139,7 @@ include '../app/controllers/clientes/listado_de_clientes.php';
                                                                     </td>
                                                                     <td>
                                                                         <?php echo $productos_datos['stock']; ?>
-                                                                    </td>    
+                                                                    </td>
                                                                     <td>
                                                                         <center><?php echo $productos_datos['precio_compra']; ?></center>
                                                                     </td>
@@ -219,7 +220,9 @@ include '../app/controllers/clientes/listado_de_clientes.php';
                                         </div>
                                     </div>
                                 </div>
+
                                 <br><br>
+
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-sm table-hover table-striped">
                                         <thead>
@@ -281,7 +284,7 @@ include '../app/controllers/clientes/listado_de_clientes.php';
                                                     <td>
                                                         <form action="../app/controllers/ventas/borrar_carrito.php" method="post">
                                                             <center>
-                                                                <input type="text" name="id_carrito" value="<?php echo $id_carrito; ?>"hidden>
+                                                                <input type="text" name="id_carrito" value="<?php echo $id_carrito; ?>" hidden>
                                                                 <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Borrar</button>
                                                             </center>
                                                         </form>
@@ -337,12 +340,25 @@ include '../app/controllers/clientes/listado_de_clientes.php';
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
-                                        <b>Carrito</b>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar_cliente">
-                                            <i class="fas fa-search"></i>
-                                            Buscar Cliente
-                                        </button>
-                                        <div class="modal fade" id="modal-buscar_cliente">
+                                        <b>Carrito</b> Buscar cliente por
+
+                                        <br>
+                                        <div class="col-sm-3" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                                            <div class="form-group" style="display: flex; align-items: center;">
+                                                <select id="tipo_cliente" class="form-control" style="margin-left: 45px;  margin-top: 17px;">
+                                                    <option>Personas</option>
+                                                    <option>Empresas</option>
+                                                </select>
+                                            </div>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar_cliente" style="margin-left: 10px;">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+
+
+
+                                        <!-- MODAL BUSCAR CLIENTE PERSONA     MODAL BUSCAR CLIENTE PERSONA     MODAL BUSCAR CLIENTE PERSONA -->
+                                        <div class="modal fade" id="modal-buscar_cliente_persona">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -358,11 +374,12 @@ include '../app/controllers/clientes/listado_de_clientes.php';
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="table table-responsive">
+
                                                             <table id="example1" class="table table-bordered table-striped table-sm">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>
-                                                                            <center>Nro</center>
+                                                                            <center>Nro de cliente</center>
                                                                         </th>
                                                                         <th>
                                                                             <center>Seleccionar</center>
@@ -371,57 +388,58 @@ include '../app/controllers/clientes/listado_de_clientes.php';
                                                                             <center>Nombre</center>
                                                                         </th>
                                                                         <th>
-                                                                            <center>Nit/CI</center>
+                                                                            <center>CUIT - DNI</center>
                                                                         </th>
                                                                         <th>
-                                                                            <center>Celular</center>
+                                                                            <center>Telefono</center>
                                                                         </th>
                                                                         <th>
                                                                             <center>Email</center>
                                                                         </th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
+                                                                <tbody id="tabla-body">
                                                                     <?php
-                                                                    $contador_de_clientes = 0;
-                                                                    foreach ($clientes_datos as $clientes_datos) {
-                                                                        $id_cliente = $clientes_datos['id_cliente'];
-                                                                        $contador_de_clientes = $contador_de_clientes + 1; ?>
+                                                                    $contador_de_clientesper = 0;
+                                                                    foreach ($clientesper_datos as $clientesper_datos) {
+
+                                                                        $contador_de_clientesper = $contador_de_clientesper + 1; ?>
                                                                         <tr>
                                                                             <td>
-                                                                                <center><?php echo $contador_de_clientes; ?></center>
+                                                                                <center><?php echo $clientesper_datos['id_cliente']; ?></center>
                                                                             </td>
                                                                             <td>
                                                                                 <center>
-                                                                                    <button class="btn btn-info" id="btn_pasar_cliente<?php echo $id_cliente; ?>">Seleccionar</button>
+                                                                                    <button class="btn btn-info" id="btn_pasar_cliente<?php echo $clientesper_datos['id_cliente']; ?>">Seleccionar</button>
                                                                                     <script>
-                                                                                        $("#btn_pasar_cliente<?php echo $id_cliente; ?>").click(function() {
-                                                                                            $("#id_cliente").val("<?php echo $clientes_datos['id_cliente']; ?>");
-                                                                                            $("#nombre_cliente").val("<?php echo $clientes_datos['nombre_cliente']; ?>");
-                                                                                            $("#nit_ci_cliente").val("<?php echo $clientes_datos['nit_ci_cliente']; ?>");
-                                                                                            $("#celular_cliente").val("<?php echo $clientes_datos['celular_cliente']; ?>");
-                                                                                            $("#email_cliente").val("<?php echo $clientes_datos['email_cliente']; ?>");
+                                                                                        $("#btn_pasar_cliente<?php echo $clientesper_datos['id_cliente']; ?>").click(function() {
+                                                                                            $("#id_cliente").val("<?php echo $clientesper_datos['id_cliente']; ?>");
+                                                                                            $("#nombre_cliente").val("<?php echo $clientesper_datos['nombre']; ?>");
+                                                                                            $("#nit_ci_cliente").val("<?php echo $clientesper_datos['dni']; ?>");
+                                                                                            $("#celular_cliente").val("<?php echo $clientesper_datos['telefono']; ?>");
+                                                                                            $("#email_cliente").val("<?php echo $clientesper_datos['email']; ?>");
                                                                                             $("#modal-buscar_cliente").modal("hide");
                                                                                         });
                                                                                     </script>
                                                                                 </center>
                                                                             </td>
                                                                             <td>
-                                                                                <center><?php echo $clientes_datos['nombre_cliente']; ?></center>
+                                                                                <center><?php echo $clientesper_datos['nombre']; ?></center>
                                                                             </td>
                                                                             <td>
-                                                                                <center><?php echo $clientes_datos['nit_ci_cliente']; ?></center>
+                                                                                <center><?php echo $clientesper_datos['dni']; ?></center>
                                                                             </td>
                                                                             <td>
-                                                                                <center><?php echo $clientes_datos['celular_cliente']; ?></center>
+                                                                                <center><?php echo $clientesper_datos['telefono']; ?></center>
                                                                             </td>
                                                                             <td>
-                                                                                <center><?php echo $clientes_datos['email_cliente']; ?></center>
+                                                                                <center><?php echo $clientesper_datos['email']; ?></center>
                                                                             </td>
                                                                         </tr>
                                                                     <?php
                                                                     }
                                                                     ?>
+
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -435,7 +453,8 @@ include '../app/controllers/clientes/listado_de_clientes.php';
                                             <!-- /.modal-dialog -->
 
                                         </div>
-                                        <br><br>
+
+
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
@@ -445,11 +464,11 @@ include '../app/controllers/clientes/listado_de_clientes.php';
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="">Nit/Ci del Cliente</label>
+                                                <label for="">DNI - CUIT del Cliente</label>
                                                 <input type="text" class="form-control" id="nit_ci_cliente">
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="">Celular del Cliente</label>
+                                                <label for="">Telefono del Cliente</label>
                                                 <input type="text" class="form-control" id="celular_cliente">
                                             </div>
                                             <div class="col-md-3">
@@ -506,35 +525,35 @@ include '../app/controllers/clientes/listado_de_clientes.php';
                                             <button id="btn_guardar_venta" class="btn btn-primary btn-block">
                                                 Guardar venta
                                             </button>
-                                            <div id="respuesta_registro_venta"></div>            
+                                            <div id="respuesta_registro_venta"></div>
                                             <script>
                                                 $("#btn_guardar_venta").click(function() {
                                                     var nro_venta = "<?php echo $contador_de_ventas + 1; ?>";
                                                     var id_cliente = $("#id_cliente").val();
                                                     var total_a_cancelar = $("#total_a_cancelar").val();
-                                                    if(id_cliente == ""){
+                                                    if (id_cliente == "") {
                                                         alert("Seleccione un cliente");
 
-                                                    }else{
-                                                       
-                                                       actualizar_stock();
-                                                       guardar_venta();
+                                                    } else {
+
+                                                        actualizar_stock();
+                                                        guardar_venta();
                                                     }
-                                                   
-                                                    
-                                                    function actualizar_stock(){
-                                                        var i=1;
-                                                        var n='<?php echo $contador_carrito; ?>';
-                                                        
-                                                        for(i=1; i <= n; i++){
-                                                            var a = 'stock_de_inventario'+i;
-                                                            var stock_de_inventario = $('#'+a).val();
 
-                                                            var b='cantidad_carrito'+i;
-                                                            var cantidad_carrito = $('#'+b).text();
 
-                                                            var c='id_producto'+i;
-                                                            var id_producto = $('#'+c).val();
+                                                    function actualizar_stock() {
+                                                        var i = 1;
+                                                        var n = '<?php echo $contador_carrito; ?>';
+
+                                                        for (i = 1; i <= n; i++) {
+                                                            var a = 'stock_de_inventario' + i;
+                                                            var stock_de_inventario = $('#' + a).val();
+
+                                                            var b = 'cantidad_carrito' + i;
+                                                            var cantidad_carrito = $('#' + b).text();
+
+                                                            var c = 'id_producto' + i;
+                                                            var id_producto = $('#' + c).val();
 
 
                                                             var stock_calculado = parseFloat(stock_de_inventario) - parseFloat(cantidad_carrito);
@@ -542,16 +561,16 @@ include '../app/controllers/clientes/listado_de_clientes.php';
                                                             //alert(stock_de_inventario+" "+cantidad_carrito+" "+stock_calculado+" "+id_producto);
 
                                                             var url2 = "../app/controllers/ventas/actualizar_stock.php";
-                                                        $.get(url2, {
-                                                            id_producto: id_producto,
-                                                            stock_calculado: stock_calculado,
-                                                        }, function(datos) {
-                                                            guardar_venta();
-                                                        });
+                                                            $.get(url2, {
+                                                                id_producto: id_producto,
+                                                                stock_calculado: stock_calculado,
+                                                            }, function(datos) {
+                                                                guardar_venta();
+                                                            });
                                                         }
                                                     }
 
-                                                    function guardar_venta(){
+                                                    function guardar_venta() {
                                                         var url = "../app/controllers/ventas/registro_de_ventas.php";
                                                         $.get(url, {
                                                             nro_venta: nro_venta,
@@ -687,47 +706,47 @@ include '../app/controllers/clientes/listado_de_clientes.php';
     });
 </script>
 <!--modal para visualizar el formulario para agregar clientes -->
-                                        <div class="modal fade" id="modal-agregar_cliente">
-                                            <div class="modal-dialog modal-sm">
-                                                <div class="modal-content">
-                                                    <div class="modal-header" style="background-color:darkorange; color:white">
-                                                        <h4 class="modal-title">Nuevo Cliente </h4>
-                                                        <div style="width: 10px;"></div>
-                                                        
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="../app/controllers/clientes/guardar_clientes.php" method="post">
-                                                            <div class="form-group">
-                                                                <label for="">Nombre del cliente</label>
-                                                                <input type="text" name="nombre_cliente" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="">Nit/CI del cliente</label>
-                                                                <input type="text" name="nit_ci_cliente" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="">Celular del cliente</label>
-                                                                <input type="text" name="celular_cliente" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="">Correo del cliente</label>
-                                                                <input type="email" name="email_cliente" class="form-control">
-                                                            </div>
-                                                            <hr>
-                                                            <div class="form-group">
-                                                                <button type="submit" class="btn btn-warning btn-block">Guardar cliente</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-between">
+<div class="modal fade" id="modal-agregar_cliente">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:darkorange; color:white">
+                <h4 class="modal-title">Nuevo Cliente </h4>
+                <div style="width: 10px;"></div>
 
-                                                    </div>
-                                                </div>
-                                                <!-- /.modal-content -->
-                                            </div>
-                                            <!-- /.modal-dialog -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="../app/controllers/clientes/guardar_clientes.php" method="post">
+                    <div class="form-group">
+                        <label for="">Nombre del cliente</label>
+                        <input type="text" name="nombre_cliente" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Nit/CI del cliente</label>
+                        <input type="text" name="nit_ci_cliente" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Celular del cliente</label>
+                        <input type="text" name="celular_cliente" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Correo del cliente</label>
+                        <input type="email" name="email_cliente" class="form-control">
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-warning btn-block">Guardar cliente</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
 
-                                        </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+
+</div>
