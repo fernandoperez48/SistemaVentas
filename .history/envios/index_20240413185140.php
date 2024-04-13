@@ -50,7 +50,7 @@ include '../app/controllers/envios/listado_de_envios.php';
                                             <center>Cliente</center>
                                         </th>
                                         <th>
-                                            <center>Fecha compra</center>
+                                            <center>Fecha</center>
                                         </th>
                                         <th>
                                             <center>Dirección Cliente</center>
@@ -83,19 +83,19 @@ include '../app/controllers/envios/listado_de_envios.php';
                                                 <?php echo $envios_datos['nro_venta']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $envios_datos['nombre'] . ' ' . $envios_datos['apellido']; ?>
+                                                <?php echo $envios_datos['nombre']; ?>
                                             </td>
                                             <td>
                                                 <?php echo $envios_datos['fyh_creacion']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $envios_datos['calle'] . ' ' . $envios_datos['numero']; ?>
+                                                <?php echo $envios_datos['calle''numero']; ?>
                                             </td>
                                             <td>
                                                 <?php echo $envios_datos['Direccion']; ?>
                                             </td>
                                             <td>
-                                                <?php echo '$'.$envios_datos['total_pagado']; ?>
+                                                <?php echo $envios_datos['total_pagado']; ?>
                                             </td>
                                             <td>
                                                 <?php echo $envios_datos['estado']; ?>
