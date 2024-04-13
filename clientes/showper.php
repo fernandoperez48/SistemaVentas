@@ -78,8 +78,14 @@ include '../app/controllers/clientes/show_clienteper.php';
                 <br>
                 <div class="form-group">
                   <a href="indexper.php" class="btn btn-secondary">Volver</a>
+                  <div class="icon">
 
+                    <a href="tu_link_de_WhatsApp" target="_blank" class="fab fa-whatsapp whatsapp-icon"></a>
+                  </div>
+                  <a href="indexper.php" class="btn btn-secondary">Enviar aviso</a>
                 </div>
+
+
 
               </div>
             </div>
