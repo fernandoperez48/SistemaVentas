@@ -1,7 +1,7 @@
 <?php
 
 
-$sql_envios ="SELECT e.IdVenta,COALESCE(emp.nombre, p.nombre) AS nombre,COALESCE(emp.razon_social, p.apellido) AS apellido, e.Direccion, e.estado,c.id_persona,v.total_pagado,v.nro_venta,v.fyh_creacion,d.calle,d.numero
+$sql_envios ="SELECT e.IdVenta,COALESCE(emp.nombre, p.nombre) AS nombre, e.Direccion, e.estado,c.id_persona,v.total_pagado,v.nro_venta,v.fyh_creacion,d.calle,d.numero
 FROM tb_envios as e
 inner Join tb_clientes as c on c.id_cliente = e.IdCliente
 left JOIN tb_empresas AS emp ON c.id_empresa = emp.id_empresa

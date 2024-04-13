@@ -95,7 +95,7 @@ include '../app/controllers/envios/listado_de_envios.php';
                                                 <?php echo $envios_datos['Direccion']; ?>
                                             </td>
                                             <td>
-                                                <?php echo '$'.$envios_datos['total_pagado']; ?>
+                                                <?php echo $envios_datos['total_pagado']; ?>
                                             </td>
                                             <td>
                                                 <?php echo $envios_datos['estado']; ?>

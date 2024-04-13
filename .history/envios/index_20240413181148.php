@@ -44,19 +44,13 @@ include '../app/controllers/envios/listado_de_envios.php';
                                             <center>Nro</center>
                                         </th>
                                         <th>
-                                            <center>Nro Venta</center>
-                                        </th>
-                                        <th>
                                             <center>Cliente</center>
                                         </th>
                                         <th>
-                                            <center>Fecha compra</center>
+                                            <center>Fecha</center>
                                         </th>
                                         <th>
-                                            <center>Dirección Cliente</center>
-                                        </th>
-                                        <th>
-                                            <center>Dirección Envio</center>
+                                            <center>Dirección</center>
                                         </th>
                                         <th>
                                             <center>Precio</center>
@@ -80,22 +74,16 @@ include '../app/controllers/envios/listado_de_envios.php';
                                                 <?php echo $contador += 1; ?>
                                             </td>
                                             <td>
-                                                <?php echo $envios_datos['nro_venta']; ?>
+                                                <?php echo $envios_datos['nombre']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $envios_datos['nombre'] . ' ' . $envios_datos['apellido']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $envios_datos['fyh_creacion']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $envios_datos['calle'] . ' ' . $envios_datos['numero']; ?>
+                                                02-04-2023
                                             </td>
                                             <td>
                                                 <?php echo $envios_datos['Direccion']; ?>
                                             </td>
                                             <td>
-                                                <?php echo '$'.$envios_datos['total_pagado']; ?>
+                                                <?php echo $envios_datos['IdCliente']; ?>
                                             </td>
                                             <td>
                                                 <?php echo $envios_datos['estado']; ?>
