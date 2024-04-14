@@ -2,10 +2,9 @@
 include '../app/config.php';
 include '../layaout/sesion.php';
 include '../layaout/parte1.php';
-include '../app/controllers/clientes/listado_de_clientesper.php';
-include '../app/controllers/clientes/listado_de_clientesemp.php';
+include '../app/controllers/ventas/listado_de_ventas.php';
 include '../app/controllers/almacen/listado_de_productos.php';
-
+include '../app/controllers/clientes/listado_de_clientes.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -46,8 +45,6 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                     Buscar Producto
                                 </button>
 
-
-                                <!-- MODAL PARA BUSCAR PRODUCTO       MODAL PARA BUSCAR PRODUCTO       MODAL PARA BUSCAR PRODUCTO -->
                                 <div class="modal fade" id="modal-buscar_producto">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -222,9 +219,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                         </div>
                                     </div>
                                 </div>
-
                                 <br><br>
-
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-sm table-hover table-striped">
                                         <thead>
@@ -343,52 +338,16 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                     <!-- /.card-header -->
                                     <div class="card-body">
                                         <b>Carrito</b>
-                                        <DIV style="text-align: center;">
-                                            <H5> BUSQUEDA DE CLIENTES</H5>
-                                        </DIV>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar_cliente">
+                                            <i class="fas fa-search"></i>
+                                            Buscar Cliente
+                                        </button>
 
-
-
-                                        <div class="card" style="margin-top: 0px;">
-                                            <div class=" card-header">
-                                                <h3 class="card-title">Buscar por tipo de cliente... </h3>
-                                                <div class="card-tools">
-                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                        <i class="fas fa-minus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="card-body p-0">
-                                                <ul class="nav nav-pills flex-column">
-
-                                                    <li class="nav-item">
-                                                        <a class="nav-link">
-                                                            <i class="far fa-circle text-danger"></i>
-                                                            Personas
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar_clienteper" style="margin-left: 30px;">
-                                                                <i class="fas fa-search"></i>
-                                                            </button>
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link">
-                                                            <i class="far fa-circle text-warning"></i> Empresas
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar_clienteemp" style="margin-left: 26px;">
-                                                                <i class="fas fa-search"></i>
-                                                            </button>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <!-- /.card-body -->
-                                        </div>
-                                        <!-- MODAL BUSCAR CLIENTE PERSONA     MODAL BUSCAR CLIENTE PERSONA     MODAL BUSCAR CLIENTE PERSONA -->
-
-                                        <div class="modal fade" id="modal-buscar_clienteper">
+                                        <div class="modal fade" id="modal-buscar_cliente">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Busqueda del Cliente persona</h4>
+                                                        <h4 class="modal-title">Busqueda del Cliente </h4>
                                                         <div style="width: 10px;"></div>
                                                         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-agregar_cliente">
                                                             <i class="fas fa-users"></i>
@@ -400,11 +359,11 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="table table-responsive">
-                                                            <table id="example2" class="table table-bordered table-striped table-sm">
+                                                            <table id="example1" class="table table-bordered table-striped table-sm">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>
-                                                                            <center>Nro de cliente</center>
+                                                                            <center>Nro</center>
                                                                         </th>
                                                                         <th>
                                                                             <center>Seleccionar</center>
@@ -413,58 +372,57 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                                             <center>Nombre</center>
                                                                         </th>
                                                                         <th>
-                                                                            <center>DNI</center>
+                                                                            <center>Nit/CI</center>
                                                                         </th>
                                                                         <th>
-                                                                            <center>Telefono</center>
+                                                                            <center>Celular</center>
                                                                         </th>
                                                                         <th>
                                                                             <center>Email</center>
                                                                         </th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody id="tabla-body">
+                                                                <tbody>
                                                                     <?php
-                                                                    $contador_de_clientesper = 0;
-                                                                    foreach ($clientesper_datos as $clientesper_datos) {
-
-                                                                        $contador_de_clientesper = $contador_de_clientesper + 1; ?>
+                                                                    $contador_de_clientes = 0;
+                                                                    foreach ($clientes_datos as $clientes_datos) {
+                                                                        $id_cliente = $clientes_datos['id_cliente'];
+                                                                        $contador_de_clientes = $contador_de_clientes + 1; ?>
                                                                         <tr>
                                                                             <td>
-                                                                                <center><?php echo $clientesper_datos['id_cliente']; ?></center>
+                                                                                <center><?php echo $contador_de_clientes; ?></center>
                                                                             </td>
                                                                             <td>
                                                                                 <center>
-                                                                                    <button class="btn btn-info" id="btn_pasar_cliente<?php echo $clientesper_datos['id_cliente']; ?>">Seleccionar</button>
+                                                                                    <button class="btn btn-info" id="btn_pasar_cliente<?php echo $id_cliente; ?>">Seleccionar</button>
                                                                                     <script>
-                                                                                        $("#btn_pasar_cliente<?php echo $clientesper_datos['id_cliente']; ?>").click(function() {
-                                                                                            $("#id_cliente").val("<?php echo $clientesper_datos['id_cliente']; ?>");
-                                                                                            $("#nombre_cliente").val("<?php echo $clientesper_datos['nombre']; ?>");
-                                                                                            $("#nit_ci_cliente").val("<?php echo $clientesper_datos['dni']; ?>");
-                                                                                            $("#celular_cliente").val("<?php echo $clientesper_datos['telefono']; ?>");
-                                                                                            $("#email_cliente").val("<?php echo $clientesper_datos['email']; ?>");
-                                                                                            $("#modal-buscar_clienteper").modal("hide");
+                                                                                        $("#btn_pasar_cliente<?php echo $id_cliente; ?>").click(function() {
+                                                                                            $("#id_cliente").val("<?php echo $clientes_datos['id_cliente']; ?>");
+                                                                                            $("#nombre_cliente").val("<?php echo $clientes_datos['nombre_cliente']; ?>");
+                                                                                            $("#nit_ci_cliente").val("<?php echo $clientes_datos['nit_ci_cliente']; ?>");
+                                                                                            $("#celular_cliente").val("<?php echo $clientes_datos['celular_cliente']; ?>");
+                                                                                            $("#email_cliente").val("<?php echo $clientes_datos['email_cliente']; ?>");
+                                                                                            $("#modal-buscar_cliente").modal("hide");
                                                                                         });
                                                                                     </script>
                                                                                 </center>
                                                                             </td>
                                                                             <td>
-                                                                                <center><?php echo $clientesper_datos['nombre']; ?></center>
+                                                                                <center><?php echo $clientes_datos['nombre_cliente']; ?></center>
                                                                             </td>
                                                                             <td>
-                                                                                <center><?php echo $clientesper_datos['dni']; ?></center>
+                                                                                <center><?php echo $clientes_datos['nit_ci_cliente']; ?></center>
                                                                             </td>
                                                                             <td>
-                                                                                <center><?php echo $clientesper_datos['telefono']; ?></center>
+                                                                                <center><?php echo $clientes_datos['celular_cliente']; ?></center>
                                                                             </td>
                                                                             <td>
-                                                                                <center><?php echo $clientesper_datos['email']; ?></center>
+                                                                                <center><?php echo $clientes_datos['email_cliente']; ?></center>
                                                                             </td>
                                                                         </tr>
                                                                     <?php
                                                                     }
                                                                     ?>
-
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -478,107 +436,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                             <!-- /.modal-dialog -->
 
                                         </div>
-
-                                        <!-- MODAL BUSCAR CLIENTE EMPRESA     MODAL BUSCAR CLIENTE EMPRESA     MODAL BUSCAR CLIENTE EMPRESA -->
-                                        <div class="modal fade" id="modal-buscar_clienteemp">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">Busqueda del Cliente empresa</h4>
-                                                        <div style="width: 10px;"></div>
-                                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-agregar_cliente">
-                                                            <i class="fas fa-users"></i>
-                                                            Agregar nuevo cliente
-                                                        </button>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="table table-responsive">
-
-                                                            <table id="example3" class="table table-bordered table-striped table-sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>
-                                                                            <center>Nro de cliente</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Seleccionar</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Nombre</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>CUIT</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Telefono</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Email</center>
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody id="tabla-body">
-                                                                    <?php
-                                                                    $contador_de_clientesemp = 0;
-                                                                    foreach ($clientesemp_datos as $clientesemp_datos) {
-
-                                                                        $contador_de_clientesemp = $contador_de_clientesemp + 1; ?>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <center><?php echo $clientesemp_datos['id_cliente']; ?></center>
-                                                                            </td>
-                                                                            <td>
-                                                                                <center>
-                                                                                    <button class="btn btn-info" id="btn_pasar_cliente<?php echo $clientesemp_datos['id_cliente']; ?>">Seleccionar</button>
-                                                                                    <script>
-                                                                                        $("#btn_pasar_cliente<?php echo $clientesemp_datos['id_cliente']; ?>").click(function() {
-                                                                                            $("#id_cliente").val("<?php echo $clientesemp_datos['id_cliente']; ?>");
-                                                                                            $("#nombre_cliente").val("<?php echo $clientesemp_datos['nombre']; ?>");
-                                                                                            $("#nit_ci_cliente").val("<?php echo $clientesemp_datos['cuit']; ?>");
-                                                                                            $("#celular_cliente").val("<?php echo $clientesemp_datos['telefono']; ?>");
-                                                                                            $("#email_cliente").val("<?php echo $clientesemp_datos['email']; ?>");
-                                                                                            $("#modal-buscar_clienteemp").modal("hide");
-                                                                                        });
-                                                                                    </script>
-                                                                                </center>
-                                                                            </td>
-                                                                            <td>
-                                                                                <center><?php echo $clientesemp_datos['nombre']; ?></center>
-                                                                            </td>
-                                                                            <td>
-                                                                                <center><?php echo $clientesemp_datos['cuit']; ?></center>
-                                                                            </td>
-                                                                            <td>
-                                                                                <center><?php echo $clientesemp_datos['telefono']; ?></center>
-                                                                            </td>
-                                                                            <td>
-                                                                                <center><?php echo $clientesemp_datos['email']; ?></center>
-                                                                            </td>
-                                                                        </tr>
-                                                                    <?php
-                                                                    }
-                                                                    ?>
-
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-between">
-
-                                                    </div>
-                                                </div>
-                                                <!-- /.modal-content -->
-                                            </div>
-                                            <!-- /.modal-dialog -->
-
-                                        </div>
-
-
-
-
+                                        <br><br>
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
@@ -588,11 +446,11 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="">DNI - CUIT del Cliente</label>
+                                                <label for="">Nit/Ci del Cliente</label>
                                                 <input type="text" class="form-control" id="nit_ci_cliente">
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="">Telefono del Cliente</label>
+                                                <label for="">Celular del Cliente</label>
                                                 <input type="text" class="form-control" id="celular_cliente">
                                             </div>
                                             <div class="col-md-3">
@@ -746,12 +604,12 @@ include '../app/controllers/almacen/listado_de_productos.php';
             language: {
                 "emptyTable": "No hay información",
                 "decimal": "",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Productos",
-                "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
-                "infoFiltered": "(Filtrado de _MAX_ total Productos)",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Clientes",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Clientes",
+                "infoFiltered": "(Filtrado de _MAX_ total Clientes)",
                 "infoPostFix": "",
                 "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ Producto",
+                "lengthMenu": "Mostrar _MENU_ Clientes",
                 "loadingRecords": "Cargando...",
                 "processing": "Procesando...",
                 "search": "Buscador:",
@@ -767,30 +625,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
             "responsive": true,
             "lengthChange": true,
             "autoWidth": false,
-            "buttons": /* Ajuste de botones */ [{
-                    extend: 'collection',
-                    text: 'Reportes',
-                    orientation: 'landscape',
-                    buttons: [{
-                        text: 'Copiar',
-                        extend: 'copy'
-                    }, {
-                        extend: 'pdf',
-                    }, {
-                        extend: 'csv',
-                    }, {
-                        extend: 'excel',
-                    }, {
-                        text: 'Imprimir',
-                        extend: 'print'
-                    }]
-                },
-                {
-                    extend: 'colvis',
-                    text: 'Visor de columnas'
-                }
-            ],
-            /*Fin de ajuste de botones*/
+
 
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
@@ -803,12 +638,12 @@ include '../app/controllers/almacen/listado_de_productos.php';
             language: {
                 "emptyTable": "No hay información",
                 "decimal": "",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Clientes",
-                "infoEmpty": "Mostrando 0 to 0 of 0 Clientes",
-                "infoFiltered": "(Filtrado de _MAX_ total Clientes)",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Proveedores",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Proveedores",
+                "infoFiltered": "(Filtrado de _MAX_ total Proveedores)",
                 "infoPostFix": "",
                 "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ Clientes",
+                "lengthMenu": "Mostrar _MENU_ Proveedores",
                 "loadingRecords": "Cargando...",
                 "processing": "Procesando...",
                 "search": "Buscador:",
@@ -848,64 +683,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
                 }
             ],
             /*Fin de ajuste de botones*/
-        }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
-
-    });
-
-
-    $(function() {
-        $("#example3").DataTable({
-            /* cambio de idiomas de datatable */
-            "pageLength": 5,
-            language: {
-                "emptyTable": "No hay información",
-                "decimal": "",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Clientes",
-                "infoEmpty": "Mostrando 0 to 0 of 0 Clientes",
-                "infoFiltered": "(Filtrado de _MAX_ total Clientes)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ Clientes",
-                "loadingRecords": "Cargando...",
-                "processing": "Procesando...",
-                "search": "Buscador:",
-                "zeroRecords": "Sin resultados encontrados",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Ultimo",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
-            },
-            /* fin de idiomas */
-            "responsive": true,
-            "lengthChange": true,
-            "autoWidth": false,
-            "buttons": /* Ajuste de botones */ [{
-                    extend: 'collection',
-                    text: 'Reportes',
-                    orientation: 'landscape',
-                    buttons: [{
-                        text: 'Copiar',
-                        extend: 'copy'
-                    }, {
-                        extend: 'pdf',
-                    }, {
-                        extend: 'csv',
-                    }, {
-                        extend: 'excel',
-                    }, {
-                        text: 'Imprimir',
-                        extend: 'print'
-                    }]
-                },
-                {
-                    extend: 'colvis',
-                    text: 'Visor de columnas'
-                }
-            ],
-            /*Fin de ajuste de botones*/
-        }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
     });
 </script>
