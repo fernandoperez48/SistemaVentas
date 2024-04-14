@@ -22,6 +22,8 @@ include '../app/controllers/ventas/listado_de_ventas.php';
 
                         <div class="card card-outline card-primary">
                             <div class="card-header">
+                                <!-- se cuenta la cantidad de ventas de la tabla correspondiente
+                                 y se le agrega un numero mas para indicar qué numero de venta sera la próxima -->
                                 <?php
                                 $contador_de_ventas = 0;
                                 foreach ($ventas_datos as $ventas_datos) {
