@@ -59,6 +59,12 @@ include '../app/controllers/categorias/listado_de_categorias.php';
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
+                                                <label for="">Stock:</label>
+                                                <input type="number" name="stock" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
                                                 <label for="">Codigo Venta</label>
                                                 <input type="text" name="precio_compra" class="form-control" required>
                                             </div>
@@ -71,11 +77,10 @@ include '../app/controllers/categorias/listado_de_categorias.php';
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <label for="">Fecha de Envio:</label>
+                                                <label for="">Fecha de ingreso:</label>
                                                 <input type="date" name="fecha_ingreso" class="form-control" required>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="estado">Estado</label>
                                             <select class="form-control" name="estado" id="estado">
@@ -83,7 +88,6 @@ include '../app/controllers/categorias/listado_de_categorias.php';
                                                 <option value="Enviado">Enviado</option>
                                                 <option value="Entregado">Entregado</option>
                                             </select>
-                                        </div>
                                         </div>
                                     </div>
                             </div>
