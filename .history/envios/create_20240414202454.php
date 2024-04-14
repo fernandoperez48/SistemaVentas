@@ -95,10 +95,11 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                         <button class="btn btn-info" id="btn_seleccionar<?php echo $ventas_datos['id_venta']; ?>">Seleccionar</button>
                                                                         <script>
                                                                             $("#btn_seleccionar<?php echo $ventas_datos['id_venta']; ?>").click(function() {
-                                                                                $("#producto").val("<?php echo $ventas_datos['id_venta']; ?>");                                                                                $('#cantidad').focus();
+                                                                                $("#producto").val("<?php echo $ventas_datos['id_venta']; ?>");
+                                                                                $('#cantidad').focus();
 
 
-                                                                               // $("#modal-buscar_producto").modal("hide");
+                                                                                $("#modal-buscar_producto").modal("hide");
                                                                             });
                                                                         </script>
                                                                     </td>
@@ -175,7 +176,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Codigo Venta</label>
-                                                <input type="text" name="producto" value="" id="producto" class="form-control" required>
+                                                <input type="text" name="producto" value="<?php echo $ventas_datos['id_venta']; ?>" id="producto" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-md-2">

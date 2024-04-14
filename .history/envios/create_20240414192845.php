@@ -2,7 +2,9 @@
 include '../app/config.php';
 include '../layaout/sesion.php';
 include '../layaout/parte1.php';
-include '../app/controllers/ventas/listado_de_ventas.php';
+include '../app/controllers/almacen/listado_de_productos.php';
+include '../app/controllers/categorias/listado_de_categorias.php';
+include '../app/controllers/envios/listado_de_envios.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -77,9 +79,6 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                 <th>
                                                                     <center>Total Pagado</center>
                                                                 </th>
-                                                                <th>
-                                                                    <center>Fecha</center>
-                                                                </th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -95,27 +94,28 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                         <button class="btn btn-info" id="btn_seleccionar<?php echo $ventas_datos['id_venta']; ?>">Seleccionar</button>
                                                                         <script>
                                                                             $("#btn_seleccionar<?php echo $ventas_datos['id_venta']; ?>").click(function() {
-                                                                                $("#producto").val("<?php echo $ventas_datos['id_venta']; ?>");                                                                                $('#cantidad').focus();
+                                                                                $("#id_producto").val("<?php echo $ventas_datos['nro_venta']; ?>");
+                                                                                $("#producto").val("<?php echo $ventas_datos['id_cliente']; ?>");
+                                                                                $("#detalle").val("<?php echo $ventas_datos['total_pagado']; ?>");
+                                                                                $("#precio_unitario").val("<?php echo $ventas_datos['fyh_creacion']; ?>");
+                                                                                $('#cantidad').focus();
 
 
-                                                                               // $("#modal-buscar_producto").modal("hide");
+                                                                                //$("#modal-buscar_producto").modal("hide");
                                                                             });
                                                                         </script>
                                                                     </td>
                                                                     <td>
-                                                                        <?php echo $ventas_datos['nro_venta']; ?>
+                                                                        <?php echo $productos_datos['codigo']; ?>
                                                                     </td>
                                                                     <td>
-                                                                        <?php echo 'Productos'; ?>
+                                                                        <?php echo $productos_datos['nombre_categoria']; ?>
                                                                     </td>
                                                                     <td>
-                                                                        <?php echo $ventas_datos['id_cliente']; ?>
+                                                                        <img src="<?php echo $URL . "/almacen/img_productos" . $productos_datos['imagen']; ?>" width="50px">
                                                                     </td>
                                                                     <td>
-                                                                        <?php echo $ventas_datos['total_pagado']; ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <?php echo $ventas_datos['fyh_creacion']; ?>
+                                                                        <?php echo $productos_datos['nombre']; ?>
                                                                     </td>
 
                                                                 </tr>
@@ -130,13 +130,53 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <input type="text" id="id_producto" hidden>
-                                                                <label for="">Cod venta</label>
+                                                                <label for="">Producto</label>
                                                                 <input type="text" id="producto" class="form-control" disabled>
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="">Detalle</label>
+                                                                <input type="text" id="detalle" class="form-control" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="form-group">
+                                                                <label for="">Cantidad</label>
+                                                                <input type="text" id="cantidad" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="form-group">
+                                                                <label for="">Precio Unitario</label>
+                                                                <input type="text" id="precio_unitario" class="form-control" disabled>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                    <button style="float: right;" id="btn_registrar_carrito" class="btn btn-primary">Registrar</button>
                                                     <div id="respuesta_carrito"></div>
-                                                    
+                                                    <script>
+                                                        $("#btn_registrar_carrito").click(function() {
+                                                            var nro_venta = "<?php echo $contador_de_ventas + 1; ?>";
+                                                            var id_producto = $("#id_producto").val();
+                                                            var cantidad = $("#cantidad").val();
+                                                            if (id_producto == "") {
+                                                                alert("Seleccione un producto");
+                                                            } else if (cantidad == "") {
+                                                                alert("Ingrese la cantidad");
+                                                            } else {
+                                                                //alert("listo para el controlador");
+                                                                var url = "../app/controllers/ventas/registrar_carrito.php";
+                                                                $.get(url, {
+                                                                    nro_venta: nro_venta,
+                                                                    id_producto: id_producto,
+                                                                    cantidad: cantidad
+                                                                }, function(datos) {
+                                                                    $('#respuesta_carrito').html(datos);
+                                                                });
+                                                            }
+                                                        });
+                                                    </script>
                                                     <br><br>
                                                 </div>
                                             </div>
@@ -175,7 +215,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Codigo Venta</label>
-                                                <input type="text" name="producto" value="" id="producto" class="form-control" required>
+                                                <input type="text" name="precio_compra" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
