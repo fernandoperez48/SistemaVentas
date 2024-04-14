@@ -39,9 +39,10 @@ include '../app/controllers/categorias/listado_de_categorias.php';
 
                     <!-- inicio -->
                     <div class="card-body">
+                                <b>Carrito</b>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar_producto">
                                     <i class="fas fa-search"></i>
-                                    Buscar Venta
+                                    Buscar Producto
                                 </button>
 
 
