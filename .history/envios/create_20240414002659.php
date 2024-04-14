@@ -59,6 +59,12 @@ include '../app/controllers/categorias/listado_de_categorias.php';
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
+                                                <label for="">Stock:</label>
+                                                <input type="number" name="stock" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
                                                 <label for="">Codigo Venta</label>
                                                 <input type="text" name="precio_compra" class="form-control" required>
                                             </div>
