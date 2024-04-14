@@ -5,6 +5,7 @@ include '../layaout/parte1.php';
 include '../app/controllers/clientes/listado_de_clientesper.php';
 include '../app/controllers/clientes/listado_de_clientesemp.php';
 include '../app/controllers/almacen/listado_de_productos.php';
+include '../app/controllers/ventas/listado_de_ventas.php';
 
 
 ?>
@@ -655,15 +656,14 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                     var nro_venta = "<?php echo $contador_de_ventas + 1; ?>";
                                                     var id_cliente = $("#id_cliente").val();
                                                     var total_a_cancelar = $("#total_a_cancelar").val();
-                                                    if (id_cliente == "") {
+                                                    if (id_cliente === "") {
                                                         alert("Seleccione un cliente");
-
+                                                    } else if (parseInt(<?php echo $precio_total; ?>) === 0) {
+                                                        alert("Seleccione productos");
                                                     } else {
-
                                                         actualizar_stock();
                                                         guardar_venta();
                                                     }
-
 
                                                     function actualizar_stock() {
                                                         var i = 1;

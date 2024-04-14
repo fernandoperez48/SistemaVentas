@@ -5,7 +5,6 @@ include '../layaout/parte1.php';
 include '../app/controllers/ventas/listado_de_ventas.php';
 
 
-
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -73,7 +72,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                         ?>
                                             <tr>
                                                 <td>
-                                                    <center> <?php echo $contador; ?></center>
+                                                    <center><?php echo $contador; ?></center>
                                                 </td>
                                                 <td>
                                                     <center><?php echo $ventas_datos['nro_venta']; ?></center>
@@ -161,6 +160,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                     <?php
                                                                                     }
                                                                                     ?>
+
                                                                                     <tr>
                                                                                         <th colspan="3" style="background-color: #e7e7e7; text-align:right;">Total</th>
                                                                                         <th>
@@ -189,9 +189,12 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                             </table>
                                                                         </div>
                                                                     </div>
+
                                                                 </div>
                                                             </div>
                                                         </div> <!-- Button trigger modal -->
+
+
                                                     </center>
                                                 </td>
                                                 <td>
@@ -270,10 +273,10 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                     </center>
                                                 </td>
                                             </tr>
-
                                         <?php
                                                                 }
                                         ?>
+
                                     </tbody>
                                 <?php
                                         }

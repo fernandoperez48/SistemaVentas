@@ -1,6 +1,8 @@
+
+
 <?php
-$sql_ventas = "SELECT *,cl.nombre_cliente as nombre_cliente
-             from tb_ventas as ve inner join tb_clientes as cli on cli.id_cliente=ve.id_cliente";
+$sql_ventas = "SELECT *,cl.id_cliente as id_cliente
+             from tb_ventas as ve inner join tb_clientes as cl on cl.id_cliente=ve.id_cliente";
 
 
 
