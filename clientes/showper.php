@@ -76,13 +76,15 @@ include '../app/controllers/clientes/show_clienteper.php';
                                                                                   ?>" disabled>
                 </div>
                 <br>
-                <div class="form-group">
-                  <a href="indexper.php" class="btn btn-secondary">Volver</a>
-                  <div class="icon">
 
-                    <a href="tu_link_de_WhatsApp" target="_blank" class="fab fa-whatsapp whatsapp-icon"></a>
+                <div class="form-group">
+                  <div class="col-md-12">
+                    <a href="indexper.php" class="btn btn-secondary">Volver</a>
+                    <a href="https://wa.me/54<?php echo $telefono; ?>" target="_blank" class="btn btn-success">
+                      <i class="fab fa-whatsapp whatsapp-icon"></i>
+                      Enviar mendaje de aviso
+                    </a>
                   </div>
-                  <a href="indexper.php" class="btn btn-secondary">Enviar aviso</a>
                 </div>
 
 

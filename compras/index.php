@@ -253,7 +253,7 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group
-                                                                            ">
+                                                                                ">
                                                         <label for="">Celular</label>
                                                         <a href="https://wa.me/54<?php echo $compras_datos['celular_proveedor'] ?>" target="_blank" class="btn btn-success">
                                                             <i class="fa fa-phone"></i>
