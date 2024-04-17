@@ -214,7 +214,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                 </div>
                                                                 <?php
                                                                 $sql_clientes = "SELECT *, COALESCE(emp.nombre, p.nombre) AS nombre,COALESCE(emp.razon_social, p.apellido) AS apellido,
-                                                                COALESCE(emp.telefono, p.telefono) AS telefono,COALESCE(emp.email, p.email) AS email, COALESCE(emp.cuit, p.dni) AS cuit
+                                                                COALESCE(emp.telefono, p.telefono) AS telefono,COALESCE(emp.email, p.email) AS email
                                                                 from tb_clientes as cl
                                                                 left JOIN tb_empresas AS emp ON cl.id_empresa = emp.id_empresa
                                                                 left JOIN tb_personas AS p ON cl.id_persona = p.id_persona
@@ -227,7 +227,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
 
                                                                 foreach ($clientes_datos as $clientes_datos) {
                                                                     $nombre_cliente = $clientes_datos['nombre'] . ' ' . $clientes_datos['apellido'];
-                                                                    $nit_ci_cliente = $clientes_datos['cuit'];
+                                                                    $nit_ci_cliente = $clientes_datos['saldo'];
                                                                     $celular_cliente = $clientes_datos['telefono'];
                                                                     $email_cliente = $clientes_datos['email'];
                                                                 ?>

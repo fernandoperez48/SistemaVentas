@@ -98,7 +98,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                 $("#producto").val("<?php echo $ventas_datos['id_venta']; ?>");                                                                                $('#cantidad').focus();
 
 
-                                                                               // $("#modal-buscar_producto").modal("hide");
+                                                                                $("#modal-buscar_producto").modal("hide");
                                                                             });
                                                                         </script>
                                                                     </td>

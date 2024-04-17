@@ -213,8 +213,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                     </button>
                                                                 </div>
                                                                 <?php
-                                                                $sql_clientes = "SELECT *, COALESCE(emp.nombre, p.nombre) AS nombre,COALESCE(emp.razon_social, p.apellido) AS apellido,
-                                                                COALESCE(emp.telefono, p.telefono) AS telefono,COALESCE(emp.email, p.email) AS email, COALESCE(emp.cuit, p.dni) AS cuit
+                                                                $sql_clientes = "SELECT *, COALESCE(emp.nombre, p.nombre) AS nombre,COALESCE(emp.razon_social, p.apellido) AS apellido
                                                                 from tb_clientes as cl
                                                                 left JOIN tb_empresas AS emp ON cl.id_empresa = emp.id_empresa
                                                                 left JOIN tb_personas AS p ON cl.id_persona = p.id_persona
@@ -226,10 +225,10 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                 $clientes_datos = $query_clientes->fetchAll(PDO::FETCH_ASSOC);
 
                                                                 foreach ($clientes_datos as $clientes_datos) {
-                                                                    $nombre_cliente = $clientes_datos['nombre'] . ' ' . $clientes_datos['apellido'];
-                                                                    $nit_ci_cliente = $clientes_datos['cuit'];
-                                                                    $celular_cliente = $clientes_datos['telefono'];
-                                                                    $email_cliente = $clientes_datos['email'];
+                                                                    $nombre_cliente = $clientes_datos['nombre'.' '.'apellido'];
+                                                                    $nit_ci_cliente = $clientes_datos['saldo'];
+                                                                    $celular_cliente = $clientes_datos['celular_cliente'];
+                                                                    $email_cliente = $clientes_datos['email_cliente'];
                                                                 ?>
                                                                     <div class="modal-body">
 

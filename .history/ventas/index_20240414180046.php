@@ -196,12 +196,12 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                 </td>
                                                 <td>
                                                     <!-- Button trigger modal -->
-                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#Modal_clientes<?php echo $id_venta; ?>">
+                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#Modal_clientes<?php echo $id_cliente; ?>">
                                                         <i class="fa fa-shopping-basket"></i> <?php echo $ventas_datos['nombre'] . ' ' . $ventas_datos['apellido']; ?>
                                                     </button>
 
                                                     <!-- Modal -->
-                                                    <div class="modal fade" id="Modal_clientes<?php echo $id_venta; ?>">
+                                                    <div class="modal fade" id="Modal_clientes<?php echo $id_cliente; ?>">
                                                         <div class="modal-dialog modal-sm">
                                                             <div class="modal-content">
                                                                 <div class="modal-header" style="background-color:darkorange; color:white">
@@ -213,12 +213,9 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                     </button>
                                                                 </div>
                                                                 <?php
-                                                                $sql_clientes = "SELECT *, COALESCE(emp.nombre, p.nombre) AS nombre,COALESCE(emp.razon_social, p.apellido) AS apellido,
-                                                                COALESCE(emp.telefono, p.telefono) AS telefono,COALESCE(emp.email, p.email) AS email, COALESCE(emp.cuit, p.dni) AS cuit
-                                                                from tb_clientes as cl
-                                                                left JOIN tb_empresas AS emp ON cl.id_empresa = emp.id_empresa
-                                                                left JOIN tb_personas AS p ON cl.id_persona = p.id_persona
-                                                                where cl.id_cliente = '$id_cliente' ";
+                                                                $sql_clientes = "SELECT * from tb_clientes
+                                                                where id_cliente = '$id_cliente'";
+
 
 
                                                                 $query_clientes = $pdo->prepare($sql_clientes);
@@ -226,10 +223,10 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                 $clientes_datos = $query_clientes->fetchAll(PDO::FETCH_ASSOC);
 
                                                                 foreach ($clientes_datos as $clientes_datos) {
-                                                                    $nombre_cliente = $clientes_datos['nombre'] . ' ' . $clientes_datos['apellido'];
-                                                                    $nit_ci_cliente = $clientes_datos['cuit'];
-                                                                    $celular_cliente = $clientes_datos['telefono'];
-                                                                    $email_cliente = $clientes_datos['email'];
+                                                                    $nombre_cliente = $clientes_datos['nombre_cliente'];
+                                                                    $nit_ci_cliente = $clientes_datos['nit_ci_cliente'];
+                                                                    $celular_cliente = $clientes_datos['celular_cliente'];
+                                                                    $email_cliente = $clientes_datos['email_cliente'];
                                                                 ?>
                                                                     <div class="modal-body">
 

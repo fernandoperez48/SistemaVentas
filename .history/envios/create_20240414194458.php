@@ -95,10 +95,14 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                         <button class="btn btn-info" id="btn_seleccionar<?php echo $ventas_datos['id_venta']; ?>">Seleccionar</button>
                                                                         <script>
                                                                             $("#btn_seleccionar<?php echo $ventas_datos['id_venta']; ?>").click(function() {
-                                                                                $("#producto").val("<?php echo $ventas_datos['id_venta']; ?>");                                                                                $('#cantidad').focus();
+                                                                                $("#id_producto").val("<?php echo $ventas_datos['nro_venta']; ?>");
+                                                                                $("#producto").val("<?php echo $ventas_datos['id_venta']; ?>");
+                                                                                $("#detalle").val("<?php echo $ventas_datos['total_pagado']; ?>");
+                                                                                $("#precio_unitario").val("<?php echo $ventas_datos['fyh_creacion']; ?>");
+                                                                                $('#cantidad').focus();
 
 
-                                                                               // $("#modal-buscar_producto").modal("hide");
+                                                                                //$("#modal-buscar_producto").modal("hide");
                                                                             });
                                                                         </script>
                                                                     </td>
@@ -135,8 +139,30 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <button style="float: right;" id="btn_registrar_carrito" class="btn btn-primary">Registrar</button>
                                                     <div id="respuesta_carrito"></div>
-                                                    
+                                                    <script>
+                                                        $("#btn_registrar_carrito").click(function() {
+                                                            var nro_venta = "<?php echo $contador_de_ventas + 1; ?>";
+                                                            var id_producto = $("#id_producto").val();
+                                                            var cantidad = $("#cantidad").val();
+                                                            if (id_producto == "") {
+                                                                alert("Seleccione un producto");
+                                                            } else if (cantidad == "") {
+                                                                alert("Ingrese la cantidad");
+                                                            } else {
+                                                                //alert("listo para el controlador");
+                                                                var url = "../app/controllers/ventas/registrar_carrito.php";
+                                                                $.get(url, {
+                                                                    nro_venta: nro_venta,
+                                                                    id_producto: id_producto,
+                                                                    cantidad: cantidad
+                                                                }, function(datos) {
+                                                                    $('#respuesta_carrito').html(datos);
+                                                                });
+                                                            }
+                                                        });
+                                                    </script>
                                                     <br><br>
                                                 </div>
                                             </div>
@@ -175,7 +201,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Codigo Venta</label>
-                                                <input type="text" name="producto" value="" id="producto" class="form-control" required>
+                                                <input type="text" name="precio_compra" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
