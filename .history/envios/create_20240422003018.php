@@ -147,7 +147,8 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                                         $sql_carrito = "SELECT *,pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, pro.stock as stock, pro.id_producto as id_producto 
                                                                                                                         from tb_carrito as carr 
                                                                                                                         inner join tb_almacen as pro on carr.id_producto = pro.id_producto 
-                                                                                                                        where nro_venta = '$nro_venta' 
+                                                                                                                        inner join tb_ventas as ve on carr.nro_venta = ve.nro_venta
+                                                                                                                        where ve.nro_venta = '$nro_venta' 
                                                                                                                         order by carr.id_carrito";
                                                                                                         $query_carrito = $pdo->prepare($sql_carrito);
                                                                                                         $query_carrito->execute();
