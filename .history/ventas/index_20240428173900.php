@@ -67,7 +67,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                         <?php
                                         $contador = 0;
                                         foreach ($ventas_datos as $ventas_datos) {
-                                            $id_venta = $ventas_datos['nro_venta'];
+                                            $id_venta = $ventas_datos['id_venta'];
                                             $id_cliente = $ventas_datos['id_cliente'];
                                             $contador++;
                                         ?>
