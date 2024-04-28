@@ -9,7 +9,7 @@ $descripcion = $_POST['descripcion'];
 //$usuario = $_POST['usuario'];
 
 // Consulta para obtener el código del cliente asociado a la venta
-$query_cliente = $pdo->prepare("SELECT id_cliente FROM tb_ventas WHERE id_venta = :codigo_venta");
+$query_cliente = $pdo->prepare("SELECT id_cliente FROM tb_ventas WHERE nro_venta = :codigo_venta");
 $query_cliente->bindParam(':codigo_venta', $codigo_venta);
 $query_cliente->execute();
 $result_cliente = $query_cliente->fetch(PDO::FETCH_ASSOC);

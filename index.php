@@ -9,6 +9,7 @@ include 'app/controllers/roles/listado_de_roles.php';
 include 'app/controllers/categorias/listado_de_categorias.php';
 include 'app/controllers/almacen/listado_de_productos.php';
 include 'app/controllers/compras/listado_de_compras.php';
+include 'app/controllers/ventas/listado_de_ventas.php';
 include 'app/controllers/proveedores/listado_de_proveedores.php';
 include 'app/controllers/envios/listado_de_envios.php';
 ?>
@@ -249,6 +250,33 @@ include 'app/controllers/envios/listado_de_envios.php';
               </div>
             </a>
             <a href="<?php echo $URL ?>/compras" class="small-box-footer">
+              Mas detalle <i class="fas fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- VENTAS -->
+        <div class="col-lg-3 col-6">
+
+          <div class="small-box" style="background-color: #EACCAD;">
+            <div class="inner">
+              <?php
+              $contador_de_ventas = 0;
+              foreach ($ventas_datos as $ventas_datos) {
+                $contador_de_ventas = $contador_de_ventas + 1;
+              }
+              ?>
+              <h3><?php echo $contador_de_ventas ?></h3>
+              <p>Ventas Realizadas</p>
+            </div>
+            <a href="<?php echo $URL ?>/compras/create.php">
+              <div class="icon">
+
+                <i class="fas fa-cart-plus"></i>
+
+              </div>
+            </a>
+            <a href="<?php echo $URL ?>/ventas" class="small-box-footer">
               Mas detalle <i class="fas fa-arrow-circle-right"></i>
             </a>
           </div>
