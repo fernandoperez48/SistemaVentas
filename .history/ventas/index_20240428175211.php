@@ -90,9 +90,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                             <div class="modal-dialog modal-lg">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header" style="background-color: #08c2ec">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                                            Productos de la venta nro
-                                                                            <?php echo $ventas_datos['nro_venta']; ?></h5>
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Productos de la venta nro <?php echo $ventas_datos['nro_venta']; ?></h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
@@ -102,18 +100,12 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                             <table class="table table-bordered table-sm table-hover table-striped">
                                                                                 <thead>
                                                                                     <tr>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
-                                                                                            Nro</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
-                                                                                            Producto</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
-                                                                                            Detalle</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
-                                                                                            Cantidad</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
-                                                                                            Precio Unitario</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
-                                                                                            Precio Subtotal</th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">Nro</th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">Producto</th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">Detalle</th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">Cantidad</th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">Precio Unitario</th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">Precio Subtotal</th>
 
                                                                                     </tr>
                                                                                 </thead>
@@ -142,30 +134,21 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                     ?>
                                                                                         <tr>
                                                                                             <td>
-                                                                                                <center>
-                                                                                                    <?php echo $contador_carrito; ?>
-                                                                                                </center>
+                                                                                                <center><?php echo $contador_carrito; ?></center>
                                                                                                 <input type="text" value="<?php echo $carrito_datos['id_producto']; ?>" id="id_producto<?php echo $contador_carrito; ?>" hidden>
                                                                                             </td>
                                                                                             <td>
-                                                                                                <center>
-                                                                                                    <?php echo $carrito_datos['nombre_producto']; ?>
-                                                                                                </center>
+                                                                                                <center><?php echo $carrito_datos['nombre_producto']; ?></center>
                                                                                             </td>
                                                                                             <td>
-                                                                                                <center>
-                                                                                                    <?php echo $carrito_datos['descripcion']; ?>
-                                                                                                </center>
+                                                                                                <center><?php echo $carrito_datos['descripcion']; ?></center>
                                                                                             </td>
                                                                                             <td>
-                                                                                                <center><span id="cantidad_carrito<?php echo $contador_carrito; ?>"><?php echo $carrito_datos['cantidad']; ?></span>
-                                                                                                </center>
+                                                                                                <center><span id="cantidad_carrito<?php echo $contador_carrito; ?>"><?php echo $carrito_datos['cantidad']; ?></span></center>
                                                                                                 <input type="text" id="stock_de_inventario<?php echo $contador_carrito; ?>" value="<?php echo $carrito_datos['stock']; ?>" hidden>
                                                                                             </td>
                                                                                             <td>
-                                                                                                <center>
-                                                                                                    <?php echo $carrito_datos['precio_venta']; ?>
-                                                                                                </center>
+                                                                                                <center><?php echo $carrito_datos['precio_venta']; ?></center>
                                                                                             </td>
                                                                                             <td>
                                                                                                 <center>
@@ -182,8 +165,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                     }
                                                                                     ?>
                                                                                     <tr>
-                                                                                        <th colspan="3" style="background-color: #e7e7e7; text-align:right;">
-                                                                                            Total</th>
+                                                                                        <th colspan="3" style="background-color: #e7e7e7; text-align:right;">Total</th>
                                                                                         <th>
                                                                                             <center>
                                                                                                 <?php
@@ -218,8 +200,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                 <td>
                                                     <!-- Button trigger modal -->
                                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#Modal_clientes<?php echo $id_venta; ?>">
-                                                        <i class="fa fa-shopping-basket"></i>
-                                                        <?php echo $ventas_datos['nombre'] . ' ' . $ventas_datos['apellido']; ?>
+                                                        <i class="fa fa-shopping-basket"></i> <?php echo $ventas_datos['nombre'] . ' ' . $ventas_datos['apellido']; ?>
                                                     </button>
 
                                                     <!-- Modal -->
@@ -286,15 +267,12 @@ include '../app/controllers/ventas/listado_de_ventas.php';
 
                                                 </td>
                                                 <td>
-                                                    <center><button class="btn btn-primary" disabled><?php echo "$" . $ventas_datos['total_pagado']; ?></button>
-                                                    </center>
+                                                    <center><button class="btn btn-primary" disabled><?php echo "$" . $ventas_datos['total_pagado']; ?></button></center>
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <a href="" class="btn btn-info"><i class="fa fa-eye"></i>
-                                                            Mostrar</a>
-                                                        <a href="" class="btn btn-danger"><i class="fa fa-trash"></i>
-                                                            Borrar</a>
+                                                        <a href="" class="btn btn-info"><i class="fa fa-eye"></i> Mostrar</a>
+                                                        <a href="" class="btn btn-danger"><i class="fa fa-trash"></i> Borrar</a>
                                                     </center>
                                                 </td>
                                             </tr>
