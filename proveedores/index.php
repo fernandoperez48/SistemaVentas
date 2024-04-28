@@ -6,7 +6,9 @@ if ($rol_sesion == "Vendedor") {
 }
 include '../layaout/parte1.php';
 include '../app/controllers/proveedores/listado_de_proveedores.php';
+
 ?>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -299,6 +301,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                                         </div>
                                                         <!-- /.modal-dialog -->
                                                     </div>
+
                                                     <script>
                                                         $('#btn_delete<?php echo $id_proveedor; ?>').click(function() {
 
@@ -312,12 +315,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                                             });
                                                         });
                                                     </script>
-
-
-                                                    </script>
-
                                                 </div>
-
                                             </td>
                                         </tr>
                                     <?php
@@ -326,190 +324,320 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
 
                                 </tbody>
 
-
                             </table>
                         </div>
                         <!-- /.card-body -->
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
+
+        <!-- Main content -->
     </div>
 
-    <!-- Main content -->
-</div>
-<!-- /.content-wrapper -->
-<!-- Page specific script -->
-<?php include '../layaout/mensajes.php'; ?>
-<?php include '../layaout/parte2.php'; ?>
+    <!-- /.content-wrapper -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-outline card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Grafico de tortas</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                            <!-- /.card-tools -->
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- ACA EL GRAFICO PAPÁ DASLFMASDKLFNA      ACAA           GJADFOGJADIOGJADIOÑGJ-->
 
-<script>
-    $(function() {
-        $("#example1").DataTable({
-            /* cambio de idiomas de datatable */
-            "pageLength": 5,
-            language: {
-                "emptyTable": "No hay información",
-                "decimal": "",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Proveedores",
-                "infoEmpty": "Mostrando 0 to 0 of 0 Proveedores",
-                "infoFiltered": "(Filtrado de _MAX_ total Proveedores)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ Proveedores",
-                "loadingRecords": "Cargando...",
-                "processing": "Procesando...",
-                "search": "Buscador:",
-                "zeroRecords": "Sin resultados encontrados",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Ultimo",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
-            },
-            /* fin de idiomas */
-            "responsive": true,
-            "lengthChange": true,
-            "autoWidth": false,
-            "buttons": /* Ajuste de botones */ [{
-                    extend: 'collection',
-                    text: 'Reportes',
-                    orientation: 'landscape',
-                    buttons: [{
-                        text: 'Copiar',
-                        extend: 'copy'
-                    }, {
-                        extend: 'pdf',
-                    }, {
-                        extend: 'csv',
-                    }, {
-                        extend: 'excel',
-                    }, {
-                        text: 'Imprimir',
-                        extend: 'print'
-                    }]
+                        <div class="card-body">
+                            <div id="container"></div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Main content -->
+    </div>
+
+    <!-- Page specific script -->
+    <?php include '../layaout/mensajes.php'; ?>
+    <?php include '../layaout/parte2.php'; ?>
+
+
+
+
+    <!-- modal para registrar proveedores-->
+    <div class="modal fade" id="modal-create">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:blue; color:white">
+                    <h4 class="modal-title">Creacion de un nuevo proveedor</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nombre del proveedor <b>*</b></label>
+                                <input type="text" id="nombre_proveedor" class="form-control">
+                                <small style="color:red; display:none" id="lbl_nombre">* Este campo es requerido</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Celular <b>*</b></label>
+                                <input type="number" id="celular" class="form-control">
+                                <small style="color:red; display:none" id="lbl_celular">* Este campo es requerido</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Telefono</label>
+                                <input type="number" id="telefono" class="form-control">
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Empresa<b>*</b></label>
+                                <input type="email" id="empresa" class="form-control">
+                                <small style="color:red; display:none" id="lbl_empresa">* Este campo es requerido</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email </label>
+                                <input type="text" id="email" class="form-control">
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Direccion<b>*</b></label>
+                                <input type="text" id="direccion" class="form-control">
+                                <small style="color:red; display:none" id="lbl_direccion">* Este campo es requerido</small>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btn_create">Guardar</button>
+                </div>
+                <div id="respuesta"></div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <!-- SCRIPTSSS DE LA TABLA-->
+    <script>
+        $('#btn_create').click(function() {
+            var nombre_proveedor = $('#nombre_proveedor').val();
+            var celular = $('#celular').val();
+            var telefono = $('#telefono').val();
+            var empresa = $('#empresa').val();
+            var email = $('#email').val();
+            var direccion = $('#direccion').val();
+
+            if (nombre_proveedor == '') {
+                $('#nombre_proveedor').focus();
+                $('#lbl_nombre').css('display', 'block');
+            } else if (celular == '') {
+                $('#celular').focus();
+                $('#lbl_celular').css('display', 'block');
+            } else if (empresa == '') {
+                $('#empresa').focus();
+                $('#lbl_empresa').css('display', 'block');
+            } else if (direccion == '') {
+                $('#direccion').focus();
+                $('#lbl_direccion').css('display', 'block');
+            } else {
+                var url = "../app/controllers/proveedores/create.php";
+                $.get(url, {
+                    nombre_proveedor: nombre_proveedor,
+                    celular: celular,
+                    telefono: telefono,
+                    empresa: empresa,
+                    email: email,
+                    direccion: direccion
+                }, function(datos) {
+                    $('#respuesta').html(datos);
+                });
+            }
+
+
+        });
+    </script>
+    <script>
+        $(function() {
+            $("#example1").DataTable({
+                /* cambio de idiomas de datatable */
+                "pageLength": 5,
+                language: {
+                    "emptyTable": "No hay información",
+                    "decimal": "",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Proveedores",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Proveedores",
+                    "infoFiltered": "(Filtrado de _MAX_ total Proveedores)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Proveedores",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscador:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
                 },
-                {
-                    extend: 'colvis',
-                    text: 'Visor de columnas'
-                }
-            ],
-            /*Fin de ajuste de botones*/
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                /* fin de idiomas */
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": false,
+                "buttons": /* Ajuste de botones */ [{
+                        extend: 'collection',
+                        text: 'Reportes',
+                        orientation: 'landscape',
+                        buttons: [{
+                            text: 'Copiar',
+                            extend: 'copy'
+                        }, {
+                            extend: 'pdf',
+                        }, {
+                            extend: 'csv',
+                        }, {
+                            extend: 'excel',
+                        }, {
+                            text: 'Imprimir',
+                            extend: 'print'
+                        }]
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Visor de columnas'
+                    }
+                ],
+                /*Fin de ajuste de botones*/
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
-    });
-</script>
-
-<!-- modal para registrar proveedores-->
-<div class="modal fade" id="modal-create">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:blue; color:white">
-                <h4 class="modal-title">Creacion de un nuevo proveedor</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Nombre del proveedor <b>*</b></label>
-                            <input type="text" id="nombre_proveedor" class="form-control">
-                            <small style="color:red; display:none" id="lbl_nombre">* Este campo es requerido</small>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Celular <b>*</b></label>
-                            <input type="number" id="celular" class="form-control">
-                            <small style="color:red; display:none" id="lbl_celular">* Este campo es requerido</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Telefono</label>
-                            <input type="number" id="telefono" class="form-control">
-
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Empresa<b>*</b></label>
-                            <input type="email" id="empresa" class="form-control">
-                            <small style="color:red; display:none" id="lbl_empresa">* Este campo es requerido</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Email </label>
-                            <input type="text" id="email" class="form-control">
-
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Direccion<b>*</b></label>
-                            <input type="text" id="direccion" class="form-control">
-                            <small style="color:red; display:none" id="lbl_direccion">* Este campo es requerido</small>
-                        </div>
-                    </div>
-                </div>
+        });
+    </script>
+    <!-- FIN SCRIPTSSS DE LA TABLA-->
 
 
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="btn_create">Guardar</button>
-            </div>
-            <div id="respuesta"></div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<script>
-    $('#btn_create').click(function() {
-        var nombre_proveedor = $('#nombre_proveedor').val();
-        var celular = $('#celular').val();
-        var telefono = $('#telefono').val();
-        var empresa = $('#empresa').val();
-        var email = $('#email').val();
-        var direccion = $('#direccion').val();
-
-        if (nombre_proveedor == '') {
-            $('#nombre_proveedor').focus();
-            $('#lbl_nombre').css('display', 'block');
-        } else if (celular == '') {
-            $('#celular').focus();
-            $('#lbl_celular').css('display', 'block');
-        } else if (empresa == '') {
-            $('#empresa').focus();
-            $('#lbl_empresa').css('display', 'block');
-        } else if (direccion == '') {
-            $('#direccion').focus();
-            $('#lbl_direccion').css('display', 'block');
-        } else {
-            var url = "../app/controllers/proveedores/create.php";
-            $.get(url, {
-                nombre_proveedor: nombre_proveedor,
-                celular: celular,
-                telefono: telefono,
-                empresa: empresa,
-                email: email,
-                direccion: direccion
-            }, function(datos) {
-                $('#respuesta').html(datos);
-            });
-        }
-
-
-    });
-</script>
+    <!-- SCRIPTSSS DE GRAFICO-->
+    <script type="text/javascript">
+        Highcharts.chart("container", {
+            chart: {
+                type: "pie",
+            },
+            title: {
+                text: "Egg Yolk Composition",
+            },
+            tooltip: {
+                valueSuffix: "%",
+            },
+            subtitle: {
+                text: 'Source:<a href="https://www.mdpi.com/2072-6643/11/3/684/htm" target="_default">MDPI</a>',
+            },
+            plotOptions: {
+                series: {
+                    allowPointSelect: true,
+                    cursor: "pointer",
+                    dataLabels: [{
+                            enabled: true,
+                            distance: 20,
+                        },
+                        {
+                            enabled: true,
+                            distance: -40,
+                            format: "{point.percentage:.1f}%",
+                            style: {
+                                fontSize: "1.2em",
+                                textOutline: "none",
+                                opacity: 0.7,
+                            },
+                            filter: {
+                                operator: ">",
+                                property: "percentage",
+                                value: 10,
+                            },
+                        },
+                    ],
+                },
+            },
+            series: [{
+                name: "Percentage",
+                colorByPoint: true,
+                data: [{
+                        name: "Compaq S.A.",
+                        y: 55.02,
+                    },
+                    {
+                        name: "Techint",
+                        sliced: true,
+                        selected: true,
+                        y: 26.71,
+                    },
+                    {
+                        name: "Pampero",
+                        y: 1.09,
+                    },
+                    {
+                        name: "Ombu S.A.",
+                        y: 15.5,
+                    },
+                    {
+                        name: "Seguridad Total SRL",
+                        y: 1.68,
+                    },
+                    {
+                        name: "Camping Adventure S.A..",
+                        y: 15.5,
+                    },
+                    {
+                        name: "Campo y Cosecha S.A.",
+                        y: 15.5,
+                    },
+                    {
+                        name: "Segurindustria",
+                        y: 15.5,
+                    },
+                    {
+                        name: "Aventuras al Aire Libre",
+                        y: 15.5,
+                    },
+                    {
+                        name: "CampoSeguro S.A.",
+                        y: 15.5,
+                    },
+                ],
+            }, ],
+        });
+    </script>
+    <script src="../code/highcharts.js"></script>
+    <script src="../code/modules/exporting.js"></script>
+    <script src="../code/modules/accessibility.js"></script>
+    <!--  FIN SCRIPTSSS DE GRAFICO-->
