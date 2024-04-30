@@ -72,7 +72,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                         <th>
                                             <center>Direccion</center>
                                         </th>
-                                        <th>
+                                        <th class="actions">
                                             <center>Acciones</center>
                                         </th>
                                     </tr>
@@ -371,9 +371,6 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
     <?php include '../layaout/mensajes.php'; ?>
     <?php include '../layaout/parte2.php'; ?>
 
-
-
-
     <!-- modal para registrar proveedores-->
     <div class="modal fade" id="modal-create">
         <div class="modal-dialog modal-lg">
@@ -447,6 +444,8 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
         </div>
         <!-- /.modal-dialog -->
     </div>
+
+
 
     <!-- SCRIPTSSS DE LA TABLA-->
     <script>
@@ -525,20 +524,40 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                             extend: 'copy'
                         }, {
                             extend: 'pdf',
+                            exportOptions: {
+                                columns: ':not(.actions)'
+                            }
                         }, {
                             extend: 'csv',
+                            exportOptions: {
+                                columns: ':not(.actions)'
+                            }
                         }, {
                             extend: 'excel',
+                            exportOptions: {
+                                columns: ':not(.actions)'
+                            }
                         }, {
                             text: 'Imprimir',
-                            extend: 'print'
+                            extend: 'print',
+                            exportOptions: {
+                                columns: ':not(.actions)'
+                            }
                         }]
                     },
                     {
                         extend: 'colvis',
                         text: 'Visor de columnas'
+
+
                     }
                 ],
+                // "columnDefs": [{
+                //     "targets": -1,
+                //     "className": "no-export",
+                //     "searchable": false
+                // }]
+
                 /*Fin de ajuste de botones*/
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
@@ -547,96 +566,90 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
     <!-- FIN SCRIPTSSS DE LA TABLA-->
 
 
+
+
     <!-- SCRIPTSSS DE GRAFICO-->
     <script type="text/javascript">
         Highcharts.chart("container", {
             chart: {
-                type: "pie",
+                type: "pie"
             },
             title: {
-                text: "Egg Yolk Composition",
+                text: "Volumen en porcetaje de Productos por Proveedores" // Replace with a dynamic title
             },
             tooltip: {
-                valueSuffix: "%",
+                valueSuffix: "%"
             },
             subtitle: {
-                text: 'Source:<a href="https://www.mdpi.com/2072-6643/11/3/684/htm" target="_default">MDPI</a>',
+                text: 'Source: <a href="https://www.mdpi.com/2072-6643/11/3/684/htm" target="_default">MDPI</a>'
             },
             plotOptions: {
                 series: {
                     allowPointSelect: true,
                     cursor: "pointer",
                     dataLabels: [{
-                            enabled: true,
-                            distance: 20,
+                        enabled: true,
+                        distance: 20
+                    }, {
+                        enabled: true,
+                        distance: -40,
+                        format: "{point.percentage:.1f}%",
+                        style: {
+                            fontSize: "1.2em",
+                            textOutline: "none",
+                            opacity: 0.7
                         },
-                        {
-                            enabled: true,
-                            distance: -40,
-                            format: "{point.percentage:.1f}%",
-                            style: {
-                                fontSize: "1.2em",
-                                textOutline: "none",
-                                opacity: 0.7,
-                            },
-                            filter: {
-                                operator: ">",
-                                property: "percentage",
-                                value: 10,
-                            },
-                        },
-                    ],
-                },
+                        filter: {
+                            operator: ">",
+                            property: "percentage",
+                            value: 10
+                        }
+                    }]
+                }
             },
             series: [{
-                name: "Percentage",
+                name: "Proveedores",
                 colorByPoint: true,
-                data: [{
-                        name: "Compaq S.A.",
-                        y: 55.02,
-                    },
-                    {
-                        name: "Techint",
-                        sliced: true,
-                        selected: true,
-                        y: 26.71,
-                    },
-                    {
-                        name: "Pampero",
-                        y: 1.09,
-                    },
-                    {
-                        name: "Ombu S.A.",
-                        y: 15.5,
-                    },
-                    {
-                        name: "Seguridad Total SRL",
-                        y: 1.68,
-                    },
-                    {
-                        name: "Camping Adventure S.A..",
-                        y: 15.5,
-                    },
-                    {
-                        name: "Campo y Cosecha S.A.",
-                        y: 15.5,
-                    },
-                    {
-                        name: "Segurindustria",
-                        y: 15.5,
-                    },
-                    {
-                        name: "Aventuras al Aire Libre",
-                        y: 15.5,
-                    },
-                    {
-                        name: "CampoSeguro S.A.",
-                        y: 15.5,
-                    },
-                ],
-            }, ],
+                data: [
+                    <?php
+                    // total de proveedores
+                    $stmt_total_proveedores = $pdo->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
+                    $total_proveedores = $stmt_total_proveedores->fetchColumn();
+
+                    $stmt_total = $pdo->query("SELECT COUNT(*) AS total FROM tb_almacen");
+                    $total = $stmt_total->fetchColumn();
+                    // completo con objetos el array
+                    $porcentajes = [];
+                    for ($i = 1; $i <= $total_proveedores; $i++) {
+                        $stmt_proveedor = $pdo->prepare("SELECT COUNT(*) AS cnt FROM tb_almacen WHERE id_proveedor = ?");
+                        $stmt_proveedor->execute([$i]);
+                        $cantidad = $stmt_proveedor->fetchColumn();
+
+                        // nombre segun $i
+                        $stmt_nombre_proveedor = $pdo->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
+                        $stmt_nombre_proveedor->execute([$i]);
+                        $nombre_proveedor = $stmt_nombre_proveedor->fetchColumn();
+
+                        $porcentaje = ($cantidad / $total) * 100;
+                        // uso el nombre segun $I
+                        $porcentajes[] = ['name' => $nombre_proveedor, 'y' => $porcentaje];
+                    }
+
+                    // recorro el array y le meto el codigo q no entiendo
+                    $primera = true;
+                    foreach ($porcentajes as $proveedor) {
+                        if (!$primera) {
+                            echo ',';
+                        }
+                        $primera = false;
+                        echo json_encode($proveedor);
+                    }
+                    ?>
+                ]
+            }]
         });
     </script>
+
     <script src="../code/highcharts.js"></script>
     <script src="../code/modules/exporting.js"></script>
     <script src="../code/modules/accessibility.js"></script>

@@ -70,8 +70,8 @@
       min-width: 50px;
     }
   </style>
+  <!-- jQuery -->
 
-    <!-- Script para Graficos -->
   <script src="../code/highcharts.js"></script>
   <script src="../code/modules/exporting.js"></script>
   <script src="../code/modules/accessibility.js"></script>
