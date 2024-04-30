@@ -92,10 +92,10 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                         <?php echo $contador += 1; ?>
                                                                     </td>
                                                                     <td>
-                                                                        <button class="btn btn-info" id="btn_seleccionar<?php echo $ventas_datos['nro_venta']; ?>">Seleccionar</button>
+                                                                        <button class="btn btn-info" id="btn_seleccionar<?php echo $ventas_datos['id_venta']; ?>">Seleccionar</button>
                                                                         <script>
-                                                                            $("#btn_seleccionar<?php echo $ventas_datos['nro_venta']; ?>").click(function() {
-                                                                                $("#codigo_venta").val("<?php echo $ventas_datos['nro_venta']; ?>"); 
+                                                                            $("#btn_seleccionar<?php echo $ventas_datos['id_venta']; ?>").click(function() {
+                                                                                $("#codigo_venta").val("<?php echo $ventas_datos['id_venta']; ?>"); 
                                                                                $('#cantidad').focus();
 
 
@@ -283,7 +283,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <label for="">Nro Venta</label>
+                                                <label for="">Codigo Venta</label>
                                                 <input type="text" name="codigo_venta" value="" id="codigo_venta" class="form-control" required>
                                             </div>
                                         </div>

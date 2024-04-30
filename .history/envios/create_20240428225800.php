@@ -283,7 +283,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <label for="">Nro Venta</label>
+                                                <label for="">Codigo Venta</label>
                                                 <input type="text" name="codigo_venta" value="" id="codigo_venta" class="form-control" required>
                                             </div>
                                         </div>
