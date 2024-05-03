@@ -327,7 +327,12 @@
                       <p>Listado de proveedores</p>
                     </a>
                   </li>
-
+                  <li class="nav-item">
+                    <a href="<?php echo $URL ?>/proveedores/reportes.php" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Reportes</p>
+                    </a>
+                  </li>
                 </ul>
               </li>
             <?php } ?>

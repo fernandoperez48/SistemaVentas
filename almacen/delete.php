@@ -39,10 +39,10 @@ include '../app/controllers/almacen/cargar_producto.php';
                     <!-- /.card-header -->
                     <form action="../app/controllers/almacen/delete.php" method="post">
                         <input type="text" name="id_producto" value="<?php echo $id_producto_get; ?>" hidden>
-                    <div class="card-body" style="display: block;">
-                        <div class="row">
-                            <div class="col-md-12">
-                                
+                        <div class="card-body" style="display: block;">
+                            <div class="row">
+                                <div class="col-md-12">
+
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -54,7 +54,7 @@ include '../app/controllers/almacen/cargar_producto.php';
                                             <div class="form-group">
                                                 <label for="">Categoria:</label>
                                                 <div style="display: flex;">
-                                                    
+
                                                     <input type="text" class="form-control" value="<?php echo $nombre_categoria; ?>" disabled>
                                                 </div>
                                             </div>
@@ -70,7 +70,7 @@ include '../app/controllers/almacen/cargar_producto.php';
                                                 <div class="form-group">
                                                     <label for="">Imagen del producto:</label>
                                                     <center>
-                                                        <img src="<?php echo $URL."/almacen/img_productos".$productos_datos['imagen'] ;?>" width="200px">
+                                                        <img src="<?php echo $URL . "/almacen/img_productos" . $productos_datos['imagen']; ?>" width="200px">
                                                     </center>
                                                 </div>
                                             </div>
@@ -126,17 +126,17 @@ include '../app/controllers/almacen/cargar_producto.php';
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
-                        </div>
 
 
-                        <br>
-                        <div class="form-group">
-                            <a href="index.php" class="btn btn-secondary">Cancelar</a>
-                            <button class="btn btn-danger"><i class="fa fa-trash">Borrar producto</i></button>
+                            <br>
+                            <div class="form-group">
+                                <a href="index.php" class="btn btn-secondary">Cancelar</a>
+                                <button class="btn btn-danger"><i class="fa fa-trash">Borrar producto</i></button>
+                            </div>
+
                         </div>
-                       
-                    </div>
                     </form>
                 </div>
 
