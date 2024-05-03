@@ -7,7 +7,7 @@ if ($rol_sesion == "Vendedor" || $rol_sesion == "EyD") {
 include '../layaout/parte1.php';
 include '../app/controllers/almacen/listado_de_productos.php';
 include '../app/controllers/categorias/listado_de_categorias.php';
-
+include '../app/controllers/proveedores/listado_de_proveedores.php';
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -134,22 +134,31 @@ include '../app/controllers/categorias/listado_de_categorias.php';
                                                 <textarea name="descripcion" id="" cols="30" rows="3" class="form-control"></textarea>
                                             </div>
                                         </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="">Proveedor:</label>
+                                                <div style="display: flex;">
+                                                    <select name="id_proveedor" id="" class="form-control" required>
+                                                        <?php
+                                                        foreach ($proveedores_datos as $proveedores_datos) { ?>
+                                                            <option value="<?php echo $proveedores_datos['id_proveedor']; ?>"><?php echo $proveedores_datos['nombre_proveedor']; ?></option>
+                                                            ?>
+                                                        <?php } ?>
+                                                    </select>
+                                                    <a href="<?php echo $URL; ?>/proveedores" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
 
-
-
-
-
-
-
-
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <!-- <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Stock:</label>
                                                 <input type="number" name="stock" class="form-control" required>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Stock minimo:</label>
@@ -162,24 +171,25 @@ include '../app/controllers/categorias/listado_de_categorias.php';
                                                 <input type="number" name="stock_maximo" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <!-- <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Precio compra:</label>
                                                 <input type="number" name="precio_compra" class="form-control" required>
                                             </div>
-                                        </div>
-                                        <div class="col-md-2">
+                                        </div> -->
+                                        <!-- <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Precio venta:</label>
                                                 <input type="number" name="precio_venta" class="form-control" required>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <label for="">Fecha de ingreso:</label>
-                                                <input type="date" name="fecha_ingreso" class="form-control" required>
+                                                <label for="">Fecha de carga:</label>
+                                                <input type="text" name="fecha_carga" class="form-control" placeholder="<?php echo date('Y-m-d'); ?>" disabled>
                                             </div>
                                         </div>
+
                                     </div>
                             </div>
                         </div>
