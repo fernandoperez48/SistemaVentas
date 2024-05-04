@@ -133,10 +133,10 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                     <?php echo $productos_datos['precio_venta']; ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo $productos_datos['fecha_ingreso']; ?>
+                                                    <?php echo $productos_datos['fecha_ultimo_ingreso']; ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo $productos_datos['email']; ?>
+                                                    <?php echo $productos_datos['nombres_usuario']; ?>
                                                 </td>
                                                 <td>
                                                     <center>
