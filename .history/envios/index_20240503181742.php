@@ -44,13 +44,19 @@ include '../app/controllers/envios/listado_de_envios.php';
                                             <center>Nro</center>
                                         </th>
                                         <th>
+                                            <center>Nro Venta</center>
+                                        </th>
+                                        <th>
                                             <center>Cliente</center>
                                         </th>
                                         <th>
-                                            <center>Fecha</center>
+                                            <center>Fecha compra</center>
                                         </th>
                                         <th>
-                                            <center>Dirección</center>
+                                            <center>Dirección Cliente</center>
+                                        </th>
+                                        <th>
+                                            <center>Dirección Envio</center>
                                         </th>
                                         <th>
                                             <center>Precio</center>
@@ -68,26 +74,39 @@ include '../app/controllers/envios/listado_de_envios.php';
                                     <?php
                                     $contador = 0;
                                     foreach ($envios_datos as $envios_datos) { 
-                                        $id_envio = $envios_datos['id_envio']; ?>
+                                        $id_envio = $envios_datos['IdVenta']; ?>
                                         <tr>
                                             <td>
                                                 <?php echo $contador += 1; ?>
                                             </td>
                                             <td>
-                                                <?php echo $envios_datos['IdVenta']; ?>
+                                                <?php echo $envios_datos['nro_venta']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $envios_datos['IdCliente']; ?>
+                                                <?php echo $envios_datos['nombre'] . ' ' . $envios_datos['apellido']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $productos_datos['Direccion']; ?>
+                                                <?php echo $envios_datos['fyh_creacion']; ?>
                                             </td>
                                             <td>
-                                                <?php echo $productos_datos['estado']; ?>
+                                                <?php echo $envios_datos['calle'] . ' ' . $envios_datos['numero']; ?>
                                             </td>
-                                           
                                             <td>
-                                                <?php echo $productos_datos['nombre']; ?>
+                                                <?php echo $envios_datos['Direccion']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo '$'.$envios_datos['total_pagado']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $envios_datos['estado']; ?>
+                                            </td>
+                                            <td>
+                                                <center>
+                                                <div class="btn-group">
+                                                    <a href="update.php?id=<?php echo $id_envio; ?>" type="button" class="btn btn-success btn-sm"><i class="fa fa-pencil-alt"></i>Editar</a>
+                                                    <a href="delete.php?id=<?php echo $id_envio; ?>" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Borrar</a>
+                                                </div>
+                                                </center>
                                             </td>
                                             <td>
                                         </tr>

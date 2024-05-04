@@ -123,12 +123,12 @@ include '../app/controllers/envios/listado_de_envios.php';
                                                                     <div class="row">
                                                                         <div class="col-md-6">
                                                                             <div class="form-group">
-                                                                                <label>Nombre del cliente</label>
+                                                                                <label>Nombre del cliente <b>*</b></label>
                                                                                 <input type="text" id="nombre_cliente<?php echo $id_envio; ?>" value="<?php echo $envios_datos['nombre'] . ' ' . $envios_datos['apellido']; ?>" class="form-control" disabled>                                                                            </div>
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <div class="form-group">
-                                                                                <label>Fecha compra</label>
+                                                                                <label>Fecha compra <b>*</b></label>
                                                                                 <input type="text" id="fecha<?php echo $id_envio; ?>" class="form-control" value="<?php echo $envios_datos['fyh_creacion']; ?>" disabled>                                                                            </div>
                                                                         </div>
                                                                     </div>
@@ -142,7 +142,7 @@ include '../app/controllers/envios/listado_de_envios.php';
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <div class="form-group">
-                                                                            <label>Total Pagado</label>
+                                                                            <label>Total Pagado<b>*</b></label>
                                                                                 <input type="text" id="precio<?php echo $id_envio; ?>" class="form-control" value="<?php echo '$'.$envios_datos['total_pagado']; ?>" disabled>                                                                            </div>
                                                                         </div>
                                                                     </div>

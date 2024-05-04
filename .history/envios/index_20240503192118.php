@@ -102,7 +102,10 @@ include '../app/controllers/envios/listado_de_envios.php';
                                             </td>
                                             <td>
                                                 <center>
-
+                                                <!--<div class="btn-group">
+                                                    <a href="update.php?id=<?php echo $id_envio; ?>" type="button" class="btn btn-success btn-sm"><i class="fa fa-pencil-alt"></i>Editar</a>
+                                                    <a href="delete.php?id=<?php echo $id_envio; ?>" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Borrar</a>
+                                                </div>-->
 
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update<?php echo $id_envio; ?>">
@@ -123,13 +126,17 @@ include '../app/controllers/envios/listado_de_envios.php';
                                                                     <div class="row">
                                                                         <div class="col-md-6">
                                                                             <div class="form-group">
-                                                                                <label>Nombre del cliente</label>
-                                                                                <input type="text" id="nombre_cliente<?php echo $id_envio; ?>" value="<?php echo $envios_datos['nombre'] . ' ' . $envios_datos['apellido']; ?>" class="form-control" disabled>                                                                            </div>
+                                                                                <label>Nombre del cliente <b>*</b></label>
+                                                                                <input type="text" id="nombre_cliente<?php echo $id_envio; ?>" value="<?php echo $envios_datos['nombre'] . ' ' . $envios_datos['apellido']; ?>" class="form-control" disabled>
+                                                                                <small style="color:red; display:none" id="lbl_nombre<?php echo $id_envio; ?>">* Este campo es requerido</small>
+                                                                            </div>
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <div class="form-group">
-                                                                                <label>Fecha compra</label>
-                                                                                <input type="text" id="fecha<?php echo $id_envio; ?>" class="form-control" value="<?php echo $envios_datos['fyh_creacion']; ?>" disabled>                                                                            </div>
+                                                                                <label>Fecha compra <b>*</b></label>
+                                                                                <input type="text" id="fecha<?php echo $id_envio; ?>" class="form-control" value="<?php echo $envios_datos['fyh_creacion']; ?>" disabled>
+                                                                                <small style="color:red; display:none" id="lbl_fecha<?php echo $id_envio; ?>">* Este campo es requerido</small>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
@@ -142,8 +149,10 @@ include '../app/controllers/envios/listado_de_envios.php';
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <div class="form-group">
-                                                                            <label>Total Pagado</label>
-                                                                                <input type="text" id="precio<?php echo $id_envio; ?>" class="form-control" value="<?php echo '$'.$envios_datos['total_pagado']; ?>" disabled>                                                                            </div>
+                                                                            <label>Total Pagado<b>*</b></label>
+                                                                                <input type="text" id="precio<?php echo $id_envio; ?>" class="form-control" value="<?php echo '$'.$envios_datos['total_pagado']; ?>" disabled>
+                                                                                <small style="color:red; display:none" id="lbl_precio<?php echo $id_envio; ?>">* Este campo es requerido</small>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
@@ -170,11 +179,16 @@ include '../app/controllers/envios/listado_de_envios.php';
                                                         $('#btn_update<?php echo $id_envio; ?>').click(function() {
 
                                                             var id_envio = '<?php echo $id_envio; ?>';
+                                                            var nombre_cliente = $('#nombre_cliente<?php echo $id_envio; ?>').val();
+                                                            var fecha = $('#fecha<?php echo $id_envio; ?>').val();
                                                             var direccion = $('#direccion<?php echo $id_envio; ?>').val();
+                                                            var precio = $('#precio<?php echo $id_envio; ?>').val();
                                                             var estado = $('#estado<?php echo $id_envio; ?>').val();
 
-                                                             if (direccion == '') {
-                                                                $('#direccion<?php echo $id_envio; ?>').focus();
+
+
+                                                            if (direccion == '') {
+                                                                $('#Direccion<?php echo $id_envio; ?>').focus();
                                                                 $('#lbl_direccion<?php echo $id_envio; ?>').css('display', 'block');
                                                             } else if (estado == '') {
                                                                 $('#estado<?php echo $id_envio; ?>').focus();
@@ -183,17 +197,20 @@ include '../app/controllers/envios/listado_de_envios.php';
                                                                 var url = "../app/controllers/envios/update.php";
                                                                 $.get(url, {
                                                                     id_envio: id_envio,
+                                                                    nombre_cliente: nombre_cliente,
+                                                                    fecha: fecha,
                                                                     direccion: direccion,
+                                                                    precio: precio,
                                                                     estado: estado,
                                                                 }, function(datos) {
                                                                     $('#respuesta').html(datos);
                                                                 });
-                                                           }
+                                                            }
 
 
                                                         });
                                                     </script>
-                                                    <div id="respuesta_update<?php echo $id_envio; ?>"></div>
+                                                    <div id="respuesta_update<?php echo $id_envios; ?>"></div>
                                                 </div>
 
 
