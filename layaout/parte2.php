@@ -10,7 +10,7 @@
     Anything you want
   </div>
   <!-- Default to the left -->
-  <strong>Copyright &copy; 2023 <a href#">FA INSUMOS</a>.</strong> All rights reserved.
+  <strong>Copyright &copy; 2023 <a href#>FA INSUMOS</a>.</strong> All rights reserved.
 </footer>
 
 <!-- ./wrapper -->
