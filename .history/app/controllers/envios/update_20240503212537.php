@@ -20,6 +20,7 @@ $sentencia = $pdo->prepare("UPDATE tb_envios SET
         $_SESSION['icono']="success";
         ?>
         <script>
+            window.location.reload();
             window.location.href = '<?php echo $URL; ?>/envios/';
         </script>
         <?php

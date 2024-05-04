@@ -160,7 +160,6 @@ include '../app/controllers/envios/listado_de_envios.php';
                                                                 <div class="modal-footer justify-content-between">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                                                     <button type="button" class="btn btn-success" id="btn_update<?php echo $id_envio; ?>">Actualizar</button>
-                                                                    <div id="respuesta_update"></div>
                                                                 </div>
                                                             </div>
                                                             <!-- /.modal-content -->
@@ -194,6 +193,7 @@ include '../app/controllers/envios/listado_de_envios.php';
 
                                                         });
                                                     </script>
+                                                    <div id="respuesta_update<?php echo $id_envio; ?>"></div>
                                                 </div>
 
 

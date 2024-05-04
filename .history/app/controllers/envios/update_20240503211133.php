@@ -15,7 +15,9 @@ $sentencia = $pdo->prepare("UPDATE tb_envios SET
     $sentencia->bindParam(':id_envio',$id_envio);
 
     if($sentencia->execute()){
+        //echo "Guardado correctamente";
         session_start();
+        //echo "Se registro la categoria correctamente";
         $_SESSION['mensaje']="Se actualizo al envio correctamente";
         $_SESSION['icono']="success";
         ?>
@@ -24,6 +26,7 @@ $sentencia = $pdo->prepare("UPDATE tb_envios SET
         </script>
         <?php
     }else{
+        //echo "No se guardo correctamente";
         session_start();
         $_SESSION['mensaje']="No se pudo editar el envio";
         $_SESSION['icono']="error";

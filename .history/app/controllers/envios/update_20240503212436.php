@@ -16,10 +16,12 @@ $sentencia = $pdo->prepare("UPDATE tb_envios SET
 
     if($sentencia->execute()){
         session_start();
+                window.location.reload();
         $_SESSION['mensaje']="Se actualizo al envio correctamente";
         $_SESSION['icono']="success";
         ?>
         <script>
+            window.location.reload();
             window.location.href = '<?php echo $URL; ?>/envios/';
         </script>
         <?php
