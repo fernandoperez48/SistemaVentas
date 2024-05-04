@@ -28,430 +28,765 @@ include '../app/controllers/compras/listado_de_compras.php';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-9">
+                    <div class="content">
+
+                        <div class="card card-outline card-primary">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!-- se cuenta la cantidad de compras de la tabla correspondiente
+                                 y se le agrega un numero mas para indicar qué numero de compra sera la próxima -->
+                                        <?php
+                                        $contador_de_compras = 0;
+                                        foreach ($compras_datos as $compras_datos) {
+                                            $contador_de_compras = $contador_de_compras + 1;
+                                        }
+                                        ?>
+                                        <div style="display: flex;">
+                                            <h3 class="card-title"><i class="fa fa-shopping-bag" style="margin-right: 5px; margin-top: 5px;"></i>
+
+                                                <h4>Compra N°</h4>
+                                                <input type="text" value="<?php echo $contador_de_compras + 1 ?>" style="text-align: center;" disabled>
+                                            </h3>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <form action="../app/controllers/almacen/create.php" method="post">
+                                            <div class="form-group">
+                                                <div style="display: flex;">
+                                                    <div>
+                                                        <label for="">
+                                                            <h4>Proveedor:</h4>
+                                                        </label>
+                                                    </div>
+
+                                                    <div style="display: flex;">
+                                                        <select name=" id_proveedor" id="proveedor_select" class="form-control" style="margin-left: 10px;" required>
+
+
+                                                            <?php
+                                                            foreach ($proveedores_datos as $proveedores_datos) { ?>
+                                                                <option value="<?php echo $proveedores_datos['id_proveedor']; ?>"><?php echo $proveedores_datos['nombre_proveedor']; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                    <a href="<?php echo $URL; ?>/proveedores" class="btn btn-primary">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.card-tools -->
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <b>detalle_compras</b>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar_producto">
+                                    <i class="fas fa-search"></i>
+                                    Buscar Producto
+                                </button>
+
+
+                                <!-- MODAL PARA BUSCAR PRODUCTO       MODAL PARA BUSCAR PRODUCTO       MODAL PARA BUSCAR PRODUCTO -->
+                                <d iv class="modal fade" id="modal-buscar_producto">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background-color:#446DF6; color:white">
+                                                <h4 class="modal-title">Busqueda del producto</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="table table-responsive">
+                                                    <table id="example1" class="table table-bordered table-striped table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>
+                                                                    <center>Nro</center>
+                                                                </th>
+                                                                <th>
+                                                                    <center>Seleccionar</center>
+                                                                </th>
+                                                                <th>
+                                                                    <center>Codigo</center>
+                                                                </th>
+                                                                <th>
+                                                                    <center>Categoria</center>
+                                                                </th>
+                                                                <th>
+                                                                    <center>Imagen</center>
+                                                                </th>
+                                                                <th>
+                                                                    <center>Nombre</center>
+                                                                </th>
+                                                                <th>
+                                                                    <center>Descripcion</center>
+                                                                </th>
+                                                                <th>
+                                                                    <center>Stock</center>
+                                                                </th>
+                                                                <th>
+                                                                    <center>Ultimo Precio Compra</center>
+                                                                </th>
+                                                                <th>
+                                                                    <center>Fecha Ingreso</center>
+                                                                </th>
+                                                                <th>
+                                                                    <center>Usuario</center>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php
+                                                            $contador = 0;
+                                                            foreach ($productos_datos as $productos_datos) {
+                                                                $id_producto = $productos_datos['id_producto']; ?>
+                                                                <tr>
+                                                                    <td>
+                                                                        <?php echo $contador += 1; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button class="btn btn-info" id="btn_seleccionar<?php echo $productos_datos['id_producto']; ?>">Seleccionar</button>
+                                                                        <script>
+                                                                            $("#btn_seleccionar<?php echo $productos_datos['id_producto']; ?>").click(function() {
+                                                                                $("#id_producto").val("<?php echo $productos_datos['id_producto']; ?>");
+                                                                                $("#producto").val("<?php echo $productos_datos['nombre']; ?>");
+                                                                                $("#detalle").val("<?php echo $productos_datos['descripcion']; ?>");
+                                                                                $("#ultimo_precio").val("<?php echo $productos_datos['precio_compra']; ?>");
+                                                                                $('#cantidad').focus();
+
+
+                                                                                //$("#modal-buscar_producto").modal("hide");
+                                                                            });
+                                                                        </script>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo $productos_datos['codigo']; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo $productos_datos['nombre_categoria']; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <img src="<?php echo $URL . "/almacen/img_productos" . $productos_datos['imagen']; ?>" width="50px">
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo $productos_datos['nombre']; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo $productos_datos['descripcion']; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo $productos_datos['stock']; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        ultimo precio
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo $productos_datos['fecha_ultimo_ingreso']; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo $productos_datos['email']; ?>
+                                                                    </td>
+
+                                                                </tr>
+                                                            <?php
+                                                            }
+                                                            ?>
+
+                                                        </tbody>
+
+                                                    </table>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <input type="text" id="id_producto" hidden>
+                                                                <label for="">Producto</label>
+                                                                <input type="text" id="producto" class="form-control" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="">Detalle</label>
+                                                                <input type="text" id="detalle" class="form-control" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="form-group">
+                                                                <label for="">Cantidad</label>
+                                                                <input type="text" id="cantidad" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="form-group">
+                                                                <label for="">Precio Unitario</label>
+                                                                <input type="text" id="precio_unitario" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button style="float: right;" id="btn_registrar_detalle_compra" class="btn btn-primary">Registrar</button>
+                                                    <div id="respuesta_detalle_compra"></div>
+                                                    <script>
+                                                        $("#btn_registrar_detalle_compra").click(function() {
+                                                            var nro_compra = "<?php echo $contador_de_compras + 1; ?>";
+                                                            var id_producto = $("#id_producto").val();
+                                                            var cantidad = $("#cantidad").val();
+                                                            var precio_unitario = $("#precio_unitario").val();
+                                                            if (id_producto == "") {
+                                                                alert("Seleccione un producto");
+                                                            } else if (cantidad == "") {
+                                                                alert("Ingrese la cantidad");
+                                                            } else if (precio_unitario == "") {
+                                                                alert("Ingrese el precio unitario");
+                                                            } else {
+                                                                //alert("listo para el controlador");
+                                                                var url = "../app/controllers/compras/registrar_detalle_compra.php";
+                                                                $.get(url, {
+                                                                    nro_compra: nro_compra,
+                                                                    id_producto: id_producto,
+                                                                    cantidad: cantidad,
+                                                                    precio_unitario: precio_unitario
+                                                                }, function(datos) {
+                                                                    $('#respuesta_detalle_compra').html(datos);
+                                                                });
+                                                            }
+                                                        });
+                                                    </script>
+                                                    <br><br>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <br><br>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-sm table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Codigo</th>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Producto</th>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Detalle</th>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Proveedor</th>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Categoria</th>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Cantidad</th>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Unitario</th>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Subtotal</th>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Accion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $contador_detalle_compras = 0;
+                                        $cantidad_total = 0;
+                                        $precio_unitario_total = 0;
+                                        $precio_total = 0;
+
+                                        $sql_detalle_compras = "SELECT *, 
+                                        pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.codigo as codigo, 
+                                        pr.nombre_proveedor as nombre_proveedor,
+                                        cat.nombre_categoria as nombre_categoria
+                                        from tb_detalle_compras as detcom
+                                        inner join tb_almacen as pro on detcom.id_producto = pro.id_producto 
+                                        inner join tb_proveedores as pr on pro.id_proveedor = pr.id_proveedor
+                                        inner join tb_acategorias as cat on cat.id_categoria = pro.id_categoria
+                                        where nro_compra = $contador_de_compras + 1 
+                                        order by detcom.id_detalle_compras";
+                                        $query_detalle_compras = $pdo->prepare($sql_detalle_compras);
+                                        $query_detalle_compras->execute();
+                                        $detalle_compras_datos = $query_detalle_compras->fetchAll(PDO::FETCH_ASSOC);
+                                        foreach ($detalle_compras_datos as $detalle_compras_datos) {
+                                            $id_detalle_compras = $detalle_compras_datos['id_detalle_compras'];
+                                            $contador_detalle_compras = $contador_detalle_compras + 1;
+                                            $cantidad_total = $cantidad_total + $detalle_compras_datos['cantidad_producto'];
+                                            $precio_unitario_total = $precio_unitario_total + $detalle_compras_datos['precio_unitario'];
+                                            $precio_total = $precio_total + ($detalle_compras_datos['cantidad_producto'] * $detalle_compras_datos['precio_unitario']);
+                                        ?>
+                                            <tr>
+                                                <td>
+                                                    <center><?php echo $contador_detalle_compras; ?></center>
+                                                    <input type="text" value="<?php echo $detalle_compras_datos['id_producto']; ?>" id="id_producto<?php echo $contador_detalle_compras; ?>" hidden>
+                                                </td>
+                                                <td>
+                                                    <center><?php echo $detalle_compras_datos['nombre_producto']; ?></center>
+                                                </td>
+                                                <td>
+                                                    <center><?php echo $detalle_compras_datos['descripcion']; ?></center>
+                                                </td>
+                                                <td>
+                                                    <center><?php echo $detalle_compras_datos['nombre_proveedor']; ?></center>
+                                                </td>
+                                                <td>
+                                                    <center><?php echo $detalle_compras_datos['nombre_categoria']; ?></center>
+                                                </td>
+                                                <td>
+                                                    <center><span id="cantidad_detalle_compras<?php echo $contador_detalle_compras; ?>"><?php echo $detalle_compras_datos['cantidad_producto']; ?></span></center>
+                                                    <input type="text" id="stock_de_inventario<?php echo $contador_detalle_compras; ?>" value="<?php echo $detalle_compras_datos['stock']; ?>" hidden>
+                                                </td>
+                                                <td>
+                                                    <center><?php echo $detalle_compras_datos['precio_unitario']; ?></center>
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                        <?php
+                                                        $cantidad_producto = floatval($detalle_compras_datos['cantidad_producto']);
+                                                        $precio_unitario = floatval($detalle_compras_datos['precio_unitario']);
+                                                        echo $subtotal = $cantidad_producto * $precio_unitario;
+                                                        ?>
+                                                    </center>
+                                                </td>
+                                                <td>
+                                                    <form action="../app/controllers/compras/borrar_detalle_compras.php" method="post">
+                                                        <center>
+                                                            <input type="text" name="id_detalle_compras" value="<?php echo $id_detalle_compras; ?>" hidden>
+                                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Borrar</button>
+                                                        </center>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+
+                                        <tr>
+                                            <th colspan="5" style="background-color: #e7e7e7; text-align:right;">Total</th>
+                                            <th>
+                                                <center>
+                                                    <?php
+                                                    echo $cantidad_total;
+                                                    ?>
+                                                </center>
+                                            </th>
+                                            <th>
+                                                <center>
+                                                    <?php
+                                                    echo $precio_unitario_total;
+                                                    ?>
+                                                </center>
+                                            </th>
+                                            <th style="background-color: yellow;">
+                                                <center>
+                                                    <?php
+                                                    echo $precio_total;
+                                                    ?>
+                                                </center>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- /.card-body -->
+                    </div>
+
+                    <!-- SECTOR SELECCIONAR CLIENTE  -->
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="card card-primary">
+                        <div class="col-md-9">
+                            <div class="card card-outline card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Llene los datos...</h3>
+                                    <h3 class="card-title"><i class="fa fa-user-check"></i> Datos del Cliente</h3>
 
                                     <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
                                         </button>
                                     </div>
                                     <!-- /.card-tools -->
                                 </div>
                                 <!-- /.card-header -->
-                                <div class="card-body" style="display: block;">
-                                    <div style="display:flex">
-                                        <h5>Datos del Producto</h5>
-                                        <div style="width: 20px;"></div>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar_producto">
-                                            <i class="fas fa-search"></i>
-                                            Buscar Producto
-                                        </button>
+                                <div class="card-body">
+                                    <b>detalle_compras</b>
+                                    <DIV style="text-align: center;">
+                                        <H5> BUSQUEDA DE CLIENTES</H5>
+                                    </DIV>
+                                    <div class="card" style="margin-top: 0px;">
+                                        <div class=" card-header">
+                                            <h3 class="card-title">Buscar por tipo de cliente... </h3>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <ul class="nav nav-pills flex-column">
 
-                                        <!-- Modal buscar producto         Modal buscar producto         Modal buscar producto-->
-                                        <div class="modal fade" id="modal-buscar_producto">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header" style="background-color:#446DF6; color:white">
-                                                        <h4 class="modal-title">Busqueda del producto</h4>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
+                                                <li class="nav-item">
+                                                    <a class="nav-link">
+                                                        <i class="far fa-circle text-danger"></i>
+                                                        Personas
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar_clienteper" style="margin-left: 30px;">
+                                                            <i class="fas fa-search"></i>
                                                         </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="table table-responsive">
-                                                            <table id="example1" class="table table-bordered table-striped table-sm">
-                                                                <thead>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link">
+                                                        <i class="far fa-circle text-warning"></i> Empresas
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar_clienteemp" style="margin-left: 26px;">
+                                                            <i class="fas fa-search"></i>
+                                                        </button>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+
+                                    <!-- MODAL BUSCAR CLIENTE PERSONA     MODAL BUSCAR CLIENTE PERSONA     MODAL BUSCAR CLIENTE PERSONA -->
+
+                                    <div class="modal fade" id="modal-buscar_clienteper">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Busqueda del Cliente persona</h4>
+                                                    <div style="width: 10px;"></div>
+                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-agregar_cliente">
+                                                        <i class="fas fa-users"></i>
+                                                        Agregar nuevo cliente
+                                                    </button>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="table table-responsive">
+                                                        <table id="example2" class="table table-bordered table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        <center>Nro de cliente</center>
+                                                                    </th>
+                                                                    <th>
+                                                                        <center>Seleccionar</center>
+                                                                    </th>
+                                                                    <th>
+                                                                        <center>Nombre</center>
+                                                                    </th>
+                                                                    <th>
+                                                                        <center>DNI</center>
+                                                                    </th>
+                                                                    <th>
+                                                                        <center>Telefono</center>
+                                                                    </th>
+                                                                    <th>
+                                                                        <center>Email</center>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tabla-body">
+                                                                <?php
+                                                                $contador_de_clientesper = 0;
+                                                                foreach ($clientesper_datos as $clientesper_datos) {
+
+                                                                    $contador_de_clientesper = $contador_de_clientesper + 1; ?>
                                                                     <tr>
-                                                                        <th>
-                                                                            <center>Nro</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Seleccionar</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Codigo</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Categoria</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Imagen</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Nombre</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Descripcion</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Stock</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Precio Compra</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Precio Venta</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Fecha Compra</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Usuario</center>
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <?php
-                                                                    $contador = 0;
-                                                                    foreach ($productos_datos as $productos_datos) {
-                                                                        $id_producto = $productos_datos['id_producto']; ?>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <?php echo $contador += 1; ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <button class="btn btn-info" id="btn_seleccionar<?php echo $productos_datos['id_producto']; ?>">Seleccionar</button>
+                                                                        <td>
+                                                                            <center><?php echo $clientesper_datos['id_cliente']; ?></center>
+                                                                        </td>
+                                                                        <td>
+                                                                            <center>
+                                                                                <button class="btn btn-info" id="btn_pasar_cliente<?php echo $clientesper_datos['id_cliente']; ?>">Seleccionar</button>
                                                                                 <script>
-                                                                                    $("#btn_seleccionar<?php echo $productos_datos['id_producto']; ?>").click(function() {
-                                                                                        $("#id_producto").val("<?php echo $productos_datos['id_producto']; ?>");
-                                                                                        $("#codigo").val("<?php echo $productos_datos['codigo']; ?>");
-                                                                                        $("#categoria").val("<?php echo $productos_datos['nombre_categoria']; ?>");
-                                                                                        $("#nombre_producto").val("<?php echo $productos_datos['nombre']; ?>");
-                                                                                        $("#descripcion_producto").val("<?php echo $productos_datos['descripcion']; ?>");
-                                                                                        $("#stock").val("<?php echo $productos_datos['stock']; ?>");
-
-                                                                                        var stock = "<?php echo $productos_datos['stock']; ?>";
-                                                                                        $("#stock_actual").val(stock);
-
-
-                                                                                        $("#stock_minimo").val("<?php echo $productos_datos['stock_minimo']; ?>");
-                                                                                        $("#stock_maximo").val("<?php echo $productos_datos['stock_maximo']; ?>");
-                                                                                        $("#precio_compra").val("<?php echo $productos_datos['precio_compra']; ?>");
-                                                                                        $("#precio_venta").val("<?php echo $productos_datos['precio_venta']; ?>");
-                                                                                        $("#fecha_ingreso").val("<?php echo $productos_datos['fecha_ultimo_ingreso']; ?>");
-                                                                                        $("#usuario_producto").val("<?php echo $productos_datos['nombres_usuario']; ?>");
-                                                                                        $("#img_producto").attr("src", "<?php echo $URL . "/almacen/img_productos" . $productos_datos['imagen']; ?>");
-                                                                                        $("#modal-buscar_producto").modal("hide");
+                                                                                    $("#btn_pasar_cliente<?php echo $clientesper_datos['id_cliente']; ?>").click(function() {
+                                                                                        $("#id_cliente").val("<?php echo $clientesper_datos['id_cliente']; ?>");
+                                                                                        $("#nombre_cliente").val("<?php echo $clientesper_datos['nombre']; ?>");
+                                                                                        $("#nit_ci_cliente").val("<?php echo $clientesper_datos['dni']; ?>");
+                                                                                        $("#celular_cliente").val("<?php echo $clientesper_datos['telefono']; ?>");
+                                                                                        $("#email_cliente").val("<?php echo $clientesper_datos['email']; ?>");
+                                                                                        $("#modal-buscar_clienteper").modal("hide");
                                                                                     });
                                                                                 </script>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php echo $productos_datos['codigo']; ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php echo $productos_datos['nombre_categoria']; ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <img src="<?php echo $URL . "/almacen/img_productos" . $productos_datos['imagen']; ?>" width="50px">
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php echo $productos_datos['nombre']; ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php echo $productos_datos['descripcion']; ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php echo $productos_datos['stock']; ?>
-                                                                            </td>
-
-                                                                            <td>
-                                                                                <center><?php echo $productos_datos['precio_compra']; ?></center>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php echo $productos_datos['precio_venta']; ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php echo $productos_datos['fecha_ingreso']; ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php echo $productos_datos['email']; ?>
-                                                                            </td>
-
-                                                                        </tr>
-                                                                    <?php
-                                                                    }
-                                                                    ?>
-
-                                                                </tbody>
-
-                                                            </table>
-                                                        </div>
-                                                    </div>
-
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-                            </div>
-
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-12">
-
-                                    <div class="row" style="font-size:12px">
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <input type="text" id="id_producto" hidden>
-                                                <label for="">Codigo:</label>
-                                                <input type="text" class="form-control" id="codigo" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="">Categoria:</label>
-                                                <div style="display: flex;">
-
-                                                    <input type="text" class="form-control" id="categoria" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="">Nombre del producto:</label>
-                                                <input type="text" name="nombre" id="nombre_producto" class="form-control" disabled>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="">Imagen del producto:</label>
-                                                <center>
-                                                    <img src="" id="img_producto" width="50%">
-                                                </center>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="">Usuario</label>
-                                                <input type="text" class="form-control" id="usuario_producto" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Descripcion del producto:</label>
-                                                <textarea name="descripcion" id="descripcion_producto" cols="30" rows="3" class="form-control" disabled></textarea>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="">Stock:</label>
-                                                <input type="number" name="stock" class="form-control" id="stock" disabled style="background-color: #d1c53b;">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="">Stock minimo:</label>
-                                                <input type="number" name="stock_minimo" class="form-control" disabled id="stock_minimo">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="">Stock maximo:</label>
-                                                <input type="number" name="stock_maximo" class="form-control" disabled id="stock_maximo">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="">Precio compra:</label>
-                                                <input type="number" name="precio_compra" class="form-control" disabled id="precio_compra">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="">Precio venta:</label>
-                                                <input type="number" name="precio_venta" class="form-control" disabled id="precio_venta">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="">Fecha de ingreso:</label>
-                                                <input type="date" name="fecha_ingreso" class="form-control" disabled id="fecha_ingreso">
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-
-                                    <hr>
-                                    <div style="display:flex">
-                                        <h5>Datos del Proveedor</h5>
-                                        <div style="width: 20px;"></div>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar_proveedor">
-                                            <i class="fas fa-search"></i>
-                                            Buscar Proveedor
-                                        </button>
-
-                                        <div class="modal fade" id="modal-buscar_proveedor" aria-hidden="true" style="display: none;">
-                                            <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header" style="background-color:#446DF6; color:white">
-                                                        <h4 class="modal-title">Busqueda de proveedor</h4>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">×</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="table table-responsive">
-                                                            <table id="example2" class="table table-bordered table-striped table-md">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>
-                                                                            <center>Nro</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Seleccionar</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Nombre del proveedor</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Celular</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Telefono</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Empresa</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Email</center>
-                                                                        </th>
-                                                                        <th>
-                                                                            <center>Direccion</center>
-                                                                        </th>
-
+                                                                            </center>
+                                                                        </td>
+                                                                        <td>
+                                                                            <center><?php echo $clientesper_datos['nombre']; ?></center>
+                                                                        </td>
+                                                                        <td>
+                                                                            <center><?php echo $clientesper_datos['dni']; ?></center>
+                                                                        </td>
+                                                                        <td>
+                                                                            <center><?php echo $clientesper_datos['telefono']; ?></center>
+                                                                        </td>
+                                                                        <td>
+                                                                            <center><?php echo $clientesper_datos['email']; ?></center>
+                                                                        </td>
                                                                     </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <?php
-                                                                    $contador = 0;
-                                                                    foreach ($proveedores_datos as $proveedores_datos) {
-                                                                        $id_proveedor = $proveedores_datos['id_proveedor'];
-                                                                        $nombre_proveedor = $proveedores_datos['nombre_proveedor']; ?>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <center><?php echo $contador = $contador + 1; ?></center>
-                                                                            </td>
-                                                                            <td>
-                                                                                <button class="btn btn-info" id="btn_seleccionar_proveedor<?php echo $proveedores_datos['id_proveedor']; ?>">Seleccionar</button>
+                                                                <?php
+                                                                }
+                                                                ?>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
+
+                                                </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+
+                                    </div>
+
+                                    <!-- MODAL BUSCAR CLIENTE EMPRESA     MODAL BUSCAR CLIENTE EMPRESA     MODAL BUSCAR CLIENTE EMPRESA -->
+                                    <div class="modal fade" id="modal-buscar_clienteemp">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Busqueda del Cliente empresa</h4>
+                                                    <div style="width: 10px;"></div>
+                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-agregar_cliente">
+                                                        <i class="fas fa-users"></i>
+                                                        Agregar nuevo cliente
+                                                    </button>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="table table-responsive">
+
+                                                        <table id="example3" class="table table-bordered table-striped table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        <center>Nro de cliente</center>
+                                                                    </th>
+                                                                    <th>
+                                                                        <center>Seleccionar</center>
+                                                                    </th>
+                                                                    <th>
+                                                                        <center>Nombre</center>
+                                                                    </th>
+                                                                    <th>
+                                                                        <center>CUIT</center>
+                                                                    </th>
+                                                                    <th>
+                                                                        <center>Telefono</center>
+                                                                    </th>
+                                                                    <th>
+                                                                        <center>Email</center>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tabla-body">
+                                                                <?php
+                                                                $contador_de_clientesemp = 0;
+                                                                foreach ($clientesemp_datos as $clientesemp_datos) {
+
+                                                                    $contador_de_clientesemp = $contador_de_clientesemp + 1; ?>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <center><?php echo $clientesemp_datos['id_cliente']; ?></center>
+                                                                        </td>
+                                                                        <td>
+                                                                            <center>
+                                                                                <button class="btn btn-info" id="btn_pasar_cliente<?php echo $clientesemp_datos['id_cliente']; ?>">Seleccionar</button>
                                                                                 <script>
-                                                                                    $("#btn_seleccionar_proveedor<?php echo $proveedores_datos['id_proveedor']; ?>").click(function() {
-                                                                                        $("#nombre_proveedor").val("<?php echo $proveedores_datos['nombre_proveedor']; ?>");
-                                                                                        $("#id_proveedor").val("<?php echo $proveedores_datos['id_proveedor']; ?>");
-                                                                                        $("#celular").val("<?php echo $proveedores_datos['celular']; ?>");
-                                                                                        $("#telefono").val("<?php echo $proveedores_datos['telefono']; ?>");
-                                                                                        $("#empresa").val("<?php echo $proveedores_datos['empresa']; ?>");
-                                                                                        $("#email").val("<?php echo $proveedores_datos['email']; ?>");
-                                                                                        $("#direccion").val("<?php echo $proveedores_datos['direccion']; ?>");
-                                                                                        $("#modal-buscar_proveedor").modal("hide");
+                                                                                    $("#btn_pasar_cliente<?php echo $clientesemp_datos['id_cliente']; ?>").click(function() {
+                                                                                        $("#id_cliente").val("<?php echo $clientesemp_datos['id_cliente']; ?>");
+                                                                                        $("#nombre_cliente").val("<?php echo $clientesemp_datos['nombre']; ?>");
+                                                                                        $("#nit_ci_cliente").val("<?php echo $clientesemp_datos['cuit']; ?>");
+                                                                                        $("#celular_cliente").val("<?php echo $clientesemp_datos['telefono']; ?>");
+                                                                                        $("#email_cliente").val("<?php echo $clientesemp_datos['email']; ?>");
+                                                                                        $("#modal-buscar_clienteemp").modal("hide");
                                                                                     });
                                                                                 </script>
-                                                                            </td>
-                                                                            <td><?php echo $nombre_proveedor; ?></td>
-                                                                            <td>
-                                                                                <a href="http://wa.me/+54<?php echo $proveedores_datos['celular']; ?>" target="_blank" class="btn btn-success">
-                                                                                    <i class="fa fa-phone"></i>
-                                                                                    <?php echo $proveedores_datos['celular']; ?>
-                                                                                </a>
-                                                                            </td>
-                                                                            <td><?php echo $proveedores_datos['telefono']; ?></td>
-                                                                            <td><?php echo $proveedores_datos['empresa']; ?></td>
-                                                                            <td><?php echo $proveedores_datos['email']; ?></td>
-                                                                            <td><?php echo $proveedores_datos['direccion']; ?></td>
+                                                                            </center>
+                                                                        </td>
+                                                                        <td>
+                                                                            <center><?php echo $clientesemp_datos['nombre']; ?></center>
+                                                                        </td>
+                                                                        <td>
+                                                                            <center><?php echo $clientesemp_datos['cuit']; ?></center>
+                                                                        </td>
+                                                                        <td>
+                                                                            <center><?php echo $clientesemp_datos['telefono']; ?></center>
+                                                                        </td>
+                                                                        <td>
+                                                                            <center><?php echo $clientesemp_datos['email']; ?></center>
+                                                                        </td>
+                                                                    </tr>
+                                                                <?php
+                                                                }
+                                                                ?>
 
-
-                                                                        </tr>
-                                                                    <?php
-                                                                    }
-                                                                    ?>
-
-                                                                </tbody>
-
-
-                                                            </table>
-                                                        </div>
-
+                                                            </tbody>
+                                                        </table>
                                                     </div>
-
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
 
                                                 </div>
                                             </div>
+                                            <!-- /.modal-content -->
                                         </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-
-                                    <hr>
-                                    <div class="row" style="font-size: 12px;">
-                                        <div class="row">
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Nombre del proveedor </label>
-                                                    <input type="text" id="id_proveedor" class="form-control" disabled>
-                                                    <input type="text" id="id_proveedor" hidden>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Celular</label>
-                                                    <input type="number" id="celular" class="form-control" disabled>
-
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Telefono</label>
-                                                    <input type="number" id="telefono" class="form-control" disabled>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Empresa<b>*</b></label>
-                                                    <input type="email" id="empresa" class="form-control" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Email </label>
-                                                    <input type="text" id="email" class="form-control" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Direccion</label>
-                                                    <input type="text" id="direccion" class="form-control" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!-- /.modal-dialog -->
 
                                     </div>
 
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <input type="text" id="id_cliente" hidden>
+                                                <label for="">Nombre del Cliente</label>
+                                                <input type="text" class="form-control" id="nombre_cliente">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="">DNI - CUIT del Cliente</label>
+                                            <input type="text" class="form-control" id="nit_ci_cliente">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="">Telefono del Cliente</label>
+                                            <input type="text" class="form-control" id="celular_cliente">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="">Email del Cliente</label>
+                                            <input type="text" class="form-control" id="email_cliente">
+                                        </div>
+                                    </div>
                                 </div>
-
-                            </div>
+                            </div> <!-- /.card-body -->
                         </div>
-                    </div>
+                        <div class="col-md-3">
+                            <div class="card card-outline card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title"><i class="fa fa-shopping-basket"></i> Registrar venta</h3>
 
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="">Monto a cancelar</label>
+                                        <input type="text" class="form-control" id="total_a_cancelar" style="text-align:center; background-color:yellow" value="<?php echo $precio_total; ?>" disabled>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Total pagado</label>
+                                                <input type="text" class="form-control" id="total_pagado">
+                                                <script>
+                                                    $("#total_pagado").keyup(function() {
+                                                        var total_a_cancelar = $("#total_a_cancelar").val();
+                                                        var total_pagado = $("#total_pagado").val();
+                                                        var cambio = parseFloat(total_pagado) - parseFloat(total_a_cancelar);
+                                                        $("#cambio").val(cambio);
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Cambio</label>
+                                                <input type="text" class="form-control" id="cambio" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group">
+                                        <button id="btn_guardar_compra" class="btn btn-primary btn-block">
+                                            Guardar compra
+                                        </button>
+                                        <div id="respuesta_registro_compra"></div>
+                                        <script>
+                                            $("#btn_guardar_compra").click(function() {
+                                                var nro_compra = "<?php echo $contador_de_compras + 1; ?>";
+                                                var id_cliente = $("#id_cliente").val();
+                                                var total_a_cancelar = $("#total_a_cancelar").val();
+                                                if (id_cliente === "") {
+                                                    alert("Seleccione un cliente");
+                                                } else if (parseInt(<?php echo $precio_total; ?>) === 0) {
+                                                    alert("Seleccione productos");
+                                                } else {
+                                                    actualizar_stock();
+                                                    guardar_venta();
+                                                }
+
+                                                function actualizar_stock() {
+                                                    var i = 1;
+                                                    var n = '<?php echo $contador_detalle_compras; ?>';
+
+                                                    for (i = 1; i <= n; i++) {
+                                                        var a = 'stock_de_inventario' + i;
+                                                        var stock_de_inventario = $('#' + a).val();
+
+                                                        var b = 'cantidad_detalle_compras' + i;
+                                                        var cantidad_detalle_compras = $('#' + b).text();
+
+                                                        var c = 'id_producto' + i;
+                                                        var id_producto = $('#' + c).val();
+
+
+                                                        var stock_calculado = parseFloat(stock_de_inventario) - parseFloat(cantidad_detalle_compras);
+
+                                                        //alert(stock_de_inventario+" "+cantidad_detalle_compras+" "+stock_calculado+" "+id_producto);
+
+                                                        var url2 = "../app/controllers/compras/actualizar_stock.php";
+                                                        $.get(url2, {
+                                                            id_producto: id_producto,
+                                                            stock_calculado: stock_calculado,
+                                                        }, function(datos) {
+                                                            guardar_venta();
+                                                        });
+                                                    }
+                                                }
+
+                                                function guardar_venta() {
+                                                    var url = "../app/controllers/compras/registro_de_compras.php";
+                                                    $.get(url, {
+                                                        nro_venta: nro_venta,
+                                                        id_cliente: id_cliente,
+                                                        total_a_cancelar: total_a_cancelar
+                                                    }, function(datos) {
+                                                        $('#respuesta_registro_venta').html(datos);
+                                                    });
+                                                }
+
+
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+                            </div> <!-- /.card-body -->
+                        </div>
+
+
+
+
+
+                    </div>
 
                 </div>
                 <div class="col-md-3">
-
-
 
                     <div class="row">
                         <div class="col-md-12">

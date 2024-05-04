@@ -71,10 +71,6 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                 <center>Fecha Compra</center>
                                             </th>
                                             <th>
-                                                <center>Usuario</center>
-                                            </th>
-
-                                            <th>
                                                 <center>Acciones</center>
                                             </th>
                                         </tr>
@@ -134,9 +130,6 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                 </td>
                                                 <td>
                                                     <?php echo $productos_datos['fecha_ultimo_ingreso']; ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $productos_datos['nombres_usuario']; ?>
                                                 </td>
                                                 <td>
                                                     <center>

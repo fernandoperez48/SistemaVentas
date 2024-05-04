@@ -191,6 +191,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                         </div>
 
                                     </div>
+                                </form>
                             </div>
                         </div>
 
