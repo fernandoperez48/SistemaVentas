@@ -115,8 +115,10 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                     $precio_unitario_total = 0;
                                                                                     $precio_total = 0;
                                                                                     $nro_venta = $ventas_datos['nro_venta'];
-                                                                                    $sql_carrito = "SELECT *,pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, pro.stock as stock, pro.id_producto as id_producto from tb_carrito as carr inner join tb_almacen as pro
-                                        on carr.id_producto = pro.id_producto where nro_venta = '$nro_venta' order by carr.id_carrito";
+                                                                                    $sql_carrito = "SELECT *,pro.nombre as nombre_producto, pro.descripcion as descripcion, 
+                                                                                    pro.precio_venta as precio_venta, 
+                                                                                    pro.stock as stock, pro.id_producto as id_producto from tb_carrito as carr inner join tb_almacen as pro
+                                                                                    on carr.id_producto = pro.id_producto where nro_venta = '$nro_venta' order by carr.id_carrito";
                                                                                     $query_carrito = $pdo->prepare($sql_carrito);
                                                                                     $query_carrito->execute();
                                                                                     $carrito_datos = $query_carrito->fetchAll(PDO::FETCH_ASSOC);
