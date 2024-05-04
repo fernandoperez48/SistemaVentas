@@ -18,19 +18,13 @@ $sentencia = $pdo->prepare("UPDATE tb_envios SET
         session_start();
         $_SESSION['mensaje']="Se actualizo al envio correctamente";
         $_SESSION['icono']="success";
-        ?>
-        <script>
-            window.location.href = '<?php echo $URL; ?>/envios/';
-        </script>
-        <?php
+        header("Location: {$URL}/envios/"); // Redirecciona a la página de envíos
+        exit(); // Finaliza la ejecución del script después de la redirección
     }else{
         session_start();
         $_SESSION['mensaje']="No se pudo editar el envio";
         $_SESSION['icono']="error";
-       ?>
-        <script>
-            window.location.href = '<?php echo $URL; ?>/envios/';
-        </script>
-        <?php
+        header("Location: {$URL}/envios/"); // Redirecciona a la página de envíos
+        exit(); // Finaliza la ejecución del script después de la redirección
     }
 ?>
