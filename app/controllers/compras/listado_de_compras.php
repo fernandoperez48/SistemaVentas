@@ -9,7 +9,7 @@ cat.nombre_categoria as nombre_categoria,
 
 us.nombres as nombre_usuarios_producto,
 pr.nombre_proveedor as nombre_proveedor, pr.celular as celular_proveedor, pr.telefono as telefono_proveedor, 
-pr.direccion as direccion_proveedor, pr.email as email_proveedor, pr.empresa as empresa_proveedor,
+pr.email as email_proveedor, pr.empresa as empresa_proveedor,
 us.nombres as nombres_usuario
 from tb_compras as co 
 inner join tb_almacen as pro on co.id_producto = pro.id_producto 

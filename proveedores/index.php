@@ -1,13 +1,11 @@
-<?php
-include '../app/config.php';
+<?php include '../app/config.php';
 include '../layaout/sesion.php';
 if ($rol_sesion == "Vendedor") {
     header('Location: ..//index.php');
 }
 include '../layaout/parte1.php';
 include '../app/controllers/proveedores/listado_de_proveedores.php';
-
-?>
+include '../app/controllers/paises/listado_de_paises.php'; ?>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -97,7 +95,43 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                             <td><?php echo $proveedores_datos['telefono']; ?></td>
                                             <td><?php echo $proveedores_datos['empresa']; ?></td>
                                             <td><?php echo $proveedores_datos['email']; ?></td>
-                                            <td><?php echo $proveedores_datos['direccion']; ?></td>
+                                            <td><?php
+                                                if (!empty($proveedores_datos['id_domicilio'])) {
+                                                    $sql_domicilio = "SELECT d.calle, d.numero, d.piso, d.depto, d.ciudad, d.provincia, d.pais
+                                                    FROM tb_domicilios as d 
+                                                    WHERE d.id_domicilio = {$proveedores_datos['id_domicilio']}";
+                                                    $query_domicilio = $pdo->prepare($sql_domicilio);
+                                                    $query_domicilio->execute();
+                                                    $domicilio_datos = $query_domicilio->fetch(PDO::FETCH_ASSOC);
+
+                                                    // Imprimir la calle y el número
+                                                    echo $domicilio_datos['calle'] . ' ' . $domicilio_datos['numero'] . ' ';
+
+                                                    // Verificar y agregar "Piso" si el valor de piso no está vacío
+                                                    if (!empty($domicilio_datos['piso'])) {
+                                                        echo 'Piso ' . $domicilio_datos['piso'] . ' ';
+                                                    }
+
+                                                    // Verificar y agregar "Depto" si el valor de depto no está vacío
+                                                    if (!empty($domicilio_datos['depto'])) {
+                                                        echo 'Depto ' . $domicilio_datos['depto'];
+                                                    }
+                                                    // Verificar y agregar "ciudad" si el valor de depto no está vacío
+                                                    if (!empty($domicilio_datos['ciudad'])) {
+                                                        echo ', Ciudad de ' . $domicilio_datos['ciudad'];
+                                                    }
+                                                    // Verificar y agregar "provincia" si el valor de depto no está vacío
+                                                    if (!empty($domicilio_datos['provincia'])) {
+                                                        echo ', Provincia ' . $domicilio_datos['provincia'];
+                                                    }
+                                                    // Verificar y agregar "pais" si el valor de depto no está vacío
+                                                    if (!empty($domicilio_datos['pais'])) {
+                                                        echo ', ' . $domicilio_datos['pais'];
+                                                    }
+                                                } else {
+                                                    echo "No hay domicilio";
+                                                }
+                                                ?></td>
 
                                             <td>
 
@@ -353,57 +387,105 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                     </button>
                 </div>
                 <div class="modal-body">
-
                     <div class="row">
-                        <div class="col-md-6">
+
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label>Nombre del proveedor <b>*</b></label>
-                                <input type="text" id="nombre_proveedor" class="form-control">
+                                <label>Nombre Proveedor<b>*</b></label>
+                                <input type="text" id="nombre_proveedor" class="form-control" placeholder="Nombre del Proveedor">
                                 <small style="color:red; display:none" id="lbl_nombre">* Este campo es requerido</small>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label>Celular <b>*</b></label>
+                                <label>Telefono</label>
+                                <input type="number" id="telefono" class="form-control" placeholder="Telefono">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Empresa</label>
+                                <input type="text" id="empresa" class="form-control" placeholder="Empresa">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="email" class="form-control" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>CUIT</label>
+                                <input type="text" id="cuit" class="form-control" placeholder="XX-XXXXXXXX-X">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Condicion IVA</label>
+                            <select name="" id="condicion_iva" class="form-control" required>
+                                <option value="" selected>Seleccione condición</option>
+                                <option value="1">Consumidor Final</option>
+                                <option value="2">Exento</option>
+                                <option value="3">Exterior</option>
+                                <option value="4">IVA NO Alcanzado</option>
+                                <option value="5">Monotributista</option>
+                                <option value="6">Responsable Inscripto</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="">Domicilio</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="" id="calle" placeholder="Calle">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="number" class="form-control" name="" id="numero" placeholder="Numero">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" name="" id="piso" placeholder="Piso">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" name="" id="depto" placeholder="Depto">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" class="form-control" name="" id="localidad" placeholder="Localidad">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control" name="" id="provincia" placeholder="Provincia">
+                                </div>
+                                <br>
+                                <div class="col">
+                                    <input type="text" class="form-control" name="" id="pais" placeholder="Pais">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Responsable Comercial<b>*</b></label>
+                                <input type="text" id="responsable_comercial" class="form-control">
+                                <small style="color:red; display:none" id="lbl_responsable_comercial">* Este campo es requerido</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Telefono/Celular de R.C.<b>*</b></label>
                                 <input type="number" id="celular" class="form-control">
                                 <small style="color:red; display:none" id="lbl_celular">* Este campo es requerido</small>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Telefono</label>
-                                <input type="number" id="telefono" class="form-control">
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Empresa<b>*</b></label>
-                                <input type="email" id="empresa" class="form-control">
-                                <small style="color:red; display:none" id="lbl_empresa">* Este campo es requerido</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Email </label>
-                                <input type="text" id="email" class="form-control">
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Direccion<b>*</b></label>
-                                <input type="text" id="direccion" class="form-control">
-                                <small style="color:red; display:none" id="lbl_direccion">* Este campo es requerido</small>
-                            </div>
-                        </div>
-                    </div>
-
-
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -411,127 +493,143 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 </div>
                 <div id="respuesta"></div>
             </div>
-            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.modal-content -->
     </div>
+    <!-- /.modal-dialog -->
+</div>
 
 
 
-    <!-- SCRIPTSSS DE LA TABLA-->
-    <script>
-        $('#btn_create').click(function() {
-            var nombre_proveedor = $('#nombre_proveedor').val();
-            var celular = $('#celular').val();
-            var telefono = $('#telefono').val();
-            var empresa = $('#empresa').val();
-            var email = $('#email').val();
-            var direccion = $('#direccion').val();
+<!-- SCRIPTSSS DE LA TABLA-->
+<script>
+    $('#btn_create').click(function() {
+        var nombre_proveedor = $('#nombre_proveedor').val();
+        var telefono = $('#telefono').val();
+        var empresa = $('#empresa').val();
+        var email = $('#email').val();
+        var cuit = $('#cuit').val();
+        var condicion_iva = $('#condicion_iva').val();
+        var calle = $('#calle').val();
+        var numero = $('#numero').val();
+        var piso = $('#piso').val();
+        var depto = $('#depto').val();
+        var localidad = $('#localidad').val();
+        var provincia = $('#provincia').val();
+        var pais = $('#pais').val();
+        var responsable_comercial = $('#responsable_comercial').val();
+        var celular = $('#celular').val();
 
-            if (nombre_proveedor == '') {
-                $('#nombre_proveedor').focus();
-                $('#lbl_nombre').css('display', 'block');
-            } else if (celular == '') {
-                $('#celular').focus();
-                $('#lbl_celular').css('display', 'block');
-            } else if (empresa == '') {
-                $('#empresa').focus();
-                $('#lbl_empresa').css('display', 'block');
-            } else if (direccion == '') {
-                $('#direccion').focus();
-                $('#lbl_direccion').css('display', 'block');
-            } else {
-                var url = "../app/controllers/proveedores/create.php";
-                $.get(url, {
-                    nombre_proveedor: nombre_proveedor,
-                    celular: celular,
-                    telefono: telefono,
-                    empresa: empresa,
-                    email: email,
-                    direccion: direccion
-                }, function(datos) {
-                    $('#respuesta').html(datos);
-                });
-            }
+        if (nombre_proveedor == '') {
+            $('#nombre_proveedor').focus();
+            $('#lbl_nombre').css('display', 'block');
+        } else if (celular == '') {
+            $('#celular').focus();
+            $('#lbl_celular').css('display', 'block');
+        } else if (responsable_comercial == '') {
+            $('#responsable_comercial').focus();
+            $('#lbl_responsable_comercial').css('display', 'block');
+        } else {
+            var url = "../app/controllers/proveedores/create.php";
+            $.get(url, {
+                nombre_proveedor: nombre_proveedor,
+                telefono: telefono,
+                empresa: empresa,
+                email: email,
+                cuit: cuit,
+                condicion_iva: condicion_iva,
+                calle: calle,
+                numero: numero,
+                piso: piso,
+                depto: depto,
+                localidad: localidad,
+                provincia: provincia,
+                pais: pais,
+                responsable_comercial: responsable_comercial,
+                celular: celular
+            }, function(datos) {
+                $('#respuesta').html(datos);
+            });
+        }
 
 
-        });
-    </script>
-    <script>
-        $(function() {
-            $("#example1").DataTable({
-                /* cambio de idiomas de datatable */
-                "pageLength": 5,
-                language: {
-                    "emptyTable": "No hay información",
-                    "decimal": "",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Proveedores",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Proveedores",
-                    "infoFiltered": "(Filtrado de _MAX_ total Proveedores)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Proveedores",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscador:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
+    });
+</script>
+<script>
+    $(function() {
+        $("#example1").DataTable({
+            /* cambio de idiomas de datatable */
+            "pageLength": 5,
+            language: {
+                "emptyTable": "No hay información",
+                "decimal": "",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Proveedores",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Proveedores",
+                "infoFiltered": "(Filtrado de _MAX_ total Proveedores)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Proveedores",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscador:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+            /* fin de idiomas */
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "buttons": /* Ajuste de botones */ [{
+                    extend: 'collection',
+                    text: 'Reportes',
+                    orientation: 'landscape',
+                    buttons: [{
+                        text: 'Copiar',
+                        extend: 'copy'
+                    }, {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: ':not(.actions)'
+                        }
+                    }, {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: ':not(.actions)'
+                        }
+                    }, {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: ':not(.actions)'
+                        }
+                    }, {
+                        text: 'Imprimir',
+                        extend: 'print',
+                        exportOptions: {
+                            columns: ':not(.actions)'
+                        }
+                    }]
                 },
-                /* fin de idiomas */
-                "responsive": true,
-                "lengthChange": true,
-                "autoWidth": false,
-                "buttons": /* Ajuste de botones */ [{
-                        extend: 'collection',
-                        text: 'Reportes',
-                        orientation: 'landscape',
-                        buttons: [{
-                            text: 'Copiar',
-                            extend: 'copy'
-                        }, {
-                            extend: 'pdf',
-                            exportOptions: {
-                                columns: ':not(.actions)'
-                            }
-                        }, {
-                            extend: 'csv',
-                            exportOptions: {
-                                columns: ':not(.actions)'
-                            }
-                        }, {
-                            extend: 'excel',
-                            exportOptions: {
-                                columns: ':not(.actions)'
-                            }
-                        }, {
-                            text: 'Imprimir',
-                            extend: 'print',
-                            exportOptions: {
-                                columns: ':not(.actions)'
-                            }
-                        }]
-                    },
-                    {
-                        extend: 'colvis',
-                        text: 'Visor de columnas'
+                {
+                    extend: 'colvis',
+                    text: 'Visor de columnas'
 
 
-                    }
-                ],
-                // "columnDefs": [{
-                //     "targets": -1,
-                //     "className": "no-export",
-                //     "searchable": false
-                // }]
+                }
+            ],
+            // "columnDefs": [{
+            //     "targets": -1,
+            //     "className": "no-export",
+            //     "searchable": false
+            // }]
 
-                /*Fin de ajuste de botones*/
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            /*Fin de ajuste de botones*/
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
-        });
-    </script>
-    <!-- FIN SCRIPTSSS DE LA TABLA-->
+    });
+</script>
+<!-- FIN SCRIPTSSS DE LA TABLA-->
