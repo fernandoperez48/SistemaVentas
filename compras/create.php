@@ -148,6 +148,7 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php';
                                                         </thead>
                                                         <tbody>
                                                             <?php
+
                                                             $contador = 0;
                                                             foreach ($productosXproveedor_datos as $productosXproveedor_datos) {
                                                                 $id_producto = $productosXproveedor_datos['id_producto']; ?>
@@ -434,12 +435,12 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php';
 
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="">Precio de la compra</label>
+                                                    <label for="">Costo de la compra</label>
                                                     <input type="text" class="form-control" id="precio_compra_controlador" style="text-align: center;">
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <!-- <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="">Stock actual</label>
                                                     <input type="text" id="stock_actual" class="form-control" style="background-color: #d1c53b; text-align:center" disabled>
@@ -466,7 +467,7 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php';
                                                         $("#stock_total").val(total);
                                                     });
                                                 </script>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
@@ -756,14 +757,15 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php';
         <script>
             $(document).ready(function() {
                 $('#proveedor_select').change(function() {
-                    var id_proveedor = $(this).val(); // Obtiene el valor del proveedor seleccionado
-                    console.log("ID del proveedor seleccionado:", id_proveedor); // Imprime el valor en la consola del navegador
+                    var id_proveedorval = $(this).val(); // Obtiene el valor del proveedor seleccionado
+                    console.log("ID del proveedor seleccionado:", id_proveedorval); // Imprime el valor en la consola del navegador
                     // Realiza una petición Ajax enviando solo el valor del proveedor seleccionado
                     var url = "../app/controllers/almacen/listado_de_productos_por_proveedor.php";
+                    const data = {
+                        id_proveedor: id_proveedorval
+                    };
 
-                    $.get(url, {
-                            id_proveedor: id_proveedor
-                        })
+                    $.get(url, data)
                         .done(function(response) {
                             console.log("Respuesta del servidor:", response); // Imprime la respuesta del servidor en la consola del navegador
                         })
