@@ -150,7 +150,7 @@ include '../app/controllers/envios/listado_de_envios.php';
                                                                         <div class="col-md-6">
                                                                             <div class="form-group">
                                                                             <label for="estado">Estado <b>*</b></label>
-                                                                                    <select class="form-control" name="estado" id="estado<?php echo $id_envio; ?>" value="<?php echo $envios_datos['estado']; ?>">
+                                                                                    <select class="form-control" name="estado" id="estado<?php echo $id_envio; ?>" value="<?php echo $envios_datos['estado']; ?>"disabled>
                                                                                         <option value="Pendiente de envio">Pendiente de envío</option>
                                                                                         <option value="Enviado">Enviado</option>
                                                                                         <option value="Entregado">Entregado</option>

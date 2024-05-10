@@ -1,23 +1,23 @@
 <?php
 include '../../config.php';
 
-$id_proveedor = $_POST['id_proveedor'];
-$nombre_proveedor = $_POST['nombre_proveedor'];
-$celular = $_POST['celular'];
-$telefono = $_POST['telefono'];
-$cuit = $_POST['cuit'];
-//$iva = $_POST['iva'];
-$comercial = $_POST['comercial'];
-$empresa = $_POST['empresa'];
-$email = $_POST['email'];
-$pais = $_POST['pais'];
-$provincia = $_POST['provincia'];
-$localidad = $_POST['localidad'];
-$domicilio = $_POST['domicilio'];
-$numero = $_POST['numero'];
-$piso = $_POST['piso'];
-$depto = $_POST['depto'];
-$id_domicilio = $_POST['id_domicilio'];
+$id_proveedor = $_GET['id_proveedor'];
+$nombre_proveedor = $_GET['nombre_proveedor'];
+$celular = $_GET['celular'];
+$telefono = $_GET['telefono'];
+$cuit = $_GET['cuit'];
+//$iva = $_GET['iva'];
+$comercial = $_GET['comercial'];
+$empresa = $_GET['empresa'];
+$email = $_GET['email'];
+$pais = $_GET['pais'];
+$provincia = $_GET['provincia'];
+$localidad = $_GET['localidad'];
+$domicilio = $_GET['domicilio'];
+$numero = $_GET['numero'];
+$piso = $_GET['piso'];
+$depto = $_GET['depto'];
+$id_domicilio = $_GET['id_domicilio'];
 
 // Actualizar datos del proveedor
 $sentencia_proveedor = $pdo->prepare("UPDATE tb_proveedores SET 
