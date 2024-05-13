@@ -27,7 +27,7 @@ $sentencia_proveedor = $pdo->prepare("UPDATE tb_proveedores SET
     cuit=:cuit,
     responsable_comercial=:comercial,
     empresa=:empresa,
-    email=:email
+    email=:email,
 WHERE id_proveedor=:id_proveedor");
 
 $sentencia_proveedor->bindParam(':nombre_proveedor', $nombre_proveedor);

@@ -16,7 +16,7 @@ $result_cliente = $query_cliente->fetch(PDO::FETCH_ASSOC);
 
 $codcliente = $result_cliente['id_cliente'];
 
-$sentencia = $pdo->prepare("INSERT INTO tb_envios(IdVenta,IdCliente,Direccion,estado,FechaEnvio,descripcion) VALUES (:codigo_venta,:codcliente,:direccion_envio,:estado,:fecha_envio,:descripcion);");
+$sentencia = $pdo->prepare("INSERT INTO tb_envios(IdVenta,IdCliente,Direccion,estado,FechaEnvio,descripcion) VALUES (:codigo_venta,:codcliente,:direccion_envio,:estado,:descripcion,:fecha_envio);");
 
 $sentencia->bindParam('codigo_venta', $codigo_venta);
 $sentencia->bindParam('codcliente', $codcliente);

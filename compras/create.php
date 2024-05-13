@@ -64,7 +64,7 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                                         <option value="">Seleccionar proveedor</option> <!--Opción por defecto -->
                                                         <?php
                                                         foreach ($proveedores_datos as $proveedores_datos) { ?>
-                                                            <option value="<?php echo $proveedores_datos['id_proveedor']; ?>"><?php echo $proveedores_datos['nombre_proveedor']; ?></option> ?>
+                                                            <option value="<?php echo $proveedores_datos['id_proveedor']; ?>"><?php echo $proveedores_datos['nombre_proveedor']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                     <a href="<?php echo $URL; ?>/proveedores" class="btn btn-primary">
