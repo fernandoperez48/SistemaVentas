@@ -1,9 +1,9 @@
 <?php
 
 // Verificar si el parámetro id_proveedor está presente en la solicitud POST
-if (isset($_POST['id_proveedor'])) {
+if (!empty($_POST['id_proveedor'])) {
 
-    // Asignar el valor del parámetro id_proveedor a una variable
+
 
     $id_proveedor = $_POST['id_proveedor'];
     // Agregar una salida para verificar si se recibió el valor correctamente
