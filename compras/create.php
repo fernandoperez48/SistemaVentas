@@ -511,9 +511,6 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                             } else if (precio_compra == "") {
                                                 $('#precio_compra_controlador').focus();
                                                 alert("DEbe llenar todos los campos");
-                                            } else if (cantidad_compra == "") {
-                                                $('#cantidad_compra').focus();
-                                                alert("DEbe llenar todos los campos");
                                             } else {
                                                 var url = "../app/controllers/compras/create.php";
                                                 $.get(url, {
@@ -560,7 +557,7 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                 <label for="">Monto a cancelar</label>
                                 <input type="text" class="form-control" id="total_a_cancelar" style="text-align:center; background-color:yellow" value="<?php echo $precio_total; ?>" disabled>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">Total pagado</label>
@@ -581,7 +578,7 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                         <input type="text" class="form-control" id="cambio" disabled>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <hr>
                             <div class="form-group">
                                 <button id="btn_guardar_compra" class="btn btn-primary btn-block">
@@ -752,23 +749,23 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
         });
     </script>
 
-    <!-- <script>
-            $(document).ready(function() {
-                $('#proveedor_select').change(function() {
-                    var id_proveedor = $(this).val(); // Obtiene el valor del proveedor seleccionado
-                    console.log("ID del proveedor seleccionado:", id_proveedor); // Imprime el valor en la consola del navegador
-                    // Realiza una petición Ajax enviando solo el valor del proveedor seleccionado
-                    var url = "../app/controllers/almacen/listado_de_productos_por_proveedor.php";
+    <script>
+        $(document).ready(function() {
+            $('#proveedor_select').change(function() {
+                var id_proveedor = $(this).val(); // Obtiene el valor del proveedor seleccionado
+                console.log("ID del proveedor seleccionado:", id_proveedor); // Imprime el valor en la consola del navegador
+                // Realiza una petición Ajax enviando solo el valor del proveedor seleccionado
+                var url = "../app/controllers/almacen/listado_de_productos_por_proveedor.php";
 
-                    $.get(url, {
-                            id_proveedor: id_proveedor
-                        })
-                        .done(function(response) {
-                            console.log("Respuesta del servidor:", response); // Imprime la respuesta del servidor en la consola del navegador
-                        })
-                        .fail(function(xhr, status, error) {
-                            console.error("Error en la solicitud AJAX:", error); // Imprime un mensaje de error en la consola del navegador si la solicitud AJAX falla
-                        });
-                });
+                $.get(url, {
+                        id_proveedor: id_proveedor
+                    })
+                    .done(function(response) {
+                        console.log("Respuesta del servidor:", response); // Imprime la respuesta del servidor en la consola del navegador
+                    })
+                    .fail(function(xhr, status, error) {
+                        console.error("Error en la solicitud AJAX:", error); // Imprime un mensaje de error en la consola del navegador si la solicitud AJAX falla
+                    });
             });
-        </script> -->
+        });
+    </script>

@@ -104,7 +104,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
 
                                             <td>
 
-                                            <div class="btn-group">
+                                                <div class="btn-group">
                                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-ver<?php echo $id_proveedor; ?>">
                                                         <i class="fa fa-eye"></i>
                                                         Ver
@@ -401,7 +401,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                                             var id_domicilio = '<?php echo $id_domicilio; ?>';
 
                                                             // Verificar si todos los campos requeridos están llenos
-                                                            if (nombre_proveedor === '' || celular === '' || cuit === '' || iva === '' || empresa === '' || pais === '' || provincia === '' || localidad === '' || domicilio === '' || numero === '' || depto === '') {
+                                                            if (nombre_proveedor === '' || celular === '' || cuit === '' || iva === '' || empresa === '' || pais === '' || provincia === '' || localidad === '' || domicilio === '' || numero === '') {
                                                                 alert('Todos los campos marcados con * son obligatorios.');
                                                             } else {
                                                                 // Realizar la solicitud AJAX para enviar los datos actualizados
@@ -438,7 +438,6 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                                                 });
                                                             }
                                                         });
-
                                                     </script>
                                                     <div id="respuesta_update<?php echo $id_proveedor; ?>"></div>
                                                 </div>
@@ -459,8 +458,8 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    
-                                                                <div class="row">
+
+                                                                    <div class="row">
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Nombre del proveedor <b>*</b></label>
@@ -576,32 +575,32 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
 
 
 
+                                                                    </div>
+                                                                    <div class="modal-footer justify-content-between">
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                                        <button type="button" class="btn btn-danger" id="btn_delete<?php echo $id_proveedor; ?>">Eliminar</button>
+                                                                        <div id="respuesta_delete<?php echo $id_proveedor; ?>"></div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="modal-footer justify-content-between">
-                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                                    <button type="button" class="btn btn-danger" id="btn_delete<?php echo $id_proveedor; ?>">Eliminar</button>
-                                                                    <div id="respuesta_delete<?php echo $id_proveedor; ?>"></div>
-                                                                </div>
+                                                                <!-- /.modal-content -->
                                                             </div>
-                                                            <!-- /.modal-content -->
+                                                            <!-- /.modal-dialog -->
                                                         </div>
-                                                        <!-- /.modal-dialog -->
-                                                    </div>
 
-                                                    <script>
-                                                        $('#btn_delete<?php echo $id_proveedor; ?>').click(function() {
+                                                        <script>
+                                                            $('#btn_delete<?php echo $id_proveedor; ?>').click(function() {
 
-                                                            var id_proveedor = '<?php echo $id_proveedor; ?>';
+                                                                var id_proveedor = '<?php echo $id_proveedor; ?>';
 
-                                                            var url2 = "../app/controllers/proveedores/delete.php";
-                                                            $.get(url2, {
-                                                                id_proveedor: id_proveedor
-                                                            }, function(datos) {
-                                                                $('#respuesta_delete<?php echo $id_proveedor; ?>').html(datos);
+                                                                var url2 = "../app/controllers/proveedores/delete.php";
+                                                                $.get(url2, {
+                                                                    id_proveedor: id_proveedor
+                                                                }, function(datos) {
+                                                                    $('#respuesta_delete<?php echo $id_proveedor; ?>').html(datos);
+                                                                });
                                                             });
-                                                        });
-                                                    </script>
-                                                </div>
+                                                        </script>
+                                                    </div>
                                             </td>
                                         </tr>
                                     <?php

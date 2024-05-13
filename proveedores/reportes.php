@@ -17,10 +17,10 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1 class="m-0">Reportes de Gestion de Proveedores
-                        <button <?php if ($rol_sesion != "Administrador") echo 'disabled'; ?> type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create">
+                        <!-- <button <?php if ($rol_sesion != "Administrador") echo 'disabled'; ?> type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create">
                             <i class="fa fa-plus"></i>
                             Agregar Nuevo
-                        </button>
+                        </button> -->
                     </h1>
 
 
@@ -69,7 +69,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 <div class="col-md-12">
                     <div class="card card-outline card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Grafico de tortas - Cantidad de compras en dinero por Proveedor</h3>
+                            <h3 class="card-title">Grafico de tortas - Cantidad de compras (operaciones) en por Proveedor</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
@@ -82,6 +82,35 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
 
                         <div class="card-body">
                             <div id="container2"></div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Main content -->
+    </div>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-outline card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Grafico de tortas - Cantidad de compras en dinero por Proveedor</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                            <!-- /.card-tools -->
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- ACA EL GRAFICO PAPÁ DASLFMASDKLFNA      ACAA           GJADFOGJADIOGJADIOÑGJ-->
+
+                        <div class="card-body">
+                            <div id="container3"></div>
 
                         </div>
                     </div>
@@ -147,7 +176,6 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                     // total de proveedores
                     $stmt_total_proveedores = $pdo->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
                     $total_proveedores = $stmt_total_proveedores->fetchColumn();
-
                     $stmt_total = $pdo->query("SELECT COUNT(*) AS total FROM tb_almacen");
                     $total = $stmt_total->fetchColumn();
                     // completo con objetos el array
@@ -184,7 +212,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
         });
     </script>
 
-    <!--  Volumen en porcetaje de Productos por Proveedores -->
+    <!--  Volumen en porcetaje de compras por Proveedores -->
     <script type="text/javascript">
         Highcharts.chart("container2", {
             chart: {
@@ -233,12 +261,12 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                     $stmt_total_proveedores = $pdo->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
                     $total_proveedores = $stmt_total_proveedores->fetchColumn();
 
-                    $stmt_total = $pdo->query("SELECT COUNT(*) AS total FROM tb_almacen");
+                    $stmt_total = $pdo->query("SELECT COUNT(*) AS total FROM tb_compras");
                     $total = $stmt_total->fetchColumn();
                     // completo con objetos el array
                     $porcentajes = [];
                     for ($i = 1; $i <= $total_proveedores; $i++) {
-                        $stmt_proveedor = $pdo->prepare("SELECT COUNT(*) AS cnt FROM tb_almacen WHERE id_proveedor = ?");
+                        $stmt_proveedor = $pdo->prepare("SELECT COUNT(*) AS cnt FROM tb_compras WHERE id_proveedor = ?");
                         $stmt_proveedor->execute([$i]);
                         $cantidad = $stmt_proveedor->fetchColumn();
 
@@ -262,6 +290,78 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                         }
                         $primera = false;
                         echo json_encode($proveedor);
+                    }
+                    ?>
+                ]
+            }]
+        });
+    </script>
+    <!--  Volumen en porcetaje de compras por Proveedores -->
+    <script type="text/javascript">
+        Highcharts.chart("container3", {
+            chart: {
+                type: "pie"
+            },
+            title: {
+                text: "Volumen en Porcentaje de compras en pesos a Proveedor" // Nuevo título
+            },
+            tooltip: {
+                valueSuffix: "%",
+                format: "{point.name}: {point.y:.1f}%" // Formato del tooltip
+            },
+            subtitle: {
+                text: 'FA INSUMOS'
+            },
+            plotOptions: {
+                series: {
+                    allowPointSelect: true,
+                    cursor: "pointer",
+                    dataLabels: [{
+                        enabled: true,
+                        distance: 20
+                    }, {
+                        enabled: true,
+                        distance: -30,
+                        format: "{point.percentage:.1f}%", // Nuevo formato de etiqueta con el porcentaje
+                        style: {
+                            fontSize: "1.2em",
+                            textOutline: "none",
+                            opacity: 1.7
+                        },
+                        filter: {
+                            operator: ">",
+                            property: "percentage",
+                            value: 1
+                        }
+                    }]
+                }
+            },
+            series: [{
+                name: "Proveedores",
+                colorByPoint: true,
+                data: [
+                    <?php
+                    $total_gastado_total = 0;
+
+                    // Consulta para obtener el total gastado por cada proveedor
+                    $stmt_total_gastado = $pdo->query("SELECT id_proveedor, SUM(precio_compra) AS total_gastado FROM tb_compras GROUP BY id_proveedor");
+                    $total_gastado_proveedores = $stmt_total_gastado->fetchAll(PDO::FETCH_ASSOC);
+
+                    // Calcular el total gastado en todas las compras
+                    foreach ($total_gastado_proveedores as $proveedor) {
+                        $total_gastado_total += $proveedor['total_gastado'];
+                    }
+
+                    // Calcular el porcentaje de gasto para cada proveedor
+                    $primera = true;
+                    foreach ($total_gastado_proveedores as $proveedor) {
+                        $porcentaje = ($proveedor['total_gastado'] / $total_gastado_total) * 100;
+                        $porcentaje_dos_decimales = number_format($porcentaje, 2);
+                        if (!$primera) {
+                            echo ',';
+                        }
+                        $primera = false;
+                        echo '{ name: "' . $proveedor['id_proveedor'] . '", y: ' . $porcentaje_dos_decimales . '}';
                     }
                     ?>
                 ]
