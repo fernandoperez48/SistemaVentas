@@ -105,7 +105,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                             <td>
 
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modal-ver<?php echo $id_proveedor; ?>">
+                                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-ver<?php echo $id_proveedor; ?>">
                                                         <i class="fa fa-eye"></i>
                                                         Ver
                                                     </button>
@@ -443,7 +443,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                                 </div>
 
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-delete<?php echo $id_proveedor; ?>">
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete<?php echo $id_proveedor; ?>">
                                                         <i class="fa fa-trash"></i>
                                                         Borrar
                                                     </button>
