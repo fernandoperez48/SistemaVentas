@@ -54,8 +54,8 @@
   }
   ?>
   <div class="card card-outline card-primary" style="border-color: black;">
-    <div class="card-header text-center bg-light">
-      <a href="" class="h1">Sistema de VENTAS</a>
+    <div class="card-header text-center">
+      <a href="../public/templates/AdminLTE-3.2.0/index2.html" class="h1">Sistema de VENTAS</a>
     </div>
     <div class="card-body">
       <h3 class="login-box-msg">Ingrese sus datos</h3>

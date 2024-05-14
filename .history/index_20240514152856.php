@@ -16,6 +16,17 @@ include 'app/controllers/envios/listado_de_envios.php';
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="background-color:gray">
   <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-12">
+          <!-- <h1 class="m-0">Bienvenido al Sistema de Ventas - <?php echo $rol_sesion ?></h1> -->
+          <h1 class="text-center">Bienvenido al Sistema de Ventas</h1>
+        </div><!-- /.col -->
+
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
   <!-- /.content-header -->
 
   <div class="content">
@@ -28,7 +39,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         <?php if ($rol_sesion == "Administrador") { ?>
 
           <div class="col-lg-4 col-6">
-            <div class="small-box EEF60E" style="background-color: #b88847;">
+            <div class="small-box EEF50E" style="background-color: #FFC300;">
               <div class="inner">
                 <?php
                 $contador_de_usuarios = 0;

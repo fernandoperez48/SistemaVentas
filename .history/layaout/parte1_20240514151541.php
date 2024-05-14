@@ -91,7 +91,7 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li>
-          <a href="../index.php" class="nav-link" role="button">Sistema de Ventas</a>
+          <a href="./index.php" class="nav-link" role="button">Sistema de Ventas</a>
         </li>
 
       </ul>

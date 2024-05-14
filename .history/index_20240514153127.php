@@ -28,7 +28,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         <?php if ($rol_sesion == "Administrador") { ?>
 
           <div class="col-lg-4 col-6">
-            <div class="small-box EEF60E" style="background-color: #b88847;">
+            <div class="small-box EEF60E" style="background-color: #b34d4d;">
               <div class="inner">
                 <?php
                 $contador_de_usuarios = 0;

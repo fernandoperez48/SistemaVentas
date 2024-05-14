@@ -33,8 +33,8 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-danger">
-                        <div class="card-header" style="background-color:orange">
+                    <div class="card card-outline card-primary">
+                        <div class="card-header">
                             <h3 class="card-title">Proveedores registrados</h3>
 
                             <div class="card-tools">
@@ -46,8 +46,8 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                         <!-- /.card-header -->
                         <div class="card-body">
 
-                            <table id="example1" class="table table-bordered table-striped table-md" style="border-color: black;">
-                                <thead style="background-color: gray;">
+                            <table id="example1" class="table table-bordered table-striped table-md">
+                                <thead>
                                     <tr>
                                         <th>
                                             <center>Nro</center>
@@ -113,7 +113,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                                     <div class="modal fade" id="modal-ver<?php echo $id_proveedor; ?>">
                                                         <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
-                                                                <div class="modal-header" style="background-color:#088da5; color:white">
+                                                                <div class="modal-header" style="background-color:darkgreen; color:white">
                                                                     <h4 class="modal-title">Datos del proveedor</h4>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
