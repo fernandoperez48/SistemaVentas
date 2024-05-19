@@ -63,35 +63,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
 
         <!-- Main content -->
     </div>
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card card-outline card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Grafico de tortas - Cantidad de compras (operaciones) en por Proveedor</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
-                            <!-- /.card-tools -->
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- ACA EL GRAFICO PAPÁ DASLFMASDKLFNA      ACAA           GJADFOGJADIOGJADIOÑGJ-->
 
-                        <div class="card-body">
-                            <div id="container2"></div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Main content -->
-    </div>
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -121,7 +93,35 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
 
         <!-- Main content -->
     </div>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-outline card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Grafico de tortas - Cantidad de compras (operaciones) por Proveedor</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                            <!-- /.card-tools -->
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- ACA EL GRAFICO PAPÁ DASLFMASDKLFNA      ACAA           GJADFOGJADIOGJADIOÑGJ-->
 
+                        <div class="card-body">
+                            <div id="container2"></div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Main content -->
+    </div>
     <!-- Page specific script -->
     <?php include '../layaout/mensajes.php'; ?>
     <?php include '../layaout/parte2.php'; ?>
@@ -212,14 +212,14 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
         });
     </script>
 
-    <!--  Volumen en porcetaje de compras por Proveedores -->
+    <!--  Volumen en porcetaje de compras operacion por Proveedores -->
     <script type="text/javascript">
         Highcharts.chart("container2", {
             chart: {
                 type: "pie"
             },
             title: {
-                text: "Volumen en porcetaje de Compras en $pesos por Proveedores" // Replace with a dynamic title
+                text: "Volumen en porcetaje de Compras (operacion) por Proveedores" // Replace with a dynamic title
             },
             tooltip: {
                 valueSuffix: "%",
@@ -296,7 +296,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
             }]
         });
     </script>
-    <!--  Volumen en porcetaje de compras por Proveedores -->
+    <!--  Volumen en porcetaje de compras en pesos por Proveedores -->
     <script type="text/javascript">
         Highcharts.chart("container3", {
             chart: {
