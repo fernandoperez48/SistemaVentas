@@ -84,14 +84,14 @@
   <div class="wrapper">
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-black navbar-dark">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-dark">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li>
-          <a href="../index.php" class="nav-link" role="button">Sistema de Ventas</a>
+          <a class="nav-link" role="button">Sistema de Ventas</a>
         </li>
 
       </ul>
@@ -114,13 +114,18 @@
 
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="<?php echo $URL ?>/index.php" class="brand-link">
+        <img src="../public/images/logo.jpg" alt="AdminLTE Logo" class="brand-image  elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">SIS VENTAS</span>
+      </a>
 
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex align-items-center">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="<?php echo $URL; ?>/public/templates/AdminLTE-3.2.0/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"  style="width: 40px; height: 40px;">
+            <img src="<?php echo $URL; ?>/public/templates/AdminLTE-3.2.0/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
             <a href="#" class="d-block"><?php echo $nombres_sesion ?></a>
@@ -136,7 +141,7 @@
             <!--Usuarios        ------Usuarios------        Usuario-->
             <?php if ($rol_sesion == "Administrador") { ?>
               <li class="nav-item">
-                <a href="#" class="nav-link active" style="background-color:orange">
+                <a href="#" class="nav-link active">
                   <i class="nav-icon fas fa-user"></i>
                   <p>
                     Usuarios
@@ -163,7 +168,7 @@
             <!--Clientes        ------Clientes------        Clientes-->
             <li class="nav-item">
 
-              <a href="#" class="nav-link active" style="background-color:orange">
+              <a href="#" class="nav-link active">
                 <i class="nav-icon fas fa-users"></i>
                 <p>
                   Clientes
@@ -257,7 +262,7 @@
             <!--Categorias        ------Categorias------        Categorias-->
             <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Almacen" || $rol_sesion == "Vendedor") { ?>
               <li class="nav-item">
-                <a href="#" class="nav-link active" style="background-color:orange">
+                <a href="#" class="nav-link active">
                   <i class="nav-icon fas fa-tags"></i>
                   <p>
                     Categorias
@@ -278,7 +283,7 @@
             <!--Almacen        ------Almacen------        Almacen-->
             <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Almacen" || $rol_sesion == "Vendedor") { ?>
               <li class="nav-item">
-                <a href="#" class="nav-link active" style="background-color:orange">
+                <a href="#" class="nav-link active">
                   <i class="nav-icon fas fa-cubes"></i>
                   <p>
                     Productos
@@ -306,7 +311,7 @@
             <?php if ($rol_sesion != "Vendedor") { ?>
               <!--Proveedores        ------Proveedores------        Proveedores-->
               <li class="nav-item">
-                <a href="#" class="nav-link active" style="background-color:orange">
+                <a href="#" class="nav-link active">
                   <i class="nav-icon fas fa-address-book"></i>
                   <p>
                     Proveedores
@@ -335,7 +340,7 @@
             <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Almacen") { ?>
               <!--Compras -->
               <li class="nav-item">
-                <a href="#" class="nav-link active" style="background-color:orange">
+                <a href="#" class="nav-link active">
                   <i class="nav-icon fas fa-cart-plus"></i>
                   <p>
                     Compras
@@ -364,7 +369,7 @@
             <!--Ventas        ------Ventas------        Ventas-->
             <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Vendedor") { ?>
               <li class="nav-item">
-                <a href="#" class="nav-link active" style="background-color:orange">
+                <a href="#" class="nav-link active">
                   <i class="nav-icon fas fa-shopping-basket"></i>
                   <p>
                     Ventas
@@ -391,7 +396,7 @@
 
             <!--Envio y Distribución        ------Envio y Distribución------        Envio y Distribución-->
             <li class="nav-item">
-              <a href="#" class="nav-link active" style="background-color:orange">
+              <a href="#" class="nav-link active">
                 <i class="fas fa-fw fa-plane"></i>
                 <p>
                   Envio y Distribución

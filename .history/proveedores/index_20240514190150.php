@@ -15,8 +15,8 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1 class="m-0">Listado de Proveedores
-                        <button <?php if ($rol_sesion != "Administrador") echo 'disabled'; ?> type="button" class="btn btn-warning ml-3" data-toggle="modal" data-target="#modal-create">
-                            <i class="fa fa-plus"></i>
+                        <button <?php if ($rol_sesion != "Administrador") echo 'disabled'; ?> type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-create">
+                            <i class="fa fa-plus mr-2"></i>
                             Agregar Nuevo
                         </button>
                     </h1>
@@ -33,8 +33,8 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-danger">
-                        <div class="card-header" style="background-color:orange">
+                    <div class="card card-outline card-primary">
+                        <div class="card-header">
                             <h3 class="card-title">Proveedores registrados</h3>
 
                             <div class="card-tools">
@@ -46,8 +46,8 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                         <!-- /.card-header -->
                         <div class="card-body">
 
-                            <table id="example1" class="table table-bordered table-striped table-md" style="border-color: black;">
-                                <thead style="background-color: gray;">
+                            <table id="example1" class="table table-bordered table-striped table-md">
+                                <thead>
                                     <tr>
                                         <th>
                                             <center>Nro</center>
@@ -105,7 +105,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                             <td>
 
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modal-ver<?php echo $id_proveedor; ?>">
+                                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-ver<?php echo $id_proveedor; ?>">
                                                         <i class="fa fa-eye"></i>
                                                         Ver
                                                     </button>
@@ -113,7 +113,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                                     <div class="modal fade" id="modal-ver<?php echo $id_proveedor; ?>">
                                                         <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
-                                                                <div class="modal-header" style="background-color:#088da5; color:white">
+                                                                <div class="modal-header" style="background-color:darkgreen; color:white">
                                                                     <h4 class="modal-title">Datos del proveedor</h4>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
@@ -242,7 +242,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                                 </div>
 
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal-update<?php echo $id_proveedor; ?>">
+                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update<?php echo $id_proveedor; ?>">
                                                         <i class="fa fa-pencil-alt"></i>
                                                         Editar
                                                     </button>
@@ -443,7 +443,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                                 </div>
 
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-delete<?php echo $id_proveedor; ?>">
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete<?php echo $id_proveedor; ?>">
                                                         <i class="fa fa-trash"></i>
                                                         Borrar
                                                     </button>

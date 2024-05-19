@@ -54,25 +54,25 @@
   }
   ?>
   <div class="card card-outline card-primary" style="border-color: black;">
-    <div class="card-header text-center bg-light">
-      <a href="" class="h1">Sistema de VENTAS</a>
+    <div class="card-header text-center">
+      <a href="../public/templates/AdminLTE-3.2.0/index2.html" class="h1">Sistema de VENTAS</a>
     </div>
     <div class="card-body">
       <h3 class="login-box-msg">Ingrese sus datos</h3>
 
       <form action="../app/controllers/login/ingreso.php" method="post">
         <div class="input-group mb-3">
-          <input type="email" name="email" class="form-control" placeholder="Email" style="border-color: black;">
+          <input type="email" name="email" class="form-control" placeholder="Email">
           <div class="input-group-append">
-            <div class="input-group-text" style="border-color: black;">
+            <div class="input-group-text">
               <span class="fas fa-envelope"></span>
             </div>
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" name="password_user" class="form-control" placeholder="Password" style="border-color: black;">
+          <input type="password" name="password_user" class="form-control" placeholder="Password">
           <div class="input-group-append">
-            <div class="input-group-text" style="border-color: black;">
+            <div class="input-group-text">
               <span class="fas fa-lock"></span>
             </div>
           </div>
@@ -83,7 +83,7 @@
           </div>
           <!-- /.col -->
           <div class="col-12">
-            <button type="submit" class="btn btn-warning btn-block">Ingresar</button>
+            <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
           </div>
           <!-- /.col -->
         </div>

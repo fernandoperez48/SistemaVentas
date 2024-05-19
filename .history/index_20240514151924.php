@@ -14,8 +14,19 @@ include 'app/controllers/proveedores/listado_de_proveedores.php';
 include 'app/controllers/envios/listado_de_envios.php';
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper" style="background-color:gray">
+<div class="content-wrapper">
   <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-12">
+          <!-- <h1 class="m-0">Bienvenido al Sistema de Ventas - <?php echo $rol_sesion ?></h1> -->
+          <h1 class="text-center">Bienvenido al Sistema de Ventas</h1>
+        </div><!-- /.col -->
+
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
   <!-- /.content-header -->
 
   <div class="content">
@@ -27,8 +38,8 @@ include 'app/controllers/envios/listado_de_envios.php';
         <!-- USUARIOS -->
         <?php if ($rol_sesion == "Administrador") { ?>
 
-          <div class="col-lg-4 col-6">
-            <div class="small-box EEF60E" style="background-color: #b88847;">
+          <div class="col-lg-3 col-6">
+            <div class="small-box EEF50E" style="background-color: #FFC300;">
               <div class="inner">
                 <?php
                 $contador_de_usuarios = 0;
@@ -56,7 +67,7 @@ include 'app/controllers/envios/listado_de_envios.php';
 
         <?php if ($rol_sesion == "Administrador") { ?>
           <!-------------- PERSONAS -->
-          <div class="col-lg-4 col-6">
+          <div class="col-lg-3 col-6">
 
             <div class="small-box bg-info">
               <div class="inner">
@@ -88,7 +99,7 @@ include 'app/controllers/envios/listado_de_envios.php';
 
         <?php if ($rol_sesion == "Administrador") { ?>
           <!-------------- EMPRESAS -->
-          <div class="col-lg-4 col-6">
+          <div class="col-lg-3 col-6">
             <div class="small-box bg-danger">
               <div class="inner">
                 <?php
@@ -115,7 +126,7 @@ include 'app/controllers/envios/listado_de_envios.php';
 
         <!-- ROLES -->
         <?php if ($rol_sesion == "Tecnico") { ?>
-          <div class="col-lg-4 col-6">
+          <div class="col-lg-3 col-6">
 
             <div class="small-box bg-info">
               <div class="inner">
@@ -141,7 +152,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         <?php } ?>
 
         <!-- CATEGORIAS -->
-        <div class="col-lg-4 col-6">
+        <div class="col-lg-3 col-6">
 
           <div class="small-box bg-success">
             <div class="inner">
@@ -166,7 +177,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         </div>
 
         <!-- PRODUCTOS -->
-        <div class="col-lg-4 col-6">
+        <div class="col-lg-3 col-6">
 
           <div class="small-box bg-primary">
             <div class="inner">
@@ -191,7 +202,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         </div>
 
         <!-- PROVEEDORES -->
-        <div class="col-lg-4 col-6">
+        <div class="col-lg-3 col-6">
 
           <div class="small-box" style=" background-color: #73c6b6;">
             <div class="inner">
@@ -218,7 +229,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         </div>
 
         <!-- COMPRAS -->
-        <div class="col-lg-4 col-6">
+        <div class="col-lg-3 col-6">
 
           <div class="small-box" style="background-color: #EEF50E;">
             <div class="inner">
@@ -245,7 +256,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         </div>
 
         <!-- VENTAS -->
-        <div class="col-lg-4 col-6">
+        <div class="col-lg-3 col-6">
 
           <div class="small-box" style="background-color: #EACCAD;">
             <div class="inner">
@@ -273,7 +284,7 @@ include 'app/controllers/envios/listado_de_envios.php';
 
         <!-- ENVIOS Y DISTRIBUICIÓN -->
         <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Vendedor" || $rol_sesion == "EyD") { ?>
-          <div class="col-lg-4 col-6">
+          <div class="col-lg-3 col-6">
             <div class="small-box" style="background-color: #aaaffE;">
               <div class="inner">
                 <?php
