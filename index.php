@@ -14,7 +14,7 @@ include 'app/controllers/proveedores/listado_de_proveedores.php';
 include 'app/controllers/envios/listado_de_envios.php';
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper" style="background-color:gray">
+<div class="content-wrapper" style="background-color:#ebfbfb;">
   <!-- Content Header (Page header) -->
   <!-- /.content-header -->
 
@@ -28,7 +28,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         <?php if ($rol_sesion == "Administrador") { ?>
 
           <div class="col-lg-4 col-6">
-            <div class="small-box EEF60E" style="background-color: #b88847;">
+            <div class="small-box EEF60E" style="background-color: #b0f0ff;">
               <div class="inner">
                 <?php
                 $contador_de_usuarios = 0;
@@ -89,7 +89,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         <?php if ($rol_sesion == "Administrador") { ?>
           <!-------------- EMPRESAS -->
           <div class="col-lg-4 col-6">
-            <div class="small-box bg-danger">
+            <div class="small-box" style="background-color: #ffa9dd;">
               <div class="inner">
                 <?php
                 $contador_de_clientesemp = 0;
@@ -117,7 +117,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         <?php if ($rol_sesion == "Tecnico") { ?>
           <div class="col-lg-4 col-6">
 
-            <div class="small-box bg-info">
+            <div class="small-box" style="background-color:#ffd09e">
               <div class="inner">
                 <?php
                 $contador_de_roles = 0;
@@ -143,7 +143,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         <!-- CATEGORIAS -->
         <div class="col-lg-4 col-6">
 
-          <div class="small-box bg-success">
+          <div class="small-box" style="background-color:#ffd09e">
             <div class="inner">
               <?php
               $contador_de_categorias = 0;
@@ -168,7 +168,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         <!-- PRODUCTOS -->
         <div class="col-lg-4 col-6">
 
-          <div class="small-box bg-primary">
+          <div class="small-box" style="background-color:#e574a1">
             <div class="inner">
               <?php
               $contador_de_productos = 0;
@@ -193,7 +193,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         <!-- PROVEEDORES -->
         <div class="col-lg-4 col-6">
 
-          <div class="small-box" style=" background-color: #73c6b6;">
+          <div class="small-box" style=" background-color: #b0f0a5;">
             <div class="inner">
               <?php
               $contador_de_proveedores = 0;
@@ -220,7 +220,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         <!-- COMPRAS -->
         <div class="col-lg-4 col-6">
 
-          <div class="small-box" style="background-color: #EEF50E;">
+          <div class="small-box" style="background-color: #a1b4ff;">
             <div class="inner">
               <?php
               $contador_de_compras = 0;
@@ -247,7 +247,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         <!-- VENTAS -->
         <div class="col-lg-4 col-6">
 
-          <div class="small-box" style="background-color: #EACCAD;">
+          <div class="small-box" style="background-color: #f7f791;">
             <div class="inner">
               <?php
               $contador_de_ventas = 0;
@@ -274,7 +274,7 @@ include 'app/controllers/envios/listado_de_envios.php';
         <!-- ENVIOS Y DISTRIBUICIÓN -->
         <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Vendedor" || $rol_sesion == "EyD") { ?>
           <div class="col-lg-4 col-6">
-            <div class="small-box" style="background-color: #aaaffE;">
+            <div class="small-box" style="background-color: #ff9699;">
               <div class="inner">
                 <?php
                 $contador_de_envios = 0;
