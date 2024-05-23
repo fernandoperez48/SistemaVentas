@@ -87,29 +87,36 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                             <td>
                                                 <?php
                                                 if (!empty($clientesemp_datos['id_domicilio'])) {
+                                                    $id_domicilio = $clientesemp_datos['id_domicilio'];
                                                     $sql_domicilio = "SELECT d.calle, d.numero, d.piso, d.depto 
-                          FROM tb_domicilios as d 
-                          WHERE d.id_domicilio = {$clientesemp_datos['id_domicilio']}";
-                                                    $query_domicilio = $pdo->prepare($sql_domicilio);
-                                                    $query_domicilio->execute();
-                                                    $domicilio_datos = $query_domicilio->fetch(PDO::FETCH_ASSOC);
+                                                     FROM tb_domicilios AS d 
+                                                     WHERE d.id_domicilio = $id_domicilio";
 
-                                                    // Imprimir la calle y el número
-                                                    echo $domicilio_datos['calle'] . ' ' . $domicilio_datos['numero'] . ' ';
+                                                    $query_domicilio = $mysqli->query($sql_domicilio);
 
-                                                    // Verificar y agregar "Piso" si el valor de piso no está vacío
-                                                    if (!empty($domicilio_datos['piso'])) {
-                                                        echo 'Piso ' . $domicilio_datos['piso'] . ' ';
-                                                    }
+                                                    if ($query_domicilio) {
+                                                        $domicilio_datos = $query_domicilio->fetch_assoc();
 
-                                                    // Verificar y agregar "Depto" si el valor de depto no está vacío
-                                                    if (!empty($domicilio_datos['depto'])) {
-                                                        echo 'Depto ' . $domicilio_datos['depto'];
+                                                        // Imprimir la calle y el número
+                                                        echo $domicilio_datos['calle'] . ' ' . $domicilio_datos['numero'] . ' ';
+
+                                                        // Verificar y agregar "Piso" si el valor de piso no está vacío
+                                                        if (!empty($domicilio_datos['piso'])) {
+                                                            echo 'Piso ' . $domicilio_datos['piso'] . ' ';
+                                                        }
+
+                                                        // Verificar y agregar "Depto" si el valor de depto no está vacío
+                                                        if (!empty($domicilio_datos['depto'])) {
+                                                            echo 'Depto ' . $domicilio_datos['depto'];
+                                                        }
+                                                    } else {
+                                                        echo "Error al ejecutar la consulta";
                                                     }
                                                 } else {
                                                     echo "No hay domicilio";
                                                 }
                                                 ?>
+
                                             </td>
 
                                             <td><?php echo $clientesemp_datos['email']; ?></td>

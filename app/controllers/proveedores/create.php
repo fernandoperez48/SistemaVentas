@@ -18,67 +18,75 @@ $responsable_comercial = $_GET['responsable_comercial'];
 $celular = $_GET['celular'];
 
 if (!empty($nombre_proveedor) && !empty($responsable_comercial) && !empty($celular)) {
+    // Insertar en la tabla tb_proveedores
+    $sql_proveedor = "INSERT INTO tb_proveedores(nombre_proveedor, telefono, empresa, email, cuit, condicion_iva, responsable_comercial, celular) 
+                      VALUES ('$nombre_proveedor', '$telefono', '$empresa', '$email', '$cuit', '$condicion_iva', '$responsable_comercial', '$celular')";
+    $resultado_proveedor = $mysqli->query($sql_proveedor);
 
-    $sentenciapro = $pdo->prepare("INSERT INTO tb_proveedores(nombre_proveedor,telefono,
-empresa,email,cuit,condicion_iva,responsable_comercial,celular) 
-VALUES (:nombre_proveedor,:telefono,:empresa,:email,:cuit,:condicion_iva,:responsable_comercial,:celular);");
+    if ($resultado_proveedor) {
+        $id_proveedor = $mysqli->insert_id;
 
-    $sentenciapro->bindParam('nombre_proveedor', $nombre_proveedor);
-    $sentenciapro->bindParam('telefono', $telefono);
-    $sentenciapro->bindParam('empresa', $empresa);
-    $sentenciapro->bindParam('email', $email);
-    $sentenciapro->bindParam('cuit', $cuit);
-    $sentenciapro->bindParam('condicion_iva', $condicion_iva);
-    $sentenciapro->bindParam('responsable_comercial', $responsable_comercial);
-    $sentenciapro->bindParam('celular', $celular);
-    $sentenciapro->execute();
+        // Insertar en la tabla tb_domicilios
+        $sql_domicilio = "INSERT INTO tb_domicilios(calle, numero, piso, depto, ciudad, provincia, pais) 
+                          VALUES ('$calle', '$numero', '$piso', '$depto', '$localidad', '$provincia', '$pais')";
+        $resultado_domicilio = $mysqli->query($sql_domicilio);
 
-    $id_proveedor = $pdo->lastInsertId();
+        if ($resultado_domicilio) {
+            $id_domicilio = $mysqli->insert_id;
 
-    // sentencia domicilio 
-    $sentenciadom = $pdo->prepare("INSERT INTO tb_domicilios(calle,numero,piso,depto,ciudad,provincia,pais) 
- VALUES (:calle,:numero,:piso,:depto,:ciudad,:provincia,:pais);");
+            // Actualizar el campo id_domicilio en la tabla tb_proveedores
+            $sql_update_id_domicilio = "UPDATE tb_proveedores SET id_domicilio = '$id_domicilio' WHERE id_proveedor = '$id_proveedor'";
+            $resultado_update_id_domicilio = $mysqli->query($sql_update_id_domicilio);
 
-    $sentenciadom->bindParam('calle', $calle);
-    $sentenciadom->bindParam('numero', $numero);
-    $sentenciadom->bindParam('piso', $piso);
-    $sentenciadom->bindParam('depto', $depto);
-    $sentenciadom->bindParam('ciudad', $localidad);
-    $sentenciadom->bindParam('provincia', $provincia);
-    $sentenciadom->bindParam('pais', $pais);
-    $sentenciadom->execute();
-
-    $id_domicilio = $pdo->lastInsertId();
-
-    // Sentencia id_domicilio de tabla proveedores
-    // Sentencia para actualizar el campo id_domicilio en la tabla tb_proveedores
-    $sentencia_id_domicilio = $pdo->prepare("UPDATE tb_proveedores SET id_domicilio = :id_domicilio WHERE id_proveedor = :id_proveedor");
-
-    // Vincular los parámetros
-    $sentencia_id_domicilio->bindParam(':id_domicilio', $id_domicilio);
-    $sentencia_id_domicilio->bindParam(':id_proveedor', $id_proveedor);
-
-    // Ejecutar la sentencia
-    $sentencia_id_domicilio->execute();
-
-    //echo "Guardado correctamente";
-    session_start();
-    //echo "Se registro el proveedor correctamente";
-    $_SESSION['mensaje'] = "Se registro el proveedor correctamente";
-    $_SESSION['icono'] = "success";
-    //header('location: '.$URL.'/proveedor/');
+            if ($resultado_update_id_domicilio) {
+                //echo "Guardado correctamente";
+                session_start();
+                $_SESSION['mensaje'] = "Se registró el proveedor correctamente";
+                $_SESSION['icono'] = "success";
 ?>
-    <script>
-        window.location.href = '<?php echo $URL; ?>/proveedores/';
-    </script>
-<?php
+                <script>
+                    window.location.href = '<?php echo $URL; ?>/proveedores/';
+                </script>
+            <?php
+            } else {
+                //echo "No se pudo actualizar el proveedor";
+                session_start();
+                $_SESSION['mensaje'] = "No se pudo registrar el proveedor";
+                $_SESSION['icono'] = "error";
+            ?>
+                <script>
+                    window.location.href = '<?php echo $URL; ?>/proveedores/';
+                </script>
+            <?php
+            }
+        } else {
+            //echo "No se pudo registrar el domicilio";
+            session_start();
+            $_SESSION['mensaje'] = "No se pudo registrar el proveedor";
+            $_SESSION['icono'] = "error";
+            ?>
+            <script>
+                window.location.href = '<?php echo $URL; ?>/proveedores/';
+            </script>
+        <?php
+        }
+    } else {
+        //echo "No se pudo registrar el proveedor";
+        session_start();
+        $_SESSION['mensaje'] = "No se pudo registrar el proveedor";
+        $_SESSION['icono'] = "error";
+        ?>
+        <script>
+            window.location.href = '<?php echo $URL; ?>/proveedores/';
+        </script>
+    <?php
+    }
 } else {
-    //echo "No se guardo correctamente";
+    //echo "Faltan campos obligatorios";
     session_start();
-    $_SESSION['mensaje'] = "No se pudo registrar el proveedor";
+    $_SESSION['mensaje'] = "Faltan campos obligatorios";
     $_SESSION['icono'] = "error";
-    // header('location: '.$URL.'/categorias');
-?>
+    ?>
     <script>
         window.location.href = '<?php echo $URL; ?>/proveedores/';
     </script>

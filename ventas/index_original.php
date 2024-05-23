@@ -116,52 +116,58 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                     $precio_total = 0;
                                                                                     $nro_venta = $ventas_datos['nro_venta'];
                                                                                     $sql_carrito = "SELECT *,pro.nombre as nombre_producto, pro.descripcion as descripcion, 
-                                                                                    pro.precio_venta as precio_venta, 
-                                                                                    pro.stock as stock, pro.id_producto as id_producto from tb_carrito as carr inner join tb_almacen as pro
-                                                                                    on carr.id_producto = pro.id_producto where nro_venta = '$nro_venta' order by carr.id_carrito";
-                                                                                    $query_carrito = $pdo->prepare($sql_carrito);
-                                                                                    $query_carrito->execute();
-                                                                                    $carrito_datos = $query_carrito->fetchAll(PDO::FETCH_ASSOC);
+                pro.precio_venta as precio_venta, 
+                pro.stock as stock, pro.id_producto as id_producto 
+                FROM tb_carrito as carr 
+                INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto 
+                WHERE nro_venta = '$nro_venta' 
+                ORDER BY carr.id_carrito";
+                                                                                    $resultado_carrito = $mysqli->query($sql_carrito);
 
-                                                                                    foreach ($carrito_datos as $carrito_datos) {
-                                                                                        $id_carrito = $carrito_datos['id_carrito'];
-                                                                                        $contador_carrito = $contador_carrito + 1;
-                                                                                        $cantidad_total = $cantidad_total + $carrito_datos['cantidad'];
-                                                                                        $precio_unitario_total = $precio_unitario_total + $carrito_datos['precio_venta'];
-                                                                                        $precio_total = $precio_total + ($carrito_datos['cantidad'] * $carrito_datos['precio_venta']);
+                                                                                    if ($resultado_carrito) {
+                                                                                        foreach ($resultado_carrito as $carrito_datos) {
+                                                                                            $id_carrito = $carrito_datos['id_carrito'];
+                                                                                            $contador_carrito = $contador_carrito + 1;
+                                                                                            $cantidad_total = $cantidad_total + $carrito_datos['cantidad'];
+                                                                                            $precio_unitario_total = $precio_unitario_total + $carrito_datos['precio_venta'];
+                                                                                            $precio_total = $precio_total + ($carrito_datos['cantidad'] * $carrito_datos['precio_venta']);
                                                                                     ?>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <center><?php echo $contador_carrito; ?></center>
-                                                                                                <input type="text" value="<?php echo $carrito_datos['id_producto']; ?>" id="id_producto<?php echo $contador_carrito; ?>" hidden>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <center><?php echo $carrito_datos['nombre_producto']; ?></center>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <center><?php echo $carrito_datos['descripcion']; ?></center>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <center><span id="cantidad_carrito<?php echo $contador_carrito; ?>"><?php echo $carrito_datos['cantidad']; ?></span></center>
-                                                                                                <input type="text" id="stock_de_inventario<?php echo $contador_carrito; ?>" value="<?php echo $carrito_datos['stock']; ?>" hidden>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <center><?php echo $carrito_datos['precio_venta']; ?></center>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <center>
-                                                                                                    <?php
-                                                                                                    $cantidad = floatval($carrito_datos['cantidad']);
-                                                                                                    $precio_venta = floatval($carrito_datos['precio_venta']);
-                                                                                                    echo $subtotal = $cantidad * $precio_venta;
-                                                                                                    ?>
-                                                                                                </center>
-                                                                                            </td>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <center><?php echo $contador_carrito; ?></center>
+                                                                                                    <input type="text" value="<?php echo $carrito_datos['id_producto']; ?>" id="id_producto<?php echo $contador_carrito; ?>" hidden>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <center><?php echo $carrito_datos['nombre_producto']; ?></center>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <center><?php echo $carrito_datos['descripcion']; ?></center>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <center><span id="cantidad_carrito<?php echo $contador_carrito; ?>"><?php echo $carrito_datos['cantidad']; ?></span></center>
+                                                                                                    <input type="text" id="stock_de_inventario<?php echo $contador_carrito; ?>" value="<?php echo $carrito_datos['stock']; ?>" hidden>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <center><?php echo $carrito_datos['precio_venta']; ?></center>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <center>
+                                                                                                        <?php
+                                                                                                        $cantidad = floatval($carrito_datos['cantidad']);
+                                                                                                        $precio_venta = floatval($carrito_datos['precio_venta']);
+                                                                                                        echo $subtotal = $cantidad * $precio_venta;
+                                                                                                        ?>
+                                                                                                    </center>
+                                                                                                </td>
 
-                                                                                        </tr>
+                                                                                            </tr>
                                                                                     <?php
+                                                                                        }
+                                                                                    } else {
+                                                                                        echo "Error al ejecutar la consulta: " . $mysqli->error;
                                                                                     }
                                                                                     ?>
+
 
                                                                                     <tr>
                                                                                         <th colspan="3" style="background-color: #e7e7e7; text-align:right;">Total</th>
@@ -218,45 +224,40 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                     </button>
                                                                 </div>
                                                                 <?php
-                                                                $sql_clientes = "SELECT * from tb_clientes
-                                                                where id_cliente = '$id_cliente'";
+                                                                $sql_clientes = "SELECT * FROM tb_clientes WHERE id_cliente = '$id_cliente'";
+                                                                $resultado_clientes = $mysqli->query($sql_clientes);
 
-
-
-                                                                $query_clientes = $pdo->prepare($sql_clientes);
-                                                                $query_clientes->execute();
-                                                                $clientes_datos = $query_clientes->fetchAll(PDO::FETCH_ASSOC);
-
-                                                                foreach ($clientes_datos as $clientes_datos) {
-                                                                    $nombre_cliente = $clientes_datos['nombre_cliente'];
-                                                                    $nit_ci_cliente = $clientes_datos['nit_ci_cliente'];
-                                                                    $celular_cliente = $clientes_datos['celular_cliente'];
-                                                                    $email_cliente = $clientes_datos['email_cliente'];
+                                                                if ($resultado_clientes) {
+                                                                    foreach ($resultado_clientes as $clientes_datos) {
+                                                                        $nombre_cliente = $clientes_datos['nombre_cliente'];
+                                                                        $nit_ci_cliente = $clientes_datos['nit_ci_cliente'];
+                                                                        $celular_cliente = $clientes_datos['celular_cliente'];
+                                                                        $email_cliente = $clientes_datos['email_cliente'];
                                                                 ?>
-                                                                    <div class="modal-body">
+                                                                        <div class="modal-body">
 
-                                                                        <div class="form-group">
-                                                                            <label for="">Nombre del cliente</label>
-                                                                            <input type="text" value="<?php echo $nombre_cliente; ?>" name="nombre_cliente" class="form-control" disabled>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label for="">Nit/CI del cliente</label>
-                                                                            <input type="text" value="<?php echo $nit_ci_cliente; ?>" name="nit_ci_cliente" class="form-control" disabled>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label for="">Celular del cliente</label>
-                                                                            <input type="text" value="<?php echo $celular_cliente; ?>" name="celular_cliente" class="form-control" disabled>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label for="">Correo del cliente</label>
-                                                                            <input type="email" value="<?php echo $email_cliente; ?>" name="email_cliente" class="form-control" disabled>
-                                                                        </div>
+                                                                            <div class="form-group">
+                                                                                <label for="">Nombre del cliente</label>
+                                                                                <input type="text" value="<?php echo $nombre_cliente; ?>" name="nombre_cliente" class="form-control" disabled>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="">Nit/CI del cliente</label>
+                                                                                <input type="text" value="<?php echo $nit_ci_cliente; ?>" name="nit_ci_cliente" class="form-control" disabled>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="">Celular del cliente</label>
+                                                                                <input type="text" value="<?php echo $celular_cliente; ?>" name="celular_cliente" class="form-control" disabled>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="">Correo del cliente</label>
+                                                                                <input type="email" value="<?php echo $email_cliente; ?>" name="email_cliente" class="form-control" disabled>
+                                                                            </div>
 
 
-                                                                    </div>
-                                                                    <div class="modal-footer justify-content-between">
+                                                                        </div>
+                                                                        <div class="modal-footer justify-content-between">
 
-                                                                    </div>
+                                                                        </div>
                                                             </div>
                                                             <!-- /.modal-content -->
                                                         </div>
@@ -275,9 +276,16 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                     </center>
                                                 </td>
                                             </tr>
-                                        <?php
+                                    <?php
+                                                                    }
+                                                                } else {
+                                                                    echo "Error al ejecutar la consulta: " . $mysqli->error;
                                                                 }
-                                        ?>
+                                    ?>
+
+
+
+
 
                                     </tbody>
                                 <?php

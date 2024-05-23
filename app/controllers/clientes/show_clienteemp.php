@@ -1,13 +1,19 @@
 <?php
 $id_clienteemp_get = $_GET['id'];
+
 $sql_clientesemp = "SELECT cl.id_cliente, e.cuit, e.nombre, e.razon_social, e.telefono, e.email, e.persona_autorizada, e.id_domicilio 
-FROM tb_clientes as cl 
-inner join tb_empresas as e 
-on cl.id_empresa=e.id_empresa 
-where id_cliente = '$id_clienteemp_get'";
-$query_clientesemp = $pdo->prepare($sql_clientesemp);
-$query_clientesemp->execute();
-$clientesemp_datos = $query_clientesemp->fetchAll(PDO::FETCH_ASSOC);
+                    FROM tb_clientes as cl 
+                    INNER JOIN tb_empresas as e 
+                    ON cl.id_empresa=e.id_empresa 
+                    WHERE id_cliente = '$id_clienteemp_get'";
+
+$resultado_clientesemp = $mysqli->query($sql_clientesemp);
+
+$clientesemp_datos = array();
+
+while ($fila = $resultado_clientesemp->fetch_assoc()) {
+    $clientesemp_datos[] = $fila;
+}
 
 foreach ($clientesemp_datos as $clientesemp_datos) {
     $idCliente = $clientesemp_datos['id_cliente'];

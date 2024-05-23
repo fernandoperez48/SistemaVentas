@@ -14,61 +14,57 @@ $depto = $_POST['depto'];
 $idPersona = $_POST['idPersona'];
 
 if (!empty($_POST)) {
+    // Iniciar conexión a la base de datos
+    $mysqli = new mysqli($servername, $username, $password, $dbname);
+
+    // Verificar la conexión
+    if ($mysqli->connect_error) {
+        die("Conexión fallida: " . $mysqli->connect_error);
+    }
+
+    // Iniciar transacción
+    $mysqli->autocommit(false);
+
     try {
-        // Iniciar transacción
-        $pdo->beginTransaction();
-
         // Actualizar la tabla tb_personas
-        $sentenciaPersonas = $pdo->prepare(
-            "UPDATE tb_personas
-            SET nombre = :nombre,
-                apellido = :apellido,
-                dni = :dni,
-                telefono = :telefono,
-                email = :email
-            WHERE id_persona = :idPersona"
-        );
+        $sqlPersonas = "UPDATE tb_personas
+                        SET nombre = '$nombre',
+                            apellido = '$apellido',
+                            dni = '$dni',
+                            telefono = '$telefono',
+                            email = '$email'
+                        WHERE id_persona = $idPersona";
 
-        $sentenciaPersonas->bindParam(':nombre', $nombre);
-        $sentenciaPersonas->bindParam(':apellido', $apellido);
-        $sentenciaPersonas->bindParam(':dni', $dni);
-        $sentenciaPersonas->bindParam(':telefono', $telefono);
-        $sentenciaPersonas->bindParam(':email', $email);
-        $sentenciaPersonas->bindParam(':idPersona', $idPersona);
-        $sentenciaPersonas->execute();
+        $mysqli->query($sqlPersonas);
 
         // Actualizar la tabla tb_domicilios
-        $sentenciaDomicilios = $pdo->prepare(
-            "UPDATE tb_domicilios
-            SET calle = :calle,
-                numero = :numero,
-                piso = :piso,
-                depto = :depto
-            WHERE id_domicilio = (
-                SELECT id_domicilio
-                FROM tb_personas
-                WHERE id_persona = :idPersona
-            )"
-        );
+        $sqlDomicilios = "UPDATE tb_domicilios
+                          SET calle = '$calle',
+                              numero = '$numero',
+                              piso = '$piso',
+                              depto = '$depto'
+                          WHERE id_domicilio = (
+                              SELECT id_domicilio
+                              FROM tb_personas
+                              WHERE id_persona = $idPersona
+                          )";
 
-        $sentenciaDomicilios->bindParam(':calle', $calle);
-        $sentenciaDomicilios->bindParam(':numero', $numero);
-        $sentenciaDomicilios->bindParam(':piso', $piso);
-        $sentenciaDomicilios->bindParam(':depto', $depto);
-        $sentenciaDomicilios->bindParam(':idPersona', $idPersona);
-        $sentenciaDomicilios->execute();
+        $mysqli->query($sqlDomicilios);
 
         // Confirmar la transacción
-        $pdo->commit();
+        $mysqli->commit();
 
         // Redireccionar después de la actualización
         session_start();
         $_SESSION['mensaje'] = "Se actualizó el usuario correctamente";
         $_SESSION['icono'] = "success";
         header('location: ' . $URL . 'clientes/indexper.php');
-    } catch (PDOException $e) {
+    } catch (Exception $e) {
         // Revertir la transacción en caso de error
-        $pdo->rollBack();
+        $mysqli->rollback();
         echo "Error al actualizar el usuario: " . $e->getMessage();
     }
+
+    // Cerrar conexión
+    $mysqli->close();
 }

@@ -131,32 +131,40 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
-                                                                                    <?php
-                                                                                    $contador_detalle_compras = 0;
-                                                                                    $cantidad_total = 0;
-                                                                                    $precio_unitario_total = 0;
-                                                                                    $precio_total = 0;
-                                                                                    $nro_tbcompra = $compras_datos['nro_compra'];
-                                                                                    //selecciona todo con el * de la tabla detalle_compras ( id_detalle_compras, id_producto, nro_compra 
-                                                                                    //cantidad_producto, precio_unitario, total_producto)
-                                                                                    $sql_detalle_compras = "SELECT *,
-                                                                                        pro.nombre as nombre_producto, pro.descripcion as descripcion, pr.nombre_proveedor as nombre_proveedor
-                                                                                        from tb_detalle_compras as detcom 
-                                                                                        inner join tb_almacen as pro on detcom.id_producto = pro.id_producto
-                                                                                        inner join tb_proveedores as pr on pr.id_proveedor = pro.id_proveedor
-                                                                                        where nro_compra = '$nro_tbcompra' 
-                                                                                        order by detcom.id_detalle_compras";
-                                                                                    $query_detalle_compras = $pdo->prepare($sql_detalle_compras);
-                                                                                    $query_detalle_compras->execute();
-                                                                                    $detalle_compras_datos = $query_detalle_compras->fetchAll(PDO::FETCH_ASSOC);
+                                                                                <?php
+                                                                                            $contador_detalle_compras = 0;
+                                                                                            $cantidad_total = 0;
+                                                                                            $precio_unitario_total = 0;
+                                                                                            $precio_total = 0;
+                                                                                            $nro_tbcompra = $compras_datos['nro_compra'];
 
-                                                                                    foreach ($detalle_compras_datos as $detalle_compras_datos) {
-                                                                                        $id_detalle_compras = $detalle_compras_datos['id_detalle_compras'];
-                                                                                        $contador_detalle_compras = $contador_detalle_compras + 1;
-                                                                                        $cantidad_total = $cantidad_total + $detalle_compras_datos['cantidad_producto'];
-                                                                                        $precio_unitario_total = $precio_unitario_total + $detalle_compras_datos['precio_unitario'];
-                                                                                        $precio_total = $precio_total + ($detalle_compras_datos['cantidad_producto'] * $detalle_compras_datos['precio_unitario']);
-                                                                                    ?>
+                                                                                            // Selecciona todo con el * de la tabla detalle_compras (id_detalle_compras, id_producto, nro_compra, cantidad_producto, precio_unitario, total_producto)
+                                                                                            $sql_detalle_compras = "SELECT *,
+                                                                                                pro.nombre AS nombre_producto, pro.descripcion AS descripcion, pr.nombre_proveedor AS nombre_proveedor
+                                                                                                FROM tb_detalle_compras AS detcom 
+                                                                                                INNER JOIN tb_almacen AS pro ON detcom.id_producto = pro.id_producto
+                                                                                                INNER JOIN tb_proveedores AS pr ON pr.id_proveedor = pro.id_proveedor
+                                                                                                WHERE nro_compra = '$nro_tbcompra' 
+                                                                                                ORDER BY detcom.id_detalle_compras";
+
+                                                                                            $query_detalle_compras = $mysqli->query($sql_detalle_compras);
+
+                                                                                            if ($query_detalle_compras) {
+                                                                                                while ($detalle_compras_datos = $query_detalle_compras->fetch_assoc()) {
+                                                                                                    $id_detalle_compras = $detalle_compras_datos['id_detalle_compras'];
+                                                                                                    $contador_detalle_compras += 1;
+                                                                                                    $cantidad_total += $detalle_compras_datos['cantidad_producto'];
+                                                                                                    $precio_unitario_total += $detalle_compras_datos['precio_unitario'];
+                                                                                                    $precio_total += ($detalle_compras_datos['cantidad_producto'] * $detalle_compras_datos['precio_unitario']);
+                                                                                                    ?>
+                                                                                                    <!-- El código HTML o PHP que necesites poner dentro del loop -->
+                                                                                                    <?php
+                                                                                                }
+                                                                                            } else {
+                                                                                                echo "Error al ejecutar la consulta: " . $mysqli->error;
+                                                                                            }
+                                                                                            ?>
+
                                                                                         <tr>
                                                                                             <td>
                                                                                                 <center>

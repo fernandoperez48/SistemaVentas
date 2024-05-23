@@ -67,17 +67,24 @@ include '../app/controllers/clientes/show_clienteemp.php';
                                     <label for="">Domicilio</label>
                                     <input type="text" class="form-control" name="domicilio" value="<?php
                                                                                                     if (!empty($clientesemp_datos['id_domicilio'])) {
+                                                                                                        $id_domicilio = $clientesemp_datos['id_domicilio'];
                                                                                                         $sql_domicilio = "SELECT d.calle, d.numero, d.piso, d.depto 
-                                                    FROM tb_domicilios as d 
-                                                    WHERE d.id_domicilio = {$clientesemp_datos['id_domicilio']}";
-                                                                                                        $query_domicilio = $pdo->prepare($sql_domicilio);
-                                                                                                        $query_domicilio->execute();
-                                                                                                        $domicilio_datos = $query_domicilio->fetch(PDO::FETCH_ASSOC);
-                                                                                                        echo $domicilio_datos['calle'] . ' ' . $domicilio_datos['numero'] . ' ' . $domicilio_datos['piso'] . ' ' . $domicilio_datos['depto'];
+                                                                                                         FROM tb_domicilios AS d 
+                                                                                                         WHERE d.id_domicilio = $id_domicilio";
+
+                                                                                                        $query_domicilio = $mysqli->query($sql_domicilio);
+
+                                                                                                        if ($query_domicilio) {
+                                                                                                            $domicilio_datos = $query_domicilio->fetch_assoc();
+                                                                                                            echo $domicilio_datos['calle'] . ' ' . $domicilio_datos['numero'] . ' ' . $domicilio_datos['piso'] . ' ' . $domicilio_datos['depto'];
+                                                                                                        } else {
+                                                                                                            echo "Error al ejecutar la consulta";
+                                                                                                        }
                                                                                                     } else {
                                                                                                         echo "No hay domicilio";
                                                                                                     }
-                                                                                                    ?>" disabled>
+                                                                                                    ?>
+" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Persona Autorizada</label>

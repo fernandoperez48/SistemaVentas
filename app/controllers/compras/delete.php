@@ -1,57 +1,52 @@
 <?php
+
 include '../../config.php';
 
+$id_compra = $_GET['id_compra'];
+$id_producto = $_GET['id_producto'];
+$stock_actual = $_GET['stock_actual'];
+$cantidad_compra = $_GET['cantidad_compra'];
 
-$id_compra=$_GET['id_compra'];
-$id_producto=$_GET['id_producto'];
-$stock_actual=$_GET['stock_actual'];
-$cantidad_compra=$_GET['cantidad_compra'];
+$mysqli->begin_transaction();
 
-//echo $id_compra." ".$id_producto;
-$pdo->beginTransaction();
+$sentencia = $mysqli->prepare("DELETE FROM tb_compras WHERE id_compra=?");
 
-   
-    $sentencia = $pdo->prepare("DELETE FROM tb_compras WHERE id_compra=:id_compra;");
-   
-    $sentencia->bindParam(':id_compra',$id_compra);
-    
-   
+$sentencia->bind_param('i', $id_compra);
 
-    if($sentencia->execute()){
-        //actualiza el stock desde la compra
-        $stock=$stock_actual-$cantidad_compra;
-        $sentencia = $pdo->prepare("UPDATE tb_almacen 
-        SET  stock=:stock WHERE id_producto=:id_producto;"); 
-            
-        $sentencia->bindParam('stock',$stock);
-        $sentencia->bindParam('id_producto',$id_producto);
-        $sentencia->execute();
+if ($sentencia->execute()) {
+    // Actualizar el stock desde la compra
+    $stock = $stock_actual - $cantidad_compra;
+    $sentencia = $mysqli->prepare("UPDATE tb_almacen 
+        SET stock=? WHERE id_producto=?");
 
-        $pdo->commit();
+    $sentencia->bind_param('ii', $stock, $id_producto);
+    $sentencia->execute();
 
-        //echo "Guardado correctamente";
-        session_start();
-        //echo "Se registro la categoria correctamente";
-        $_SESSION['mensaje']="Se elimino la compra correctamente";
-        $_SESSION['icono']="success";
-        //header('location: '.$URL.'/categorias/');
-        ?>
-        <script>
-            window.location.href = '<?php echo $URL; ?>/compras/';
-        </script>
-        <?php
-    }else{
-        $pdo->rollBack();
-        //echo "No se guardo correctamente";
-        session_start();
-        $_SESSION['mensaje']="No se pudo actualizar la compra";
-        $_SESSION['icono']="error";
-       // header('location: '.$URL.'/categorias');
-       ?>
-        <script>
-            window.location.href = '<?php echo $URL; ?>/compras';
-        </script>
-        <?php
-    }
+    $mysqli->commit();
+
+    session_start();
+    $_SESSION['mensaje'] = "Se eliminó la compra correctamente";
+    $_SESSION['icono'] = "success";
+?>
+
+    <script>
+        window.location.href = '<?php echo $URL; ?>/compras/';
+    </script>
+
+<?php
+} else {
+    $mysqli->rollback();
+
+    session_start();
+    $_SESSION['mensaje'] = "No se pudo actualizar la compra";
+    $_SESSION['icono'] = "error";
+?>
+
+    <script>
+        window.location.href = '<?php echo $URL; ?>/compras';
+    </script>
+
+<?php
+}
 
 ?>

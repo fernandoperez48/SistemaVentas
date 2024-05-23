@@ -5,9 +5,8 @@ include '../../config.php';
 $id_cliente = $_POST['id_cliente'];
 
 // Preparar y ejecutar la consulta de eliminación
-$sentencia = $pdo->prepare("DELETE FROM tb_clientes WHERE id_cliente = :id_cliente");
-$sentencia->bindParam(':id_cliente', $id_cliente);
-$sentencia->execute();
+$sql_delete = "DELETE FROM tb_clientes WHERE id_cliente = '$id_cliente'";
+$mysqli->query($sql_delete);
 
 // Iniciar sesión y establecer mensajes
 session_start();

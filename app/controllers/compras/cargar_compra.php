@@ -2,29 +2,32 @@
 
 $id_compra_get = $_GET['id'];
 
-$sql_compras ="SELECT *,
-pro.codigo as codigo, pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.stock as stock, pro.stock_minimo as stock_minimo, pro.stock_maximo as stock_maximo, pro.precio_compra as precio_compra_producto, pro.precio_venta as precio_venta_producto, pro.fecha_ingreso as fecha_ingreso, pro.imagen as imagen,
-cat.nombre_categoria as nombre_categoria, us.nombres as nombre_usuarios_producto,
-pr.nombre_proveedor as nombre_proveedor, pr.celular as celular_proveedor, pr.telefono as telefono_proveedor, pr.direccion as direccion_proveedor, pr.email as email_proveedor, pr.empresa as empresa_proveedor, us.nombres as nombres_usuario
-from tb_compras as co 
-inner join tb_almacen as pro on co.id_producto = pro.id_producto 
-inner join tb_acategorias as cat on cat.id_categoria = pro.id_categoria
-inner join tb_usuarios as us on co.id_usuario = us.id_usuarios 
-inner join tb_proveedores as pr on co.id_proveedor = pr.id_proveedor
-where co.id_compra = '$id_compra_get'";
+$sql_compras = "SELECT *,
+                pro.codigo as codigo, pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.stock as stock, pro.stock_minimo as stock_minimo, pro.stock_maximo as stock_maximo, pro.precio_compra as precio_compra_producto, pro.precio_venta as precio_venta_producto, pro.fecha_ingreso as fecha_ingreso, pro.imagen as imagen,
+                cat.nombre_categoria as nombre_categoria, us.nombres as nombre_usuarios_producto,
+                pr.nombre_proveedor as nombre_proveedor, pr.celular as celular_proveedor, pr.telefono as telefono_proveedor, pr.direccion as direccion_proveedor, pr.email as email_proveedor, pr.empresa as empresa_proveedor, us.nombres as nombres_usuario
+                FROM tb_compras as co 
+                INNER JOIN tb_almacen as pro ON co.id_producto = pro.id_producto 
+                INNER JOIN tb_acategorias as cat ON cat.id_categoria = pro.id_categoria
+                INNER JOIN tb_usuarios as us ON co.id_usuario = us.id_usuarios 
+                INNER JOIN tb_proveedores as pr ON co.id_proveedor = pr.id_proveedor
+                WHERE co.id_compra = '$id_compra_get'";
 
+$result_compras = $mysqli->query($sql_compras);
 
-$query_compras= $pdo->prepare($sql_compras);
-$query_compras->execute();
-$compras_datos=$query_compras->fetchAll(PDO::FETCH_ASSOC);
+$compras_datos = array();
+
+while ($row = $result_compras->fetch_assoc()) {
+    $compras_datos[] = $row;
+}
 
 foreach ($compras_datos as $compras_datos) {
-   $nro_compra = $compras_datos['nro_compra'];
+    $nro_compra = $compras_datos['nro_compra'];
     $id_compra = $compras_datos['id_compra'];
     $id_producto = $compras_datos['id_producto'];
     $id_proveedor_tabla = $compras_datos['id_proveedor'];
-   $codigo = $compras_datos['codigo'];
-   $nombre_categoria = $compras_datos['nombre_categoria'];
+    $codigo = $compras_datos['codigo'];
+    $nombre_categoria = $compras_datos['nombre_categoria'];
     $nombre_producto = $compras_datos['nombre_producto'];
     $nombre_usuarios_producto = $compras_datos['nombre_usuarios_producto'];
     $descripcion = $compras_datos['descripcion'];
@@ -46,4 +49,3 @@ foreach ($compras_datos as $compras_datos) {
     $cantidad = $compras_datos['cantidad'];
     $precio_compra = $compras_datos['precio_compra'];
 }
-?>

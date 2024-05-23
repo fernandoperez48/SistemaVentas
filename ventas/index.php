@@ -118,28 +118,34 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
-                                                                                    <?php
+                                                                                <?php
                                                                                     $contador_carrito = 0;
-                                                                                    $cantidad_total = 0;
-                                                                                    $precio_unitario_total = 0;
-                                                                                    $precio_total = 0;
-                                                                                    $nro_venta = $ventas_datos['nro_venta'];
-                                                                                    $sql_carrito = "SELECT *,pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, pro.stock as stock, pro.id_producto as id_producto 
-                                                                                    from tb_carrito as carr 
-                                                                                    inner join tb_almacen as pro on carr.id_producto = pro.id_producto 
-                                                                                    where nro_venta = '$nro_venta' 
-                                                                                    order by carr.id_carrito";
-                                                                                    $query_carrito = $pdo->prepare($sql_carrito);
-                                                                                    $query_carrito->execute();
-                                                                                    $carrito_datos = $query_carrito->fetchAll(PDO::FETCH_ASSOC);
+$cantidad_total = 0;
+$precio_unitario_total = 0;
+$precio_total = 0;
+$nro_venta = $ventas_datos['nro_venta'];
+$sql_carrito = "SELECT carr.*, pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, pro.stock as stock, pro.id_producto as id_producto 
+                FROM tb_carrito as carr 
+                INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto 
+                WHERE nro_venta = '$nro_venta' 
+                ORDER BY carr.id_carrito";
+$resultado_carrito = $mysqli->query($sql_carrito);
 
-                                                                                    foreach ($carrito_datos as $carrito_datos) {
-                                                                                        $id_carrito = $carrito_datos['id_carrito'];
-                                                                                        $contador_carrito = $contador_carrito + 1;
-                                                                                        $cantidad_total = $cantidad_total + $carrito_datos['cantidad'];
-                                                                                        $precio_unitario_total = $precio_unitario_total + $carrito_datos['precio_venta'];
-                                                                                        $precio_total = $precio_total + ($carrito_datos['cantidad'] * $carrito_datos['precio_venta']);
-                                                                                    ?>
+if ($resultado_carrito) {
+    $carrito_datos = $resultado_carrito->fetch_all(MYSQLI_ASSOC);
+    
+    foreach ($carrito_datos as $carrito) {
+        $id_carrito = $carrito['id_carrito'];
+        $contador_carrito++;
+        $cantidad_total += $carrito['cantidad'];
+        $precio_unitario_total += $carrito['precio_venta'];
+        $precio_total += ($carrito['cantidad'] * $carrito['precio_venta']);
+    }
+} else {
+    echo "Error en la consulta: " . $mysqli->error;
+}
+?>
+
                                                                                         <tr>
                                                                                             <td>
                                                                                                 <center>
@@ -236,16 +242,20 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                 </div>
                                                                 <?php
                                                                 $sql_clientes = "SELECT *, COALESCE(emp.nombre, p.nombre) AS nombre,COALESCE(emp.razon_social, p.apellido) AS apellido,
-                                                                COALESCE(emp.telefono, p.telefono) AS telefono,COALESCE(emp.email, p.email) AS email, COALESCE(emp.cuit, p.dni) AS cuit
-                                                                from tb_clientes as cl
-                                                                left JOIN tb_empresas AS emp ON cl.id_empresa = emp.id_empresa
-                                                                left JOIN tb_personas AS p ON cl.id_persona = p.id_persona
-                                                                where cl.id_cliente = '$id_cliente' ";
+                                                                    COALESCE(emp.telefono, p.telefono) AS telefono,COALESCE(emp.email, p.email) AS email, COALESCE(emp.cuit, p.dni) AS cuit
+                                                                    from tb_clientes as cl
+                                                                    left JOIN tb_empresas AS emp ON cl.id_empresa = emp.id_empresa
+                                                                    left JOIN tb_personas AS p ON cl.id_persona = p.id_persona
+                                                                    where cl.id_cliente = '$id_cliente' ";
 
 
-                                                                $query_clientes = $pdo->prepare($sql_clientes);
-                                                                $query_clientes->execute();
-                                                                $clientes_datos = $query_clientes->fetchAll(PDO::FETCH_ASSOC);
+
+                                                                $resultado_clientes = $mysqli->query($sql_clientes);
+                                                                $clientes_datos = array();
+                                                                while ($fila = $resultado_clientes->fetch_assoc()) {
+                                                                    $clientes_datos[] = $fila;
+                                                                }
+
 
                                                                 foreach ($clientes_datos as $clientes_datos) {
                                                                     $nombre_cliente = $clientes_datos['nombre'] . ' ' . $clientes_datos['apellido'];

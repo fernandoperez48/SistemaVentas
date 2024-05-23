@@ -1,29 +1,34 @@
 <?php
 include '../../config.php';
-$rol=$_POST['rol'];
-$id_rol=$_POST['id_rol'];
-     
-        $sentencia = $pdo->prepare("UPDATE tb_roles 
-         SET rol=:rol,
-            fyh_actualizacion=:fyh_actualizacion
-         WHERE id_rol=:id_rol;");
-        
-    
-        $sentencia->bindParam('rol',$rol);
-        $sentencia->bindParam('fyh_actualizacion',$fechaHora);
-        $sentencia->bindParam('id_rol',$id_rol);
-        
-        if($sentencia->execute()){
-            //echo "guardado";
-            session_start();
-            $_SESSION['mensaje']="Se actualizo el rol correctamente";
-            $_SESSION['icono']="success";
-            header('location: '.$URL.'/roles/');
-        }else{
-            //echo "no guardado";
-            session_start();
-            $_SESSION['mensaje']="No se actualizo el rol correctamente";
-            $_SESSION['icono']="error";
-            header('location: '.$URL.'roles/update.php?id='.$id_rol.'');
-        }
-?>
+
+$rol = $_POST['rol'];
+$id_rol = $_POST['id_rol'];
+
+// Preparar la sentencia SQL
+$sql = "UPDATE tb_roles 
+        SET rol = ?, fyh_actualizacion = ?
+        WHERE id_rol = ?";
+$stmt = $mysqli->prepare($sql);
+
+if ($stmt) {
+    // Vincular los parámetros
+    $stmt->bind_param('ssi', $rol, $fechaHora, $id_rol);
+
+    // Ejecutar la sentencia
+    if ($stmt->execute()) {
+        session_start();
+        $_SESSION['mensaje'] = "Se actualizó el rol correctamente";
+        $_SESSION['icono'] = "success";
+        header('location: ' . $URL . '/roles/');
+    } else {
+        session_start();
+        $_SESSION['mensaje'] = "No se pudo actualizar el rol correctamente";
+        $_SESSION['icono'] = "error";
+        header('location: ' . $URL . 'roles/update.php?id=' . $id_rol);
+    }
+    // Cerrar la sentencia
+    $stmt->close();
+} else {
+    // Si hay algún error en la preparación de la sentencia
+    echo "Error: " . $mysqli->error;
+}

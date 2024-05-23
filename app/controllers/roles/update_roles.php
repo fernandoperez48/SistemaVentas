@@ -1,11 +1,18 @@
 <?php
-$id_rol_get = $_GET['id'];
-$sql_roles ="SELECT * FROM tb_roles where id_rol = '$id_rol_get'";
-$query_roles= $pdo->prepare($sql_roles);
-$query_roles->execute();
-$roles_datos=$query_roles->fetchAll(PDO::FETCH_ASSOC);
+include '../../config.php';
 
-foreach ($roles_datos as $roles_datos) {
+$id_rol_get = $_GET['id'];
+
+// Consulta SQL para obtener los datos del rol
+$sql_roles = "SELECT * FROM tb_roles WHERE id_rol = '$id_rol_get'";
+$resultado = $mysqli->query($sql_roles);
+
+// Inicializar la variable $rol
+$rol = '';
+
+// Verificar si se encontraron datos
+if ($resultado->num_rows > 0) {
+    // Obtener los datos del rol
+    $roles_datos = $resultado->fetch_assoc();
     $rol = $roles_datos['rol'];
 }
-?>

@@ -174,27 +174,29 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 data: [
                     <?php
                     // total de proveedores
-                    $stmt_total_proveedores = $pdo->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
-                    $total_proveedores = $stmt_total_proveedores->fetchColumn();
-                    $stmt_total = $pdo->query("SELECT COUNT(*) AS total FROM tb_almacen");
-                    $total = $stmt_total->fetchColumn();
+                    $sql_total_proveedores = "SELECT COUNT(*) AS total_proveedores FROM tb_proveedores";
+                    $resultado_total_proveedores = $mysqli->query($sql_total_proveedores);
+                    $total_proveedores = $resultado_total_proveedores->fetch_assoc()['total_proveedores'];
+
+                    $sql_total_almacen = "SELECT COUNT(*) AS total FROM tb_almacen";
+                    $resultado_total_almacen = $mysqli->query($sql_total_almacen);
+                    $total = $resultado_total_almacen->fetch_assoc()['total'];
+
                     // completo con objetos el array
                     $porcentajes = [];
                     for ($i = 1; $i <= $total_proveedores; $i++) {
-                        $stmt_proveedor = $pdo->prepare("SELECT COUNT(*) AS cnt FROM tb_almacen WHERE id_proveedor = ?");
-                        $stmt_proveedor->execute([$i]);
-                        $cantidad = $stmt_proveedor->fetchColumn();
+                        $sql_proveedor = "SELECT COUNT(*) AS cnt FROM tb_almacen WHERE id_proveedor = $i";
+                        $resultado_proveedor = $mysqli->query($sql_proveedor);
+                        $cantidad = $resultado_proveedor->fetch_assoc()['cnt'];
 
                         // nombre segun $i
-                        $stmt_nombre_proveedor = $pdo->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
-                        $stmt_nombre_proveedor->execute([$i]);
-                        $nombre_proveedor = $stmt_nombre_proveedor->fetchColumn();
+                        $sql_nombre_proveedor = "SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = $i";
+                        $resultado_nombre_proveedor = $mysqli->query($sql_nombre_proveedor);
+                        $nombre_proveedor = $resultado_nombre_proveedor->fetch_assoc()['nombre_proveedor'];
 
-                        //$porcentaje = ($cantidad / $total) * 100;
-                        // uso el nombre segun $I
                         $porcentaje = ($cantidad / $total) * 100;
                         $porcentaje_dos_decimales = number_format($porcentaje, 2);
-                        $porcentajes[] = ['name' => $nombre_proveedor, 'y' => $porcentaje];
+                        $porcentajes[] = ['name' => $nombre_proveedor, 'y' => $porcentaje_dos_decimales];
                     }
 
                     // recorro el array y le meto el codigo q no entiendo
@@ -207,6 +209,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                         echo json_encode($proveedor);
                     }
                     ?>
+
                 ]
             }]
         });
@@ -258,31 +261,32 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 data: [
                     <?php
                     // total de proveedores
-                    $stmt_total_proveedores = $pdo->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
-                    $total_proveedores = $stmt_total_proveedores->fetchColumn();
+                    $sql_total_proveedores = "SELECT COUNT(*) AS total_proveedores FROM tb_proveedores";
+                    $resultado_total_proveedores = $mysqli->query($sql_total_proveedores);
+                    $total_proveedores = $resultado_total_proveedores->fetch_assoc()['total_proveedores'];
 
-                    $stmt_total = $pdo->query("SELECT COUNT(*) AS total FROM tb_compras");
-                    $total = $stmt_total->fetchColumn();
+                    $sql_total_compras = "SELECT COUNT(*) AS total FROM tb_compras";
+                    $resultado_total_compras = $mysqli->query($sql_total_compras);
+                    $total = $resultado_total_compras->fetch_assoc()['total'];
+
                     // completo con objetos el array
                     $porcentajes = [];
                     for ($i = 1; $i <= $total_proveedores; $i++) {
-                        $stmt_proveedor = $pdo->prepare("SELECT COUNT(*) AS cnt FROM tb_compras WHERE id_proveedor = ?");
-                        $stmt_proveedor->execute([$i]);
-                        $cantidad = $stmt_proveedor->fetchColumn();
+                        $sql_proveedor = "SELECT COUNT(*) AS cnt FROM tb_compras WHERE id_proveedor = $i";
+                        $resultado_proveedor = $mysqli->query($sql_proveedor);
+                        $cantidad = $resultado_proveedor->fetch_assoc()['cnt'];
 
                         // nombre segun $i
-                        $stmt_nombre_proveedor = $pdo->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
-                        $stmt_nombre_proveedor->execute([$i]);
-                        $nombre_proveedor = $stmt_nombre_proveedor->fetchColumn();
+                        $sql_nombre_proveedor = "SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = $i";
+                        $resultado_nombre_proveedor = $mysqli->query($sql_nombre_proveedor);
+                        $nombre_proveedor = $resultado_nombre_proveedor->fetch_assoc()['nombre_proveedor'];
 
-                        //$porcentaje = ($cantidad / $total) * 100;
-                        // uso el nombre segun $I
                         $porcentaje = ($cantidad / $total) * 100;
                         $porcentaje_dos_decimales = number_format($porcentaje, 2);
-                        $porcentajes[] = ['name' => $nombre_proveedor, 'y' => $porcentaje];
+                        $porcentajes[] = ['name' => $nombre_proveedor, 'y' => $porcentaje_dos_decimales];
                     }
 
-                    // recorro el array y le meto el codigo q no entiendo
+                    // recorro el array y le meto el código que no entiendo
                     $primera = true;
                     foreach ($porcentajes as $proveedor) {
                         if (!$primera) {
@@ -292,6 +296,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                         echo json_encode($proveedor);
                     }
                     ?>
+
                 ]
             }]
         });
@@ -344,11 +349,17 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                     $total_gastado_total = 0;
 
                     // Consulta para obtener el total gastado por cada proveedor
-                    $stmt_total_gastado = $pdo->query("SELECT id_proveedor, SUM(precio_compra) AS total_gastado FROM tb_compras GROUP BY id_proveedor");
-                    $total_gastado_proveedores = $stmt_total_gastado->fetchAll(PDO::FETCH_ASSOC);
+                    $sql_total_gastado = "SELECT id_proveedor, SUM(precio_compra) AS total_gastado FROM tb_compras GROUP BY id_proveedor";
+                    $resultado_total_gastado = $mysqli->query($sql_total_gastado);
 
-                    // Calcular el total gastado en todas las compras
-                    foreach ($total_gastado_proveedores as $proveedor) {
+                    // Inicializar el arreglo para almacenar los datos
+                    $total_gastado_proveedores = array();
+
+                    // Obtener los datos del total gastado por proveedor
+                    while ($proveedor = $resultado_total_gastado->fetch_assoc()) {
+                        $total_gastado_proveedores[] = $proveedor;
+
+                        // Calcular el total gastado en todas las compras
                         $total_gastado_total += $proveedor['total_gastado'];
                     }
 
@@ -364,6 +375,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                         echo '{ name: "' . $proveedor['id_proveedor'] . '", y: ' . $porcentaje_dos_decimales . '}';
                     }
                     ?>
+
                 ]
             }]
         });

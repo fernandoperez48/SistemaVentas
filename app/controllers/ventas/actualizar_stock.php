@@ -1,26 +1,15 @@
 <?php
 include '../../config.php';
 
-$id_producto=$_GET['id_producto'];
-$stock_calculado=$_GET['stock_calculado'];
+$id_producto = $_GET['id_producto'];
+$stock_calculado = $_GET['stock_calculado'];
 
+$sql = "UPDATE tb_almacen SET stock='$stock_calculado' WHERE id_producto='$id_producto'";
 
-   
-    $sentencia = $pdo->prepare("update tb_almacen set stock=:stock where id_producto=:id_producto");
+if ($mysqli->query($sql) === TRUE) {
+    echo "Guardado correctamente";
+} else {
+    echo "No se guardó correctamente";
+}
 
-   
-
-    $sentencia->bindParam('stock',$stock_calculado);
-    $sentencia->bindParam('id_producto',$id_producto);
-    
-   
-
-    if($sentencia->execute()){
-       echo "Guardado correctamente";       
-    }else{
-        echo "No se guardo correctamente";     
-    }
-
-    
-
-?>
+$mysqli->close();

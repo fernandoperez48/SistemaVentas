@@ -1,13 +1,19 @@
 <?php
 
-
 $sql_envios = "SELECT e.IdVenta,COALESCE(emp.nombre, p.nombre) AS nombre,COALESCE(emp.razon_social, p.apellido) AS apellido, e.Direccion, e.estado,c.id_persona,v.total_pagado,v.nro_venta,v.fyh_creacion,d.calle,d.numero
-FROM tb_envios as e
-inner Join tb_clientes as c on c.id_cliente = e.IdCliente
-left JOIN tb_empresas AS emp ON c.id_empresa = emp.id_empresa
-left JOIN tb_personas AS p ON c.id_persona = p.id_persona 
-inner Join tb_ventas as v on e.idVenta = v.nro_venta
-inner Join tb_domicilios as d on d.id_domicilio = emp.id_domicilio or d.id_domicilio = p.id_domicilio";
-$query_envios = $pdo->prepare($sql_envios);
-$query_envios->execute();
-$envios_datos = $query_envios->fetchAll(PDO::FETCH_ASSOC);
+               FROM tb_envios as e
+               INNER JOIN tb_clientes as c ON c.id_cliente = e.IdCliente
+               LEFT JOIN tb_empresas AS emp ON c.id_empresa = emp.id_empresa
+               LEFT JOIN tb_personas AS p ON c.id_persona = p.id_persona 
+               INNER JOIN tb_ventas as v ON e.idVenta = v.nro_venta
+               INNER JOIN tb_domicilios as d ON d.id_domicilio = emp.id_domicilio OR d.id_domicilio = p.id_domicilio";
+
+$result_envios = $mysqli->query($sql_envios);
+
+$envios_datos = [];
+
+if ($result_envios) {
+    while ($row = $result_envios->fetch_assoc()) {
+        $envios_datos[] = $row;
+    }
+}

@@ -1,25 +1,28 @@
+
+
 <?php
 define('SERVIDOR', 'localhost');
 define('USUARIO', 'root');
 define('PASSWORD', '');
 define('BD', 'sistemadeventas');
 
-$servidor = "mysql:dbname=" . BD . ";host=" . SERVIDOR;
+// Crear la conexión con MySQLi
+$mysqli = new mysqli(SERVIDOR, USUARIO, PASSWORD, BD);
 
-try {
-    $pdo = new PDO(
-        $servidor,
-        USUARIO,
-        PASSWORD,
-        array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
-    );
+// Comprobar la conexión
+if ($mysqli->connect_error) {
+    die("Error al conectar con la base de datos: " . $mysqli->connect_error);
+} else {
+    // echo "<script>alert('Conectado...')</script>";
+}
 
-    //echo "<script>alert('Conectado...')</script>";
-} catch (PDOException $e) {
-    echo "Error al conectar con la base de datos";
+// Establecer el conjunto de caracteres a utf8
+if (!$mysqli->set_charset("utf8")) {
+    die("Error al configurar el conjunto de caracteres: " . $mysqli->error);
 }
 
 $URL = "http://localhost/SistemaVentas/";
 
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $fechaHora = date("Y-m-d H:i:s");
+?>

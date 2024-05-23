@@ -49,10 +49,6 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                                 </h3>
                                             </div>
                                         </div>
-
-
-
-
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <div style="display: flex;">
@@ -279,32 +275,37 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                        $contador_detalle_compras = 0;
-                                        $cantidad_total = 0;
-                                        $precio_unitario_total = 0;
-                                        $precio_total = 0;
+                                    <?php
+$contador_detalle_compras = 0;
+$cantidad_total = 0;
+$precio_unitario_total = 0;
+$precio_total = 0;
 
-                                        $sql_detalle_compras = "SELECT *, 
-                                        pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.codigo as codigo, 
-                                        pr.nombre_proveedor as nombre_proveedor,
-                                        cat.nombre_categoria as nombre_categoria
-                                        from tb_detalle_compras as detcom
-                                        inner join tb_almacen as pro on detcom.id_producto = pro.id_producto 
-                                        inner join tb_proveedores as pr on pro.id_proveedor = pr.id_proveedor
-                                        inner join tb_acategorias as cat on cat.id_categoria = pro.id_categoria
-                                        where nro_compra = $contador_de_compras + 1 
-                                        order by detcom.id_detalle_compras";
-                                        $query_detalle_compras = $pdo->prepare($sql_detalle_compras);
-                                        $query_detalle_compras->execute();
-                                        $detalle_compras_datos = $query_detalle_compras->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($detalle_compras_datos as $detalle_compras_datos) {
-                                            $id_detalle_compras = $detalle_compras_datos['id_detalle_compras'];
-                                            $contador_detalle_compras = $contador_detalle_compras + 1;
-                                            $cantidad_total = $cantidad_total + $detalle_compras_datos['cantidad_producto'];
-                                            $precio_unitario_total = $precio_unitario_total + $detalle_compras_datos['precio_unitario'];
-                                            $precio_total = $precio_total + ($detalle_compras_datos['cantidad_producto'] * $detalle_compras_datos['precio_unitario']);
-                                        ?>
+$sql_detalle_compras = "SELECT *, 
+                        pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.codigo as codigo, 
+                        pr.nombre_proveedor as nombre_proveedor,
+                        cat.nombre_categoria as nombre_categoria
+                        FROM tb_detalle_compras AS detcom
+                        INNER JOIN tb_almacen AS pro ON detcom.id_producto = pro.id_producto 
+                        INNER JOIN tb_proveedores AS pr ON pro.id_proveedor = pr.id_proveedor
+                        INNER JOIN tb_acategorias AS cat ON cat.id_categoria = pro.id_categoria
+                        WHERE nro_compra = " . ($contador_de_compras + 1) . " 
+                        ORDER BY detcom.id_detalle_compras";
+
+$resultado_detalle_compras = $mysqli->query($sql_detalle_compras);
+if ($resultado_detalle_compras) {
+    while ($detalle_compras_datos = $resultado_detalle_compras->fetch_assoc()) {
+        $id_detalle_compras = $detalle_compras_datos['id_detalle_compras'];
+        $contador_detalle_compras++;
+        $cantidad_total += $detalle_compras_datos['cantidad_producto'];
+        $precio_unitario_total += $detalle_compras_datos['precio_unitario'];
+        $precio_total += ($detalle_compras_datos['cantidad_producto'] * $detalle_compras_datos['precio_unitario']);
+    }
+} else {
+    echo "Error: " . $mysqli->error;
+}
+?>
+
                                             <tr>
                                                 <td>
                                                     <center><?php echo $contador_detalle_compras; ?></center>
