@@ -131,15 +131,15 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
-                                                                                <?php
-                                                                                            $contador_detalle_compras = 0;
-                                                                                            $cantidad_total = 0;
-                                                                                            $precio_unitario_total = 0;
-                                                                                            $precio_total = 0;
-                                                                                            $nro_tbcompra = $compras_datos['nro_compra'];
+                                                                                    <?php
+                                                                                    $contador_detalle_compras = 0;
+                                                                                    $cantidad_total = 0;
+                                                                                    $precio_unitario_total = 0;
+                                                                                    $precio_total = 0;
+                                                                                    $nro_tbcompra = $compras_datos['nro_compra'];
 
-                                                                                            // Selecciona todo con el * de la tabla detalle_compras (id_detalle_compras, id_producto, nro_compra, cantidad_producto, precio_unitario, total_producto)
-                                                                                            $sql_detalle_compras = "SELECT *,
+                                                                                    // Selecciona todo con el * de la tabla detalle_compras (id_detalle_compras, id_producto, nro_compra, cantidad_producto, precio_unitario, total_producto)
+                                                                                    $sql_detalle_compras = "SELECT *,
                                                                                                 pro.nombre AS nombre_producto, pro.descripcion AS descripcion, pr.nombre_proveedor AS nombre_proveedor
                                                                                                 FROM tb_detalle_compras AS detcom 
                                                                                                 INNER JOIN tb_almacen AS pro ON detcom.id_producto = pro.id_producto
@@ -147,70 +147,67 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                                                 WHERE nro_compra = '$nro_tbcompra' 
                                                                                                 ORDER BY detcom.id_detalle_compras";
 
-                                                                                            $query_detalle_compras = $mysqli->query($sql_detalle_compras);
+                                                                                    $query_detalle_compras = $mysqli->query($sql_detalle_compras);
 
-                                                                                            if ($query_detalle_compras) {
-                                                                                                while ($detalle_compras_datos = $query_detalle_compras->fetch_assoc()) {
-                                                                                                    $id_detalle_compras = $detalle_compras_datos['id_detalle_compras'];
-                                                                                                    $contador_detalle_compras += 1;
-                                                                                                    $cantidad_total += $detalle_compras_datos['cantidad_producto'];
-                                                                                                    $precio_unitario_total += $detalle_compras_datos['precio_unitario'];
-                                                                                                    $precio_total += ($detalle_compras_datos['cantidad_producto'] * $detalle_compras_datos['precio_unitario']);
-                                                                                                    ?>
-                                                                                                    <!-- El código HTML o PHP que necesites poner dentro del loop -->
-                                                                                                    <?php
-                                                                                                }
-                                                                                            } else {
-                                                                                                echo "Error al ejecutar la consulta: " . $mysqli->error;
-                                                                                            }
-                                                                                            ?>
+                                                                                    if ($query_detalle_compras) {
+                                                                                        while ($detalle_compras_datos = $query_detalle_compras->fetch_assoc()) {
+                                                                                            $id_detalle_compras = $detalle_compras_datos['id_detalle_compras'];
+                                                                                            $contador_detalle_compras += 1;
+                                                                                            $cantidad_total += $detalle_compras_datos['cantidad_producto'];
+                                                                                            $precio_unitario_total += $detalle_compras_datos['precio_unitario'];
+                                                                                            $precio_total += ($detalle_compras_datos['cantidad_producto'] * $detalle_compras_datos['precio_unitario']);
+                                                                                    ?>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <center>
+                                                                                                        <?php echo $contador_detalle_compras; ?>
+                                                                                                    </center>
+                                                                                                    <input type="text" value="<?php echo $detalle_compras_datos['id_producto']; ?>" id="id_producto<?php echo $contador_detalle_compras; ?>" hidden>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <center>
+                                                                                                        <?php echo $detalle_compras_datos['nombre_producto']; ?>
+                                                                                                    </center>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <center>
+                                                                                                        <?php echo $detalle_compras_datos['descripcion']; ?>
+                                                                                                    </center>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <center>
+                                                                                                        <?php echo $detalle_compras_datos['nombre_proveedor']; ?>
+                                                                                                    </center>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <center><span id="cantidad_detalle_compras<?php echo $contador_detalle_compras; ?>"><?php echo $detalle_compras_datos['cantidad_producto']; ?></span>
+                                                                                                    </center>
+                                                                                                    <input type="text" id="stock_de_inventario<?php echo $contador_detalle_compras; ?>" value="<?php echo $detalle_compras_datos['stock']; ?>" hidden>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <center>
+                                                                                                        <?php echo $detalle_compras_datos['precio_unitario']; ?>
+                                                                                                    </center>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <center>
+                                                                                                        <?php
+                                                                                                        $cantidad = floatval($detalle_compras_datos['cantidad_producto']);
+                                                                                                        $precio_unitario = floatval($detalle_compras_datos['precio_unitario']);
+                                                                                                        echo $subtotal = $cantidad * $precio_unitario;
+                                                                                                        ?>
+                                                                                                    </center>
+                                                                                                </td>
 
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <center>
-                                                                                                    <?php echo $contador_detalle_compras; ?>
-                                                                                                </center>
-                                                                                                <input type="text" value="<?php echo $detalle_compras_datos['id_producto']; ?>" id="id_producto<?php echo $contador_detalle_compras; ?>" hidden>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <center>
-                                                                                                    <?php echo $detalle_compras_datos['nombre_producto']; ?>
-                                                                                                </center>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <center>
-                                                                                                    <?php echo $detalle_compras_datos['descripcion']; ?>
-                                                                                                </center>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <center>
-                                                                                                    <?php echo $detalle_compras_datos['nombre_proveedor']; ?>
-                                                                                                </center>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <center><span id="cantidad_detalle_compras<?php echo $contador_detalle_compras; ?>"><?php echo $detalle_compras_datos['cantidad_producto']; ?></span>
-                                                                                                </center>
-                                                                                                <input type="text" id="stock_de_inventario<?php echo $contador_detalle_compras; ?>" value="<?php echo $detalle_compras_datos['stock']; ?>" hidden>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <center>
-                                                                                                    <?php echo $detalle_compras_datos['precio_unitario']; ?>
-                                                                                                </center>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <center>
-                                                                                                    <?php
-                                                                                                    $cantidad = floatval($detalle_compras_datos['cantidad_producto']);
-                                                                                                    $precio_unitario = floatval($detalle_compras_datos['precio_unitario']);
-                                                                                                    echo $subtotal = $cantidad * $precio_unitario;
-                                                                                                    ?>
-                                                                                                </center>
-                                                                                            </td>
-
-                                                                                        </tr>
+                                                                                            </tr>
                                                                                     <?php
+                                                                                        }
+                                                                                    } else {
+                                                                                        echo "Error al ejecutar la consulta: " . $mysqli->error;
                                                                                     }
                                                                                     ?>
+
+
                                                                                     <tr>
                                                                                         <th colspan="4" style="background-color: #e7e7e7; text-align:right;">
                                                                                             Total</th>

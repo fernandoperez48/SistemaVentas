@@ -135,7 +135,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 type: "pie"
             },
             title: {
-                text: "Volumen en porcetaje de Productos por Proveedores" // Replace with a dynamic title
+                text: "Volumen en porcentaje de Productos por Proveedores" // Replace with a dynamic title
             },
             tooltip: {
                 valueSuffix: "%",
@@ -174,32 +174,37 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 data: [
                     <?php
                     // total de proveedores
-                    $sql_total_proveedores = "SELECT COUNT(*) AS total_proveedores FROM tb_proveedores";
-                    $resultado_total_proveedores = $mysqli->query($sql_total_proveedores);
-                    $total_proveedores = $resultado_total_proveedores->fetch_assoc()['total_proveedores'];
+                    $stmt_total_proveedores = $mysqli->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
+                    $total_proveedores = $stmt_total_proveedores->fetch_assoc()['total_proveedores'];
 
-                    $sql_total_almacen = "SELECT COUNT(*) AS total FROM tb_almacen";
-                    $resultado_total_almacen = $mysqli->query($sql_total_almacen);
-                    $total = $resultado_total_almacen->fetch_assoc()['total'];
+                    $stmt_total = $mysqli->query("SELECT COUNT(*) AS total FROM tb_almacen");
+                    $total = $stmt_total->fetch_assoc()['total'];
 
                     // completo con objetos el array
                     $porcentajes = [];
                     for ($i = 1; $i <= $total_proveedores; $i++) {
-                        $sql_proveedor = "SELECT COUNT(*) AS cnt FROM tb_almacen WHERE id_proveedor = $i";
-                        $resultado_proveedor = $mysqli->query($sql_proveedor);
-                        $cantidad = $resultado_proveedor->fetch_assoc()['cnt'];
+                        $stmt_proveedor = $mysqli->prepare("SELECT COUNT(*) AS cnt FROM tb_almacen WHERE id_proveedor = ?");
+                        $stmt_proveedor->bind_param('i', $i);
+                        $stmt_proveedor->execute();
+                        $cantidad = $stmt_proveedor->get_result()->fetch_assoc()['cnt'];
 
-                        // nombre segun $i
-                        $sql_nombre_proveedor = "SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = $i";
-                        $resultado_nombre_proveedor = $mysqli->query($sql_nombre_proveedor);
-                        $nombre_proveedor = $resultado_nombre_proveedor->fetch_assoc()['nombre_proveedor'];
+                        // nombre según $i
+                        $stmt_nombre_proveedor = $mysqli->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
+                        $stmt_nombre_proveedor->bind_param('i', $i);
+                        $stmt_nombre_proveedor->execute();
+                        $nombre_proveedor = $stmt_nombre_proveedor->get_result()->fetch_assoc()['nombre_proveedor'];
 
-                        $porcentaje = ($cantidad / $total) * 100;
+                        // uso el nombre según $i
+                        if ($total > 0) {
+                            $porcentaje = ($cantidad / $total) * 100;
+                        } else {
+                            $porcentaje = 0;
+                        }
                         $porcentaje_dos_decimales = number_format($porcentaje, 2);
-                        $porcentajes[] = ['name' => $nombre_proveedor, 'y' => $porcentaje_dos_decimales];
+                        $porcentajes[] = ['name' => $nombre_proveedor, 'y' => $porcentaje];
                     }
 
-                    // recorro el array y le meto el codigo q no entiendo
+                    // recorro el array y le meto el código
                     $primera = true;
                     foreach ($porcentajes as $proveedor) {
                         if (!$primera) {
@@ -209,11 +214,11 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                         echo json_encode($proveedor);
                     }
                     ?>
-
                 ]
             }]
         });
     </script>
+
 
     <!--  Volumen en porcetaje de compras operacion por Proveedores -->
     <script type="text/javascript">
@@ -260,33 +265,33 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 colorByPoint: true,
                 data: [
                     <?php
-                    // total de proveedores
-                    $sql_total_proveedores = "SELECT COUNT(*) AS total_proveedores FROM tb_proveedores";
-                    $resultado_total_proveedores = $mysqli->query($sql_total_proveedores);
-                    $total_proveedores = $resultado_total_proveedores->fetch_assoc()['total_proveedores'];
+                    $stmt_total_proveedores = $mysqli->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
+                    $total_proveedores = $stmt_total_proveedores->fetch_assoc()['total_proveedores'];
 
-                    $sql_total_compras = "SELECT COUNT(*) AS total FROM tb_compras";
-                    $resultado_total_compras = $mysqli->query($sql_total_compras);
-                    $total = $resultado_total_compras->fetch_assoc()['total'];
+                    $stmt_total = $mysqli->query("SELECT COUNT(*) AS total FROM tb_compras");
+                    $total = $stmt_total->fetch_assoc()['total'];
 
-                    // completo con objetos el array
                     $porcentajes = [];
                     for ($i = 1; $i <= $total_proveedores; $i++) {
-                        $sql_proveedor = "SELECT COUNT(*) AS cnt FROM tb_compras WHERE id_proveedor = $i";
-                        $resultado_proveedor = $mysqli->query($sql_proveedor);
-                        $cantidad = $resultado_proveedor->fetch_assoc()['cnt'];
+                        $stmt_proveedor = $mysqli->prepare("SELECT COUNT(*) AS cnt FROM tb_compras WHERE id_proveedor = ?");
+                        $stmt_proveedor->bind_param('i', $i);
+                        $stmt_proveedor->execute();
+                        $cantidad = $stmt_proveedor->get_result()->fetch_assoc()['cnt'];
 
-                        // nombre segun $i
-                        $sql_nombre_proveedor = "SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = $i";
-                        $resultado_nombre_proveedor = $mysqli->query($sql_nombre_proveedor);
-                        $nombre_proveedor = $resultado_nombre_proveedor->fetch_assoc()['nombre_proveedor'];
+                        $stmt_nombre_proveedor = $mysqli->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
+                        $stmt_nombre_proveedor->bind_param('i', $i);
+                        $stmt_nombre_proveedor->execute();
+                        $nombre_proveedor = $stmt_nombre_proveedor->get_result()->fetch_assoc()['nombre_proveedor'];
 
-                        $porcentaje = ($cantidad / $total) * 100;
+                        if ($total > 0) {
+                            $porcentaje = ($cantidad / $total) * 100;
+                        } else {
+                            $porcentaje = 0;
+                        }
                         $porcentaje_dos_decimales = number_format($porcentaje, 2);
-                        $porcentajes[] = ['name' => $nombre_proveedor, 'y' => $porcentaje_dos_decimales];
+                        $porcentajes[] = ['name' => $nombre_proveedor, 'y' => $porcentaje];
                     }
 
-                    // recorro el array y le meto el código que no entiendo
                     $primera = true;
                     foreach ($porcentajes as $proveedor) {
                         if (!$primera) {
@@ -296,11 +301,12 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                         echo json_encode($proveedor);
                     }
                     ?>
-
                 ]
             }]
         });
     </script>
+
+
     <!--  Volumen en porcetaje de compras en pesos por Proveedores -->
     <script type="text/javascript">
         Highcharts.chart("container3", {

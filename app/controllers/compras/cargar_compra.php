@@ -3,7 +3,7 @@
 $id_compra_get = $_GET['id'];
 
 $sql_compras = "SELECT *,
-                pro.codigo as codigo, pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.stock as stock, pro.stock_minimo as stock_minimo, pro.stock_maximo as stock_maximo, pro.precio_compra as precio_compra_producto, pro.precio_venta as precio_venta_producto, pro.fecha_ingreso as fecha_ingreso, pro.imagen as imagen,
+                pro.codigo as codigo, pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.stock as stock, pro.stock_minimo as stock_minimo, pro.stock_maximo as stock_maximo, pro.precio_compra as precio_compra_producto, pro.precio_venta as precio_venta_producto, pro.fecha_ultimo_ingreso as fecha_ultimo_ingreso, pro.imagen as imagen,
                 cat.nombre_categoria as nombre_categoria, us.nombres as nombre_usuarios_producto,
                 pr.nombre_proveedor as nombre_proveedor, pr.celular as celular_proveedor, pr.telefono as telefono_proveedor, pr.direccion as direccion_proveedor, pr.email as email_proveedor, pr.empresa as empresa_proveedor, us.nombres as nombres_usuario
                 FROM tb_compras as co 

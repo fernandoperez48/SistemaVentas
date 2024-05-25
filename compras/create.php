@@ -275,13 +275,13 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
-$contador_detalle_compras = 0;
-$cantidad_total = 0;
-$precio_unitario_total = 0;
-$precio_total = 0;
+                                        <?php
+                                        $contador_detalle_compras = 0;
+                                        $cantidad_total = 0;
+                                        $precio_unitario_total = 0;
+                                        $precio_total = 0;
 
-$sql_detalle_compras = "SELECT *, 
+                                        $sql_detalle_compras = "SELECT *, 
                         pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.codigo as codigo, 
                         pr.nombre_proveedor as nombre_proveedor,
                         cat.nombre_categoria as nombre_categoria
@@ -292,65 +292,65 @@ $sql_detalle_compras = "SELECT *,
                         WHERE nro_compra = " . ($contador_de_compras + 1) . " 
                         ORDER BY detcom.id_detalle_compras";
 
-$resultado_detalle_compras = $mysqli->query($sql_detalle_compras);
-if ($resultado_detalle_compras) {
-    while ($detalle_compras_datos = $resultado_detalle_compras->fetch_assoc()) {
-        $id_detalle_compras = $detalle_compras_datos['id_detalle_compras'];
-        $contador_detalle_compras++;
-        $cantidad_total += $detalle_compras_datos['cantidad_producto'];
-        $precio_unitario_total += $detalle_compras_datos['precio_unitario'];
-        $precio_total += ($detalle_compras_datos['cantidad_producto'] * $detalle_compras_datos['precio_unitario']);
-    }
-} else {
-    echo "Error: " . $mysqli->error;
-}
-?>
-
-                                            <tr>
-                                                <td>
-                                                    <center><?php echo $contador_detalle_compras; ?></center>
-                                                    <input type="text" value="<?php echo $detalle_compras_datos['id_producto']; ?>" id="id_producto<?php echo $contador_detalle_compras; ?>" hidden>
-                                                </td>
-                                                <td>
-                                                    <center><?php echo $detalle_compras_datos['nombre_producto']; ?></center>
-                                                </td>
-                                                <td>
-                                                    <center><?php echo $detalle_compras_datos['descripcion']; ?></center>
-                                                </td>
-                                                <td>
-                                                    <center><?php echo $detalle_compras_datos['nombre_proveedor']; ?></center>
-                                                </td>
-                                                <td>
-                                                    <center><?php echo $detalle_compras_datos['nombre_categoria']; ?></center>
-                                                </td>
-                                                <td>
-                                                    <center><span id="cantidad_detalle_compras<?php echo $contador_detalle_compras; ?>"><?php echo $detalle_compras_datos['cantidad_producto']; ?></span></center>
-                                                    <input type="text" id="stock_de_inventario<?php echo $contador_detalle_compras; ?>" value="<?php echo $detalle_compras_datos['stock']; ?>" hidden>
-                                                </td>
-                                                <td>
-                                                    <center><?php echo $detalle_compras_datos['precio_unitario']; ?></center>
-                                                </td>
-                                                <td>
-                                                    <center>
-                                                        <?php
-                                                        $cantidad_producto = floatval($detalle_compras_datos['cantidad_producto']);
-                                                        $precio_unitario = floatval($detalle_compras_datos['precio_unitario']);
-                                                        echo $subtotal = $cantidad_producto * $precio_unitario;
-                                                        ?>
-                                                    </center>
-                                                </td>
-                                                <td>
-                                                    <form action="../app/controllers/compras/borrar_detalle_compras.php" method="post">
+                                        $resultado_detalle_compras = $mysqli->query($sql_detalle_compras);
+                                        if ($resultado_detalle_compras) {
+                                            while ($detalle_compras_datos = $resultado_detalle_compras->fetch_assoc()) {
+                                                $id_detalle_compras = $detalle_compras_datos['id_detalle_compras'];
+                                                $contador_detalle_compras++;
+                                                $cantidad_total += $detalle_compras_datos['cantidad_producto'];
+                                                $precio_unitario_total += $detalle_compras_datos['precio_unitario'];
+                                                $precio_total += ($detalle_compras_datos['cantidad_producto'] * $detalle_compras_datos['precio_unitario']);
+                                        ?>
+                                                <tr>
+                                                    <td>
+                                                        <center><?php echo $contador_detalle_compras; ?></center>
+                                                        <input type="text" value="<?php echo $detalle_compras_datos['id_producto']; ?>" id="id_producto<?php echo $contador_detalle_compras; ?>" hidden>
+                                                    </td>
+                                                    <td>
+                                                        <center><?php echo $detalle_compras_datos['nombre_producto']; ?></center>
+                                                    </td>
+                                                    <td>
+                                                        <center><?php echo $detalle_compras_datos['descripcion']; ?></center>
+                                                    </td>
+                                                    <td>
+                                                        <center><?php echo $detalle_compras_datos['nombre_proveedor']; ?></center>
+                                                    </td>
+                                                    <td>
+                                                        <center><?php echo $detalle_compras_datos['nombre_categoria']; ?></center>
+                                                    </td>
+                                                    <td>
+                                                        <center><span id="cantidad_detalle_compras<?php echo $contador_detalle_compras; ?>"><?php echo $detalle_compras_datos['cantidad_producto']; ?></span></center>
+                                                        <input type="text" id="stock_de_inventario<?php echo $contador_detalle_compras; ?>" value="<?php echo $detalle_compras_datos['stock']; ?>" hidden>
+                                                    </td>
+                                                    <td>
+                                                        <center><?php echo $detalle_compras_datos['precio_unitario']; ?></center>
+                                                    </td>
+                                                    <td>
                                                         <center>
-                                                            <input type="text" name="id_detalle_compras" value="<?php echo $id_detalle_compras; ?>" hidden>
-                                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Borrar</button>
+                                                            <?php
+                                                            $cantidad_producto = floatval($detalle_compras_datos['cantidad_producto']);
+                                                            $precio_unitario = floatval($detalle_compras_datos['precio_unitario']);
+                                                            echo $subtotal = $cantidad_producto * $precio_unitario;
+                                                            ?>
                                                         </center>
-                                                    </form>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td>
+                                                        <form action="../app/controllers/compras/borrar_detalle_compras.php" method="post">
+                                                            <center>
+                                                                <input type="text" name="id_detalle_compras" value="<?php echo $id_detalle_compras; ?>" hidden>
+                                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Borrar</button>
+                                                            </center>
+                                                        </form>
+                                                    </td>
+                                                </tr>
                                         <?php
+                                            }
+                                        } else {
+                                            echo "Error: " . $mysqli->error;
                                         }
                                         ?>
+
+
 
                                         <tr>
                                             <th colspan="5" style="background-color: #e7e7e7; text-align:right;">Total</th>
