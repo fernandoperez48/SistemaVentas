@@ -1,4 +1,5 @@
-<?php include '../app/config.php';
+<?php
+include '../app/config.php';
 include '../layaout/sesion.php';
 if ($rol_sesion == "EyD" || $rol_sesion == "Vendedor" || $rol_sesion == "Almacen") {
     header('Location: ..//index.php');
@@ -7,7 +8,9 @@ include '../layaout/parte1.php';
 include '../app/controllers/almacen/listado_de_productos.php';
 include '../app/controllers/proveedores/listado_de_proveedores.php';
 include '../app/controllers/compras/listado_de_compras.php';
-include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
+include '../app/controllers/almacen/listado_de_productos_por_proveedor.php';
+include '../app/controllers/almacen/funcionListar.php'; ?>
+
 <!-- Content Wrapper. Contains page content -->
 
 <div class="content-wrapper">
@@ -30,7 +33,7 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                     <div class="content">
                         <div class="card card-outline card-primary">
                             <div class="card-header">
-                                <form action="../app/controllers/almacen/listado_de_productos_por_proveedor.php" method="post">
+                                <form action="#">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <!-- se cuenta la cantidad de compras de la tabla correspondiente
@@ -42,11 +45,11 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                             }
                                             ?>
                                             <div style="display: flex;">
-                                                <h3 class="card-title"><i class="fa fa-shopping-bag" style="margin-right: 5px; margin-top: 5px;"></i>
+                                                <div class="card-title"><i class="fa fa-shopping-bag" style="margin-right: 5px; margin-top: 5px;"></i>
 
-                                                    <h4>Compra N°</h4>
+                                                    Compra N°
                                                     <input type="text" value="<?php echo $contador_de_compras + 1 ?>" style="text-align: center; margin-left:15px;" disabled>
-                                                </h3>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -56,11 +59,11 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                                         <h4>Proveedor:</h4>
                                                     </label>
 
-                                                    <select name="id_proveedor" class="form-control" style="margin-left: 10px;" required>
+
+                                                    <select name="id_proveedor" id="id_proveedor" style="margin-left: 10px;" required onchange="updateProveedor()">
                                                         <option value="">Seleccionar proveedor</option> <!--Opción por defecto -->
-                                                        <?php
-                                                        foreach ($proveedores_datos as $proveedores_datos) { ?>
-                                                            <option value="<?php echo $proveedores_datos['id_proveedor']; ?>"><?php echo $proveedores_datos['nombre_proveedor']; ?></option>
+                                                        <?php foreach ($proveedores_datos as $proveedor) { ?>
+                                                            <option value="<?php echo $proveedor['id_proveedor']; ?>"><?php echo $proveedor['nombre_proveedor']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                     <a href="<?php echo $URL; ?>/proveedores" class="btn btn-primary">
@@ -69,11 +72,8 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <button type="submit" href="#" class="btn btn-primary" style="margin-left: 10px;">Confirmar selección</button>
-                                            </div>
-                                        </div>
+
+                                    </div>
                                 </form>
 
                             </div>
@@ -98,6 +98,38 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
 
                             </div>
                             <!-- MODAL PARA BUSCAR PRODUCTO       MODAL PARA BUSCAR PRODUCTO       MODAL PARA BUSCAR PRODUCTO -->
+
+                            <?php
+                            if (session_status() === PHP_SESSION_NONE) {
+                                session_start();
+                            }
+
+                            if (isset($_SESSION['id_proveedorDelSelect'])) {
+                                $id_proveedorDelSelect = $_SESSION['id_proveedorDelSelect'];
+                            } else {
+                                $id_proveedorDelSelect = ''; // O algún valor por defecto o mensaje de error
+                            }
+
+                            // Verifica el valor de $id_proveedorDelSelect
+                            echo 'Ultimo proveedor seleccionado: ' . $id_proveedorDelSelect . '<br>';
+
+                            if (empty($id_proveedorDelSelect)) {
+                                if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_proveedor'])) {
+                                    $id_proveedorDelSelect = $_POST['id_proveedor'];
+                                    $_SESSION['id_proveedorDelSelect'] = $id_proveedorDelSelect;
+                                } else {
+                                    echo 'No se ha seleccionado un proveedor válido.';
+                                    // Puedes manejar este caso de manera específica, por ejemplo, redirigir o mostrar un mensaje de error
+                                    // exit; // Descomentar si deseas detener la ejecución en caso de error
+                                }
+                            }
+
+                            // Aquí puedes usar $id_proveedorDelSelect para listar productos
+                            $productosXproveedor_datos = ListarProductosXProveedor($mysqli, $id_proveedorDelSelect);
+                            ?>
+
+
+
                             <div class="modal fade" id="modal-buscar_producto">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
@@ -144,6 +176,7 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                                     <tbody>
                                                         <?php
                                                         $contador = 0;
+
                                                         foreach ($productosXproveedor_datos as $productosXproveedor_datos) {
                                                             $id_producto = $productosXproveedor_datos['id_producto']; ?>
                                                             <tr>
@@ -769,4 +802,33 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                     });
             });
         });
+    </script>
+    <script>
+        function updateProveedor() {
+            var select = document.getElementById('id_proveedor');
+            var id_proveedorDelSelect = select.value;
+
+            console.log('Valor del proveedor seleccionado:', id_proveedorDelSelect);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '../app/controllers/almacen/actualizar_proveedor.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log('Proveedor actualizado:', xhr.responseText);
+                    if (xhr.responseText.includes('Proveedor actualizado')) {
+                        // Recarga la página para reflejar los cambios
+                        window.location.reload();
+                    }
+                }
+            };
+            xhr.send('id_proveedor=' + encodeURIComponent(id_proveedorDelSelect));
+        }
+    </script>
+    <script>
+        // Obtener el valor del proveedor seleccionado de la sesión
+        var id_proveedorDelSelect = "<?php echo $id_proveedorDelSelect; ?>";
+
+        // Establecer el valor del select con el valor obtenido de la sesión
+        document.getElementById('id_proveedor').value = id_proveedorDelSelect;
     </script>
