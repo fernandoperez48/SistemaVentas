@@ -837,7 +837,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
             "autoWidth": false,
             "buttons": /* Ajuste de botones */ [{
                     extend: 'collection',
-                    text: 'Reportes',
+                    text: 'Exportar',
                     orientation: 'landscape',
                     buttons: [{
                         text: 'Copiar',
