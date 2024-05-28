@@ -271,7 +271,8 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                                 nro_compra: nro_compra,
                                                                 id_producto: id_producto,
                                                                 cantidad: cantidad,
-                                                                precio_unitario: precio_unitario
+                                                                precio_unitario: precio_unitario,
+                                                                id_proveedor: id_proveedor
                                                             }, function(datos) {
                                                                 $('#respuesta_detalle_compra').html(datos);
                                                             });
@@ -331,7 +332,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                         ?>
                                                 <tr>
                                                     <td>
-                                                        <center><?php echo $contador_detalle_compras; ?></center>
+                                                        <center><?php echo $detalle_compras_datos['codigo']; ?></center>
                                                         <input type="text" value="<?php echo $detalle_compras_datos['id_producto']; ?>" id="id_producto<?php echo $contador_detalle_compras; ?>" hidden>
                                                     </td>
                                                     <td>
