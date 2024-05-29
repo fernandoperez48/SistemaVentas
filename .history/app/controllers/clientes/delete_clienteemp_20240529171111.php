@@ -10,7 +10,7 @@ if ($mysqli->query($sql) === true) {
     $_SESSION['icono'] = "success";
 ?>
     <script>
-        window.location.href = '<?php echo $URL; ?>/clientes/indexemp.php';
+        window.location.href = '<?php echo $URL; ?>/clientes/indexper.php';
     </script>
 <?php
 } else {

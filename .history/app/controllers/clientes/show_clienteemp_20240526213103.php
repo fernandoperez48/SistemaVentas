@@ -1,11 +1,10 @@
 <?php
 $id_clienteemp_get = $_GET['id'];
 
-$sql_clientesemp = "SELECT cl.id_cliente, e.cuit, e.nombre, e.razon_social, e.telefono, e.email, e.persona_autorizada, e.id_domicilio,d.calle,d.numero,d.ciudad,d.provincia,d.pais 
+$sql_clientesemp = "SELECT cl.id_cliente, e.cuit, e.nombre, e.razon_social, e.telefono, e.email, e.persona_autorizada, e.id_domicilio 
                     FROM tb_clientes as cl 
                     INNER JOIN tb_empresas as e 
                     ON cl.id_empresa=e.id_empresa 
-                    INNER JOIN tb_domicilios as d ON d.id_domicilio=e.id_domicilio
                     WHERE id_cliente = '$id_clienteemp_get'";
 
 $resultado_clientesemp = $mysqli->query($sql_clientesemp);

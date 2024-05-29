@@ -3,9 +3,9 @@ include '../../config.php';
 
 $id_cliente = $_POST['id_cliente'];
 $nombre_cliente= $_POST['nombre_cliente'];
-$razon_social= $_POST['razon_social'];
+$apellido_cliente= $_POST['apellido_cliente'];
 $telefono = $_POST['telefono'];
-$cuit = $_POST['cuit'];
+$dni = $_POST['dni'];
 $email = $_POST['email'];
 $pais = $_POST['pais'];
 $provincia = $_POST['provincia'];
@@ -17,13 +17,13 @@ $depto = $_POST['depto'];
 $id_domicilio = $_POST['id_domicilio'];
 
 // Actualizar datos del cliente
-$sql_cliente = "UPDATE tb_empresas as e
-    INNER JOIN tb_clientes AS c on c.id_empresa = e.id_empresa SET 
-    e.cuit='$cuit',
-    e.nombre='$nombre_cliente',
-    e.razon_social='$razon_social',
-    e.telefono='$telefono',
-    e.email='$email'
+$sql_cliente = "UPDATE tb_personas as p
+    INNER JOIN tb_clientes AS C on c.id_persona = p.id_persona SET 
+    p.dni='$dni',
+    p.nombre='$nombre_cliente',
+    p.apellido='$apellido_cliente',
+    p.telefono='$telefono',
+    p.email='$email'
 WHERE c.id_cliente='$id_cliente'";
 
 // Actualizar datos del domicilio
@@ -52,7 +52,7 @@ if ($mysqli->query($sql_cliente) === true && $mysqli->query($sql_domicilio) === 
 // Redirigir
 ?>
 <script>
-    window.location.href = '<?php echo $URL; ?>/clientes/indexemp.php';
+    window.location.href = '<?php echo $URL; ?>/clientes/indexper.php';
 </script>
 <?php
 exit();
