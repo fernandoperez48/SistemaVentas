@@ -472,7 +472,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
 
                                                                 var id_cliente = '<?php echo $id_cliente; ?>';
 
-                                                                var url2 = "../app/controllers/clientes/delete_clienteemp.php";
+                                                                var url2 = "../app/controllers/clientes/delete.php";
                                                                 $.get(url2, {
                                                                     id_cliente: id_cliente
                                                                 }, function(datos) {

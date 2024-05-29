@@ -18,7 +18,7 @@ $id_domicilio = $_POST['id_domicilio'];
 
 // Actualizar datos del cliente
 $sql_cliente = "UPDATE tb_empresas as e
-    INNER JOIN tb_clientes AS c on c.id_empresa = e.id_empresa SET 
+    INNER JOIN tb_clientes AS C on c.id_empresa = e.id_empresa SET 
     e.cuit='$cuit',
     e.nombre='$nombre_cliente',
     e.razon_social='$razon_social',

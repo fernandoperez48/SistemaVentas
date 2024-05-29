@@ -382,7 +382,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Razon Social <b>*</b></label>
-                                                                                <input type="text" id="razonSocial<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['razon_social']; ?>" class="form-control" disabled>
+                                                                                <input type="text" id="razonSocial<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['apellido']; ?>" class="form-control" disabled>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-4">
@@ -396,7 +396,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>CUIT <b>*</b></label>
-                                                                                <input type="text" id="cuit<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['cuit']; ?>" class="form-control" disabled>
+                                                                                <input type="text" id="cuit<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['dni']; ?>" class="form-control" disabled>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-4">
@@ -472,7 +472,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
 
                                                                 var id_cliente = '<?php echo $id_cliente; ?>';
 
-                                                                var url2 = "../app/controllers/clientes/delete_clienteemp.php";
+                                                                var url2 = "../app/controllers/clientes/delete.php";
                                                                 $.get(url2, {
                                                                     id_cliente: id_cliente
                                                                 }, function(datos) {
