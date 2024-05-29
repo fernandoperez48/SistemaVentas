@@ -360,7 +360,7 @@ include '../app/controllers/clientes/listado_de_clientesper.php';
                                                         <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header" style="background-color:red; color:white">
-                                                                    <h4 class="modal-title">¿Esta seguro de eliminar al cliente?</h4>
+                                                                    <h4 class="modal-title">¿Esta seguro de eliminar al proveedor?</h4>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
@@ -391,7 +391,7 @@ include '../app/controllers/clientes/listado_de_clientesper.php';
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>DNI <b>*</b></label>
-                                                                                <input type="text" id="dni<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['dni']; ?>" class="form-control" disabled>
+                                                                                <input type="text" id="cui<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['cuit']; ?>" class="form-control" disabled>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-4">
@@ -465,13 +465,13 @@ include '../app/controllers/clientes/listado_de_clientesper.php';
                                                         <script>
                                                             $('#btn_delete<?php echo $id_cliente; ?>').click(function() {
 
-                                                                var id_cliente = '<?php echo $id_cliente; ?>';
+                                                                var id_proveedor = '<?php echo $id_proveedor; ?>';
 
-                                                                var url2 = "../app/controllers/clientes/delete.php";
+                                                                var url2 = "../app/controllers/proveedores/delete.php";
                                                                 $.get(url2, {
-                                                                    id_cliente: id_cliente
+                                                                    id_proveedor: id_proveedor
                                                                 }, function(datos) {
-                                                                    $('#respuesta_delete<?php echo $id_cliente; ?>').html(datos);
+                                                                    $('#respuesta_delete<?php echo $id_proveedor; ?>').html(datos);
                                                                 });
                                                             });
                                                         </script>

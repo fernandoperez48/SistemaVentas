@@ -1,7 +1,7 @@
 <?php
 
 $sql_clientesper = "SELECT cl.id_cliente, cl.saldo, 
-                    p.dni, p.nombre, p.apellido, p.telefono, p.email, p.id_domicilio,d.calle,d.numero,d.ciudad,d.provincia,d.pais, d.piso, d.depto
+                    p.dni, p.nombre, p.apellido, p.telefono, p.email, p.id_domicilio,d.calle,d.numero,d.ciudad,d.provincia,d.pais,d.piso,d.dpto
                     FROM tb_clientes as cl 
                     INNER JOIN tb_personas as p 
                     ON cl.id_persona=p.id_persona

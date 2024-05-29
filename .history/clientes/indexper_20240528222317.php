@@ -360,7 +360,7 @@ include '../app/controllers/clientes/listado_de_clientesper.php';
                                                         <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header" style="background-color:red; color:white">
-                                                                    <h4 class="modal-title">¿Esta seguro de eliminar al cliente?</h4>
+                                                                    <h4 class="modal-title">¿Esta seguro de eliminar al proveedor?</h4>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>

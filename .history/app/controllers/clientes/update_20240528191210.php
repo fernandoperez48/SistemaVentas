@@ -17,14 +17,13 @@ $depto = $_POST['depto'];
 $id_domicilio = $_POST['id_domicilio'];
 
 // Actualizar datos del cliente
-$sql_cliente = "UPDATE tb_personas as p
-    INNER JOIN tb_clientes AS C on c.id_persona = p.id_persona SET 
-    p.dni='$dni',
-    p.nombre='$nombre_cliente',
-    p.apellido='$apellido_cliente',
-    p.telefono='$telefono',
-    p.email='$email'
-WHERE c.id_cliente='$id_cliente'";
+$sql_cliente = "UPDATE tb_clientes SET 
+    dni='$dni',
+    nombre='$nombre_cliente',
+    apellido='$apellido_cliente',
+    telefono='$telefono',
+    email='$email'
+WHERE id_cliente='$id_cliente'";
 
 // Actualizar datos del domicilio
 $sql_domicilio = "UPDATE tb_domicilios SET 
@@ -42,17 +41,17 @@ session_start();
 
 // Ejecutar las consultas
 if ($mysqli->query($sql_cliente) === true && $mysqli->query($sql_domicilio) === true) {
-    $_SESSION['mensaje'] = "Se actualizó al cliente correctamente";
+    $_SESSION['mensaje'] = "Se actualizó al proveedor correctamente";
     $_SESSION['icono'] = "success";
 } else {
-    $_SESSION['mensaje'] = "No se pudo actualizar al cliente";
+    $_SESSION['mensaje'] = "No se pudo actualizar al proveedor o su domicilio";
     $_SESSION['icono'] = "error";
 }
 
 // Redirigir
 ?>
 <script>
-    window.location.href = '<?php echo $URL; ?>/clientes/indexper.php';
+    window.location.href = '<?php echo $URL; ?>/clientes/';
 </script>
 <?php
 exit();

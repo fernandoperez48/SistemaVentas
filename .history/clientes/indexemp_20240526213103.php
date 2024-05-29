@@ -6,7 +6,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper" style="background-color:gray">
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -24,8 +24,8 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-danger">
-                        <div class="card-header" style="background-color:orange">
+                    <div class="card card-outline card-primary">
+                        <div class="card-header">
                             <h3 class="card-title">Clientes - empresas regitradas</h3>
 
                             <div class="card-tools">
@@ -37,8 +37,8 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                         <!-- /.card-header -->
                         <div class="card-body">
 
-                            <table id="example1" class="table table-bordered table-striped" style="border-color: black;">
-                                <thead style="background-color: gray;">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
                                     <tr>
                                         <th>
                                             <center>Id de Cliente</center>
@@ -124,9 +124,9 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                             <td>
                                                 <center>
                                                     <div class="btn-group">
-                                                        <a href="showemp.php?id=<?php echo $id_cliente; ?>" type="button" class="btn btn-outline-info"><i class="fa fa-eye"></i>Ver</a>
-                                                        <a href="updateemp.php?id=<?php echo $id_cliente; ?>" type="button" class="btn btn-outline-success"><i class="fa fa-pencil-alt"></i>Editar</a>
-                                                        <a href="deleteemp.php?id=<?php echo $id_cliente; ?>" type="button" class="btn btn-outline-danger"><i class="fa fa-trash"></i>Borrar</a>
+                                                        <a href="showemp.php?id=<?php echo $id_cliente; ?>" type="button" class="btn btn-info"><i class="fa fa-eye"></i>Ver</a>
+                                                        <a href="updateemp.php?id=<?php echo $id_cliente; ?>" type="button" class="btn btn-success"><i class="fa fa-pencil-alt"></i>Editar</a>
+                                                        <a href="deleteemp.php?id=<?php echo $id_cliente; ?>" type="button" class="btn btn-danger"><i class="fa fa-trash"></i>Borrar</a>
                                                     </div>
                                                 </center>
                                             </td>

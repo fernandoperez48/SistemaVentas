@@ -2,7 +2,7 @@
 include '../app/config.php';
 include '../layaout/sesion.php';
 include '../layaout/parte1.php';
-include '../app/controllers/clientes/listado_de_clientesemp.php';
+include '../app/controllers/clientes/listado_de_clientesper.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -26,7 +26,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                 <div class="col-md-12">
                     <div class="card card-outline card-danger">
                         <div class="card-header" style="background-color:orange">
-                            <h3 class="card-title">Clientes - empresas regitradas</h3>
+                            <h3 class="card-title">Clientes - personas regitradas</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -44,27 +44,17 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                             <center>Id de Cliente</center>
                                         </th>
                                         <th>
-                                            <center>Nombre</center>
+                                            <center>Nombre y Apellido</center>
                                         </th>
                                         <th>
-                                            <center>Razon Social</center>
-                                        </th>
-                                        <th>
-                                            <center>CUIT</center>
+                                            <center>DNI</center>
                                         </th>
                                         <th>
                                             <center>Telefono</center>
                                         </th>
                                         <th>
-                                            <center>Domicilio</center>
-                                        </th>
-                                        <th>
                                             <center>Email</center>
                                         </th>
-                                        <th>
-                                            <center>Persona Autorizada</center>
-                                        </th>
-
                                         <th>
                                             <center>Opciones</center>
                                         </th>
@@ -73,60 +63,22 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                 <tbody>
                                     <?php
                                     $contador = 0;
-                                    foreach ($clientesemp_datos as $clientesemp_datos) {
-                                        $id_cliente = $clientesemp_datos['id_cliente']; ?>
+                                    foreach ($clientesper_datos as $clientesper_datos) {
+                                        $id_cliente = $clientesper_datos['id_cliente']; ?>
                                         <tr>
                                             <td>
-                                                <?php echo $clientesemp_datos['id_cliente']; ?>
+                                                <?php echo $clientesper_datos['id_cliente']; ?>
                                             </td>
-                                            <td><?php echo $clientesemp_datos['nombre']; ?></td>
-                                            <td><?php echo $clientesemp_datos['razon_social']; ?></td>
-                                            <td><?php echo $clientesemp_datos['cuit']; ?></td>
-                                            <td><?php echo $clientesemp_datos['telefono']; ?></td>
-
-                                            <td>
-                                                <?php
-                                                if (!empty($clientesemp_datos['id_domicilio'])) {
-                                                    $id_domicilio = $clientesemp_datos['id_domicilio'];
-                                                    $sql_domicilio = "SELECT d.calle, d.numero, d.piso, d.depto 
-                                                     FROM tb_domicilios AS d 
-                                                     WHERE d.id_domicilio = $id_domicilio";
-
-                                                    $query_domicilio = $mysqli->query($sql_domicilio);
-
-                                                    if ($query_domicilio) {
-                                                        $domicilio_datos = $query_domicilio->fetch_assoc();
-
-                                                        // Imprimir la calle y el número
-                                                        echo $domicilio_datos['calle'] . ' ' . $domicilio_datos['numero'] . ' ';
-
-                                                        // Verificar y agregar "Piso" si el valor de piso no está vacío
-                                                        if (!empty($domicilio_datos['piso'])) {
-                                                            echo 'Piso ' . $domicilio_datos['piso'] . ' ';
-                                                        }
-
-                                                        // Verificar y agregar "Depto" si el valor de depto no está vacío
-                                                        if (!empty($domicilio_datos['depto'])) {
-                                                            echo 'Depto ' . $domicilio_datos['depto'];
-                                                        }
-                                                    } else {
-                                                        echo "Error al ejecutar la consulta";
-                                                    }
-                                                } else {
-                                                    echo "No hay domicilio";
-                                                }
-                                                ?>
-
-                                            </td>
-
-                                            <td><?php echo $clientesemp_datos['email']; ?></td>
-                                            <td><?php echo $clientesemp_datos['persona_autorizada']; ?></td>
+                                            <td><?php echo $clientesper_datos['nombre'] . ' ' . $clientesper_datos['apellido']; ?></td>
+                                            <td><?php echo $clientesper_datos['dni']; ?></td>
+                                            <td><?php echo $clientesper_datos['telefono']; ?></td>
+                                            <td><?php echo $clientesper_datos['email']; ?></td>
                                             <td>
                                                 <center>
                                                     <div class="btn-group">
-                                                        <a href="showemp.php?id=<?php echo $id_cliente; ?>" type="button" class="btn btn-outline-info"><i class="fa fa-eye"></i>Ver</a>
-                                                        <a href="updateemp.php?id=<?php echo $id_cliente; ?>" type="button" class="btn btn-outline-success"><i class="fa fa-pencil-alt"></i>Editar</a>
-                                                        <a href="deleteemp.php?id=<?php echo $id_cliente; ?>" type="button" class="btn btn-outline-danger"><i class="fa fa-trash"></i>Borrar</a>
+                                                        <a href="showper.php?id=<?php echo $id_cliente; ?>" type="button" class="btn btn-outline-info"><i class="fa fa-eye"></i>Ver</a>
+                                                        <a href="updateper.php?id=<?php echo $id_cliente; ?>" type="button" class="btn btn-outline-success"><i class="fa fa-pencil-alt"></i>Editar</a>
+                                                        <a href="deleteper.php?id=<?php echo $id_cliente; ?>" type="button" class="btn btn-outline-danger"><i class="fa fa-trash"></i>Borrar</a>
                                                     </div>
                                                 </center>
                                             </td>
