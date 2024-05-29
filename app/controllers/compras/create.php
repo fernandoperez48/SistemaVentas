@@ -12,48 +12,49 @@ $cantidad_compra = $_GET['cantidad_compra'];
 $id_usuario = $_GET['id_usuario'];
 $stock_total = $_GET['stock_total'];
 
-$mysqli->begin_transaction();
-
-$sentencia = $mysqli->prepare("INSERT INTO tb_compras
-    (id_producto,nro_compra,fecha_compra,id_proveedor,comprobante,precio_compra,cantidad,id_usuario,fyh_creacion)
-    VALUES (?,?,?,?,?,?,?,?,?)");
-
 $fyh_creacion = date('Y-m-d H:i:s');
 
-$sentencia->bind_param('isssssiss', $id_producto, $nro_compra, $fecha_compra, $id_proveedor, $comprobante, $precio_compra, $cantidad_compra, $id_usuario, $fyh_creacion);
+$mysqli->begin_transaction();
 
-if ($sentencia->execute()) {
-    // Actualiza el stock desde la compra
-    $sentencia = $mysqli->prepare("UPDATE tb_almacen 
-        SET  stock=? WHERE id_producto=?");
+// Inserta la compra
+$insert_query = "INSERT INTO tb_compras (nro_compra, fecha_compra_pago, id_proveedor, comprobante, precio_compra, cantidad, id_usuario, fyh_creacion) 
+VALUES ('$id_producto', '$nro_compra', '$fecha_compra', '$id_proveedor', '$comprobante', '$precio_compra', '$cantidad_compra', '$id_usuario', '$fyh_creacion')";
 
-    $sentencia->bind_param('ii', $stock_total, $id_producto);
-    $sentencia->execute();
+if ($mysqli->query($insert_query) === TRUE) {
+    // Actualiza el stock
+    $update_query = "UPDATE tb_almacen SET stock='$stock_total' WHERE id_producto='$id_producto'";
 
-    $mysqli->commit();
+    if ($mysqli->query($update_query) === TRUE) {
+        $mysqli->commit();
 
-    session_start();
-    $_SESSION['mensaje'] = "Se registró la compra correctamente";
-    $_SESSION['icono'] = "success";
+        session_start();
+        $_SESSION['mensaje'] = "Se registró la compra correctamente";
+        $_SESSION['icono'] = "success";
 ?>
-
-    <script>
-        window.location.href = '<?php echo $URL; ?>/compras/';
-    </script>
-
-<?php
+        <script>
+            window.location.href = '<?php echo $URL; ?>/compras/';
+        </script>
+    <?php
+    } else {
+        $mysqli->rollback();
+        session_start();
+        $_SESSION['mensaje'] = "No se pudo registrar la compra";
+        $_SESSION['icono'] = "error";
+    ?>
+        <script>
+            window.location.href = '<?php echo $URL; ?>/compras/create.php';
+        </script>
+    <?php
+    }
 } else {
     $mysqli->rollback();
-
     session_start();
     $_SESSION['mensaje'] = "No se pudo registrar la compra";
     $_SESSION['icono'] = "error";
-?>
-
+    ?>
     <script>
         window.location.href = '<?php echo $URL; ?>/compras/create.php';
     </script>
-
 <?php
 }
 

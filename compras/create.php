@@ -427,28 +427,34 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="">Fecha de la operación</label>
                                         <input type="date" class="form-control" id="fecha_compra">
                                     </div>
                                 </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="">Fecha de ingreso de la mercadería</label>
+                                        <input type="date" class="form-control" id="ingreso_mercaderia">
+                                    </div>
+                                </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="">Comprobante de la compra</label>
                                         <input type="text" class="form-control" id="comprobante">
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="">Costo de la compra</label>
                                         <input type="text" class="form-control" id="precio_compra_controlador" style="text-align: center;">
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="">Usuario</label>
                                         <input type="text" class="form-control" value="<?php echo $email_session; ?>" disabled>
@@ -468,6 +474,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                             <script>
                                 $("#btn_guardar_compra").click(function() {
                                     var id_producto = $("#id_producto").val();
+                                    var ingreso_mercaderia = $("#ingreso_mercaderia").val();
                                     var nro_compra = $("#nro_compra").val();
                                     var fecha_compra = $("#fecha_compra").val();
                                     var id_proveedor = $("#id_proveedor").val();
@@ -479,7 +486,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
 
                                     if (id_producto == "") {
                                         $('#id_producto').focus();
-                                        alert("DEbe llenar todos los campos");
+                                        alert("Debe llenar todos los campos");
                                     } else if (fecha_compra == "") {
                                         $('#fecha_compra').focus();
                                         alert("DEbe llenar todos los campos");
