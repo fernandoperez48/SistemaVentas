@@ -513,7 +513,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
 <?php include '../layaout/mensajes.php'; ?>
 <?php include '../layaout/parte2.php'; ?>
 
-    <!-- modal para registrar clientes-->
+    <!-- modal para registrar proveedores-->
     <div class="modal fade" id="modal-create">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -529,21 +529,20 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Nombre<b>*</b></label>
-                                <input type="text" id="nombre_empresa" class="form-control" placeholder="Nombre de la empresa">
+                                <input type="text" id="nombre_proveedor" class="form-control" placeholder="Nombre del Proveedor">
                                 <small style="color:red; display:none" id="lbl_nombre">* Este campo es requerido</small>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Razon Social<b>*</b></label>
-                                <input type="text" id="razon_social" class="form-control" placeholder="Razon social">
-                                <small style="color:red; display:none" id="lbl_razon_social">* Este campo es requerido</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Telefono</label>
                                 <input type="number" id="telefono" class="form-control" placeholder="Telefono">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Empresa</label>
+                                <input type="text" id="empresa" class="form-control" placeholder="Empresa">
                             </div>
                         </div>
                     </div>
@@ -562,11 +561,16 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Persona Autorizada<b>*</b></label>
-                                <input type="text" id="responsable_comercial" class="form-control">
-                                <small style="color:red; display:none" id="lbl_responsable_comercial">* Este campo es requerido</small>
-                            </div>
+                            <label>Condicion IVA</label>
+                            <select name="" id="condicion_iva" class="form-control" required>
+                                <option value="" selected>Seleccione condición</option>
+                                <option value="1">Consumidor Final</option>
+                                <option value="2">Exento</option>
+                                <option value="3">Exterior</option>
+                                <option value="4">IVA NO Alcanzado</option>
+                                <option value="5">Monotributista</option>
+                                <option value="6">Responsable Inscripto</option>
+                            </select>
                         </div>
                     </div>
 
@@ -602,6 +606,23 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Responsable Comercial<b>*</b></label>
+                                <input type="text" id="responsable_comercial" class="form-control">
+                                <small style="color:red; display:none" id="lbl_responsable_comercial">* Este campo es requerido</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Telefono/Celular de R.C.<b>*</b></label>
+                                <input type="number" id="celular" class="form-control">
+                                <small style="color:red; display:none" id="lbl_celular">* Este campo es requerido</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -620,12 +641,12 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
 <!-- SCRIPTSSS DE LA TABLA-->
 <script>
     $('#btn_create').click(function() {
-        var nombre_empresa = $('#nombre_empresa').val();
-        var razon_social = $('#razon_social').val();
+        var nombre_proveedor = $('#nombre_proveedor').val();
         var telefono = $('#telefono').val();
+        var empresa = $('#empresa').val();
         var email = $('#email').val();
         var cuit = $('#cuit').val();
-        var responsable_comercial = $('#responsable_comercial').val();
+        var condicion_iva = $('#condicion_iva').val();
         var calle = $('#calle').val();
         var numero = $('#numero').val();
         var piso = $('#piso').val();
@@ -633,32 +654,36 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
         var localidad = $('#localidad').val();
         var provincia = $('#provincia').val();
         var pais = $('#pais').val();
+        var responsable_comercial = $('#responsable_comercial').val();
+        var celular = $('#celular').val();
 
-
-
-        if (nombre_empresa == '') {
-            $('#nombre_empresa').focus();
+        if (nombre_proveedor == '') {
+            $('#nombre_proveedor').focus();
             $('#lbl_nombre').css('display', 'block');
+        } else if (celular == '') {
+            $('#celular').focus();
+            $('#lbl_celular').css('display', 'block');
         } else if (responsable_comercial == '') {
             $('#responsable_comercial').focus();
             $('#lbl_responsable_comercial').css('display', 'block');
         } else {
-            
-            var url = "../app/controllers/clientes/createemp.php";
+            var url = "../app/controllers/proveedores/create.php";
             $.get(url, {
-                nombre_empresa: nombre_empresa,
-                razon_social: razon_social,
+                nombre_proveedor: nombre_proveedor,
                 telefono: telefono,
+                empresa: empresa,
                 email: email,
                 cuit: cuit,
-                responsable_comercial: responsable_comercial,
+                condicion_iva: condicion_iva,
                 calle: calle,
                 numero: numero,
                 piso: piso,
                 depto: depto,
                 localidad: localidad,
                 provincia: provincia,
-                pais: pais
+                pais: pais,
+                responsable_comercial: responsable_comercial,
+                celular: celular
             }, function(datos) {
                 $('#respuesta').html(datos);
             });

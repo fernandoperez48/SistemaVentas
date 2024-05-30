@@ -513,7 +513,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
 <?php include '../layaout/mensajes.php'; ?>
 <?php include '../layaout/parte2.php'; ?>
 
-    <!-- modal para registrar clientes-->
+    <!-- modal para registrar proveedores-->
     <div class="modal fade" id="modal-create">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -643,8 +643,25 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
             $('#responsable_comercial').focus();
             $('#lbl_responsable_comercial').css('display', 'block');
         } else {
-            
-            var url = "../app/controllers/clientes/createemp.php";
+
+// Mostrar los datos por consola
+console.log({
+            nombre_empresa: nombre_empresa,
+            razon_social: razon_social,
+            telefono: telefono,
+            email: email,
+            cuit: cuit,
+            responsable_comercial: responsable_comercial,
+            calle: calle,
+            numero: numero,
+            piso: piso,
+            depto: depto,
+            localidad: localidad,
+            provincia: provincia,
+            pais: pais
+        });
+
+            //var url = "../app/controllers/clientes/create.php";
             $.get(url, {
                 nombre_empresa: nombre_empresa,
                 razon_social: razon_social,

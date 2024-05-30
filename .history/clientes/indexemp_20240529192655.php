@@ -513,7 +513,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
 <?php include '../layaout/mensajes.php'; ?>
 <?php include '../layaout/parte2.php'; ?>
 
-    <!-- modal para registrar clientes-->
+    <!-- modal para registrar proveedores-->
     <div class="modal fade" id="modal-create">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -634,35 +634,24 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
         var provincia = $('#provincia').val();
         var pais = $('#pais').val();
 
-
-
-        if (nombre_empresa == '') {
-            $('#nombre_empresa').focus();
-            $('#lbl_nombre').css('display', 'block');
-        } else if (responsable_comercial == '') {
-            $('#responsable_comercial').focus();
-            $('#lbl_responsable_comercial').css('display', 'block');
-        } else {
-            
-            var url = "../app/controllers/clientes/createemp.php";
+            var url = "../app/controllers/clientes/create.php";
             $.get(url, {
-                nombre_empresa: nombre_empresa,
-                razon_social: razon_social,
+                nombre_proveedor: nombre_proveedor,
                 telefono: telefono,
                 email: email,
                 cuit: cuit,
-                responsable_comercial: responsable_comercial,
                 calle: calle,
                 numero: numero,
                 piso: piso,
                 depto: depto,
                 localidad: localidad,
                 provincia: provincia,
-                pais: pais
+                pais: pais,
+                responsable_comercial: responsable_comercial,
+                celular: celular
             }, function(datos) {
                 $('#respuesta').html(datos);
             });
-        }
 
 
     });
