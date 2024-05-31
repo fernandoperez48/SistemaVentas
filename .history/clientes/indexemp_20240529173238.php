@@ -513,7 +513,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
 <?php include '../layaout/mensajes.php'; ?>
 <?php include '../layaout/parte2.php'; ?>
 
-    <!-- modal para registrar clientes-->
+    <!-- modal para registrar proveedores-->
     <div class="modal fade" id="modal-create">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -620,12 +620,12 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
 <!-- SCRIPTSSS DE LA TABLA-->
 <script>
     $('#btn_create').click(function() {
-        var nombre_empresa = $('#nombre_empresa').val();
-        var razon_social = $('#razon_social').val();
+        var nombre_proveedor = $('#nombre_proveedor').val();
         var telefono = $('#telefono').val();
+        var empresa = $('#empresa').val();
         var email = $('#email').val();
         var cuit = $('#cuit').val();
-        var responsable_comercial = $('#responsable_comercial').val();
+        var condicion_iva = $('#condicion_iva').val();
         var calle = $('#calle').val();
         var numero = $('#numero').val();
         var piso = $('#piso').val();
@@ -633,32 +633,36 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
         var localidad = $('#localidad').val();
         var provincia = $('#provincia').val();
         var pais = $('#pais').val();
+        var responsable_comercial = $('#responsable_comercial').val();
+        var celular = $('#celular').val();
 
-
-
-        if (nombre_empresa == '') {
-            $('#nombre_empresa').focus();
+        if (nombre_proveedor == '') {
+            $('#nombre_proveedor').focus();
             $('#lbl_nombre').css('display', 'block');
+        } else if (celular == '') {
+            $('#celular').focus();
+            $('#lbl_celular').css('display', 'block');
         } else if (responsable_comercial == '') {
             $('#responsable_comercial').focus();
             $('#lbl_responsable_comercial').css('display', 'block');
         } else {
-            
-            var url = "../app/controllers/clientes/createemp.php";
+            var url = "../app/controllers/proveedores/create.php";
             $.get(url, {
-                nombre_empresa: nombre_empresa,
-                razon_social: razon_social,
+                nombre_proveedor: nombre_proveedor,
                 telefono: telefono,
+                empresa: empresa,
                 email: email,
                 cuit: cuit,
-                responsable_comercial: responsable_comercial,
+                condicion_iva: condicion_iva,
                 calle: calle,
                 numero: numero,
                 piso: piso,
                 depto: depto,
                 localidad: localidad,
                 provincia: provincia,
-                pais: pais
+                pais: pais,
+                responsable_comercial: responsable_comercial,
+                celular: celular
             }, function(datos) {
                 $('#respuesta').html(datos);
             });

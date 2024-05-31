@@ -16,16 +16,12 @@ $provincia = $_GET['provincia'];
 $pais = $_GET['pais'];
 
     // Insertar en la tabla tb_empresas
-    $sql_proveedor = "INSERT INTO tb_empresas(cuit, nombre, razon_social, telefono, email, persona_autorizada) 
-                      VALUES ('$cuit','$nombre_empresa', '$razon_social', '$telefono', '$email','$responsable_comercial')";
+    $sql_proveedor = "INSERT INTO tb_empresas(cuit, nombre, razon_social,id_domicilio, telefono, email, persona_autorizada) 
+                      VALUES ('$cuit','$nombre_empresa', '$razon_social', '', '$telefono', '$email','$responsable_comercial')";
     $resultado_proveedor = $mysqli->query($sql_proveedor);
 
             if ($resultado_proveedor) {
                 $id_empresa = $mysqli->insert_id;
-
-                    // Inserción en tb_clientes
-                    $sql_clientes = "INSERT INTO tb_clientes(id_empresa) VALUES ('$id_empresa')";
-                    $mysqli->query($sql_clientes);
 
                 // Insertar en la tabla tb_domicilios
                 $sql_domicilio = "INSERT INTO tb_domicilios(calle, numero, piso, depto, ciudad, provincia, pais) 

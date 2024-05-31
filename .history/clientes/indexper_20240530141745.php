@@ -2,7 +2,7 @@
 include '../app/config.php';
 include '../layaout/sesion.php';
 include '../layaout/parte1.php';
-include '../app/controllers/clientes/listado_de_clientesemp.php';
+include '../app/controllers/clientes/listado_de_clientesper.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -17,6 +17,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                             <i class="fa fa-plus"></i>
                             Agregar Nuevo
                         </button>
+
                     </h1>
                 </div><!-- /.col -->
 
@@ -31,7 +32,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                 <div class="col-md-12">
                     <div class="card card-outline card-danger">
                         <div class="card-header" style="background-color:orange">
-                            <h3 class="card-title">Clientes - empresas regitradas</h3>
+                            <h3 class="card-title">Clientes - personas regitradas</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -49,13 +50,10 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                             <center>Id de Cliente</center>
                                         </th>
                                         <th>
-                                            <center>Nombre</center>
+                                            <center>Nombre y Apellido</center>
                                         </th>
                                         <th>
-                                            <center>Razon Social</center>
-                                        </th>
-                                        <th>
-                                            <center>CUIT</center>
+                                            <center>DNI</center>
                                         </th>
                                         <th>
                                             <center>Telefono</center>
@@ -64,10 +62,6 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                             <center>Email</center>
                                         </th>
                                         <th>
-                                            <center>Persona Autorizada</center>
-                                        </th>
-
-                                        <th>
                                             <center>Opciones</center>
                                         </th>
                                     </tr>
@@ -75,30 +69,28 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                 <tbody>
                                     <?php
                                     $contador = 0;
-                                    foreach ($clientesemp_datos as $clientesemp_datos) {
-                                        $id_cliente = $clientesemp_datos['id_cliente']; 
-                                        $id_domicilio = $clientesemp_datos['id_domicilio']; ?>
+                                    foreach ($clientesper_datos as $clientesper_datos) {
+                                        $id_cliente = $clientesper_datos['id_cliente'];
+                                        $id_domicilio = $clientesper_datos['id_domicilio']; ?>
                                         <tr>
                                             <td>
-                                                <?php echo $clientesemp_datos['id_cliente']; ?>
+                                                <?php echo $clientesper_datos['id_cliente']; ?>
                                             </td>
-                                            <td><?php echo $clientesemp_datos['nombre']; ?></td>
-                                            <td><?php echo $clientesemp_datos['razon_social']; ?></td>
-                                            <td><?php echo $clientesemp_datos['cuit']; ?></td>
-                                            <td><?php echo $clientesemp_datos['telefono']; ?></td>
-                                            <td><?php echo $clientesemp_datos['email']; ?></td>
-                                            <td><?php echo $clientesemp_datos['persona_autorizada']; ?></td>
+                                            <td><?php echo $clientesper_datos['nombre'] . ' ' . $clientesper_datos['apellido']; ?></td>
+                                            <td><?php echo $clientesper_datos['dni']; ?></td>
+                                            <td><?php echo $clientesper_datos['telefono']; ?></td>
+                                            <td><?php echo $clientesper_datos['email']; ?></td>
                                             <td>
                                                 <center>
                                                     <div class="btn-group">
                                                         <a type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modal-ver<?php echo $id_cliente; ?>"><i class="fa fa-eye"></i>Ver</a>
 
                                                          <!-- modal para ver clientes-->
-                                                         <div class="modal fade" id="modal-ver<?php echo $id_cliente; ?>">
+                                                            <div class="modal fade" id="modal-ver<?php echo $id_cliente; ?>">
                                                                 <div class="modal-dialog modal-lg">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header" style="background-color:#088da5; color:white">
-                                                                            <h4 class="modal-title">Datos de la empresa</h4>
+                                                                            <h4 class="modal-title">Datos del cliente</h4>
                                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                                 <span aria-hidden="true">&times;</span>
                                                                             </button>
@@ -108,39 +100,39 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Nombre</label>
-                                                                                        <input type="text" id="nombre<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['nombre']; ?>" class="form-control" disabled>
+                                                                                        <input type="text" id="nombre<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['nombre']; ?>" class="form-control" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
-                                                                                        <label>Razon social</label>
-                                                                                        <input type="text" id="rz<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['razon_social']; ?>" class="form-control" disabled>
+                                                                                        <label>Apellido</label>
+                                                                                        <input type="text" id="apellido<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['apellido']; ?>" class="form-control" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Telefono</label>
-                                                                                        <input type="number" id="tel<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['telefono'] ?>" disabled>
+                                                                                        <input type="number" id="tel<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['telefono'] ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row">
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
-                                                                                        <label>Cuit</label>
-                                                                                        <input type="text" id="cuit<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['cuit']; ?>" class="form-control" disabled>
+                                                                                        <label>DNI</label>
+                                                                                        <input type="text" id="dni<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['dni']; ?>" class="form-control" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Email</label>
-                                                                                        <input type="text" id="email<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['email']; ?>" disabled>
+                                                                                        <input type="text" id="email<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['email']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Pais </label>
-                                                                                        <input type="text" id="pais<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['pais']; ?>" disabled>
+                                                                                        <input type="text" id="pais<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['pais']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -148,19 +140,19 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Provincia</label>
-                                                                                        <input type="text" id="prov<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['provincia']; ?>" disabled>
+                                                                                        <input type="text" id="prov<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['provincia']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Localidad </label>
-                                                                                        <input type="text" id="loc<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['ciudad']; ?>" disabled>
+                                                                                        <input type="text" id="loc<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['ciudad']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Domicilio<b>*</b></label>
-                                                                                        <input type="text" id="dom<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['calle']; ?>" disabled>
+                                                                                        <input type="text" id="dom<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['calle']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -168,20 +160,20 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Nro<b>*</b></label>
-                                                                                        <input type="text" id="num<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['numero']; ?>" disabled>
+                                                                                        <input type="text" id="num<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['numero']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Piso </label>
-                                                                                        <input type="text" id="pis<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['piso']; ?>" disabled>
+                                                                                        <input type="text" id="pis<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['piso']; ?>" disabled>
 
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Depto<b>*</b></label>
-                                                                                        <input type="text" id="dpto<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['depto']; ?>" disabled>
+                                                                                        <input type="text" id="dpto<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['depto']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -191,16 +183,16 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                 </div>
                                                                 <!-- /.modal-dialog -->
                                                             </div>
-
-
+                                                    </div>
+                                                    <div class="btn-group">
                                                         <a type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal-update<?php echo $id_cliente; ?>"><i class="fa fa-pencil-alt"></i>Editar</a>
-                                                        
+
                                                             <!-- modal para actualizar clientes-->
                                                             <div class="modal fade" id="modal-update<?php echo $id_cliente; ?>">
                                                                 <div class="modal-dialog modal-lg">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header" style="background-color:darkgreen; color:white">
-                                                                            <h4 class="modal-title">Actualizacion de la Empresa</h4>
+                                                                            <h4 class="modal-title">Actualizacion del cliente</h4>
                                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                                 <span aria-hidden="true">&times;</span>
                                                                             </button>
@@ -209,45 +201,45 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                             <div class="row">
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
-                                                                                        <label>Nombre empresa<b>*</b></label>
-                                                                                        <input type="text" id="nombre_empresa<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['nombre']; ?>" class="form-control">
-                                                                                        <small style="color:red; display:none" id="lbl_nombreE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
+                                                                                        <label>Nombre del cliente <b>*</b></label>
+                                                                                        <input type="text" id="nombre_clienteU<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['nombre']; ?>" class="form-control">
+                                                                                        <small style="color:red; display:none" id="lbl_nombreU<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                 <div class="form-group">
-                                                                                        <label>Razon Social <b>*</b></label>
-                                                                                        <input type="text" id="razon_social<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['razon_social']; ?>" class="form-control">
-                                                                                        <small style="color:red; display:none" id="lbl_razon_socialE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
+                                                                                        <label>Apellido del cliente <b>*</b></label>
+                                                                                        <input type="text" id="apellido_clienteU<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['apellido']; ?>" class="form-control">
+                                                                                        <small style="color:red; display:none" id="lbl_apellidoU<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Telefono</label>
-                                                                                        <input type="number" id="telefonoE<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['telefono']; ?>">
+                                                                                        <input type="number" id="telefonoU<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['telefono']; ?>">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row">
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
-                                                                                        <label>CUIT <b>*</b></label>
-                                                                                        <input type="text" id="cuitE<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['cuit']; ?>" class="form-control">
-                                                                                        <small style="color:red; display:none" id="lbl_cuitE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
+                                                                                        <label>DNI <b>*</b></label>
+                                                                                        <input type="text" id="dniU<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['dni']; ?>" class="form-control">
+                                                                                        <small style="color:red; display:none" id="lbl_dniU<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Email </label>
-                                                                                        <input type="text" id="emailE<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['email']; ?>">
+                                                                                        <input type="text" id="emailU<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['email']; ?>">
 
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Pais<b>*</b></label>
-                                                                                        <input type="text" id="paisE<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['pais']; ?>">
-                                                                                        <small style="color:red; display:none" id="lbl_paisE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
+                                                                                        <input type="text" id="paisU<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['pais']; ?>">
+                                                                                        <small style="color:red; display:none" id="lbl_paisU<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -255,22 +247,22 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Provincia<b>*</b></label>
-                                                                                        <input type="text" id="provinciaE<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['provincia']; ?>">
-                                                                                        <small style="color:red; display:none" id="lbl_provinciaE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
+                                                                                        <input type="text" id="provinciaU<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['provincia']; ?>">
+                                                                                        <small style="color:red; display:none" id="lbl_provinciaU<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Localidad </label>
-                                                                                        <input type="text" id="localidadE<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['ciudad']; ?>">
-                                                                                        <small style="color:red; display:none" id="lbl_localidadE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
+                                                                                        <input type="text" id="localidadU<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['ciudad']; ?>">
+                                                                                        <small style="color:red; display:none" id="lbl_localidadU<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Domicilio<b>*</b></label>
-                                                                                        <input type="text" id="domicilioE<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['calle']; ?>">
-                                                                                        <small style="color:red; display:none" id="lbl_domicilioE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
+                                                                                        <input type="text" id="domicilioU<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['calle']; ?>">
+                                                                                        <small style="color:red; display:none" id="lbl_domicilioU<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -278,21 +270,21 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Nro<b>*</b></label>
-                                                                                        <input type="text" id="numeroE<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['numero']; ?>">
-                                                                                        <small style="color:red; display:none" id="lbl_numeroE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
+                                                                                        <input type="text" id="numeroU<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['numero']; ?>">
+                                                                                        <small style="color:red; display:none" id="lbl_numeroU<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Piso </label>
-                                                                                        <input type="text" id="pisoE<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['piso']; ?>">
+                                                                                        <input type="text" id="pisoU<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['piso']; ?>">
 
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Depto<b>*</b></label>
-                                                                                        <input type="text" id="deptoE<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['depto']; ?>">
+                                                                                        <input type="text" id="deptoU<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['depto']; ?>">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -300,7 +292,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
 
                                                                         <div class="modal-footer justify-content-between">
                                                                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                                            <button type="button" class="btn btn-success" id="btn_updateE<?php echo $id_cliente; ?>">Actualizar</button>
+                                                                            <button type="button" class="btn btn-success" id="btn_update<?php echo $id_cliente; ?>">Actualizar</button>
                                                                         </div>
                                                                     </div>
                                                                     <!-- /.modal-content -->
@@ -308,38 +300,38 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                 <!-- /.modal-dialog -->
                                                             </div>
                                                             <script>
-                                                                $('#btn_updateE<?php echo $id_cliente; ?>').click(function() {
+                                                                $('#btn_update<?php echo $id_cliente; ?>').click(function() {
                                                                     console.log("Script cargado y ejecutándose");
                                                                     var id_cliente = '<?php echo $id_cliente; ?>';
-                                                                    var nombre_cliente = $('#nombre_empresa<?php echo $id_cliente; ?>').val();
-                                                                    var razon_social = $('#razon_social<?php echo $id_cliente; ?>').val();
-                                                                    var telefono = $('#telefonoE<?php echo $id_cliente; ?>').val();
-                                                                    var cuit = $('#cuitE<?php echo $id_cliente; ?>').val();
-                                                                    var email = $('#emailE<?php echo $id_cliente; ?>').val();
-                                                                    var pais = $('#paisE<?php echo $id_cliente; ?>').val();
-                                                                    var provincia = $('#provinciaE<?php echo $id_cliente; ?>').val();
-                                                                    var localidad = $('#localidadE<?php echo $id_cliente; ?>').val();
-                                                                    var domicilio = $('#domicilioE<?php echo $id_cliente; ?>').val();
-                                                                    var numero = $('#numeroE<?php echo $id_cliente; ?>').val();
-                                                                    var piso = $('#pisoE<?php echo $id_cliente; ?>').val();
-                                                                    var depto = $('#deptoE<?php echo $id_cliente; ?>').val();
+                                                                    var nombre_cliente = $('#nombre_clienteU<?php echo $id_cliente; ?>').val();
+                                                                    var apellido_cliente = $('#apellido_clienteU<?php echo $id_cliente; ?>').val();
+                                                                    var telefono = $('#telefonoU<?php echo $id_cliente; ?>').val();
+                                                                    var dni = $('#dniU<?php echo $id_cliente; ?>').val();
+                                                                    var email = $('#emailU<?php echo $id_cliente; ?>').val();
+                                                                    var pais = $('#paisU<?php echo $id_cliente; ?>').val();
+                                                                    var provincia = $('#provinciaU<?php echo $id_cliente; ?>').val();
+                                                                    var localidad = $('#localidadU<?php echo $id_cliente; ?>').val();
+                                                                    var domicilio = $('#domicilioU<?php echo $id_cliente; ?>').val();
+                                                                    var numero = $('#numeroU<?php echo $id_cliente; ?>').val();
+                                                                    var piso = $('#pisoU<?php echo $id_cliente; ?>').val();
+                                                                    var depto = $('#deptoU<?php echo $id_cliente; ?>').val();
                                                                     var id_domicilio = '<?php echo $id_domicilio; ?>';
 
 
                                                                     // Verificar si todos los campos requeridos están llenos
-                                                                    if (nombre_cliente === '' || razon_social === '' || cuit === '' || pais === '' || provincia === '' || localidad === '' || domicilio === '' || numero === '') {
+                                                                    if (nombre_cliente === '' || apellido_cliente === '' || dni === '' || pais === '' || provincia === '' || localidad === '' || domicilio === '' || numero === '') {
                                                                         alert('Todos los campos marcados con * son obligatorios.');
                                                                     } else {
                                                                         // Realizar la solicitud AJAX para enviar los datos actualizados
                                                                         $.ajax({
                                                                             type: "POST", // Cambiar a POST para enviar datos sensibles
-                                                                            url: "../app/controllers/clientes/updateemp.php",
+                                                                            url: "../app/controllers/clientes/updateper.php",
                                                                             data: {
                                                                                 id_cliente: id_cliente,
                                                                                 nombre_cliente: nombre_cliente,
-                                                                                razon_social: razon_social,
+                                                                                apellido_cliente: apellido_cliente,
                                                                                 telefono: telefono,
-                                                                                cuit: cuit,
+                                                                                dni: dni,
                                                                                 email: email,
                                                                                 pais: pais,
                                                                                 provincia: provincia,
@@ -363,7 +355,11 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                 });
                                                             </script>
                                                             <div id="respuesta_update<?php echo $id_cliente; ?>"></div>
-                                                        
+                                                    </div>
+
+
+                                                    <div class="btn-group">
+                                                
                                                         <a type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-delete<?php echo $id_cliente; ?>"><i class="fa fa-trash"></i>Borrar</a>
 
                                                         <div class="modal fade" id="modal-delete<?php echo $id_cliente; ?>">
@@ -381,40 +377,40 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Nombre del cliente <b>*</b></label>
-                                                                                <input type="text" id="nombre<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['nombre']; ?>" class="form-control" disabled>
+                                                                                <input type="text" id="nombre<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['nombre']; ?>" class="form-control" disabled>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
-                                                                                <label>Razon Social <b>*</b></label>
-                                                                                <input type="text" id="razonSocial<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['razon_social']; ?>" class="form-control" disabled>
+                                                                                <label>Apellido del cliente <b>*</b></label>
+                                                                                <input type="text" id="apellido<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['apellido']; ?>" class="form-control" disabled>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Telefono</label>
-                                                                                <input type="number" id="tel<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['telefono']; ?>" disabled>
+                                                                                <input type="number" id="tel<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['telefono']; ?>" disabled>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
-                                                                                <label>CUIT <b>*</b></label>
-                                                                                <input type="text" id="cuit<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['cuit']; ?>" class="form-control" disabled>
+                                                                                <label>DNI <b>*</b></label>
+                                                                                <input type="text" id="dni<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['dni']; ?>" class="form-control" disabled>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Email </label>
-                                                                                <input type="text" id="ema<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['email']; ?>" disabled>
+                                                                                <input type="text" id="ema<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['email']; ?>" disabled>
 
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Pais<b>*</b></label>
-                                                                                <input type="text" id="pai<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['pais']; ?>" disabled>
+                                                                                <input type="text" id="pai<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['pais']; ?>" disabled>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -422,20 +418,20 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Provincia<b>*</b></label>
-                                                                                <input type="text" id="prov<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['provincia']; ?>" disabled>
+                                                                                <input type="text" id="prov<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['provincia']; ?>" disabled>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Localidad </label>
-                                                                                <input type="text" id="loc<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['ciudad']; ?>" disabled>
+                                                                                <input type="text" id="loc<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['ciudad']; ?>" disabled>
 
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Domicilio<b>*</b></label>
-                                                                                <input type="text" id="dom<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['calle']; ?>" disabled>
+                                                                                <input type="text" id="dom<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['calle']; ?>" disabled>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -443,20 +439,20 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Nro<b>*</b></label>
-                                                                                <input type="text" id="num<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['numero']; ?>" disabled>
+                                                                                <input type="text" id="num<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['numero']; ?>" disabled>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Piso </label>
-                                                                                <input type="text" id="pis<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['piso']; ?>" disabled>
+                                                                                <input type="text" id="pis<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['piso']; ?>" disabled>
 
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Depto<b>*</b></label>
-                                                                                <input type="text" id="dpto<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesemp_datos['depto']; ?>" disabled>
+                                                                                <input type="text" id="dpto<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['depto']; ?>" disabled>
                                                                             </div>
                                                                         </div>
 
@@ -477,7 +473,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
 
                                                                 var id_cliente = '<?php echo $id_cliente; ?>';
 
-                                                                var url2 = "../app/controllers/clientes/delete_clienteemp.php";
+                                                                var url2 = "../app/controllers/clientes/delete.php";
                                                                 $.get(url2, {
                                                                     id_cliente: id_cliente
                                                                 }, function(datos) {
@@ -485,6 +481,7 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                                 });
                                                             });
                                                         </script>
+                                                    </div>
 
                                                     </div>
                                                 </center>
@@ -529,21 +526,21 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Nombre<b>*</b></label>
-                                <input type="text" id="nombre_empresa" class="form-control" placeholder="Nombre de la empresa">
-                                <small style="color:red; display:none" id="lbl_nombre">* Este campo es requerido</small>
+                                <input type="text" id="nombreC" class="form-control" placeholder="Nombre de la empresa">
+                                <small style="color:red; display:none" id="lbl_nombreC">* Este campo es requerido</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Razon Social<b>*</b></label>
-                                <input type="text" id="razon_social" class="form-control" placeholder="Razon social">
-                                <small style="color:red; display:none" id="lbl_razon_social">* Este campo es requerido</small>
+                                <label>Apellido<b>*</b></label>
+                                <input type="text" id="apellidoC" class="form-control" placeholder="Razon social">
+                                <small style="color:red; display:none" id="lbl_apellidoC">* Este campo es requerido</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Telefono</label>
-                                <input type="number" id="telefono" class="form-control" placeholder="Telefono">
+                                <input type="number" id="telefonoC" class="form-control" placeholder="Telefono">
                             </div>
                         </div>
                     </div>
@@ -552,20 +549,13 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" id="email" class="form-control" placeholder="Email">
+                                <input type="email" id="emailC" class="form-control" placeholder="Email">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>CUIT</label>
-                                <input type="text" id="cuit" class="form-control" placeholder="XX-XXXXXXXX-X">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Persona Autorizada<b>*</b></label>
-                                <input type="text" id="responsable_comercial" class="form-control">
-                                <small style="color:red; display:none" id="lbl_responsable_comercial">* Este campo es requerido</small>
+                                <label>DNI</label>
+                                <input type="text" id="dniC" class="form-control" placeholder="XX-XXXXXXXX-X">
                             </div>
                         </div>
                     </div>
@@ -613,19 +603,16 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-</div>
-
 
 
 <!-- SCRIPTSSS DE LA TABLA-->
 <script>
     $('#btn_create').click(function() {
-        var nombre_empresa = $('#nombre_empresa').val();
-        var razon_social = $('#razon_social').val();
-        var telefono = $('#telefono').val();
-        var email = $('#email').val();
-        var cuit = $('#cuit').val();
-        var responsable_comercial = $('#responsable_comercial').val();
+        var nombre = $('#nombreC').val();
+        var apellido = $('#apellidoC').val();
+        var telefono = $('#telefonoC').val();
+        var email = $('#emailC').val();
+        var dni = $('#dniC').val();
         var calle = $('#calle').val();
         var numero = $('#numero').val();
         var piso = $('#piso').val();
@@ -636,22 +623,21 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
 
 
 
-        if (nombre_empresa == '') {
+        if (nombre == '') {
             $('#nombre_empresa').focus();
-            $('#lbl_nombre').css('display', 'block');
-        } else if (responsable_comercial == '') {
-            $('#responsable_comercial').focus();
-            $('#lbl_responsable_comercial').css('display', 'block');
+            $('#lbl_nombreC').css('display', 'block');
+        } else if (apellido == '') {
+            $('#apellidoC').focus();
+            $('#lbl_apellidoC').css('display', 'block');
         } else {
             
-            var url = "../app/controllers/clientes/createemp.php";
+            var url = "../app/controllers/clientes/create.php";
             $.get(url, {
-                nombre_empresa: nombre_empresa,
-                razon_social: razon_social,
+                nombre: nombre,
+                apellido: apellido,
                 telefono: telefono,
                 email: email,
-                cuit: cuit,
-                responsable_comercial: responsable_comercial,
+                dni: dni,
                 calle: calle,
                 numero: numero,
                 piso: piso,

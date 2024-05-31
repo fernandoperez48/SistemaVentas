@@ -23,10 +23,6 @@ $pais = $_GET['pais'];
             if ($resultado_proveedor) {
                 $id_empresa = $mysqli->insert_id;
 
-                    // Inserción en tb_clientes
-                    $sql_clientes = "INSERT INTO tb_clientes(id_empresa) VALUES ('$id_empresa')";
-                    $mysqli->query($sql_clientes);
-
                 // Insertar en la tabla tb_domicilios
                 $sql_domicilio = "INSERT INTO tb_domicilios(calle, numero, piso, depto, ciudad, provincia, pais) 
                                 VALUES ('$calle', '$numero', '$piso', '$depto', '$localidad', '$provincia', '$pais')";
