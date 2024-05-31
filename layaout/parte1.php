@@ -95,13 +95,11 @@
             <ul class="navbar-nav container-fluid">
 
                 <a class="navbar-brand">
-                    <img href="../index.php" src="<?php echo $URL; ?>/public/images/fainsumocartel.png" alt="logofainsumos" style="max-width:150px;">
+                    <a href="http://localhost/SistemaVentas/index.php"> <img href="../index.php" src="<?php echo $URL; ?>/public/images/fainsumocartel.png" alt="logofainsumos" style="max-width:150px;"></a>
                 </a>
                 <li>
-                    <a href="http://localhost/SistemaVentas/index.php" class="nav-link" role="button">Sistema de Ventas</a>
+                    <a href="http://localhost/SistemaVentas/index.php" class="nav-link" role="button"><?php echo $nombres_sesion ?>/<?php echo $rol_sesion ?></a>
                 </li>
-
-
 
                 <!--Usuarios        ------Usuarios------        Usuario-->
                 <?php if ($rol_sesion == "Administrador") { ?>
@@ -124,7 +122,9 @@
                             <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Personas</a>
                             <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
                                 <li><a href="<?php echo $URL ?>/clientes/indexper.php" class="dropdown-item">Listado</a></li>
-                                <li><a href="<?php echo $URL ?>/clientes/createper.php" class="dropdown-item">Crear</a></li>
+                                <?php if ($rol_sesion == "Administrador" || $id_usuarios_sesion == "3") { ?>
+                                    <li><a href="<?php echo $URL ?>/clientes/createper.php" class="dropdown-item">Crear</a></li>
+                                <?php } ?>
                             </ul>
                         </li>
                         <!-- End Level one -->
@@ -134,7 +134,7 @@
                             <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Empresas</a>
                             <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow " style="background-color:#343a40;">
                                 <li><a href="<?php echo $URL ?>/clientes/indexemp.php" class="dropdown-item">Listado</a></li>
-                                <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Vendedor") { ?>
+                                <?php if ($rol_sesion == "Administrador" || $id_usuarios_sesion == "3") { ?>
                                     <li><a href="<?php echo $URL ?>/clientes/createemp.php" class="dropdown-item">Crear</a></li>
                                 <?php } ?>
                             </ul>
@@ -155,22 +155,24 @@
                 <?php } ?>
 
                 <!--Categorias       ------Categorias------        Categorias-->
-                <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Almacen" || $rol_sesion == "Vendedor") { ?>
-                    <li class="nav-item dropdown dropdown-hover">
-                        <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Categorias</a>
-                        <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
-                            <li><a href="<?php echo $URL ?>/categorias" class="dropdown-item">Listado de Categorias</a></li>
-                        </ul>
-                    </li>
-                <?php } ?>
+
+                <li class="nav-item dropdown dropdown-hover">
+                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Categorias</a>
+                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
+                        <li><a href="<?php echo $URL ?>/categorias" class="dropdown-item">Listado de Categorias</a></li>
+                    </ul>
+                </li>
+
 
                 <!--Productos       ------Productos------        Productos-->
-                <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Almacen" || $rol_sesion == "Vendedor") { ?>
+                <?php if ($rol_sesion == "Administrador" || $id_usuarios_sesion == "4" || $id_usuarios_sesion == "3") { ?>
                     <li class="nav-item dropdown dropdown-hover">
                         <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Productos</a>
                         <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
                             <li><a href="<?php echo $URL ?>/almacen" class="dropdown-item">Listado de Productos</a></li>
-                            <li><a href="<?php echo $URL ?>/almacen/create.php" class="dropdown-item">Crear Producto</a></li>
+                            <?php if ($rol_sesion == "Administrador" || $id_usuarios_sesion == "4") { ?>
+                                <li><a href="<?php echo $URL ?>/almacen/create.php" class="dropdown-item">Crear Producto</a></li>
+                            <?php } ?>
                         </ul>
                     </li>
                 <?php } ?>
@@ -189,7 +191,9 @@
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Compras</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
                         <li><a href="<?php echo $URL ?>/compras" class="dropdown-item">Listado de Compras</a></li>
-                        <li><a href="<?php echo $URL ?>/compras/create.php" class="dropdown-item">Registrar Compra</a></li>
+                        <?php if ($rol_sesion == "Administrador" || $id_usuarios_sesion == "4") { ?>
+                            <li><a href="<?php echo $URL ?>/compras/create.php" class="dropdown-item">Registrar Compra</a></li>
+                        <?php } ?>
                     </ul>
                 </li>
 
@@ -198,7 +202,9 @@
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Ventas</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
                         <li><a href="<?php echo $URL ?>/ventas" class="dropdown-item">Listado de Ventas</a></li>
-                        <li><a href="<?php echo $URL ?>/ventas/create.php" class="dropdown-item">Registrar Venta</a></li>
+                        <?php if ($rol_sesion == "Administrador" || $id_usuarios_sesion == "3") { ?>
+                            <li><a href="<?php echo $URL ?>/ventas/create.php" class="dropdown-item">Registrar Venta</a></li>
+                        <?php } ?>
                     </ul>
                 </li>
 
@@ -207,7 +213,9 @@
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Envío y Distribución</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
                         <li><a href="<?php echo $URL ?>/envios" class="dropdown-item">Listado de Envíos</a></li>
-                        <li><a href="<?php echo $URL ?>/envios/create.php" class="dropdown-item">Nuevo Envío</a></li>
+                        <?php if ($rol_sesion == "Administrador" || $id_usuarios_sesion == "1") { ?>
+                            <li><a href="<?php echo $URL ?>/envios/create.php" class="dropdown-item">Nuevo Envío</a></li>
+                        <?php } ?>
                     </ul>
                 </li>
 

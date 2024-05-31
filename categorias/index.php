@@ -16,7 +16,7 @@ include '../app/controllers/categorias/listado_de_categorias.php';
                 <div class="col-sm-12">
                     <h1 class="m-0">Listado de Categorias
 
-                        <button <?php if ($rol_sesion != "Administrador" && $rol_sesion != "Almacen") echo 'disabled'; ?> type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create">
+                        <button <?php if ($rol_sesion != "Administrador" && $id_usuarios_sesion != "4") echo 'disabled'; ?> type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create">
                             <i class="fa fa-plus"></i>
                             Agregar Nuevo
                         </button>

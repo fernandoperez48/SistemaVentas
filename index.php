@@ -8,7 +8,7 @@ include 'app/controllers/clientes/listado_de_clientesemp.php';
 include 'app/controllers/roles/listado_de_roles.php';
 include 'app/controllers/categorias/listado_de_categorias.php';
 include 'app/controllers/almacen/listado_de_productos.php';
-include 'app/controllers/compras/listado_de_compras.php';
+//include 'app/controllers/compras/listado_de_compras.php';
 include 'app/controllers/ventas/listado_de_ventas.php';
 include 'app/controllers/proveedores/listado_de_proveedores.php';
 include 'app/controllers/envios/listado_de_envios.php';
