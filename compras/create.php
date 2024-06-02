@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', 1);
 include '../app/config.php';
 include '../layaout/sesion.php';
 if ($rol_sesion == "EyD" || $rol_sesion == "Vendedor" || $rol_sesion == "Almacen") {
@@ -274,7 +275,10 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                                 precio_unitario: precio_unitario,
                                                                 id_proveedor: id_proveedor
                                                             }, function(datos) {
+                                                                actualizarCantidadProducto(id_producto, cantidad);
                                                                 $('#respuesta_detalle_compra').html(datos);
+                                                                $('#modal-buscar_producto').modal('hide'); // Cerrar el modal después de registrar
+                                                                location.reload(); // Recargar la página para actualizar la tabla
                                                             });
                                                         }
                                                     });
@@ -429,8 +433,8 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="">Fecha de la operación</label>
-                                        <input type="date" class="form-control" id="fecha_compra">
+                                        <label for="">Fecha de pago/operación</label>
+                                        <input type="date" class="form-control" id="fecha_operacion">
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -461,6 +465,8 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                         <input type="text" id="id_usuario" hidden>
                                     </div>
                                 </div>
+
+
                             </div>
                             <hr>
                             <div class="col-md-12 ">
@@ -471,49 +477,102 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                     </button>
                                 </div>
                             </div>
-                            <script>
-                                $("#btn_guardar_compra").click(function() {
-                                    var id_producto = $("#id_producto").val();
-                                    var ingreso_mercaderia = $("#ingreso_mercaderia").val();
-                                    var nro_compra = $("#nro_compra").val();
-                                    var fecha_compra = $("#fecha_compra").val();
-                                    var id_proveedor = $("#id_proveedor").val();
-                                    var comprobante = $("#comprobante").val();
-                                    var id_usuario = '<?php echo $id_usuarios_sesion ?>';
-                                    var precio_compra = $("#precio_compra_controlador").val();
-                                    var cantidad_compra = $("#cantidad_compra").val();
-                                    var stock_total = $("#stock_total").val();
+                            <div id="respuesta_create"></div>
 
-                                    if (id_producto == "") {
-                                        $('#id_producto').focus();
-                                        alert("Debe llenar todos los campos");
-                                    } else if (fecha_compra == "") {
-                                        $('#fecha_compra').focus();
-                                        alert("DEbe llenar todos los campos");
-                                    } else if (comprobante == "") {
-                                        $('#comprobante').focus();
-                                        alert("DEbe llenar todos los campos");
-                                    } else if (precio_compra == "") {
-                                        $('#precio_compra_controlador').focus();
-                                        alert("DEbe llenar todos los campos");
-                                    } else {
-                                        var url = "../app/controllers/compras/create.php";
-                                        $.get(url, {
-                                            id_producto: id_producto,
-                                            nro_compra: nro_compra,
-                                            fecha_compra: fecha_compra,
-                                            id_proveedor: id_proveedor,
-                                            comprobante: comprobante,
-                                            id_usuario: id_usuario,
-                                            precio_compra: precio_compra,
-                                            cantidad_compra: cantidad_compra,
-                                            stock_total: stock_total
-                                        }, function(datos) {
-                                            $('#respuesta_create').html(datos);
-                                        });
-                                    }
+
+                            <?php
+                            // Definir los arrays donde almacenaremos los datos
+
+                            $consulta_detalle_compras = "SELECT detcom.id_producto as id_producto, 
+                            detcom.cantidad_producto as cantidad_producto
+                            FROM tb_detalle_compras as detcom                                                    
+                            WHERE detcom.nro_compra = " . ($contador_de_compras + 1);
+
+                            $res_detalle_compras = $mysqli->query($consulta_detalle_compras);
+
+                            if ($res_detalle_compras) {
+                                $detalle_compras_datos = $res_detalle_compras->fetch_all(MYSQLI_ASSOC);
+                                $id_productos = [];
+                                $cantidades = [];
+                                foreach ($detalle_compras_datos as $detalle_compras) {
+                                    $id_productos[] = $detalle_compras['id_producto'];
+                                    $cantidades[] = $detalle_compras['cantidad_producto'];
+                                }
+                                // Convertir los arrays a formato JSON para pasarlos al script JavaScript
+                                $id_productos_json = json_encode($id_productos);
+                                $cantidades_json = json_encode($cantidades);
+                            }
+                            // Pasar el contador de compras a JavaScript
+                            $nro_compra_js = $contador_de_compras + 1;
+                            ?>
+
+
+                            <script>
+                                $(document).ready(function() {
+                                    var nro_compra = <?php echo $nro_compra_js; ?>;
+                                    var id_productos = <?php echo $id_productos_json; ?>;
+                                    var cantidades = <?php echo $cantidades_json; ?>;
+
+                                    console.log("Nro Compra: ", nro_compra);
+                                    console.log("ID Productos: ", id_productos);
+                                    console.log("Cantidades: ", cantidades);
+
+                                    $("#btn_guardar_compra").click(function() {
+                                        var id_proveedor = $("#id_proveedor").val();
+                                        var fecha_operacion = $("#fecha_operacion").val();
+                                        var ingreso_mercaderia = $("#ingreso_mercaderia").val();
+                                        var comprobante = $("#comprobante").val();
+                                        var precio_compra = $("#precio_compra_controlador").val();
+                                        var id_usuario = '<?php echo $id_usuarios_sesion ?>';
+
+                                        if (nro_compra == "") {
+                                            $('#nro_compra').focus();
+                                            alert("Debe llenar todos los campos de compra.");
+                                        } else if (id_proveedor == "") {
+                                            $('#id_proveedor').focus();
+                                            alert("Debe llenar todos los campos de proveedor.");
+                                        } else if (fecha_operacion == "") {
+                                            $('#fecha_operacion').focus();
+                                            alert("Debe llenar todos los campos de operación.");
+                                        } else if (ingreso_mercaderia == "") {
+                                            $('#ingreso_mercaderia').focus();
+                                            alert("Debe llenar todos los campos de mercadería.");
+                                        } else if (comprobante == "") {
+                                            $('#comprobante').focus();
+                                            alert("Debe llenar todos los campos de comprobante.");
+                                        } else if (precio_compra == "") {
+                                            $('#precio_compra_controlador').focus();
+                                            alert("Debe llenar todos los campos de costo.");
+                                        } else if (id_usuario == "") {
+                                            $('#id_usuario').focus();
+                                            alert("Debe llenar todos los campos de usuario.");
+                                        } else {
+                                            var url = "../app/controllers/compras/create.php";
+                                            $.get(url, {
+                                                nro_compra: nro_compra,
+                                                id_proveedor: id_proveedor,
+                                                fecha_operacion: fecha_operacion,
+                                                ingreso_mercaderia: ingreso_mercaderia,
+                                                comprobante: comprobante,
+                                                precio_compra: precio_compra,
+                                                id_usuario: id_usuario,
+                                                id_productos: JSON.stringify(id_productos),
+                                                cantidades: JSON.stringify(cantidades)
+                                            }, function(datos) {
+                                                $('#respuesta_create').html(datos);
+                                                // Si la respuesta contiene el mensaje de éxito, refresca la página
+                                                if (datos.includes("La compra se ha registrado exitosamente.")) {
+
+                                                    location.reload();
+                                                }
+                                            });
+                                        }
+                                    });
                                 });
                             </script>
+
+
+
                         </div>
                     </div>
                 </div>
