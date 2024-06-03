@@ -153,6 +153,10 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                     </div>
 
                                     <div class="row">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 04d44838cbe1dee6bbddc9ca45e77956bafeb114
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Stock minimo:</label>
@@ -165,6 +169,10 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                                 <input type="number" name="stock_maximo" class="form-control">
                                             </div>
                                         </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 04d44838cbe1dee6bbddc9ca45e77956bafeb114
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Fecha de carga:</label>
@@ -173,7 +181,10 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                         </div>
 
                                     </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 04d44838cbe1dee6bbddc9ca45e77956bafeb114
                                     <br>
                                     <div class="form-group">
                                         <a href="index.php" class="btn btn-secondary">Cancelar</a>
@@ -184,7 +195,12 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                         </div>
 
 
+<<<<<<< HEAD
                         </form>
+=======
+
+
+>>>>>>> 04d44838cbe1dee6bbddc9ca45e77956bafeb114
                     </div>
                 </div>
 

@@ -1,4 +1,6 @@
-<?php include '../app/config.php';
+<?php
+ini_set('display_errors', 1);
+include '../app/config.php';
 include '../layaout/sesion.php';
 if ($rol_sesion == "EyD" || $rol_sesion == "Vendedor" || $rol_sesion == "Almacen") {
     header('Location: ..//index.php');
@@ -7,7 +9,9 @@ include '../layaout/parte1.php';
 include '../app/controllers/almacen/listado_de_productos.php';
 include '../app/controllers/proveedores/listado_de_proveedores.php';
 include '../app/controllers/compras/listado_de_compras.php';
-include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
+include '../app/controllers/almacen/listado_de_productos_por_proveedor.php';
+include '../app/controllers/almacen/funcionListar.php'; ?>
+
 <!-- Content Wrapper. Contains page content -->
 
 <div class="content-wrapper">
@@ -30,11 +34,11 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                     <div class="content">
                         <div class="card card-outline card-primary">
                             <div class="card-header">
-                                <form action="../app/controllers/almacen/listado_de_productos_por_proveedor.php" method="post">
+                                <form action="#">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <!-- se cuenta la cantidad de compras de la tabla correspondiente
-                                 y se le agrega un numero mas para indicar qué numero de compra sera la próxima -->
+                                            y se le agrega un numero mas para indicar qué numero de compra sera la próxima -->
                                             <?php
                                             $contador_de_compras = 0;
                                             foreach ($compras_datos as $compras_datos) {
@@ -42,17 +46,13 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                             }
                                             ?>
                                             <div style="display: flex;">
-                                                <h3 class="card-title"><i class="fa fa-shopping-bag" style="margin-right: 5px; margin-top: 5px;"></i>
+                                                <div class="card-title"><i class="fa fa-shopping-bag" style="margin-right: 5px; margin-top: 5px;"></i>
 
-                                                    <h4>Compra N°</h4>
+                                                    Compra N°
                                                     <input type="text" value="<?php echo $contador_de_compras + 1 ?>" style="text-align: center; margin-left:15px;" disabled>
-                                                </h3>
+                                                </div>
                                             </div>
                                         </div>
-
-
-
-
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <div style="display: flex;">
@@ -60,11 +60,11 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                                         <h4>Proveedor:</h4>
                                                     </label>
 
-                                                    <select name="id_proveedor" class="form-control" style="margin-left: 10px;" required>
+
+                                                    <select name="id_proveedor" id="id_proveedor" style="margin-left: 10px;" required onchange="updateProveedor()">
                                                         <option value="">Seleccionar proveedor</option> <!--Opción por defecto -->
-                                                        <?php
-                                                        foreach ($proveedores_datos as $proveedores_datos) { ?>
-                                                            <option value="<?php echo $proveedores_datos['id_proveedor']; ?>"><?php echo $proveedores_datos['nombre_proveedor']; ?></option>
+                                                        <?php foreach ($proveedores_datos as $proveedor) { ?>
+                                                            <option value="<?php echo $proveedor['id_proveedor']; ?>"><?php echo $proveedor['nombre_proveedor']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                     <a href="<?php echo $URL; ?>/proveedores" class="btn btn-primary">
@@ -73,26 +73,23 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                                 </div>
                                             </div>
                                         </div>
+<<<<<<< HEAD
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <button type="submit" href="#" class="btn btn-primary" style="margin-left: 10px;">Confirmar selección</button>
                                             </div>
                                         </div>
 
+=======
+>>>>>>> 04d44838cbe1dee6bbddc9ca45e77956bafeb114
                                 </form>
-
                             </div>
-
-
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
                                 </button>
                             </div>
-                            <!-- /.card-tools -->
                         </div>
-                        <!-- /.card-header -->
-
                         <div class="card-body">
                             <div style="display: flex;">
                                 <h4><b>Detalle de la Compra</b></h4>
@@ -103,6 +100,35 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
 
                             </div>
                             <!-- MODAL PARA BUSCAR PRODUCTO       MODAL PARA BUSCAR PRODUCTO       MODAL PARA BUSCAR PRODUCTO -->
+
+                            <?php
+                            if (session_status() === PHP_SESSION_NONE) {
+                                session_start();
+                            }
+
+                            if (isset($_SESSION['id_proveedorDelSelect'])) {
+                                $id_proveedorDelSelect = $_SESSION['id_proveedorDelSelect'];
+                            } else {
+                                $id_proveedorDelSelect = ''; // O algún valor por defecto o mensaje de error
+                            }
+
+                            // Verifica el valor de $id_proveedorDelSelect
+                            echo 'Ultimo proveedor seleccionado: ' . $id_proveedorDelSelect . '<br>';
+
+                            if (empty($id_proveedorDelSelect)) {
+                                if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_proveedor'])) {
+                                    $id_proveedorDelSelect = $_POST['id_proveedor'];
+                                    $_SESSION['id_proveedorDelSelect'] = $id_proveedorDelSelect;
+                                } else {
+                                    echo 'No se ha seleccionado un proveedor válido.';
+                                    // Puedes manejar este caso de manera específica, por ejemplo, redirigir o mostrar un mensaje de error
+                                    // exit; // Descomentar si deseas detener la ejecución en caso de error
+                                }
+                            }
+
+                            // Aquí puedes usar $id_proveedorDelSelect para listar productos
+                            $productosXproveedor_datos = ListarProductosXProveedor($mysqli, $id_proveedorDelSelect);
+                            ?>
                             <div class="modal fade" id="modal-buscar_producto">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
@@ -149,6 +175,7 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                                     <tbody>
                                                         <?php
                                                         $contador = 0;
+
                                                         foreach ($productosXproveedor_datos as $productosXproveedor_datos) {
                                                             $id_producto = $productosXproveedor_datos['id_producto']; ?>
                                                             <tr>
@@ -224,6 +251,13 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                                             <input type="text" id="precio_unitario" class="form-control">
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+
+                                                            <input type="text" id="id_proveedor" class="form-control" value="<?php echo $id_proveedorDelSelect; ?>" hidden>
+                                                            <!-- Aquí el valor del id_proveedor se establece automáticamente -->
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <button style="float: right;" id="btn_registrar_detalle_compra" class="btn btn-primary">Registrar</button>
                                                 <div id="respuesta_detalle_compra"></div>
@@ -233,6 +267,7 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                                         var id_producto = $("#id_producto").val();
                                                         var cantidad = $("#cantidad").val();
                                                         var precio_unitario = $("#precio_unitario").val();
+                                                        var id_proveedor = $("#id_proveedor").val();
                                                         if (id_producto == "") {
                                                             alert("Seleccione un producto");
                                                         } else if (cantidad == "") {
@@ -246,9 +281,13 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                                                 nro_compra: nro_compra,
                                                                 id_producto: id_producto,
                                                                 cantidad: cantidad,
-                                                                precio_unitario: precio_unitario
+                                                                precio_unitario: precio_unitario,
+                                                                id_proveedor: id_proveedor
                                                             }, function(datos) {
+                                                                actualizarCantidadProducto(id_producto, cantidad);
                                                                 $('#respuesta_detalle_compra').html(datos);
+                                                                $('#modal-buscar_producto').modal('hide'); // Cerrar el modal después de registrar
+                                                                location.reload(); // Recargar la página para actualizar la tabla
                                                             });
                                                         }
                                                     });
@@ -261,9 +300,7 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                     </div>
                                 </div>
                             </div>
-
                             <br><br>
-
                             <div class="table-responsive">
                                 <table class="table table-bordered table-sm table-hover table-striped">
                                     <thead>
@@ -287,70 +324,75 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                         $precio_total = 0;
 
                                         $sql_detalle_compras = "SELECT *, 
-                                        pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.codigo as codigo, 
-                                        pr.nombre_proveedor as nombre_proveedor,
-                                        cat.nombre_categoria as nombre_categoria
-                                        from tb_detalle_compras as detcom
-                                        inner join tb_almacen as pro on detcom.id_producto = pro.id_producto 
-                                        inner join tb_proveedores as pr on pro.id_proveedor = pr.id_proveedor
-                                        inner join tb_acategorias as cat on cat.id_categoria = pro.id_categoria
-                                        where nro_compra = $contador_de_compras + 1 
-                                        order by detcom.id_detalle_compras";
-                                        $query_detalle_compras = $pdo->prepare($sql_detalle_compras);
-                                        $query_detalle_compras->execute();
-                                        $detalle_compras_datos = $query_detalle_compras->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach ($detalle_compras_datos as $detalle_compras_datos) {
-                                            $id_detalle_compras = $detalle_compras_datos['id_detalle_compras'];
-                                            $contador_detalle_compras = $contador_detalle_compras + 1;
-                                            $cantidad_total = $cantidad_total + $detalle_compras_datos['cantidad_producto'];
-                                            $precio_unitario_total = $precio_unitario_total + $detalle_compras_datos['precio_unitario'];
-                                            $precio_total = $precio_total + ($detalle_compras_datos['cantidad_producto'] * $detalle_compras_datos['precio_unitario']);
+                                            pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.codigo as codigo, 
+                                            pr.nombre_proveedor as nombre_proveedor,
+                                            cat.nombre_categoria as nombre_categoria
+                                            FROM tb_detalle_compras AS detcom
+                                            INNER JOIN tb_almacen AS pro ON detcom.id_producto = pro.id_producto 
+                                            INNER JOIN tb_proveedores AS pr ON pro.id_proveedor = pr.id_proveedor
+                                            INNER JOIN tb_acategorias AS cat ON cat.id_categoria = pro.id_categoria
+                                            WHERE nro_compra = " . ($contador_de_compras + 1) . " 
+                                            ORDER BY detcom.id_detalle_compras";
+
+                                        $resultado_detalle_compras = $mysqli->query($sql_detalle_compras);
+                                        if ($resultado_detalle_compras) {
+                                            while ($detalle_compras_datos = $resultado_detalle_compras->fetch_assoc()) {
+                                                $id_detalle_compras = $detalle_compras_datos['id_detalle_compras'];
+                                                $contador_detalle_compras++;
+                                                $cantidad_total += $detalle_compras_datos['cantidad_producto'];
+                                                $precio_unitario_total += $detalle_compras_datos['precio_unitario'];
+                                                $precio_total += ($detalle_compras_datos['cantidad_producto'] * $detalle_compras_datos['precio_unitario']);
                                         ?>
-                                            <tr>
-                                                <td>
-                                                    <center><?php echo $contador_detalle_compras; ?></center>
-                                                    <input type="text" value="<?php echo $detalle_compras_datos['id_producto']; ?>" id="id_producto<?php echo $contador_detalle_compras; ?>" hidden>
-                                                </td>
-                                                <td>
-                                                    <center><?php echo $detalle_compras_datos['nombre_producto']; ?></center>
-                                                </td>
-                                                <td>
-                                                    <center><?php echo $detalle_compras_datos['descripcion']; ?></center>
-                                                </td>
-                                                <td>
-                                                    <center><?php echo $detalle_compras_datos['nombre_proveedor']; ?></center>
-                                                </td>
-                                                <td>
-                                                    <center><?php echo $detalle_compras_datos['nombre_categoria']; ?></center>
-                                                </td>
-                                                <td>
-                                                    <center><span id="cantidad_detalle_compras<?php echo $contador_detalle_compras; ?>"><?php echo $detalle_compras_datos['cantidad_producto']; ?></span></center>
-                                                    <input type="text" id="stock_de_inventario<?php echo $contador_detalle_compras; ?>" value="<?php echo $detalle_compras_datos['stock']; ?>" hidden>
-                                                </td>
-                                                <td>
-                                                    <center><?php echo $detalle_compras_datos['precio_unitario']; ?></center>
-                                                </td>
-                                                <td>
-                                                    <center>
-                                                        <?php
-                                                        $cantidad_producto = floatval($detalle_compras_datos['cantidad_producto']);
-                                                        $precio_unitario = floatval($detalle_compras_datos['precio_unitario']);
-                                                        echo $subtotal = $cantidad_producto * $precio_unitario;
-                                                        ?>
-                                                    </center>
-                                                </td>
-                                                <td>
-                                                    <form action="../app/controllers/compras/borrar_detalle_compras.php" method="post">
+                                                <tr>
+                                                    <td>
+                                                        <center><?php echo $detalle_compras_datos['codigo']; ?></center>
+                                                        <input type="text" value="<?php echo $detalle_compras_datos['id_producto']; ?>" id="id_producto<?php echo $contador_detalle_compras; ?>" hidden>
+                                                    </td>
+                                                    <td>
+                                                        <center><?php echo $detalle_compras_datos['nombre_producto']; ?></center>
+                                                    </td>
+                                                    <td>
+                                                        <center><?php echo $detalle_compras_datos['descripcion']; ?></center>
+                                                    </td>
+                                                    <td>
+                                                        <center><?php echo $detalle_compras_datos['nombre_proveedor']; ?></center>
+                                                    </td>
+                                                    <td>
+                                                        <center><?php echo $detalle_compras_datos['nombre_categoria']; ?></center>
+                                                    </td>
+                                                    <td>
+                                                        <center><span id="cantidad_detalle_compras<?php echo $contador_detalle_compras; ?>"><?php echo $detalle_compras_datos['cantidad_producto']; ?></span></center>
+                                                        <input type="text" id="stock_de_inventario<?php echo $contador_detalle_compras; ?>" value="<?php echo $detalle_compras_datos['stock']; ?>" hidden>
+                                                    </td>
+                                                    <td>
+                                                        <center><?php echo $detalle_compras_datos['precio_unitario']; ?></center>
+                                                    </td>
+                                                    <td>
                                                         <center>
-                                                            <input type="text" name="id_detalle_compras" value="<?php echo $id_detalle_compras; ?>" hidden>
-                                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Borrar</button>
+                                                            <?php
+                                                            $cantidad_producto = floatval($detalle_compras_datos['cantidad_producto']);
+                                                            $precio_unitario = floatval($detalle_compras_datos['precio_unitario']);
+                                                            echo $subtotal = $cantidad_producto * $precio_unitario;
+                                                            ?>
                                                         </center>
-                                                    </form>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td>
+                                                        <form action="../app/controllers/compras/borrar_detalle_compras.php" method="post">
+                                                            <center>
+                                                                <input type="text" name="id_detalle_compras" value="<?php echo $id_detalle_compras; ?>" hidden>
+                                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Borrar</button>
+                                                            </center>
+                                                        </form>
+                                                    </td>
+                                                </tr>
                                         <?php
+                                            }
+                                        } else {
+                                            echo "Error: " . $mysqli->error;
                                         }
                                         ?>
+
+
 
                                         <tr>
                                             <th colspan="5" style="background-color: #e7e7e7; text-align:right;">Total</th>
@@ -383,390 +425,315 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-9">
+        </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card card-outline card-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">Detalle de la compra</h3>
-
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <!-- /.card-tools -->
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <?php
-                                                $contador_de_compras = 0;
-                                                foreach ($compras_datos as $compras_datos) {
-                                                    $contador_de_compras += 1;
-                                                }
-                                                ?>
-                                                <label for="">Numero de la compra</label>
-                                                <input type="text" value="<?php echo $contador_de_compras + 1 ?>" style="text-align: center; margin-left:15px;" disabled>
-                                                <!--  <input type="text" style="text-align: center;" class="form-control" value="<?php echo $contador_de_compras; ?>" disabled>
-                                                <input type="text" id="nro_compra" value="<?php echo $contador_de_compras; ?>" hidden>
-                                                 -->
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="">Fecha de la operación</label>
-                                                <input type="date" class="form-control" id="fecha_compra">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="">Comprobante de la compra</label>
-                                                <input type="text" class="form-control" id="comprobante">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="">Costo de la compra</label>
-                                                <input type="text" class="form-control" id="precio_compra_controlador" style="text-align: center;">
-                                            </div>
-                                        </div>
-
-                                        <!-- <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Stock actual</label>
-                                                    <input type="text" id="stock_actual" class="form-control" style="background-color: #d1c53b; text-align:center" disabled>
-                                                    <input type="text" id="stock_actual" hidden>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Stock total</label>
-                                                    <input type="text" id="stock_total" class="form-control" style="text-align:center" id="fecha_compra" disabled>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Cantidad de la compra</label>
-                                                    <input type="number" style="text-align: center;" class="form-control" id="cantidad_compra">
-                                                </div>
-                                                <script>
-                                                    $("#cantidad_compra").keyup(function() {
-                                                        var stock_actual = $("#stock_actual").val();
-                                                        var stock_compra = $("#cantidad_compra").val();
-                                                        var total = parseInt(stock_actual) + parseInt(stock_compra);
-                                                        $("#stock_total").val(total);
-                                                    });
-                                                </script>
-                                            </div> -->
-
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="">Usuario</label>
-                                                <input type="text" class="form-control" value="<?php echo $email_session; ?>" disabled>
-                                                <input type="text" id="id_usuario" hidden>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <button class="btn btn-primary btn-block" id="btn_guardar_compra">
-                                                <i class="fas fa-save"></i>
-                                                Guardar compra
-                                            </button>
-                                        </div>
-
-                                    </div>
-                                    <script>
-                                        $("#btn_guardar_compra").click(function() {
-                                            var id_producto = $("#id_producto").val();
-                                            var nro_compra = $("#nro_compra").val();
-                                            var fecha_compra = $("#fecha_compra").val();
-                                            var id_proveedor = $("#id_proveedor").val();
-                                            var comprobante = $("#comprobante").val();
-                                            var id_usuario = '<?php echo $id_usuarios_sesion ?>';
-                                            var precio_compra = $("#precio_compra_controlador").val();
-                                            var cantidad_compra = $("#cantidad_compra").val();
-                                            var stock_total = $("#stock_total").val();
-
-                                            if (id_producto == "") {
-                                                $('#id_producto').focus();
-                                                alert("DEbe llenar todos los campos");
-                                            } else if (fecha_compra == "") {
-                                                $('#fecha_compra').focus();
-                                                alert("DEbe llenar todos los campos");
-                                            } else if (comprobante == "") {
-                                                $('#comprobante').focus();
-                                                alert("DEbe llenar todos los campos");
-                                            } else if (precio_compra == "") {
-                                                $('#precio_compra_controlador').focus();
-                                                alert("DEbe llenar todos los campos");
-                                            } else {
-                                                var url = "../app/controllers/compras/create.php";
-                                                $.get(url, {
-                                                    id_producto: id_producto,
-                                                    nro_compra: nro_compra,
-                                                    fecha_compra: fecha_compra,
-                                                    id_proveedor: id_proveedor,
-                                                    comprobante: comprobante,
-                                                    id_usuario: id_usuario,
-                                                    precio_compra: precio_compra,
-                                                    cantidad_compra: cantidad_compra,
-                                                    stock_total: stock_total
-                                                }, function(datos) {
-                                                    $('#respuesta_create').html(datos);
-                                                });
-                                            }
-                                        });
-                                    </script>
-                                </div>
-
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                    </div>
-                    <div id="respuesta_create"></div>
-
-                </div>
-
-                <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="content">
                     <div class="card card-outline card-primary">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="fa fa-shopping-basket"></i> Registrar venta</h3>
-
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
+                            <div class="row">
+                                <div class="card-title"><i class="fa fa-shopping-bag" style="margin-right: 5px; margin-top: 5px;"></i>
+                                    Detalle de la compra
+                                </div>
                             </div>
-                            <!-- /.card-tools -->
                         </div>
-                        <!-- /.card-header -->
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="">Monto a cancelar</label>
-                                <input type="text" class="form-control" id="total_a_cancelar" style="text-align:center; background-color:yellow" value="<?php echo $precio_total; ?>" disabled>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="">Fecha de pago/operación</label>
+                                        <input type="date" class="form-control" id="fecha_operacion">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="">Fecha de ingreso de la mercadería</label>
+                                        <input type="date" class="form-control" id="ingreso_mercaderia">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="">Comprobante de la compra</label>
+                                        <input type="text" class="form-control" id="comprobante">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="">Costo de la compra</label>
+                                        <input type="text" class="form-control" id="precio_compra_controlador" style="text-align: center;">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="">Usuario</label>
+                                        <input type="text" class="form-control" value="<?php echo $email_session; ?>" disabled>
+                                        <input type="text" id="id_usuario" hidden>
+                                    </div>
+                                </div>
+
+
                             </div>
-                            <!-- <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">Total pagado</label>
-                                        <input type="text" class="form-control" id="total_pagado">
-                                        <script>
-                                            $("#total_pagado").keyup(function() {
-                                                var total_a_cancelar = $("#total_a_cancelar").val();
-                                                var total_pagado = $("#total_pagado").val();
-                                                var cambio = parseFloat(total_pagado) - parseFloat(total_a_cancelar);
-                                                $("#cambio").val(cambio);
-                                            });
-                                        </script>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">Cambio</label>
-                                        <input type="text" class="form-control" id="cambio" disabled>
-                                    </div>
-                                </div>
-                            </div> -->
                             <hr>
-                            <div class="form-group">
-                                <button id="btn_guardar_compra" class="btn btn-primary btn-block">
-                                    Guardar compra
-                                </button>
-                                <div id="respuesta_registro_compra"></div>
-                                <script>
+                            <div class="col-md-12 ">
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-block" id="btn_guardar_compra">
+                                        <i class="fas fa-save"></i>
+                                        Guardar compra
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="respuesta_create"></div>
+
+
+                            <?php
+                            // Definir los arrays donde almacenaremos los datos
+
+                            $consulta_detalle_compras = "SELECT detcom.id_producto as id_producto, 
+                            detcom.cantidad_producto as cantidad_producto
+                            FROM tb_detalle_compras as detcom                                                    
+                            WHERE detcom.nro_compra = " . ($contador_de_compras + 1);
+
+                            $res_detalle_compras = $mysqli->query($consulta_detalle_compras);
+
+                            if ($res_detalle_compras) {
+                                $detalle_compras_datos = $res_detalle_compras->fetch_all(MYSQLI_ASSOC);
+                                $id_productos = [];
+                                $cantidades = [];
+                                foreach ($detalle_compras_datos as $detalle_compras) {
+                                    $id_productos[] = $detalle_compras['id_producto'];
+                                    $cantidades[] = $detalle_compras['cantidad_producto'];
+                                }
+                                // Convertir los arrays a formato JSON para pasarlos al script JavaScript
+                                $id_productos_json = json_encode($id_productos);
+                                $cantidades_json = json_encode($cantidades);
+                            }
+                            // Pasar el contador de compras a JavaScript
+                            $nro_compra_js = $contador_de_compras + 1;
+                            ?>
+
+
+                            <script>
+                                $(document).ready(function() {
+                                    var nro_compra = <?php echo $nro_compra_js; ?>;
+                                    var id_productos = <?php echo $id_productos_json; ?>;
+                                    var cantidades = <?php echo $cantidades_json; ?>;
+
+                                    console.log("Nro Compra: ", nro_compra);
+                                    console.log("ID Productos: ", id_productos);
+                                    console.log("Cantidades: ", cantidades);
+
                                     $("#btn_guardar_compra").click(function() {
-                                        var nro_compra = "<?php echo $contador_de_compras + 1; ?>";
-                                        var id_cliente = $("#id_cliente").val();
-                                        var total_a_cancelar = $("#total_a_cancelar").val();
-                                        if (id_cliente === "") {
-                                            alert("Seleccione un cliente");
-                                        } else if (parseInt(<?php echo $precio_total; ?>) === 0) {
-                                            alert("Seleccione productos");
+                                        var id_proveedor = $("#id_proveedor").val();
+                                        var fecha_operacion = $("#fecha_operacion").val();
+                                        var ingreso_mercaderia = $("#ingreso_mercaderia").val();
+                                        var comprobante = $("#comprobante").val();
+                                        var precio_compra = $("#precio_compra_controlador").val();
+                                        var id_usuario = '<?php echo $id_usuarios_sesion ?>';
+
+                                        if (nro_compra == "") {
+                                            $('#nro_compra').focus();
+                                            alert("Debe llenar todos los campos de compra.");
+                                        } else if (id_proveedor == "") {
+                                            $('#id_proveedor').focus();
+                                            alert("Debe llenar todos los campos de proveedor.");
+                                        } else if (fecha_operacion == "") {
+                                            $('#fecha_operacion').focus();
+                                            alert("Debe llenar todos los campos de operación.");
+                                        } else if (ingreso_mercaderia == "") {
+                                            $('#ingreso_mercaderia').focus();
+                                            alert("Debe llenar todos los campos de mercadería.");
+                                        } else if (comprobante == "") {
+                                            $('#comprobante').focus();
+                                            alert("Debe llenar todos los campos de comprobante.");
+                                        } else if (precio_compra == "") {
+                                            $('#precio_compra_controlador').focus();
+                                            alert("Debe llenar todos los campos de costo.");
+                                        } else if (id_usuario == "") {
+                                            $('#id_usuario').focus();
+                                            alert("Debe llenar todos los campos de usuario.");
                                         } else {
-                                            actualizar_stock();
-                                            guardar_venta();
-                                        }
-
-                                        function actualizar_stock() {
-                                            var i = 1;
-                                            var n = '<?php echo $contador_detalle_compras; ?>';
-
-                                            for (i = 1; i <= n; i++) {
-                                                var a = 'stock_de_inventario' + i;
-                                                var stock_de_inventario = $('#' + a).val();
-
-                                                var b = 'cantidad_detalle_compras' + i;
-                                                var cantidad_detalle_compras = $('#' + b).text();
-
-                                                var c = 'id_producto' + i;
-                                                var id_producto = $('#' + c).val();
-
-
-                                                var stock_calculado = parseFloat(stock_de_inventario) - parseFloat(cantidad_detalle_compras);
-
-                                                //alert(stock_de_inventario+" "+cantidad_detalle_compras+" "+stock_calculado+" "+id_producto);
-
-                                                var url2 = "../app/controllers/compras/actualizar_stock.php";
-                                                $.get(url2, {
-                                                    id_producto: id_producto,
-                                                    stock_calculado: stock_calculado,
-                                                }, function(datos) {
-                                                    guardar_venta();
-                                                });
-                                            }
-                                        }
-
-                                        function guardar_venta() {
-                                            var url = "../app/controllers/compras/registro_de_compras.php";
+                                            var url = "../app/controllers/compras/create.php";
                                             $.get(url, {
-                                                nro_venta: nro_venta,
-                                                id_cliente: id_cliente,
-                                                total_a_cancelar: total_a_cancelar
+                                                nro_compra: nro_compra,
+                                                id_proveedor: id_proveedor,
+                                                fecha_operacion: fecha_operacion,
+                                                ingreso_mercaderia: ingreso_mercaderia,
+                                                comprobante: comprobante,
+                                                precio_compra: precio_compra,
+                                                id_usuario: id_usuario,
+                                                id_productos: JSON.stringify(id_productos),
+                                                cantidades: JSON.stringify(cantidades)
                                             }, function(datos) {
-                                                $('#respuesta_registro_venta').html(datos);
+                                                $('#respuesta_create').html(datos);
+                                                // Si la respuesta contiene el mensaje de éxito, refresca la página
+                                                if (datos.includes("La compra se ha registrado exitosamente.")) {
+
+                                                    location.reload();
+                                                }
                                             });
                                         }
-
-
                                     });
-                                </script>
-                            </div>
+                                });
+                            </script>
+
+
+
                         </div>
-                    </div> <!-- /.card-body -->
+                    </div>
                 </div>
-
             </div>
-
         </div>
-    </div>
-    <!-- Main content -->
 
-    <!-- /.content-wrapper -->
-    <?php include '../layaout/mensajes.php'; ?>
-    <?php include '../layaout/parte2.php'; ?>
+        <!-- Main content -->
 
-    <script>
-        $(function() {
-            $("#example1").DataTable({
-                /* cambio de idiomas de datatable */
-                "pageLength": 5,
-                language: {
-                    "emptyTable": "No hay información",
-                    "decimal": "",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Productos",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
-                    "infoFiltered": "(Filtrado de _MAX_ total Productos)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Productos",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscador:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                },
-                /* fin de idiomas */
-                "responsive": true,
-                "lengthChange": true,
-                "autoWidth": false,
+        <!-- /.content-wrapper -->
+        <?php include '../layaout/mensajes.php'; ?>
+        <?php include '../layaout/parte2.php'; ?>
 
-
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-
-        });
-
-        $(function() {
-            $("#example2").DataTable({
-                /* cambio de idiomas de datatable */
-                "pageLength": 5,
-                language: {
-                    "emptyTable": "No hay información",
-                    "decimal": "",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Proveedores",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Proveedores",
-                    "infoFiltered": "(Filtrado de _MAX_ total Proveedores)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Proveedores",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscador:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                },
-                /* fin de idiomas */
-                "responsive": true,
-                "lengthChange": true,
-                "autoWidth": false,
-                "buttons": /* Ajuste de botones */ [{
-                        extend: 'collection',
-                        text: 'Reportes',
-                        orientation: 'landscape',
-                        buttons: [{
-                            text: 'Copiar',
-                            extend: 'copy'
-                        }, {
-                            extend: 'pdf',
-                        }, {
-                            extend: 'csv',
-                        }, {
-                            extend: 'excel',
-                        }, {
-                            text: 'Imprimir',
-                            extend: 'print'
-                        }]
+        <script>
+            $(function() {
+                $("#example1").DataTable({
+                    /* cambio de idiomas de datatable */
+                    "pageLength": 5,
+                    language: {
+                        "emptyTable": "No hay información",
+                        "decimal": "",
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Productos",
+                        "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
+                        "infoFiltered": "(Filtrado de _MAX_ total Productos)",
+                        "infoPostFix": "",
+                        "thousands": ",",
+                        "lengthMenu": "Mostrar _MENU_ Productos",
+                        "loadingRecords": "Cargando...",
+                        "processing": "Procesando...",
+                        "search": "Buscador:",
+                        "zeroRecords": "Sin resultados encontrados",
+                        "paginate": {
+                            "first": "Primero",
+                            "last": "Ultimo",
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                        }
                     },
-                    {
-                        extend: 'colvis',
-                        text: 'Visor de columnas'
-                    }
-                ],
-                /*Fin de ajuste de botones*/
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                    /* fin de idiomas */
+                    "responsive": true,
+                    "lengthChange": true,
+                    "autoWidth": false,
 
-        });
-    </script>
 
-    <script>
-        $(document).ready(function() {
-            $('#proveedor_select').change(function() {
-                var id_proveedor = $(this).val(); // Obtiene el valor del proveedor seleccionado
-                console.log("ID del proveedor seleccionado:", id_proveedor); // Imprime el valor en la consola del navegador
-                // Realiza una petición Ajax enviando solo el valor del proveedor seleccionado
-                var url = "../app/controllers/almacen/listado_de_productos_por_proveedor.php";
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
-                $.get(url, {
-                        id_proveedor: id_proveedor
-                    })
-                    .done(function(response) {
-                        console.log("Respuesta del servidor:", response); // Imprime la respuesta del servidor en la consola del navegador
-                    })
-                    .fail(function(xhr, status, error) {
-                        console.error("Error en la solicitud AJAX:", error); // Imprime un mensaje de error en la consola del navegador si la solicitud AJAX falla
-                    });
             });
-        });
-    </script>
+
+            $(function() {
+                $("#example2").DataTable({
+                    /* cambio de idiomas de datatable */
+                    "pageLength": 5,
+                    language: {
+                        "emptyTable": "No hay información",
+                        "decimal": "",
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Proveedores",
+                        "infoEmpty": "Mostrando 0 to 0 of 0 Proveedores",
+                        "infoFiltered": "(Filtrado de _MAX_ total Proveedores)",
+                        "infoPostFix": "",
+                        "thousands": ",",
+                        "lengthMenu": "Mostrar _MENU_ Proveedores",
+                        "loadingRecords": "Cargando...",
+                        "processing": "Procesando...",
+                        "search": "Buscador:",
+                        "zeroRecords": "Sin resultados encontrados",
+                        "paginate": {
+                            "first": "Primero",
+                            "last": "Ultimo",
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                        }
+                    },
+                    /* fin de idiomas */
+                    "responsive": true,
+                    "lengthChange": true,
+                    "autoWidth": false,
+                    "buttons": /* Ajuste de botones */ [{
+                            extend: 'collection',
+                            text: 'Reportes',
+                            orientation: 'landscape',
+                            buttons: [{
+                                text: 'Copiar',
+                                extend: 'copy'
+                            }, {
+                                extend: 'pdf',
+                            }, {
+                                extend: 'csv',
+                            }, {
+                                extend: 'excel',
+                            }, {
+                                text: 'Imprimir',
+                                extend: 'print'
+                            }]
+                        },
+                        {
+                            extend: 'colvis',
+                            text: 'Visor de columnas'
+                        }
+                    ],
+                    /*Fin de ajuste de botones*/
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+            });
+        </script>
+        <script>
+            $(document).ready(function() {
+                $('#proveedor_select').change(function() {
+                    var id_proveedor = $(this).val(); // Obtiene el valor del proveedor seleccionado
+                    console.log("ID del proveedor seleccionado:", id_proveedor); // Imprime el valor en la consola del navegador
+                    // Realiza una petición Ajax enviando solo el valor del proveedor seleccionado
+                    var url = "../app/controllers/almacen/listado_de_productos_por_proveedor.php";
+
+                    $.get(url, {
+                            id_proveedor: id_proveedor
+                        })
+                        .done(function(response) {
+                            console.log("Respuesta del servidor:", response); // Imprime la respuesta del servidor en la consola del navegador
+                        })
+                        .fail(function(xhr, status, error) {
+                            console.error("Error en la solicitud AJAX:", error); // Imprime un mensaje de error en la consola del navegador si la solicitud AJAX falla
+                        });
+                });
+            });
+        </script>
+        <script>
+            function updateProveedor() {
+                var select = document.getElementById('id_proveedor');
+                var id_proveedorDelSelect = select.value;
+
+                console.log('Valor del proveedor seleccionado:', id_proveedorDelSelect);
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '../app/controllers/almacen/actualizar_proveedor.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        console.log('Proveedor actualizado:', xhr.responseText);
+                        if (xhr.responseText.includes('Proveedor actualizado')) {
+                            // Recarga la página para reflejar los cambios
+                            window.location.reload();
+                        }
+                    }
+                };
+                xhr.send('id_proveedor=' + encodeURIComponent(id_proveedorDelSelect));
+            }
+        </script>
+        <script>
+            // Obtener el valor del proveedor seleccionado de la sesión
+            var id_proveedorDelSelect = "<?php echo $id_proveedorDelSelect; ?>";
+
+            // Establecer el valor del select con el valor obtenido de la sesión
+            document.getElementById('id_proveedor').value = id_proveedorDelSelect;
+        </script>
+    </div>
+</div>
+</div>

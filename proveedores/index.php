@@ -15,7 +15,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1 class="m-0">Listado de Proveedores
-                        <button <?php if ($rol_sesion != "Administrador") echo 'disabled'; ?> type="button" class="btn btn-warning ml-3" data-toggle="modal" data-target="#modal-create">
+                        <button <?php if ($rol_sesion != "Administrador" || $id_usuarios_sesion == "4") echo 'disabled'; ?> type="button" class="btn btn-warning ml-3" data-toggle="modal" data-target="#modal-create">
                             <i class="fa fa-plus"></i>
                             Agregar Nuevo
                         </button>
@@ -837,7 +837,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
             "autoWidth": false,
             "buttons": /* Ajuste de botones */ [{
                     extend: 'collection',
-                    text: 'Reportes',
+                    text: 'Exportar',
                     orientation: 'landscape',
                     buttons: [{
                         text: 'Copiar',

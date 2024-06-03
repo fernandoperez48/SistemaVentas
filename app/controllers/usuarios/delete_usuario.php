@@ -1,16 +1,20 @@
 <?php
 include '../../config.php';
 
-$id_usuario=$_POST['id_usuario'];
+$id_usuario = $_POST['id_usuario'];
 
+$sql = "DELETE FROM tb_usuarios WHERE id_usuarios = '$id_usuario'";
 
-    $sentencia = $pdo->prepare("DELETE FROM tb_usuarios WHERE id_usuarios=:id_usuarios;");
-
-    $sentencia->bindParam('id_usuarios',$id_usuario);
-    $sentencia->execute();
+if ($mysqli->query($sql) === TRUE) {
     session_start();
-    $_SESSION['mensaje']="Se elimino el usuario correctamente";
-    $_SESSION['icono']="success";
-    header('location: '.$URL.'usuarios/');
+    $_SESSION['mensaje'] = "Se eliminó el usuario correctamente";
+    $_SESSION['icono'] = "success";
+    header('location: ' . $URL . 'usuarios/');
+} else {
+    session_start();
+    $_SESSION['mensaje'] = "No se pudo eliminar el usuario";
+    $_SESSION['icono'] = "error";
+    header('location: ' . $URL . 'usuarios/');
+}
 
-?>
+$mysqli->close();

@@ -1,8 +1,13 @@
 <?php
 
+$sql_roles = "SELECT * FROM tb_roles";
 
-$sql_roles ="SELECT * FROM tb_roles";
-$query_roles= $pdo->prepare($sql_roles);
-$query_roles->execute();
-$roles_datos=$query_roles->fetchAll(PDO::FETCH_ASSOC);
-?>
+$result_roles = $mysqli->query($sql_roles);
+
+$roles_datos = [];
+
+if ($result_roles) {
+    while ($row = $result_roles->fetch_assoc()) {
+        $roles_datos[] = $row;
+    }
+}

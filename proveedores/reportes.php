@@ -135,7 +135,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 type: "pie"
             },
             title: {
-                text: "Volumen en porcetaje de Productos por Proveedores" // Replace with a dynamic title
+                text: "Volumen en porcentaje de Productos por Proveedores" // Replace with a dynamic title
             },
             tooltip: {
                 valueSuffix: "%",
@@ -174,30 +174,37 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 data: [
                     <?php
                     // total de proveedores
-                    $stmt_total_proveedores = $pdo->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
-                    $total_proveedores = $stmt_total_proveedores->fetchColumn();
-                    $stmt_total = $pdo->query("SELECT COUNT(*) AS total FROM tb_almacen");
-                    $total = $stmt_total->fetchColumn();
+                    $stmt_total_proveedores = $mysqli->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
+                    $total_proveedores = $stmt_total_proveedores->fetch_assoc()['total_proveedores'];
+
+                    $stmt_total = $mysqli->query("SELECT COUNT(*) AS total FROM tb_almacen");
+                    $total = $stmt_total->fetch_assoc()['total'];
+
                     // completo con objetos el array
                     $porcentajes = [];
                     for ($i = 1; $i <= $total_proveedores; $i++) {
-                        $stmt_proveedor = $pdo->prepare("SELECT COUNT(*) AS cnt FROM tb_almacen WHERE id_proveedor = ?");
-                        $stmt_proveedor->execute([$i]);
-                        $cantidad = $stmt_proveedor->fetchColumn();
+                        $stmt_proveedor = $mysqli->prepare("SELECT COUNT(*) AS cnt FROM tb_almacen WHERE id_proveedor = ?");
+                        $stmt_proveedor->bind_param('i', $i);
+                        $stmt_proveedor->execute();
+                        $cantidad = $stmt_proveedor->get_result()->fetch_assoc()['cnt'];
 
-                        // nombre segun $i
-                        $stmt_nombre_proveedor = $pdo->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
-                        $stmt_nombre_proveedor->execute([$i]);
-                        $nombre_proveedor = $stmt_nombre_proveedor->fetchColumn();
+                        // nombre según $i
+                        $stmt_nombre_proveedor = $mysqli->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
+                        $stmt_nombre_proveedor->bind_param('i', $i);
+                        $stmt_nombre_proveedor->execute();
+                        $nombre_proveedor = $stmt_nombre_proveedor->get_result()->fetch_assoc()['nombre_proveedor'];
 
-                        //$porcentaje = ($cantidad / $total) * 100;
-                        // uso el nombre segun $I
-                        $porcentaje = ($cantidad / $total) * 100;
+                        // uso el nombre según $i
+                        if ($total > 0) {
+                            $porcentaje = ($cantidad / $total) * 100;
+                        } else {
+                            $porcentaje = 0;
+                        }
                         $porcentaje_dos_decimales = number_format($porcentaje, 2);
                         $porcentajes[] = ['name' => $nombre_proveedor, 'y' => $porcentaje];
                     }
 
-                    // recorro el array y le meto el codigo q no entiendo
+                    // recorro el array y le meto el código
                     $primera = true;
                     foreach ($porcentajes as $proveedor) {
                         if (!$primera) {
@@ -211,6 +218,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
             }]
         });
     </script>
+
 
     <!--  Volumen en porcetaje de compras operacion por Proveedores -->
     <script type="text/javascript">
@@ -257,21 +265,38 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 colorByPoint: true,
                 data: [
                     <?php
+<<<<<<< HEAD
                     $stmt_total_proveedores = $pdo->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
                     $total_proveedores = $stmt_total_proveedores->fetchColumn();
 
                     $stmt_total = $pdo->query("SELECT COUNT(*) AS total FROM tb_compras");
                     $total = $stmt_total->fetchColumn();
 
+=======
+                    $stmt_total_proveedores = $mysqli->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
+                    $total_proveedores = $stmt_total_proveedores->fetch_assoc()['total_proveedores'];
+
+                    $stmt_total = $mysqli->query("SELECT COUNT(*) AS total FROM tb_compras");
+                    $total = $stmt_total->fetch_assoc()['total'];
+
+>>>>>>> 04d44838cbe1dee6bbddc9ca45e77956bafeb114
                     $porcentajes = [];
                     for ($i = 1; $i <= $total_proveedores; $i++) {
-                        $stmt_proveedor = $pdo->prepare("SELECT COUNT(*) AS cnt FROM tb_compras WHERE id_proveedor = ?");
-                        $stmt_proveedor->execute([$i]);
-                        $cantidad = $stmt_proveedor->fetchColumn();
+                        $stmt_proveedor = $mysqli->prepare("SELECT COUNT(*) AS cnt FROM tb_compras WHERE id_proveedor = ?");
+                        $stmt_proveedor->bind_param('i', $i);
+                        $stmt_proveedor->execute();
+                        $cantidad = $stmt_proveedor->get_result()->fetch_assoc()['cnt'];
 
+<<<<<<< HEAD
                         $stmt_nombre_proveedor = $pdo->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
                         $stmt_nombre_proveedor->execute([$i]);
                         $nombre_proveedor = $stmt_nombre_proveedor->fetchColumn();
+=======
+                        $stmt_nombre_proveedor = $mysqli->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
+                        $stmt_nombre_proveedor->bind_param('i', $i);
+                        $stmt_nombre_proveedor->execute();
+                        $nombre_proveedor = $stmt_nombre_proveedor->get_result()->fetch_assoc()['nombre_proveedor'];
+>>>>>>> 04d44838cbe1dee6bbddc9ca45e77956bafeb114
 
                         if ($total > 0) {
                             $porcentaje = ($cantidad / $total) * 100;
@@ -345,11 +370,17 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                     $total_gastado_total = 0;
 
                     // Consulta para obtener el total gastado por cada proveedor
-                    $stmt_total_gastado = $pdo->query("SELECT id_proveedor, SUM(precio_compra) AS total_gastado FROM tb_compras GROUP BY id_proveedor");
-                    $total_gastado_proveedores = $stmt_total_gastado->fetchAll(PDO::FETCH_ASSOC);
+                    $sql_total_gastado = "SELECT id_proveedor, SUM(precio_compra) AS total_gastado FROM tb_compras GROUP BY id_proveedor";
+                    $resultado_total_gastado = $mysqli->query($sql_total_gastado);
 
-                    // Calcular el total gastado en todas las compras
-                    foreach ($total_gastado_proveedores as $proveedor) {
+                    // Inicializar el arreglo para almacenar los datos
+                    $total_gastado_proveedores = array();
+
+                    // Obtener los datos del total gastado por proveedor
+                    while ($proveedor = $resultado_total_gastado->fetch_assoc()) {
+                        $total_gastado_proveedores[] = $proveedor;
+
+                        // Calcular el total gastado en todas las compras
                         $total_gastado_total += $proveedor['total_gastado'];
                     }
 
@@ -365,6 +396,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                         echo '{ name: "' . $proveedor['id_proveedor'] . '", y: ' . $porcentaje_dos_decimales . '}';
                     }
                     ?>
+
                 ]
             }]
         });
