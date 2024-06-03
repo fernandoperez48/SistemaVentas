@@ -82,7 +82,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                             $id_producto = $productos_datos['id_producto']; ?>
                                             <tr>
                                                 <td>
-                                                    <?php echo $contador += 1; ?>
+                                                    <?php echo $productos_datos['id_producto']; ?>
                                                 </td>
                                                 <td>
                                                     <?php echo $productos_datos['codigo']; ?>

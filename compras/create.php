@@ -244,12 +244,11 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <div class="form-group">
-
                                                             <input type="text" id="id_proveedor" class="form-control" value="<?php echo $id_proveedorDelSelect; ?>" hidden>
-                                                            <!-- Aquí el valor del id_proveedor se establece automáticamente -->
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <button style="float: right;" id="btn_registrar_detalle_compra" class="btn btn-primary">Registrar</button>
                                                 <div id="respuesta_detalle_compra"></div>
                                                 <script>
@@ -266,7 +265,6 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                         } else if (precio_unitario == "") {
                                                             alert("Ingrese el precio unitario");
                                                         } else {
-                                                            //alert("listo para el controlador");
                                                             var url = "../app/controllers/compras/registrar_detalle_compra.php";
                                                             $.get(url, {
                                                                 nro_compra: nro_compra,
@@ -275,14 +273,13 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                                 precio_unitario: precio_unitario,
                                                                 id_proveedor: id_proveedor
                                                             }, function(datos) {
-                                                                actualizarCantidadProducto(id_producto, cantidad);
                                                                 $('#respuesta_detalle_compra').html(datos);
-                                                                $('#modal-buscar_producto').modal('hide'); // Cerrar el modal después de registrar
-                                                                location.reload(); // Recargar la página para actualizar la tabla
+                                                                $("#modal-buscar_producto").modal('hide'); // Cierra el modal
                                                             });
                                                         }
                                                     });
                                                 </script>
+
                                                 <br><br>
                                             </div>
                                         </div>
