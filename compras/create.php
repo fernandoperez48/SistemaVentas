@@ -78,6 +78,7 @@ include '../app/controllers/almacen/listado_de_productos_por_proveedor.php'; ?>
                                                 <button type="submit" href="#" class="btn btn-primary" style="margin-left: 10px;">Confirmar selección</button>
                                             </div>
                                         </div>
+
                                 </form>
 
                             </div>

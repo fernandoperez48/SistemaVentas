@@ -257,32 +257,31 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 colorByPoint: true,
                 data: [
                     <?php
-                    // total de proveedores
                     $stmt_total_proveedores = $pdo->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
                     $total_proveedores = $stmt_total_proveedores->fetchColumn();
 
                     $stmt_total = $pdo->query("SELECT COUNT(*) AS total FROM tb_compras");
                     $total = $stmt_total->fetchColumn();
-                    // completo con objetos el array
+
                     $porcentajes = [];
                     for ($i = 1; $i <= $total_proveedores; $i++) {
                         $stmt_proveedor = $pdo->prepare("SELECT COUNT(*) AS cnt FROM tb_compras WHERE id_proveedor = ?");
                         $stmt_proveedor->execute([$i]);
                         $cantidad = $stmt_proveedor->fetchColumn();
 
-                        // nombre segun $i
                         $stmt_nombre_proveedor = $pdo->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
                         $stmt_nombre_proveedor->execute([$i]);
                         $nombre_proveedor = $stmt_nombre_proveedor->fetchColumn();
 
-                        //$porcentaje = ($cantidad / $total) * 100;
-                        // uso el nombre segun $I
-                        $porcentaje = ($cantidad / $total) * 100;
+                        if ($total > 0) {
+                            $porcentaje = ($cantidad / $total) * 100;
+                        } else {
+                            $porcentaje = 0;
+                        }
                         $porcentaje_dos_decimales = number_format($porcentaje, 2);
                         $porcentajes[] = ['name' => $nombre_proveedor, 'y' => $porcentaje];
                     }
 
-                    // recorro el array y le meto el codigo q no entiendo
                     $primera = true;
                     foreach ($porcentajes as $proveedor) {
                         if (!$primera) {
@@ -296,6 +295,8 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
             }]
         });
     </script>
+
+
     <!--  Volumen en porcetaje de compras en pesos por Proveedores -->
     <script type="text/javascript">
         Highcharts.chart("container3", {

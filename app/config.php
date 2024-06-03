@@ -19,7 +19,7 @@ try {
     echo "Error al conectar con la base de datos";
 }
 
-$URL = "http://localhost/SistemaVentas/";
+$URL = "http://localhost/SistemaVentas1/SistemaVentas/";
 
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $fechaHora = date("Y-m-d H:i:s");

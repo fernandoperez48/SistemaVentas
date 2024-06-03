@@ -153,12 +153,6 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                     </div>
 
                                     <div class="row">
-                                        <!-- <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="">Stock:</label>
-                                                <input type="number" name="stock" class="form-control" required>
-                                            </div>
-                                        </div> -->
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Stock minimo:</label>
@@ -171,18 +165,6 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                                 <input type="number" name="stock_maximo" class="form-control">
                                             </div>
                                         </div>
-                                        <!-- <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="">Precio compra:</label>
-                                                <input type="number" name="precio_compra" class="form-control" required>
-                                            </div>
-                                        </div> -->
-                                        <!-- <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="">Precio venta:</label>
-                                                <input type="number" name="precio_venta" class="form-control" required>
-                                            </div>
-                                        </div> -->
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Fecha de carga:</label>
@@ -191,16 +173,17 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                         </div>
 
                                     </div>
+
+                                    <br>
+                                    <div class="form-group">
+                                        <a href="index.php" class="btn btn-secondary">Cancelar</a>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
 
 
-                        <br>
-                        <div class="form-group">
-                            <a href="index.php" class="btn btn-secondary">Cancelar</a>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                        </div>
                         </form>
                     </div>
                 </div>
