@@ -73,6 +73,15 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                 </div>
                                             </div>
                                         </div>
+<<<<<<< HEAD
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <button type="submit" href="#" class="btn btn-primary" style="margin-left: 10px;">Confirmar selección</button>
+                                            </div>
+                                        </div>
+
+=======
+>>>>>>> 04d44838cbe1dee6bbddc9ca45e77956bafeb114
                                 </form>
                             </div>
                             <div class="card-tools">

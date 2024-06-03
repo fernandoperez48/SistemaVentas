@@ -265,12 +265,21 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 colorByPoint: true,
                 data: [
                     <?php
+<<<<<<< HEAD
+                    $stmt_total_proveedores = $pdo->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
+                    $total_proveedores = $stmt_total_proveedores->fetchColumn();
+
+                    $stmt_total = $pdo->query("SELECT COUNT(*) AS total FROM tb_compras");
+                    $total = $stmt_total->fetchColumn();
+
+=======
                     $stmt_total_proveedores = $mysqli->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
                     $total_proveedores = $stmt_total_proveedores->fetch_assoc()['total_proveedores'];
 
                     $stmt_total = $mysqli->query("SELECT COUNT(*) AS total FROM tb_compras");
                     $total = $stmt_total->fetch_assoc()['total'];
 
+>>>>>>> 04d44838cbe1dee6bbddc9ca45e77956bafeb114
                     $porcentajes = [];
                     for ($i = 1; $i <= $total_proveedores; $i++) {
                         $stmt_proveedor = $mysqli->prepare("SELECT COUNT(*) AS cnt FROM tb_compras WHERE id_proveedor = ?");
@@ -278,10 +287,16 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                         $stmt_proveedor->execute();
                         $cantidad = $stmt_proveedor->get_result()->fetch_assoc()['cnt'];
 
+<<<<<<< HEAD
+                        $stmt_nombre_proveedor = $pdo->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
+                        $stmt_nombre_proveedor->execute([$i]);
+                        $nombre_proveedor = $stmt_nombre_proveedor->fetchColumn();
+=======
                         $stmt_nombre_proveedor = $mysqli->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
                         $stmt_nombre_proveedor->bind_param('i', $i);
                         $stmt_nombre_proveedor->execute();
                         $nombre_proveedor = $stmt_nombre_proveedor->get_result()->fetch_assoc()['nombre_proveedor'];
+>>>>>>> 04d44838cbe1dee6bbddc9ca45e77956bafeb114
 
                         if ($total > 0) {
                             $porcentaje = ($cantidad / $total) * 100;
