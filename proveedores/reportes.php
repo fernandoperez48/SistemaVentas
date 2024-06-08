@@ -320,37 +320,23 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 type: "pie"
             },
             title: {
-                text: "Volumen en Porcentaje de compras en pesos a Proveedor" // Nuevo título
+                text: "Volumen en Porcentaje de compras en pesos a Proveedor"
             },
             tooltip: {
-                valueSuffix: "%",
-                format: "{point.name}: {point.y:.1f}%" // Formato del tooltip
+                pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
             },
             subtitle: {
                 text: 'FA INSUMOS'
             },
             plotOptions: {
-                series: {
+                pie: {
                     allowPointSelect: true,
                     cursor: "pointer",
-                    dataLabels: [{
+                    dataLabels: {
                         enabled: true,
-                        distance: 20
-                    }, {
-                        enabled: true,
-                        distance: -30,
-                        format: "{point.percentage:.1f}%", // Nuevo formato de etiqueta con el porcentaje
-                        style: {
-                            fontSize: "1.2em",
-                            textOutline: "none",
-                            opacity: 1.7
-                        },
-                        filter: {
-                            operator: ">",
-                            property: "percentage",
-                            value: 1
-                        }
-                    }]
+                        format: "{point.name}: {point.percentage:.1f}%"
+                    },
+                    showInLegend: true
                 }
             },
             series: [{
@@ -358,22 +344,35 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 colorByPoint: true,
                 data: [
                     <?php
-                    $total_gastado_total = 0;
-
                     // Consulta para obtener el total gastado por cada proveedor
-                    $sql_total_gastado = "SELECT id_proveedor, SUM(precio_compra) AS total_gastado FROM tb_compras GROUP BY id_proveedor";
+                    $sql_total_gastado = "SELECT 
+                    proveedores.nombre_proveedor AS nombre,
+                    COALESCE(SUM(detalle.cantidad_producto * detalle.precio_unitario), 0) AS total_gastado
+                FROM 
+                    tb_proveedores AS proveedores
+                LEFT JOIN 
+                    tb_detalle_compras AS detalle ON proveedores.id_proveedor = detalle.id_proveedor
+                GROUP BY 
+                    proveedores.id_proveedor";
+
                     $resultado_total_gastado = $mysqli->query($sql_total_gastado);
 
                     // Inicializar el arreglo para almacenar los datos
                     $total_gastado_proveedores = array();
+                    $proveedores_sin_compras = array();
 
                     // Obtener los datos del total gastado por proveedor
                     while ($proveedor = $resultado_total_gastado->fetch_assoc()) {
                         $total_gastado_proveedores[] = $proveedor;
 
-                        // Calcular el total gastado en todas las compras
-                        $total_gastado_total += $proveedor['total_gastado'];
+                        // Verificar si el proveedor no tiene compras
+                        if ($proveedor['total_gastado'] == 0) {
+                            $proveedores_sin_compras[] = $proveedor['nombre'];
+                        }
                     }
+
+                    // Calcular el total gastado en todas las compras
+                    $total_gastado_total = array_sum(array_column($total_gastado_proveedores, 'total_gastado'));
 
                     // Calcular el porcentaje de gasto para cada proveedor
                     $primera = true;
@@ -384,14 +383,25 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                             echo ',';
                         }
                         $primera = false;
-                        echo '{ name: "' . $proveedor['id_proveedor'] . '", y: ' . $porcentaje_dos_decimales . '}';
+                        echo '{ name: "' . $proveedor['nombre'] . '", y: ' . $porcentaje_dos_decimales . '}';
                     }
                     ?>
-
                 ]
             }]
         });
+
+        // Mostrar la leyenda de proveedores sin compras
+        <?php if (!empty($proveedores_sin_compras)) { ?>
+            document.addEventListener('DOMContentLoaded', function() {
+                var container = document.createElement('div');
+                container.innerHTML = '<strong>Proveedores sin compras:</strong> <?php echo implode(" -- ", $proveedores_sin_compras); ?>';
+                document.body.appendChild(container);
+            });
+        <?php } ?>
     </script>
+
+
+
 
 
     <script src="../code/highcharts.js"></script>
