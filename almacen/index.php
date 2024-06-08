@@ -91,10 +91,19 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                     <?php echo $productos_datos['nombre_categoria']; ?>
                                                 </td>
                                                 <td>
-
-                                                    <img src="<?php echo $URL . "/almacen/img_productos" . $productos_datos['imagen']; ?>" width="50px">
-
+                                                    <?php
+                                                    // Asumiendo que $productos_datos['imagen'] contiene el valor del campo 'imagen'
+                                                    if (empty($productos_datos['imagen']) || is_null($productos_datos['imagen'])) {
+                                                        // Si el valor de imagen está vacío o es NULL, muestra la imagen predeterminada
+                                                        echo '<img src="' . $URL . '/almacen/img/img_productossinimagen.jpg" width="50px">';
+                                                    } else {
+                                                        // Si el valor de imagen no está vacío ni es NULL, muestra la imagen correspondiente
+                                                        echo '<img src="' . $URL . '/almacen/img/img_productos' . $productos_datos['imagen'] . '" width="50px">';
+                                                    }
+                                                    ?>
                                                 </td>
+
+
                                                 <td>
                                                     <?php echo $productos_datos['nombre']; ?>
                                                 </td>

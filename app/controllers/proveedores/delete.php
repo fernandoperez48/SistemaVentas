@@ -2,11 +2,18 @@
 include '../../config.php';
 
 $id_proveedor = $_GET['id_proveedor'];
+$estado = $_GET['estado'];
+if ($estado == "habilitado") {
+    $sql = "UPDATE tb_proveedores SET estado = 'deshabilitado' WHERE id_proveedor = '$id_proveedor'";
+} else {
+    $sql = "UPDATE tb_proveedores SET estado = 'habilitado' WHERE id_proveedor = '$id_proveedor'";
+}
 
-$sql = "DELETE FROM tb_proveedores WHERE id_proveedor = '$id_proveedor'";
 if ($mysqli->query($sql) === true) {
     session_start();
-    $_SESSION['mensaje'] = "Se eliminó al proveedor correctamente";
+
+    $_SESSION['mensaje'] = "Se cambio de estado correctamente";
+
     $_SESSION['icono'] = "success";
 ?>
     <script>

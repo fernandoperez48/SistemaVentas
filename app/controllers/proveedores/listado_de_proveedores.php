@@ -1,11 +1,19 @@
 <?php
 
-$sql_proveedores = "SELECT p.*,d.*, ci.nombre as iva
+if ($id_rol == 1 || $id_rol == 4) {
+
+    $sql_proveedores = "SELECT p.*, d.*, ci.nombre as iva
                     FROM tb_proveedores as p
-                    INNER JOIN tb_domicilios as d
-                    ON p.id_domicilio = d.id_domicilio
-                    INNER JOIN tb_condicion_iva as ci 
-                    ON ci.id = p.condicion_iva";
+                    INNER JOIN tb_domicilios as d ON p.id_domicilio = d.id_domicilio
+                    INNER JOIN tb_condicion_iva as ci ON ci.id = p.condicion_iva";
+} else {
+    $sql_proveedores = "SELECT p.*, d.*, ci.nombre as iva
+                        FROM tb_proveedores as p
+                        INNER JOIN tb_domicilios as d ON p.id_domicilio = d.id_domicilio
+                        INNER JOIN tb_condicion_iva as ci ON ci.id = p.condicion_iva
+                        WHERE p.estado = 'habilitado'";
+    // Modificar la consulta SQL para filtrar por estado habilitado
+}
 
 // Preparar la consulta
 $query_proveedores = $mysqli->prepare($sql_proveedores);

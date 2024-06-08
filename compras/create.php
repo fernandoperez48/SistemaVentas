@@ -73,15 +73,9 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                 </div>
                                             </div>
                                         </div>
-<<<<<<< HEAD
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <button type="submit" href="#" class="btn btn-primary" style="margin-left: 10px;">Confirmar selección</button>
-                                            </div>
-                                        </div>
 
-=======
->>>>>>> 04d44838cbe1dee6bbddc9ca45e77956bafeb114
+
+
                                 </form>
                             </div>
                             <div class="card-tools">
@@ -201,7 +195,16 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                                     <?php echo $productosXproveedor_datos['nombre_categoria']; ?>
                                                                 </td>
                                                                 <td>
-                                                                    <img src="<?php echo $URL . "/almacen/img_productos" . $productosXproveedor_datos['imagen']; ?>" width="50px">
+                                                                    <?php
+                                                                    // Asumiendo que $productosXproveedor_datos['imagen'] contiene el valor del campo 'imagen'
+                                                                    if (empty($productosXproveedor_datos['imagen']) || is_null($productosXproveedor_datos['imagen'])) {
+                                                                        // Si el valor de imagen está vacío o es NULL, muestra la imagen predeterminada
+                                                                        echo '<img src="' . $URL . '/almacen/img/img_productossinimagen.jpg" width="50px">';
+                                                                    } else {
+                                                                        // Si el valor de imagen no está vacío ni es NULL, muestra la imagen correspondiente
+                                                                        echo '<img src="' . $URL . '/almacen/img/img_productos' . $productosXproveedor_datos['imagen'] . '" width="50px">';
+                                                                    }
+                                                                    ?>
                                                                 </td>
                                                                 <td>
                                                                     <?php echo $productosXproveedor_datos['nombre']; ?>
@@ -213,7 +216,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                                     <?php echo $productosXproveedor_datos['stock']; ?>
                                                                 </td>
                                                                 <td>
-                                                                    ultimo precio
+                                                                    <?php echo $productosXproveedor_datos['precio_compra']; ?>
                                                                 </td>
                                                                 <td>
                                                                     <?php echo $productosXproveedor_datos['fecha_ultimo_ingreso']; ?>

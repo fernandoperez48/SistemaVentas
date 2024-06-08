@@ -42,7 +42,8 @@ if ($mysqli->query($insert_query)) {
         $id_producto = $id_productos[$i];
         $cantidad = $cantidades[$i];
         // Actualizar el stock del producto en la base de datos
-        $update_query = "UPDATE tb_almacen SET stock = stock + '$cantidad' WHERE id_producto = '$id_producto'";
+        $update_query = "UPDATE tb_almacen SET stock = stock + '$cantidad', precio_compra = '$precio_compra' WHERE id_producto = '$id_producto'";
+
         if ($mysqli->query($update_query)) {
             // Verificar si el stock actualizado supera el stock máximo permitido
             $stock_actualizado = obtenerStockActualizado($mysqli, $id_producto);
