@@ -903,3 +903,109 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
     });
 </script>
 <!-- FIN SCRIPTSSS DE LA TABLA-->
+
+<!-- SCRIPTSSS DE LA TABLA-->
+<script>
+    $('#btn_create').click(function() {
+        var nombre_proveedor = $('#nombre_proveedor').val();
+        var telefono = $('#telefono').val();
+        var empresa = $('#empresa').val();
+        var email = $('#email').val();
+        var cuit = $('#cuit').val();
+        var condicion_iva = $('#condicion_iva').val();
+        var calle = $('#calle').val();
+        var numero = $('#numero').val();
+        var piso = $('#piso').val();
+        var depto = $('#depto').val();
+        var localidad = $('#localidad').val();
+        var provincia = $('#provincia').val();
+        var pais = $('#pais').val();
+        var responsable_comercial = $('#responsable_comercial').val();
+        var celular = $('#celular').val();
+
+
+        // Función para validar email
+        function validarEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
+        if (nombre_proveedor == '') {
+            $('#nombre_proveedor').focus();
+            $('#lbl_nombre').css('display', 'block');
+        } else if (telefono == '') {
+            $('#telefono').focus();
+            $('#lbl_telefono').css('display', 'block');
+        } else if (empresa == '') {
+            $('#empresa').focus();
+            $('#lbl_empresa').css('display', 'block');
+        } else if (email == '') {
+            $('#email').focus();
+            $('#lbl_email').css('display', 'block');
+        } else if (!validarEmail(email)) {
+            $('#email').focus();
+            $('#lbl_email_invalid').css('display', 'block');
+        } else if (cuit == '') {
+            $('#cuit').focus();
+            $('#lbl_cuit').css('display', 'block');
+        } else if (condicion_iva == '') {
+            $('#condicion_iva').focus();
+            $('#lbl_condicion_iva').css('display', 'block');
+        } else if (calle == '') {
+            $('#calle').focus();
+            $('#lbl_calle').css('display', 'block');
+        } else if (numero == '') {
+            $('#numero').focus();
+            $('#lbl_numero').css('display', 'block');
+        } else if (localidad == '') {
+            $('#localidad').focus();
+            $('#lbl_localidad').css('display', 'block');
+        } else if (provincia == '') {
+            $('#provincia').focus();
+            $('#lbl_provincia').css('display', 'block');
+        } else if (pais == '') {
+            $('#pais').focus();
+            $('#lbl_pais').css('display', 'block');
+        } else if (responsable_comercial == '') {
+            $('#responsable_comercial').focus();
+            $('#lbl_responsable_comercial').css('display', 'block');
+        } else if (celular == '') {
+            $('#celular').focus();
+            $('#lbl_celular').css('display', 'block');
+        } else {
+            // Verificar duplicados en la base de datos
+            var url_verificar = "../app/controllers/proveedores/verificar.php";
+            $.get(url_verificar, {
+                nombre_proveedor: nombre_proveedor,
+                cuit: cuit,
+                empresa: empresa
+            }, function(response) {
+                if (response == 'duplicado') {
+                    alert('El proveedor, CUIT o empresa ya existe en la base de datos.');
+                } else {
+                    // Si no hay duplicados, enviar los datos para crear el registro
+                    var url = "../app/controllers/proveedores/create.php";
+                    $.get(url, {
+                        nombre_proveedor: nombre_proveedor,
+                        telefono: telefono,
+                        empresa: empresa,
+                        email: email,
+                        cuit: cuit,
+                        condicion_iva: condicion_iva,
+                        calle: calle,
+                        numero: numero,
+                        piso: piso,
+                        depto: depto,
+                        localidad: localidad,
+                        provincia: provincia,
+                        pais: pais,
+                        responsable_comercial: responsable_comercial,
+                        celular: celular
+                    }, function(datos) {
+                        $('#respuesta').html(datos);
+                    });
+                }
+            });
+        }
+    });
+</script>

@@ -850,29 +850,40 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
             $('#celular').focus();
             $('#lbl_celular').css('display', 'block');
         } else {
-            var url = "../app/controllers/proveedores/create.php";
-            $.get(url, {
+            // Verificar si ya existe un proveedor con los mismos datos
+            $.get('../app/controllers/proveedores/verificar.php', {
                 nombre_proveedor: nombre_proveedor,
-                telefono: telefono,
                 empresa: empresa,
-                email: email,
-                cuit: cuit,
-                condicion_iva: condicion_iva,
-                calle: calle,
-                numero: numero,
-                piso: piso,
-                depto: depto,
-                localidad: localidad,
-                provincia: provincia,
-                pais: pais,
-                responsable_comercial: responsable_comercial,
-                celular: celular
-            }, function(datos) {
-                $('#respuesta').html(datos);
+                cuit: cuit
+            }, function(response) {
+                var datos = JSON.parse(response);
+                if (datos.status === 'error') {
+                    alert(datos.message);
+                } else {
+                    // Si no hay conflictos, proceder con la creación del proveedor
+                    var url = "../app/controllers/proveedores/create.php";
+                    $.get(url, {
+                        nombre_proveedor: nombre_proveedor,
+                        telefono: telefono,
+                        empresa: empresa,
+                        email: email,
+                        cuit: cuit,
+                        condicion_iva: condicion_iva,
+                        calle: calle,
+                        numero: numero,
+                        piso: piso,
+                        depto: depto,
+                        localidad: localidad,
+                        provincia: provincia,
+                        pais: pais,
+                        responsable_comercial: responsable_comercial,
+                        celular: celular
+                    }, function(datos) {
+                        $('#respuesta').html(datos);
+                    });
+                }
             });
         }
-
-
     });
 </script>
 <script>
