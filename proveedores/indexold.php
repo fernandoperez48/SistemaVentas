@@ -1,6 +1,6 @@
 <?php include '../app/config.php';
 include '../layaout/sesion.php';
-if ($id_rol == "5") {
+if ($rol_sesion == "Vendedor") {
     header('Location: ..//index.php');
 }
 include '../layaout/parte1.php';
@@ -169,14 +169,15 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Empresa<b>*</b></label>
-                                                                                <input type="texto" id="emp<?php echo $id_proveedor; ?>" class="form-control" value="<?php echo $proveedores_datos['empresa']; ?>" disabled>
+                                                                                <input type="email" id="emp<?php echo $id_proveedor; ?>" class="form-control" value="<?php echo $proveedores_datos['empresa']; ?>" disabled>
                                                                                 <small style="color:red; display:none" id="lbl_empresa<?php echo $id_proveedor; ?>">* Este campo es requerido</small>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-4">
                                                                             <div class="form-group">
                                                                                 <label>Email </label>
-                                                                                <input type="email" id="ema<?php echo $id_proveedor; ?>" class="form-control" value="<?php echo $proveedores_datos['email']; ?>" disabled>
+                                                                                <input type="text" id="ema<?php echo $id_proveedor; ?>" class="form-control" value="<?php echo $proveedores_datos['email']; ?>" disabled>
+
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-4">
@@ -669,14 +670,12 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                             <div class="form-group">
                                 <label>Telefono</label>
                                 <input type="number" id="telefono" class="form-control" placeholder="Telefono">
-                                <small style="color:red; display:none" id="lbl_telefono">* Este campo es requerido</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Empresa</label>
                                 <input type="text" id="empresa" class="form-control" placeholder="Empresa">
-                                <small style="color:red; display:none" id="lbl_empresa">* Este campo es requerido</small>
                             </div>
                         </div>
                     </div>
@@ -686,15 +685,12 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                             <div class="form-group">
                                 <label>Email</label>
                                 <input type="email" id="email" class="form-control" placeholder="Email">
-                                <small style="color:red; display:none" id="lbl_email">* Este campo es requerido</small>
-                                <small style="color:red; display:none" id="lbl_email_invalid">* El email no es válido</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>CUIT</label>
                                 <input type="text" id="cuit" class="form-control" placeholder="XX-XXXXXXXX-X">
-                                <small style="color:red; display:none" id="lbl_cuit">* Este campo es requerido</small>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -708,7 +704,6 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                 <option value="5">Monotributista</option>
                                 <option value="6">Responsable Inscripto</option>
                             </select>
-                            <small style="color:red; display:none" id="lbl_condicion_iva">* Este campo es requerido</small>
                         </div>
                     </div>
 
@@ -718,11 +713,9 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                             <div class="row">
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="" id="calle" placeholder="Calle">
-                                    <small style="color:red; display:none" id="lbl_calle">* Este campo es requerido</small>
                                 </div>
                                 <div class="col-md-2">
                                     <input type="number" class="form-control" name="" id="numero" placeholder="Numero">
-                                    <small style="color:red; display:none" id="lbl_numero">* Este campo es requerido</small>
                                 </div>
                                 <div class="col-md-2">
                                     <input type="text" class="form-control" name="" id="piso" placeholder="Piso">
@@ -735,16 +728,13 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                             <div class="row">
                                 <div class="col">
                                     <input type="text" class="form-control" name="" id="localidad" placeholder="Localidad">
-                                    <small style="color:red; display:none" id="lbl_localidad">* Este campo es requerido</small>
                                 </div>
                                 <div class="col">
                                     <input type="text" class="form-control" name="" id="provincia" placeholder="Provincia">
-                                    <small style="color:red; display:none" id="lbl_provincia">* Este campo es requerido</small>
                                 </div>
                                 <br>
                                 <div class="col">
                                     <input type="text" class="form-control" name="" id="pais" placeholder="Pais">
-                                    <small style="color:red; display:none" id="lbl_pais">* Este campo es requerido</small>
                                 </div>
                             </div>
                         </div>
@@ -800,55 +790,15 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
         var responsable_comercial = $('#responsable_comercial').val();
         var celular = $('#celular').val();
 
-
-        // Función para validar email
-        function validarEmail(email) {
-            var re = /\S+@\S+\.\S+/;
-            return re.test(email);
-        }
-
         if (nombre_proveedor == '') {
             $('#nombre_proveedor').focus();
             $('#lbl_nombre').css('display', 'block');
-        } else if (telefono == '') {
-            $('#telefono').focus();
-            $('#lbl_telefono').css('display', 'block');
-        } else if (empresa == '') {
-            $('#empresa').focus();
-            $('#lbl_empresa').css('display', 'block');
-        } else if (email == '') {
-            $('#email').focus();
-            $('#lbl_email').css('display', 'block');
-        } else if (!validarEmail(email)) {
-            $('#email').focus();
-            $('#lbl_email_invalid').css('display', 'block');
-        } else if (cuit == '') {
-            $('#cuit').focus();
-            $('#lbl_cuit').css('display', 'block');
-        } else if (condicion_iva == '') {
-            $('#condicion_iva').focus();
-            $('#lbl_condicion_iva').css('display', 'block');
-        } else if (calle == '') {
-            $('#calle').focus();
-            $('#lbl_calle').css('display', 'block');
-        } else if (numero == '') {
-            $('#numero').focus();
-            $('#lbl_numero').css('display', 'block');
-        } else if (localidad == '') {
-            $('#localidad').focus();
-            $('#lbl_localidad').css('display', 'block');
-        } else if (provincia == '') {
-            $('#provincia').focus();
-            $('#lbl_provincia').css('display', 'block');
-        } else if (pais == '') {
-            $('#pais').focus();
-            $('#lbl_pais').css('display', 'block');
-        } else if (responsable_comercial == '') {
-            $('#responsable_comercial').focus();
-            $('#lbl_responsable_comercial').css('display', 'block');
         } else if (celular == '') {
             $('#celular').focus();
             $('#lbl_celular').css('display', 'block');
+        } else if (responsable_comercial == '') {
+            $('#responsable_comercial').focus();
+            $('#lbl_responsable_comercial').css('display', 'block');
         } else {
             var url = "../app/controllers/proveedores/create.php";
             $.get(url, {

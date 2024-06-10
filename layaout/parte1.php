@@ -178,13 +178,17 @@
                 <?php } ?>
 
                 <!--Proveedores      ------Proveedores------        Proveedores-->
-                <li class="nav-item dropdown dropdown-hover">
-                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Proveedores</a>
-                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
-                        <li><a href="<?php echo $URL ?>/proveedores" class="dropdown-item">Listado de Proveedores</a></li>
-                        <li><a href="<?php echo $URL ?>/proveedores/reportes.php" class="dropdown-item">Reportes</a></li>
-                    </ul>
-                </li>
+
+                <!--Usuarios        ------Usuarios------        Usuario-->
+                <?php if ($id_rol != "5") { ?>
+                    <li class="nav-item dropdown dropdown-hover">
+                        <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Proveedores</a>
+                        <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
+                            <li><a href="<?php echo $URL ?>/proveedores" class="dropdown-item">Listado de Proveedores</a></li>
+                            <li><a href="<?php echo $URL ?>/proveedores/reportes.php" class="dropdown-item">Reportes</a></li>
+                        </ul>
+                    </li>
+                <?php } ?>
 
                 <!--Compras      ------Compras------        Compras-->
                 <li class="nav-item dropdown dropdown-hover">
