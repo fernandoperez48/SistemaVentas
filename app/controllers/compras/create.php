@@ -13,17 +13,17 @@ $id_usuario = isset($_GET['id_usuario']) ? $_GET['id_usuario'] : '';
 $id_productos = isset($_GET['id_productos']) ? json_decode($_GET['id_productos'], true) : [];
 $cantidades = isset($_GET['cantidades']) ? json_decode($_GET['cantidades'], true) : [];
 
-// Agregamos un mensaje de alerta para verificar la recepción de los datos
-echo "Datos recibidos:<br>";
-echo "Nro Compra: " . $nro_compra . "<br>";
-echo "ID Proveedor: " . $id_proveedor . "<br>";
-echo "Fecha Operación: " . $fecha_operacion . "<br>";
-echo "Ingreso Mercadería: " . $ingreso_mercaderia . "<br>";
-echo "Comprobante: " . $comprobante . "<br>";
-echo "Precio Compra: " . $precio_compra . "<br>";
-echo "ID Usuario: " . $id_usuario . "<br>";
-echo "ID Productos: " . json_encode($id_productos) . "<br>";
-echo "Cantidades: " . json_encode($cantidades) . "<br>";
+// // Agregamos un mensaje de alerta para verificar la recepción de los datos
+// echo "Datos recibidos:<br>";
+// echo "Nro Compra: " . $nro_compra . "<br>";
+// echo "ID Proveedor: " . $id_proveedor . "<br>";
+// echo "Fecha Operación: " . $fecha_operacion . "<br>";
+// echo "Ingreso Mercadería: " . $ingreso_mercaderia . "<br>";
+// echo "Comprobante: " . $comprobante . "<br>";
+// echo "Precio Compra: " . $precio_compra . "<br>";
+// echo "ID Usuario: " . $id_usuario . "<br>";
+// echo "ID Productos: " . json_encode($id_productos) . "<br>";
+// echo "Cantidades: " . json_encode($cantidades) . "<br>";
 
 $fyh_creacion = date('Y-m-d H:i:s');
 
@@ -52,7 +52,7 @@ if ($mysqli->query($insert_query)) {
                 $se_supero_maximo = true;
                 $nombre_producto = obtenerNombreProducto($mysqli, $id_producto);
             }
-            echo "El stock del producto $nombre_producto ha sido actualizado correctamente.<br>";
+            //echo "El stock del producto $nombre_producto ha sido actualizado correctamente.<br>"
         } else {
             echo "Error al actualizar el stock del producto con ID $id_producto: " . $mysqli->error . "<br>";
         }

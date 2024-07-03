@@ -706,7 +706,6 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                             </select>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="form-group">
                             <label for="">Domicilio</label>

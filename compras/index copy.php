@@ -66,12 +66,10 @@ include '../app/controllers/compras/listado_de_compras.php';
                                             <th>
                                                 <center>Costo</center>
                                             </th>
+
                                             <th>
-                                                <center>Usuario de carga</center>
-                                            </th>
-                                            <!-- <th>
                                                 <center>Acciones</center>
-                                            </th> -->
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -116,15 +114,7 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="table-responsive">
-                                                                            <div class="row">
-                                                                                <div class="col-md-6">
-                                                                                    <input type="text" id="searchInput" class="form-control" placeholder="Buscar...">
-                                                                                </div>
-                                                                                <div class="col-md-6 text-right">
-                                                                                    <span id="recordCount"></span>
-                                                                                </div>
-                                                                            </div>
-                                                                            <table id="tabla_productos" class="table table-bordered table-sm table-hover table-striped">
+                                                                            <table class="table table-bordered table-sm table-hover table-striped">
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th style="background-color: #e7e7e7; text-align:center;">
@@ -224,8 +214,7 @@ include '../app/controllers/compras/listado_de_compras.php';
 
 
 
-                                                                                    <tr class="total-row">
-                                                                                        </trclass>
+                                                                                    <tr>
                                                                                         <th colspan="4" style="background-color: #e7e7e7; text-align:right;">
                                                                                             Total</th>
                                                                                         <th>
@@ -277,18 +266,13 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <?php echo $compras['nombre_usuario']; ?>
-                                                    </center>
-                                                </td>
-                                                <!-- <td>
-                                                    <center>
                                                         <div class="btn-group">
                                                             <a href="show.php?id=<?php echo $nro_compra; ?>" type="button" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>Ver</a>
                                                             <a href="update.php?id=<?php echo $nro_compra; ?>" type="button" class="btn btn-success btn-sm"><i class="fa fa-pencil-alt"></i>Editar</a>
                                                             <a href="delete.php?id=<?php echo $nro_compra; ?>" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Borrar</a>
                                                         </div>
                                                     </center>
-                                                </td> -->
+                                                </td>
                                             </tr>
                                         <?php
                                         }
@@ -367,44 +351,5 @@ include '../app/controllers/compras/listado_de_compras.php';
             /*Fin de ajuste de botones*/
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const searchInput = document.getElementById('searchInput');
-        const tabla_productos = document.getElementById('tabla_productos').getElementsByTagName('tbody')[0];
-        const recordCount = document.getElementById('recordCount');
-
-        searchInput.addEventListener('keyup', function() {
-            const filter = searchInput.value.toLowerCase();
-            let visibleRows = 0;
-
-            Array.from(tabla_productos.getElementsByTagName('tr')).forEach(function(row) {
-                if (row.classList.contains('total-row')) {
-                    return;
-                }
-                const cells = row.getElementsByTagName('td');
-                let match = false;
-
-                Array.from(cells).forEach(function(cell) {
-                    if (cell.textContent.toLowerCase().indexOf(filter) > -1) {
-                        match = true;
-                    }
-                });
-
-                if (match) {
-                    row.style.display = '';
-                    visibleRows++;
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-
-            recordCount.textContent = `Productos encontrados: ${visibleRows}`;
-        });
-
-        // Inicializa el contador de registros excluyendo la fila de total
-        const initialCount = Array.from(tabla_productos.getElementsByTagName('tr')).filter(row => !row.classList.contains('total-row')).length;
-        recordCount.textContent = `Cantidad de Productos: ${initialCount}`;
     });
 </script>
