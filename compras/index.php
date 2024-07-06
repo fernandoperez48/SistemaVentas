@@ -69,6 +69,9 @@ include '../app/controllers/compras/listado_de_compras.php';
                                             <th>
                                                 <center>Usuario de carga</center>
                                             </th>
+                                            <th>
+                                                <center>Descuento/recarga</center>
+                                            </th>
                                             <!-- <th>
                                                 <center>Acciones</center>
                                             </th> -->
@@ -279,6 +282,34 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                     <center>
                                                         <?php echo $compras['nombre_usuario']; ?>
                                                     </center>
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                        <?php echo $compras['resultado']; ?>
+                                                        <?php if ($compras['resultado']) { ?>
+                                                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#infoModal_<?php echo $compras['nro_compra']; ?>">
+                                                                <i class="fas fa-info-circle"></i>
+                                                            </button> <?php }; ?>
+                                                    </center>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="infoModal_<?php echo $compras['nro_compra']; ?>" tabindex="-1" aria-labelledby="infoModalLabel_<?php echo $compras['nro_compra']; ?>" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="infoModalLabel_<?php echo $compras['nro_compra']; ?>">Explicación de la Diferencia</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <?php echo nl2br($compras['explicacion_diferencia']); ?>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <!-- <td>
                                                     <center>

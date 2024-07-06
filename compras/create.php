@@ -268,6 +268,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                         var cantidad = $("#cantidad").val();
                                                         var precio_unitario = $("#precio_unitario").val();
                                                         var id_proveedor = $("#id_proveedor").val();
+
                                                         if (id_producto == "") {
                                                             alert("Seleccione un producto");
                                                         } else if (cantidad == "") {
@@ -475,7 +476,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                 <!-- Div para mostrar la diferencia y el porcentaje -->
                                 <div class="col-md-2" id="resultado" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
                                     <div class="form-group">
-                                        <label for="">Porcentage de descuento o Recargo</label>
+
                                     </div>
                                 </div>
                             </div>
@@ -548,9 +549,9 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                         var porcentaje = (diferencia / precioTotal) * 100;
                                         var resultadoDiv = document.getElementById('resultado');
                                         if (diferencia > 0) {
-                                            resultadoDiv.innerHTML = 'El precio introducido es mayor que el precio total por un ' + porcentaje.toFixed(2) + '%';
+                                            resultadoDiv.innerHTML = 'El costo final tiene un recargo del ' + porcentaje.toFixed(2) + '% sobre el precio total de compra.';
                                         } else if (diferencia < 0) {
-                                            resultadoDiv.innerHTML = 'El precio introducido es menor que el precio total por un ' + Math.abs(porcentaje).toFixed(2) + '%';
+                                            resultadoDiv.innerHTML = 'El costo final tiene un descuento del ' + Math.abs(porcentaje).toFixed(2) + '% sobre el precio total de compra.';
                                         } else {
                                             resultadoDiv.innerHTML = 'El precio introducido es igual al precio total';
                                         }
@@ -574,11 +575,11 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                             alert('Por favor, complete la explicación de la diferencia.');
                                         } else {
                                             $('#explicacionModal').modal('hide');
-                                            guardarCompra();
+                                            guardarCompra(explicacion); // Pasamos la explicación
                                         }
                                     });
 
-                                    function guardarCompra() {
+                                    function guardarCompra(explicacion = '') { // Añadimos un parámetro para la explicación
                                         var nro_compra = <?php echo $nro_compra_js; ?>;
                                         var id_productos = <?php echo $id_productos_json; ?>;
                                         var cantidades = <?php echo $cantidades_json; ?>;
@@ -588,6 +589,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                         var comprobante = $("#comprobante").val();
                                         var precio_compra = $("#precio_compra_controlador").val();
                                         var id_usuario = '<?php echo $id_usuarios_sesion ?>';
+                                        var resultado = $("#resultado").text(); // Cambiado para extraer el texto
 
                                         if (nro_compra == "") {
                                             $('#nro_compra').focus();
@@ -620,6 +622,8 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                 comprobante: comprobante,
                                                 precio_compra: precio_compra,
                                                 id_usuario: id_usuario,
+                                                resultado: resultado,
+                                                explicacion_diferencia: explicacion, // Añadido
                                                 id_productos: JSON.stringify(id_productos),
                                                 cantidades: JSON.stringify(cantidades)
                                             }, function(datos) {
@@ -635,6 +639,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                     document.getElementById('precio_compra_controlador').addEventListener('input', calcularDiferenciaYPorcentaje);
                                 });
                             </script>
+
 
                         </div>
                     </div>

@@ -10,8 +10,12 @@ $ingreso_mercaderia = isset($_GET['ingreso_mercaderia']) ? $_GET['ingreso_mercad
 $comprobante = isset($_GET['comprobante']) ? $_GET['comprobante'] : '';
 $precio_compra = isset($_GET['precio_compra']) ? $_GET['precio_compra'] : '';
 $id_usuario = isset($_GET['id_usuario']) ? $_GET['id_usuario'] : '';
+$resultado = isset($_GET['resultado']) ? $_GET['resultado'] : '';
+$explicacion_diferencia = $_GET['explicacion_diferencia']; // Recibir la explicación
 $id_productos = isset($_GET['id_productos']) ? json_decode($_GET['id_productos'], true) : [];
 $cantidades = isset($_GET['cantidades']) ? json_decode($_GET['cantidades'], true) : [];
+
+
 
 // // Agregamos un mensaje de alerta para verificar la recepción de los datos
 // echo "Datos recibidos:<br>";
@@ -24,14 +28,15 @@ $cantidades = isset($_GET['cantidades']) ? json_decode($_GET['cantidades'], true
 // echo "ID Usuario: " . $id_usuario . "<br>";
 // echo "ID Productos: " . json_encode($id_productos) . "<br>";
 // echo "Cantidades: " . json_encode($cantidades) . "<br>";
+// echo "Resultado: " . json_encode($resultado) . "<br>";
 
 $fyh_creacion = date('Y-m-d H:i:s');
 
 $mysqli->begin_transaction();
 
 // Inserta la compra
-$insert_query = "INSERT INTO tb_compras (nro_compra, fecha_compra_pago, id_proveedor, nro_comprobante, id_usuario, costo, fecha_ingreso_mercaderia, fecha_registro) 
-VALUES ('$nro_compra', '$fecha_operacion', '$id_proveedor', '$comprobante', '$id_usuario', '$precio_compra', '$ingreso_mercaderia', '$fyh_creacion')";
+$insert_query = "INSERT INTO tb_compras (nro_compra, fecha_compra_pago, id_proveedor, nro_comprobante, id_usuario, costo, fecha_ingreso_mercaderia, fecha_registro, resultado, explicacion_diferencia) 
+VALUES ('$nro_compra', '$fecha_operacion', '$id_proveedor', '$comprobante', '$id_usuario', '$precio_compra', '$ingreso_mercaderia', '$fyh_creacion', '$resultado', '$explicacion_diferencia')";
 
 // Ejecutar la consulta de inserción
 if ($mysqli->query($insert_query)) {
@@ -41,7 +46,7 @@ if ($mysqli->query($insert_query)) {
     for ($i = 0; $i < count($id_productos); $i++) {
         $id_producto = $id_productos[$i];
         $cantidad = $cantidades[$i];
-        // Actualizar el stock del producto en la base de datos
+        // Actualizar el stock del producto en la base de datos y precio de compra  
         $update_query = "UPDATE tb_almacen SET stock = stock + '$cantidad', precio_compra = '$precio_compra' WHERE id_producto = '$id_producto'";
 
         if ($mysqli->query($update_query)) {
