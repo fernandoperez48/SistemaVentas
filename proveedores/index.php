@@ -45,8 +45,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-
-                            <table id="example1" class="table table-bordered table-striped table-md" style="border-color: black;">
+                            <table id="example1" class="table table-bordered table-striped table-sm" style="border-color: black;">
                                 <thead style="background-color: gray;">
                                     <tr>
                                         <th>
@@ -102,7 +101,6 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                             <td><?php echo $proveedores_datos['cuit']; ?></td>
                                             <td><?php echo $proveedores_datos['responsable_comercial']; ?></td>
                                             <td><?php echo $proveedores_datos['email']; ?></td>
-
                                             <td>
 
                                                 <div class="btn-group">

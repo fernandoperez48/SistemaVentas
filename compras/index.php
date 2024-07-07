@@ -9,7 +9,7 @@ include '../app/controllers/compras/listado_de_compras.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -27,8 +27,8 @@ include '../app/controllers/compras/listado_de_compras.php';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-primary">
-                        <div class="card-header">
+                    <div class="card card-outline card-danger">
+                        <div class="card-header" style="background-color:orange">
                             <h3 class="card-title">Compras registradas</h3>
 
                             <div class="card-tools">
@@ -40,8 +40,8 @@ include '../app/controllers/compras/listado_de_compras.php';
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="table table-responsive">
-                                <table id="example1" class="table table-bordered table-striped table-sm">
-                                    <thead>
+                                <table id="example1" class="table table-bordered table-striped table-sm" style="border-color: black;">
+                                    <thead style="background-color: gray;">
                                         <tr>
                                             <th>
                                                 <center>N° de compra</center>
@@ -109,7 +109,7 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                         <div class="modal fade" id="Modal_productos<?php echo $compras['nro_compra']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-lg">
                                                                 <div class="modal-content">
-                                                                    <div class="modal-header" style="background-color: #08c2ec">
+                                                                    <div class="modal-header" style="background-color:orange">
                                                                         <h5 class="modal-title" id="exampleModalLabel">
                                                                             Productos de la compra nro
                                                                             <?php echo $compras['nro_compra']; ?>, ingresados al local el día <?php echo $compras['fecha_ingreso_mercaderia']; ?>.</h5>
@@ -128,21 +128,21 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                                 </div>
                                                                             </div>
                                                                             <table id="tabla_productos" class="table table-bordered table-sm table-hover table-striped">
-                                                                                <thead>
+                                                                                <thead style="background-color:gray">
                                                                                     <tr>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
+                                                                                        <th>
                                                                                             Código </th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
+                                                                                        <th>
                                                                                             Producto</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
+                                                                                        <th>
                                                                                             Descripción</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
+                                                                                        <th>
                                                                                             Categoria</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
+                                                                                        <th>
                                                                                             Cantidad</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
+                                                                                        <th>
                                                                                             Precio Unitario</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
+                                                                                        <th>
                                                                                             Precio Subtotal</th>
 
                                                                                     </tr>
