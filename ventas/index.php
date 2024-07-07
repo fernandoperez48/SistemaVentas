@@ -8,7 +8,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -26,8 +26,8 @@ include '../app/controllers/ventas/listado_de_ventas.php';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-primary">
-                        <div class="card-header">
+                    <div class="card card-outline card-danger">
+                        <div class="card-header" style="background-color:orange">
                             <h3 class="card-title">Ventas registradas</h3>
 
                             <div class="card-tools">
@@ -39,8 +39,8 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="table table-responsive">
-                                <table id="example1" class="table table-bordered table-striped table-sm">
-                                    <thead>
+                                <table id="example1" class="table table-bordered table-striped table-sm" style="border-color: black;">
+                                    <thead style="background-color: gray;">
                                         <tr>
                                             <th>
                                                 <center>Nro</center>
@@ -125,10 +125,10 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                     $precio_total = 0;
                                                                                     $nro_venta = $ventas_datos['nro_venta'];
                                                                                     $sql_carrito = "SELECT carr.*, pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, pro.stock as stock, pro.id_producto as id_producto 
-                FROM tb_carrito as carr 
-                INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto 
-                WHERE nro_venta = '$nro_venta' 
-                ORDER BY carr.id_carrito";
+                                                                                FROM tb_carrito as carr 
+                                                                                INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto 
+                                                                                WHERE nro_venta = '$nro_venta' 
+                                                                                ORDER BY carr.id_carrito";
                                                                                     $resultado_carrito = $mysqli->query($sql_carrito);
 
                                                                                     if ($resultado_carrito) {
@@ -319,80 +319,80 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                         }
                                 ?>
                                 </table>
-                            </div>
-                        </div>
 
-                        <!-- /.card-body -->
+                            </div>
+
+                            <!-- /.card-body -->
+                        </div>
                     </div>
                 </div>
+
             </div>
-
         </div>
+
+        <!-- Main content -->
     </div>
-
-    <!-- Main content -->
-</div>
-<!-- /.content -->
-<!-- /.content-wrapper -->
-<!-- Page specific script -->
-<?php include '../layaout/mensajes.php'; ?>
-<?php include '../layaout/parte2.php'; ?>
+    <!-- /.content -->
+    <!-- /.content-wrapper -->
+    <!-- Page specific script -->
+    <?php include '../layaout/mensajes.php'; ?>
+    <?php include '../layaout/parte2.php'; ?>
 
 
-<script>
-    $(function() {
-        $("#example1").DataTable({
-            /* cambio de idiomas de datatable */
-            "pageLength": 5,
-            language: {
-                "emptyTable": "No hay información",
-                "decimal": "",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Compras",
-                "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
-                "infoFiltered": "(Filtrado de _MAX_ total Compras)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ Compras",
-                "loadingRecords": "Cargando...",
-                "processing": "Procesando...",
-                "search": "Buscador:",
-                "zeroRecords": "Sin resultados encontrados",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Ultimo",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
-            },
-            /* fin de idiomas */
-            "responsive": true,
-            "lengthChange": true,
-            "autoWidth": false,
-            "buttons": /* Ajuste de botones */ [{
-                    extend: 'collection',
-                    text: 'Reportes',
-                    orientation: 'landscape',
-                    buttons: [{
-                        text: 'Copiar',
-                        extend: 'copy'
-                    }, {
-                        extend: 'pdf',
-                    }, {
-                        extend: 'csv',
-                    }, {
-                        extend: 'excel',
-                    }, {
-                        text: 'Imprimir',
-                        extend: 'print'
-                    }]
+    <script>
+        $(function() {
+            $("#example1").DataTable({
+                /* cambio de idiomas de datatable */
+                "pageLength": 5,
+                language: {
+                    "emptyTable": "No hay información",
+                    "decimal": "",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Compras",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
+                    "infoFiltered": "(Filtrado de _MAX_ total Compras)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Compras",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscador:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
                 },
-                {
-                    extend: 'colvis',
-                    text: 'Visor de columnas'
-                }
-            ],
-            /*Fin de ajuste de botones*/
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                /* fin de idiomas */
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": false,
+                "buttons": /* Ajuste de botones */ [{
+                        extend: 'collection',
+                        text: 'Reportes',
+                        orientation: 'landscape',
+                        buttons: [{
+                            text: 'Copiar',
+                            extend: 'copy'
+                        }, {
+                            extend: 'pdf',
+                        }, {
+                            extend: 'csv',
+                        }, {
+                            extend: 'excel',
+                        }, {
+                            text: 'Imprimir',
+                            extend: 'print'
+                        }]
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Visor de columnas'
+                    }
+                ],
+                /*Fin de ajuste de botones*/
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
-    });
-</script>
+        });
+    </script>

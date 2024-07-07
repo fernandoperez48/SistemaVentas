@@ -9,7 +9,7 @@ include '../app/controllers/compras/listado_de_compras.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper" style="background-color:gray">
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -27,8 +27,8 @@ include '../app/controllers/compras/listado_de_compras.php';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-danger">
-                        <div class="card-header" style="background-color:orange">
+                    <div class="card card-outline card-primary">
+                        <div class="card-header">
                             <h3 class="card-title">Compras registradas</h3>
 
                             <div class="card-tools">
@@ -40,8 +40,8 @@ include '../app/controllers/compras/listado_de_compras.php';
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="table table-responsive">
-                                <table id="example1" class="table table-bordered table-striped table-sm" style="border-color: black;">
-                                    <thead style="background-color: gray;">
+                                <table id="example1" class="table table-bordered table-striped table-sm">
+                                    <thead>
                                         <tr>
                                             <th>
                                                 <center>N° de compra</center>
@@ -66,15 +66,10 @@ include '../app/controllers/compras/listado_de_compras.php';
                                             <th>
                                                 <center>Costo</center>
                                             </th>
+
                                             <th>
-                                                <center>Usuario de carga</center>
-                                            </th>
-                                            <th>
-                                                <center>Descuento/recarga</center>
-                                            </th>
-                                            <!-- <th>
                                                 <center>Acciones</center>
-                                            </th> -->
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -109,7 +104,7 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                         <div class="modal fade" id="Modal_productos<?php echo $compras['nro_compra']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-lg">
                                                                 <div class="modal-content">
-                                                                    <div class="modal-header" style="background-color:orange">
+                                                                    <div class="modal-header" style="background-color: #08c2ec">
                                                                         <h5 class="modal-title" id="exampleModalLabel">
                                                                             Productos de la compra nro
                                                                             <?php echo $compras['nro_compra']; ?>, ingresados al local el día <?php echo $compras['fecha_ingreso_mercaderia']; ?>.</h5>
@@ -119,30 +114,22 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="table-responsive">
-                                                                            <div class="row">
-                                                                                <div class="col-md-6">
-                                                                                    <input type="text" id="searchInput" class="form-control" placeholder="Buscar...">
-                                                                                </div>
-                                                                                <div class="col-md-6 text-right">
-                                                                                    <span id="recordCount"></span>
-                                                                                </div>
-                                                                            </div>
-                                                                            <table id="tabla_productos" class="table table-bordered table-sm table-hover table-striped">
-                                                                                <thead style="background-color:gray">
+                                                                            <table class="table table-bordered table-sm table-hover table-striped">
+                                                                                <thead>
                                                                                     <tr>
-                                                                                        <th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
                                                                                             Código </th>
-                                                                                        <th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
                                                                                             Producto</th>
-                                                                                        <th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
                                                                                             Descripción</th>
-                                                                                        <th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
                                                                                             Categoria</th>
-                                                                                        <th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
                                                                                             Cantidad</th>
-                                                                                        <th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
                                                                                             Precio Unitario</th>
-                                                                                        <th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
                                                                                             Precio Subtotal</th>
 
                                                                                     </tr>
@@ -227,8 +214,7 @@ include '../app/controllers/compras/listado_de_compras.php';
 
 
 
-                                                                                    <tr class="total-row">
-                                                                                        </trclass>
+                                                                                    <tr>
                                                                                         <th colspan="4" style="background-color: #e7e7e7; text-align:right;">
                                                                                             Total</th>
                                                                                         <th>
@@ -280,46 +266,13 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <?php echo $compras['nombre_usuario']; ?>
-                                                    </center>
-                                                </td>
-                                                <td>
-                                                    <center>
-                                                        <?php echo $compras['resultado']; ?>
-                                                        <?php if ($compras['resultado']) { ?>
-                                                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#infoModal_<?php echo $compras['nro_compra']; ?>">
-                                                                <i class="fas fa-info-circle"></i>
-                                                            </button> <?php }; ?>
-                                                    </center>
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="infoModal_<?php echo $compras['nro_compra']; ?>" tabindex="-1" aria-labelledby="infoModalLabel_<?php echo $compras['nro_compra']; ?>" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="infoModalLabel_<?php echo $compras['nro_compra']; ?>">Explicación de la Diferencia</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <?php echo nl2br($compras['explicacion_diferencia']); ?>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <!-- <td>
-                                                    <center>
                                                         <div class="btn-group">
                                                             <a href="show.php?id=<?php echo $nro_compra; ?>" type="button" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>Ver</a>
                                                             <a href="update.php?id=<?php echo $nro_compra; ?>" type="button" class="btn btn-success btn-sm"><i class="fa fa-pencil-alt"></i>Editar</a>
                                                             <a href="delete.php?id=<?php echo $nro_compra; ?>" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Borrar</a>
                                                         </div>
                                                     </center>
-                                                </td> -->
+                                                </td>
                                             </tr>
                                         <?php
                                         }
@@ -398,44 +351,5 @@ include '../app/controllers/compras/listado_de_compras.php';
             /*Fin de ajuste de botones*/
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const searchInput = document.getElementById('searchInput');
-        const tabla_productos = document.getElementById('tabla_productos').getElementsByTagName('tbody')[0];
-        const recordCount = document.getElementById('recordCount');
-
-        searchInput.addEventListener('keyup', function() {
-            const filter = searchInput.value.toLowerCase();
-            let visibleRows = 0;
-
-            Array.from(tabla_productos.getElementsByTagName('tr')).forEach(function(row) {
-                if (row.classList.contains('total-row')) {
-                    return;
-                }
-                const cells = row.getElementsByTagName('td');
-                let match = false;
-
-                Array.from(cells).forEach(function(cell) {
-                    if (cell.textContent.toLowerCase().indexOf(filter) > -1) {
-                        match = true;
-                    }
-                });
-
-                if (match) {
-                    row.style.display = '';
-                    visibleRows++;
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-
-            recordCount.textContent = `Productos encontrados: ${visibleRows}`;
-        });
-
-        // Inicializa el contador de registros excluyendo la fila de total
-        const initialCount = Array.from(tabla_productos.getElementsByTagName('tr')).filter(row => !row.classList.contains('total-row')).length;
-        recordCount.textContent = `Cantidad de Productos: ${initialCount}`;
     });
 </script>

@@ -1,0 +1,99 @@
+<script>
+    $(document).ready(function() {
+                                    var precioTotal = <?php echo json_encode($precio_total); ?>;
+
+    function calcularDiferenciaYPorcentaje() {
+                                        var precioCompra = document.getElementById('precio_compra_controlador').value;
+    var diferencia = precioCompra - precioTotal;
+    var porcentaje = (diferencia / precioTotal) * 100;
+    var resultadoDiv = document.getElementById('resultado');
+                                        if (diferencia > 0) {
+        resultadoDiv.innerHTML = 'El costo final tiene un recargo del ' + porcentaje.toFixed(2) + '% sobre el precio total de compra.';
+                                        } else if (diferencia < 0) {
+        resultadoDiv.innerHTML = 'El costo final tiene un descuento del ' + Math.abs(porcentaje).toFixed(2) + '% sobre el precio total de compra.';
+                                        } else {
+        resultadoDiv.innerHTML = 'El precio introducido es igual al precio total';
+                                        }
+                                    }
+
+    document.getElementById('btn_guardar_compra').addEventListener('click', function() {
+                                        var precioCompra = document.getElementById('precio_compra_controlador').value;
+    var diferencia = precioCompra - precioTotal;
+
+    if (diferencia != 0) {
+        $('#explicacionModal').modal('show');
+                                        } else {
+        guardarCompra();
+                                        }
+                                    });
+
+    document.getElementById('btn_continuar').addEventListener('click', function() {
+                                        var explicacion = document.getElementById('explicacion_diferencia').value;
+
+    if (explicacion.trim() === '') {
+        alert('Por favor, complete la explicación de la diferencia.');
+                                        } else {
+        $('#explicacionModal').modal('hide');
+    guardarCompra(explicacion);
+                                        }
+                                    });
+
+    function guardarCompra() {
+                                        var nro_compra = <?php echo $nro_compra_js; ?>;
+    var id_productos = <?php echo $id_productos_json; ?>;
+    var cantidades = <?php echo $cantidades_json; ?>;
+    var id_proveedor = $("#id_proveedor").val();
+    var fecha_operacion = $("#fecha_operacion").val();
+    var ingreso_mercaderia = $("#ingreso_mercaderia").val();
+    var comprobante = $("#comprobante").val();
+    var precio_compra = $("#precio_compra_controlador").val();
+    var id_usuario = '<?php echo $id_usuarios_sesion ?>';
+    var resultado = $("#resultado").text();
+
+    if (nro_compra == "") {
+        $('#nro_compra').focus();
+    alert("Debe llenar el campo de compra.");
+                                        } else if (id_proveedor == "") {
+        $('#id_proveedor').focus();
+    alert("Debe llenar el campo proveedor.");
+                                        } else if (fecha_operacion == "") {
+        $('#fecha_operacion').focus();
+    alert("Debe llenar el campo de fecha de pago/operación.");
+                                        } else if (ingreso_mercaderia == "") {
+        $('#ingreso_mercaderia').focus();
+    alert("Debe llenar el campo ingreso de mercadería.");
+                                        } else if (comprobante == "") {
+        $('#comprobante').focus();
+    alert("Debe llenar el campo N° de comprobante.");
+                                        } else if (precio_compra == "") {
+        $('#precio_compra_controlador').focus();
+    alert("Debe llenar el campo Costo de la compra.");
+                                        } else if (id_usuario == "") {
+        $('#id_usuario').focus();
+    alert("Debe llenar todos los campos de usuario.");
+                                        } else {
+                                            var url = "../app/controllers/compras/create.php";
+    $.get(url, {
+        nro_compra: nro_compra,
+    id_proveedor: id_proveedor,
+    fecha_operacion: fecha_operacion,
+    ingreso_mercaderia: ingreso_mercaderia,
+    comprobante: comprobante,
+    precio_compra: precio_compra,
+    id_usuario: id_usuario,
+    resultado: resultado,
+    id_productos: JSON.stringify(id_productos),
+    cantidades: JSON.stringify(cantidades)
+                                            }, function(datos) {
+        $('#respuesta_create').html(datos);
+    if (datos.includes("La compra se ha registrado exitosamente.")) {
+        location.reload();
+                                                }
+                                            });
+                                        }
+                                    }
+
+    window.onload = calcularDiferenciaYPorcentaje;
+    document.getElementById('precio_compra_controlador').addEventListener('input', calcularDiferenciaYPorcentaje);
+                                });
+</script>

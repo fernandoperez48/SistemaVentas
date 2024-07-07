@@ -182,8 +182,6 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                                             $("#detalle").val("<?php echo $productosXproveedor_datos['descripcion']; ?>");
                                                                             $("#ultimo_precio").val("<?php echo $productosXproveedor_datos['precio_compra']; ?>");
                                                                             $('#cantidad').focus();
-
-
                                                                             //$("#modal-buscar_producto").modal("hide");
                                                                         });
                                                                     </script>
@@ -270,6 +268,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                         var cantidad = $("#cantidad").val();
                                                         var precio_unitario = $("#precio_unitario").val();
                                                         var id_proveedor = $("#id_proveedor").val();
+
                                                         if (id_producto == "") {
                                                             alert("Seleccione un producto");
                                                         } else if (cantidad == "") {
@@ -443,7 +442,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="">Fecha de pago/operación</label>
-                                        <input type="date" class="form-control" id="fecha_operacion">
+                                        <input type="date" class="form-control" id="fecha_operacion" required>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -462,20 +461,24 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
 
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="">Costo de la compra</label>
-                                        <input type="text" class="form-control" id="precio_compra_controlador" style="text-align: center;">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
                                         <label for="">Usuario</label>
                                         <input type="text" class="form-control" value="<?php echo $email_session; ?>" disabled>
                                         <input type="text" id="id_usuario" hidden>
                                     </div>
                                 </div>
 
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="">Costo de la compra</label>
+                                        <input type="text" class="form-control" id="precio_compra_controlador" style="text-align: center;">
+                                    </div>
+                                </div>
+                                <!-- Div para mostrar la diferencia y el porcentaje -->
+                                <div class="col-md-2" id="resultado" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
+                                    <div class="form-group">
 
+                                    </div>
+                                </div>
                             </div>
                             <hr>
                             <div class="col-md-12 ">
@@ -486,7 +489,29 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                     </button>
                                 </div>
                             </div>
-                            <div id="respuesta_create"></div>
+                            <div id="respuesta_create">
+                                <!-- Aquí se mostrará la respuesta del guardado de la compra -->
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="explicacionModal" tabindex="-1" aria-labelledby="explicacionModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="explicacionModalLabel">Explicación de la Diferencia</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <textarea id="explicacion_diferencia" class="form-control" rows="3" placeholder="Explique el motivo de la diferencia entre precio total y costo de la compra"></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-primary" id="btn_continuar">Continuar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
                             <?php
@@ -514,44 +539,76 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                             // Pasar el contador de compras a JavaScript
                             $nro_compra_js = $contador_de_compras + 1;
                             ?>
-
-
                             <script>
                                 $(document).ready(function() {
-                                    var nro_compra = <?php echo $nro_compra_js; ?>;
-                                    var id_productos = <?php echo $id_productos_json; ?>;
-                                    var cantidades = <?php echo $cantidades_json; ?>;
+                                    var precioTotal = <?php echo json_encode($precio_total); ?>;
 
-                                    console.log("Nro Compra: ", nro_compra);
-                                    console.log("ID Productos: ", id_productos);
-                                    console.log("Cantidades: ", cantidades);
+                                    function calcularDiferenciaYPorcentaje() {
+                                        var precioCompra = document.getElementById('precio_compra_controlador').value;
+                                        var diferencia = precioCompra - precioTotal;
+                                        var porcentaje = (diferencia / precioTotal) * 100;
+                                        var resultadoDiv = document.getElementById('resultado');
+                                        if (diferencia > 0) {
+                                            resultadoDiv.innerHTML = 'El costo final tiene un recargo del ' + porcentaje.toFixed(2) + '% sobre el precio total de compra.';
+                                        } else if (diferencia < 0) {
+                                            resultadoDiv.innerHTML = 'El costo final tiene un descuento del ' + Math.abs(porcentaje).toFixed(2) + '% sobre el precio total de compra.';
+                                        } else {
+                                            resultadoDiv.innerHTML = 'El precio introducido es igual al precio total';
+                                        }
+                                    }
 
-                                    $("#btn_guardar_compra").click(function() {
+                                    document.getElementById('btn_guardar_compra').addEventListener('click', function() {
+                                        var precioCompra = document.getElementById('precio_compra_controlador').value;
+                                        var diferencia = precioCompra - precioTotal;
+
+                                        if (diferencia != 0) {
+                                            $('#explicacionModal').modal('show');
+                                        } else {
+                                            guardarCompra();
+                                        }
+                                    });
+
+                                    document.getElementById('btn_continuar').addEventListener('click', function() {
+                                        var explicacion = document.getElementById('explicacion_diferencia').value;
+
+                                        if (explicacion.trim() === '') {
+                                            alert('Por favor, complete la explicación de la diferencia.');
+                                        } else {
+                                            $('#explicacionModal').modal('hide');
+                                            guardarCompra(explicacion); // Pasamos la explicación
+                                        }
+                                    });
+
+                                    function guardarCompra(explicacion = '') { // Añadimos un parámetro para la explicación
+                                        var nro_compra = <?php echo $nro_compra_js; ?>;
+                                        var id_productos = <?php echo $id_productos_json; ?>;
+                                        var cantidades = <?php echo $cantidades_json; ?>;
                                         var id_proveedor = $("#id_proveedor").val();
                                         var fecha_operacion = $("#fecha_operacion").val();
                                         var ingreso_mercaderia = $("#ingreso_mercaderia").val();
                                         var comprobante = $("#comprobante").val();
                                         var precio_compra = $("#precio_compra_controlador").val();
                                         var id_usuario = '<?php echo $id_usuarios_sesion ?>';
+                                        var resultado = $("#resultado").text(); // Cambiado para extraer el texto
 
                                         if (nro_compra == "") {
                                             $('#nro_compra').focus();
-                                            alert("Debe llenar todos los campos de compra.");
+                                            alert("Debe llenar el campo de compra.");
                                         } else if (id_proveedor == "") {
                                             $('#id_proveedor').focus();
-                                            alert("Debe llenar todos los campos de proveedor.");
+                                            alert("Debe llenar el campo proveedor.");
                                         } else if (fecha_operacion == "") {
                                             $('#fecha_operacion').focus();
-                                            alert("Debe llenar todos los campos de operación.");
+                                            alert("Debe llenar el campo de fecha de pago/operación.");
                                         } else if (ingreso_mercaderia == "") {
                                             $('#ingreso_mercaderia').focus();
-                                            alert("Debe llenar todos los campos de mercadería.");
+                                            alert("Debe llenar el campo ingreso de mercadería.");
                                         } else if (comprobante == "") {
                                             $('#comprobante').focus();
-                                            alert("Debe llenar todos los campos de comprobante.");
+                                            alert("Debe llenar el campo N° de comprobante.");
                                         } else if (precio_compra == "") {
                                             $('#precio_compra_controlador').focus();
-                                            alert("Debe llenar todos los campos de costo.");
+                                            alert("Debe llenar el campo Costo de la compra.");
                                         } else if (id_usuario == "") {
                                             $('#id_usuario').focus();
                                             alert("Debe llenar todos los campos de usuario.");
@@ -565,21 +622,23 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                 comprobante: comprobante,
                                                 precio_compra: precio_compra,
                                                 id_usuario: id_usuario,
+                                                resultado: resultado,
+                                                explicacion_diferencia: explicacion, // Añadido
                                                 id_productos: JSON.stringify(id_productos),
                                                 cantidades: JSON.stringify(cantidades)
                                             }, function(datos) {
                                                 $('#respuesta_create').html(datos);
-                                                // Si la respuesta contiene el mensaje de éxito, refresca la página
                                                 if (datos.includes("La compra se ha registrado exitosamente.")) {
-
                                                     location.reload();
                                                 }
                                             });
                                         }
-                                    });
+                                    }
+
+                                    window.onload = calcularDiferenciaYPorcentaje;
+                                    document.getElementById('precio_compra_controlador').addEventListener('input', calcularDiferenciaYPorcentaje);
                                 });
                             </script>
-
 
 
                         </div>
@@ -734,6 +793,9 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
             // Establecer el valor del select con el valor obtenido de la sesión
             document.getElementById('id_proveedor').value = id_proveedorDelSelect;
         </script>
+
+
+
     </div>
 </div>
 </div>
