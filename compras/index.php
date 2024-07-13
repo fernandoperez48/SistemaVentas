@@ -50,7 +50,6 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                 <center>Fecha de pago</center>
                                             </th>
                                             <th>
-
                                                 <center>Fecha de registro</center>
                                             </th>
                                             <th>
@@ -275,7 +274,7 @@ include '../app/controllers/compras/listado_de_compras.php';
 
                                                 <td>
                                                     <center>
-                                                        <?php echo $compras['costo']; ?>
+                                                        $ <?php echo $compras['costo']; ?>
                                                     </center>
                                                 </td>
                                                 <td>
@@ -286,30 +285,12 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                 <td>
                                                     <center>
                                                         <?php echo $compras['resultado']; ?>
-                                                        <?php if ($compras['resultado']) { ?>
-                                                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#infoModal_<?php echo $compras['nro_compra']; ?>">
-                                                                <i class="fas fa-info-circle"></i>
-                                                            </button> <?php }; ?>
+                                                        <?php if ($compras['explicacion_diferencia']) { ?>
+                                                            <button class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo htmlspecialchars($compras['explicacion_diferencia'], ENT_QUOTES); ?>">
+                                                                <i class="fas fa-question-circle"></i>
+                                                            </button>
+                                                        <?php }; ?>
                                                     </center>
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="infoModal_<?php echo $compras['nro_compra']; ?>" tabindex="-1" aria-labelledby="infoModalLabel_<?php echo $compras['nro_compra']; ?>" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="infoModalLabel_<?php echo $compras['nro_compra']; ?>">Explicación de la Diferencia</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <?php echo nl2br($compras['explicacion_diferencia']); ?>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </td>
                                                 <!-- <td>
                                                     <center>
@@ -405,6 +386,10 @@ include '../app/controllers/compras/listado_de_compras.php';
         const searchInput = document.getElementById('searchInput');
         const tabla_productos = document.getElementById('tabla_productos').getElementsByTagName('tbody')[0];
         const recordCount = document.getElementById('recordCount');
+
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
 
         searchInput.addEventListener('keyup', function() {
             const filter = searchInput.value.toLowerCase();

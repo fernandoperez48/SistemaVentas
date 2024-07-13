@@ -78,7 +78,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                 <td>
                                                     <center><?php echo $ventas_datos['nro_venta']; ?></center>
                                                 </td>
-                                                <td>
+                                                <td><!-- INICIO DE BOTON PRODUCTOS -->
                                                     <center>
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal_productos<?php echo $id_venta; ?>">
@@ -99,7 +99,15 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="table-responsive">
-                                                                            <table class="table table-bordered table-sm table-hover table-striped">
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <input type="text" id="searchInput" class="form-control" placeholder="Buscar...">
+                                                                                </div>
+                                                                                <div class="col-md-6 text-right">
+                                                                                    <span id="recordCount"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <table id="tabla_productos" class="table table-bordered table-sm table-hover table-striped">
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th style="background-color: #e7e7e7; text-align:center;">
@@ -134,12 +142,12 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                     if ($resultado_carrito) {
                                                                                         $carrito_datos = $resultado_carrito->fetch_all(MYSQLI_ASSOC);
 
-                                                                                        foreach ($carrito_datos as $carrito) {
-                                                                                            $id_carrito = $carrito['id_carrito'];
+                                                                                        foreach ($carrito_datos as $carrito_datos) {
+                                                                                            $id_carrito = $carrito_datos['id_carrito'];
                                                                                             $contador_carrito++;
-                                                                                            $cantidad_total += $carrito['cantidad'];
-                                                                                            $precio_unitario_total += $carrito['precio_venta'];
-                                                                                            $precio_total += ($carrito['cantidad'] * $carrito['precio_venta']);
+                                                                                            $cantidad_total += $carrito_datos['cantidad'];
+                                                                                            $precio_unitario_total += $carrito_datos['precio_venta'];
+                                                                                            $precio_total += ($carrito_datos['cantidad'] * $carrito_datos['precio_venta']);
                                                                                     ?>
                                                                                             <tr>
                                                                                                 <td>
@@ -319,80 +327,119 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                         }
                                 ?>
                                 </table>
-
                             </div>
-
-                            <!-- /.card-body -->
                         </div>
+
+                        <!-- /.card-body -->
                     </div>
                 </div>
-
             </div>
+
         </div>
-
-        <!-- Main content -->
     </div>
-    <!-- /.content -->
-    <!-- /.content-wrapper -->
-    <!-- Page specific script -->
-    <?php include '../layaout/mensajes.php'; ?>
-    <?php include '../layaout/parte2.php'; ?>
+
+    <!-- Main content -->
+</div>
+<!-- /.content -->
+<!-- /.content-wrapper -->
+<!-- Page specific script -->
+<?php include '../layaout/mensajes.php'; ?>
+<?php include '../layaout/parte2.php'; ?>
 
 
-    <script>
-        $(function() {
-            $("#example1").DataTable({
-                /* cambio de idiomas de datatable */
-                "pageLength": 5,
-                language: {
-                    "emptyTable": "No hay información",
-                    "decimal": "",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Compras",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
-                    "infoFiltered": "(Filtrado de _MAX_ total Compras)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Compras",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscador:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
+<script>
+    $(function() {
+        $("#example1").DataTable({
+            /* cambio de idiomas de datatable */
+            "pageLength": 5,
+            language: {
+                "emptyTable": "No hay información",
+                "decimal": "",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Compras",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
+                "infoFiltered": "(Filtrado de _MAX_ total Compras)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Compras",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscador:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+            /* fin de idiomas */
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "buttons": /* Ajuste de botones */ [{
+                    extend: 'collection',
+                    text: 'Reportes',
+                    orientation: 'landscape',
+                    buttons: [{
+                        text: 'Copiar',
+                        extend: 'copy'
+                    }, {
+                        extend: 'pdf',
+                    }, {
+                        extend: 'csv',
+                    }, {
+                        extend: 'excel',
+                    }, {
+                        text: 'Imprimir',
+                        extend: 'print'
+                    }]
                 },
-                /* fin de idiomas */
-                "responsive": true,
-                "lengthChange": true,
-                "autoWidth": false,
-                "buttons": /* Ajuste de botones */ [{
-                        extend: 'collection',
-                        text: 'Reportes',
-                        orientation: 'landscape',
-                        buttons: [{
-                            text: 'Copiar',
-                            extend: 'copy'
-                        }, {
-                            extend: 'pdf',
-                        }, {
-                            extend: 'csv',
-                        }, {
-                            extend: 'excel',
-                        }, {
-                            text: 'Imprimir',
-                            extend: 'print'
-                        }]
-                    },
-                    {
-                        extend: 'colvis',
-                        text: 'Visor de columnas'
-                    }
-                ],
-                /*Fin de ajuste de botones*/
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                {
+                    extend: 'colvis',
+                    text: 'Visor de columnas'
+                }
+            ],
+            /*Fin de ajuste de botones*/
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById('searchInput');
+        const tabla_productos = document.getElementById('tabla_productos').getElementsByTagName('tbody')[0];
+        const recordCount = document.getElementById('recordCount');
+
+        searchInput.addEventListener('keyup', function() {
+            const filter = searchInput.value.toLowerCase();
+            let visibleRows = 0;
+
+            Array.from(tabla_productos.getElementsByTagName('tr')).forEach(function(row) {
+                if (row.classList.contains('total-row')) {
+                    return;
+                }
+                const cells = row.getElementsByTagName('td');
+                let match = false;
+
+                Array.from(cells).forEach(function(cell) {
+                    if (cell.textContent.toLowerCase().indexOf(filter) > -1) {
+                        match = true;
+                    }
+                });
+
+                if (match) {
+                    row.style.display = '';
+                    visibleRows++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            recordCount.textContent = `Productos encontrados: ${visibleRows}`;
         });
-    </script>
+
+        // Inicializa el contador de registros excluyendo la fila de total
+        const initialCount = Array.from(tabla_productos.getElementsByTagName('tr')).filter(row => !row.classList.contains('total-row')).length;
+        recordCount.textContent = `Cantidad de Productos: ${initialCount}`;
+    });
+</script>
