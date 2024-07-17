@@ -66,9 +66,9 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                     <tbody>
                                         <?php
                                         $contador = 0;
-                                        foreach ($ventas_datos as $ventas_datos) {
-                                            $id_venta = $ventas_datos['nro_venta'];
-                                            $id_cliente = $ventas_datos['id_cliente'];
+                                        foreach ($ventas_datos as $venta) {
+                                            $id_venta = $venta['nro_venta'];
+                                            $id_cliente = $venta['id_cliente'];
                                             $contador++;
                                         ?>
                                             <tr>
@@ -76,9 +76,9 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                     <center> <?php echo $contador; ?></center>
                                                 </td>
                                                 <td>
-                                                    <center><?php echo $ventas_datos['nro_venta']; ?></center>
+                                                    <center><?php echo $venta['nro_venta']; ?></center>
                                                 </td>
-                                                <td>
+                                                <td><!-- INICIO DE BOTON PRODUCTOS -->
                                                     <center>
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal_productos<?php echo $id_venta; ?>">
@@ -90,31 +90,30 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                             <div class="modal-dialog modal-lg">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header" style="background-color: #08c2ec">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                                            Productos de la venta nro
-                                                                            <?php echo $ventas_datos['nro_venta']; ?></h5>
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Productos de la venta nro <?php echo $id_venta; ?></h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <div class="table-responsive">
-                                                                            <table class="table table-bordered table-sm table-hover table-striped">
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <input type="text" id="searchInput<?php echo $venta['nro_venta']; ?>" class="form-control" placeholder="Buscar...">
+                                                                                </div>
+                                                                                <div class="col-md-6 text-right">
+                                                                                    <span id="recordCount<?php echo $venta['nro_venta']; ?>"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <table id="tabla_productos<?php echo $venta['nro_venta']; ?>" class="table table-bordered table-sm table-hover table-striped">
                                                                                 <thead>
                                                                                     <tr>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
-                                                                                            Nro</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
-                                                                                            Producto</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
-                                                                                            Detalle</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
-                                                                                            Cantidad</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
-                                                                                            Precio Unitario</th>
-                                                                                        <th style="background-color: #e7e7e7; text-align:center;">
-                                                                                            Precio Subtotal</th>
-
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">Nro</th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">Producto</th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">Detalle</th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">Cantidad</th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">Precio Unitario</th>
+                                                                                        <th style="background-color: #e7e7e7; text-align:center;">Precio Subtotal</th>
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
@@ -123,12 +122,12 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                     $cantidad_total = 0;
                                                                                     $precio_unitario_total = 0;
                                                                                     $precio_total = 0;
-                                                                                    $nro_venta = $ventas_datos['nro_venta'];
+                                                                                    $nro_venta = $venta['nro_venta'];
                                                                                     $sql_carrito = "SELECT carr.*, pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, pro.stock as stock, pro.id_producto as id_producto 
-                                                                                FROM tb_carrito as carr 
-                                                                                INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto 
-                                                                                WHERE nro_venta = '$nro_venta' 
-                                                                                ORDER BY carr.id_carrito";
+                                                                FROM tb_carrito as carr 
+                                                                INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto 
+                                                                WHERE nro_venta = '$nro_venta' 
+                                                                ORDER BY carr.id_carrito";
                                                                                     $resultado_carrito = $mysqli->query($sql_carrito);
 
                                                                                     if ($resultado_carrito) {
@@ -143,43 +142,26 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                     ?>
                                                                                             <tr>
                                                                                                 <td>
-                                                                                                    <center>
-                                                                                                        <?php echo $contador_carrito; ?>
-                                                                                                    </center>
-                                                                                                    <input type="text" value="<?php echo $carrito_datos['id_producto']; ?>" id="id_producto<?php echo $contador_carrito; ?>" hidden>
+                                                                                                    <center><?php echo $contador_carrito; ?></center>
+                                                                                                    <input type="text" value="<?php echo $carrito['id_producto']; ?>" id="id_producto<?php echo $contador_carrito; ?>" hidden>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <center>
-                                                                                                        <?php echo $carrito_datos['nombre_producto']; ?>
-                                                                                                    </center>
+                                                                                                    <center><?php echo $carrito['nombre_producto']; ?></center>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <center>
-                                                                                                        <?php echo $carrito_datos['descripcion']; ?>
-                                                                                                    </center>
+                                                                                                    <center><?php echo $carrito['descripcion']; ?></center>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <center><span id="cantidad_carrito<?php echo $contador_carrito; ?>"><?php echo $carrito_datos['cantidad']; ?></span>
-                                                                                                    </center>
-                                                                                                    <input type="text" id="stock_de_inventario<?php echo $contador_carrito; ?>" value="<?php echo $carrito_datos['stock']; ?>" hidden>
+                                                                                                    <center><span id="cantidad_carrito<?php echo $contador_carrito; ?>"><?php echo $carrito['cantidad']; ?></span></center>
+                                                                                                    <input type="text" id="stock_de_inventario<?php echo $contador_carrito; ?>" value="<?php echo $carrito['stock']; ?>" hidden>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <center>
-                                                                                                        <?php echo $carrito_datos['precio_venta']; ?>
-                                                                                                    </center>
+                                                                                                    <center><?php echo $carrito['precio_venta']; ?></center>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <center>
-                                                                                                        <?php
-                                                                                                        $cantidad = floatval($carrito_datos['cantidad']);
-                                                                                                        $precio_venta = floatval($carrito_datos['precio_venta']);
-                                                                                                        echo $subtotal = $cantidad * $precio_venta;
-                                                                                                        ?>
-                                                                                                    </center>
+                                                                                                    <center><?php echo $subtotal = floatval($carrito['cantidad']) * floatval($carrito['precio_venta']); ?></center>
                                                                                                 </td>
-
                                                                                             </tr>
-
                                                                                     <?php
                                                                                         }
                                                                                     } else {
@@ -187,31 +169,16 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                     }
                                                                                     ?>
 
-
-
-                                                                                    <tr>
-                                                                                        <th colspan="3" style="background-color: #e7e7e7; text-align:right;">
-                                                                                            Total</th>
+                                                                                    <tr class="total-row">
+                                                                                        <th colspan="3" style="background-color: #e7e7e7; text-align:right;">Total</th>
                                                                                         <th>
-                                                                                            <center>
-                                                                                                <?php
-                                                                                                echo $cantidad_total;
-                                                                                                ?>
-                                                                                            </center>
+                                                                                            <center><?php echo $cantidad_total; ?></center>
                                                                                         </th>
                                                                                         <th>
-                                                                                            <center>
-                                                                                                <?php
-                                                                                                echo $precio_unitario_total;
-                                                                                                ?>
-                                                                                            </center>
+                                                                                            <center><?php echo $precio_unitario_total; ?></center>
                                                                                         </th>
                                                                                         <th style="background-color: yellow;">
-                                                                                            <center>
-                                                                                                <?php
-                                                                                                echo $precio_total;
-                                                                                                ?>
-                                                                                            </center>
+                                                                                            <center><?php echo $precio_total; ?></center>
                                                                                         </th>
                                                                                     </tr>
                                                                                 </tbody>
@@ -220,14 +187,14 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div> <!-- Button trigger modal -->
+                                                        </div>
                                                     </center>
                                                 </td>
                                                 <td>
                                                     <!-- Button trigger modal -->
                                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#Modal_clientes<?php echo $id_venta; ?>">
                                                         <i class="fa fa-shopping-basket"></i>
-                                                        <?php echo $ventas_datos['nombre'] . ' ' . $ventas_datos['apellido']; ?>
+                                                        <?php echo $venta['nombre'] . ' ' . $venta['apellido']; ?>
                                                     </button>
 
                                                     <!-- Modal -->
@@ -237,20 +204,17 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                 <div class="modal-header" style="background-color:darkorange; color:white">
                                                                     <h4 class="modal-title">Cliente </h4>
                                                                     <div style="width: 10px;"></div>
-
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>
                                                                 <?php
-                                                                $sql_clientes = "SELECT *, COALESCE(emp.nombre, p.nombre) AS nombre,COALESCE(emp.razon_social, p.apellido) AS apellido,
-                                                                    COALESCE(emp.telefono, p.telefono) AS telefono,COALESCE(emp.email, p.email) AS email, COALESCE(emp.cuit, p.dni) AS cuit
-                                                                    from tb_clientes as cl
-                                                                    left JOIN tb_empresas AS emp ON cl.id_empresa = emp.id_empresa
-                                                                    left JOIN tb_personas AS p ON cl.id_persona = p.id_persona
-                                                                    where cl.id_cliente = '$id_cliente' ";
-
-
+                                                                $sql_clientes = "SELECT *, COALESCE(emp.nombre, p.nombre) AS nombre, COALESCE(emp.razon_social, p.apellido) AS apellido,
+                                             COALESCE(emp.telefono, p.telefono) AS telefono, COALESCE(emp.email, p.email) AS email, COALESCE(emp.cuit, p.dni) AS cuit
+                                             FROM tb_clientes as cl
+                                             LEFT JOIN tb_empresas AS emp ON cl.id_empresa = emp.id_empresa
+                                             LEFT JOIN tb_personas AS p ON cl.id_persona = p.id_persona
+                                             WHERE cl.id_cliente = '$id_cliente'";
 
                                                                 $resultado_clientes = $mysqli->query($sql_clientes);
                                                                 $clientes_datos = array();
@@ -258,15 +222,13 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                     $clientes_datos[] = $fila;
                                                                 }
 
-
-                                                                foreach ($clientes_datos as $clientes_datos) {
-                                                                    $nombre_cliente = $clientes_datos['nombre'] . ' ' . $clientes_datos['apellido'];
-                                                                    $nit_ci_cliente = $clientes_datos['cuit'];
-                                                                    $celular_cliente = $clientes_datos['telefono'];
-                                                                    $email_cliente = $clientes_datos['email'];
+                                                                foreach ($clientes_datos as $cliente) {
+                                                                    $nombre_cliente = $cliente['nombre'] . ' ' . $cliente['apellido'];
+                                                                    $nit_ci_cliente = $cliente['cuit'];
+                                                                    $celular_cliente = $cliente['telefono'];
+                                                                    $email_cliente = $cliente['email'];
                                                                 ?>
                                                                     <div class="modal-body">
-
                                                                         <div class="form-group">
                                                                             <label for="">Nombre del cliente</label>
                                                                             <input type="text" value="<?php echo $nombre_cliente; ?>" name="nombre_cliente" class="form-control" disabled>
@@ -280,119 +242,146 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                             <input type="text" value="<?php echo $celular_cliente; ?>" name="celular_cliente" class="form-control" disabled>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label for="">Correo del cliente</label>
-                                                                            <input type="email" value="<?php echo $email_cliente; ?>" name="email_cliente" class="form-control" disabled>
+                                                                            <label for="">Email del cliente</label>
+                                                                            <input type="text" value="<?php echo $email_cliente; ?>" name="email_cliente" class="form-control" disabled>
                                                                         </div>
-
-
                                                                     </div>
-                                                                    <div class="modal-footer justify-content-between">
-
-                                                                    </div>
+                                                                <?php
+                                                                }
+                                                                ?>
                                                             </div>
-                                                            <!-- /.modal-content -->
                                                         </div>
-                                                        <!-- /.modal-dialog -->
-
                                                     </div>
-
-                                                </td>
-                                                <td>
-                                                    <center><button class="btn btn-primary" disabled><?php echo "$" . $ventas_datos['total_pagado']; ?></button>
-                                                    </center>
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <a href="" class="btn btn-info"><i class="fa fa-eye"></i>
-                                                            Mostrar</a>
-                                                        <a href="" class="btn btn-danger"><i class="fa fa-trash"></i>
-                                                            Borrar</a>
+                                                        <button type="button" class="btn btn-danger btn_borrar_venta" data-toggle="modal" data-target="#borrar_venta<?php echo $id_venta; ?>"><i class="fa fa-trash"></i></button>
                                                     </center>
                                                 </td>
                                             </tr>
-
                                         <?php
-                                                                }
+                                        }
                                         ?>
                                     </tbody>
-                                <?php
-                                        }
-                                ?>
+
+
                                 </table>
-
                             </div>
-
-                            <!-- /.card-body -->
                         </div>
+
+                        <!-- /.card-body -->
                     </div>
                 </div>
-
             </div>
+
         </div>
-
-        <!-- Main content -->
     </div>
-    <!-- /.content -->
-    <!-- /.content-wrapper -->
-    <!-- Page specific script -->
-    <?php include '../layaout/mensajes.php'; ?>
-    <?php include '../layaout/parte2.php'; ?>
+
+    <!-- Main content -->
+</div>
+<!-- /.content -->
+<!-- /.content-wrapper -->
+<!-- Page specific script -->
+<?php include '../layaout/mensajes.php'; ?>
+<?php include '../layaout/parte2.php'; ?>
 
 
-    <script>
-        $(function() {
-            $("#example1").DataTable({
-                /* cambio de idiomas de datatable */
-                "pageLength": 5,
-                language: {
-                    "emptyTable": "No hay información",
-                    "decimal": "",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Compras",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
-                    "infoFiltered": "(Filtrado de _MAX_ total Compras)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Compras",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscador:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
+<script>
+    $(function() {
+        $("#example1").DataTable({
+            /* cambio de idiomas de datatable */
+            "pageLength": 5,
+            language: {
+                "emptyTable": "No hay información",
+                "decimal": "",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Compras",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
+                "infoFiltered": "(Filtrado de _MAX_ total Compras)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Compras",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscador:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+            /* fin de idiomas */
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "buttons": /* Ajuste de botones */ [{
+                    extend: 'collection',
+                    text: 'Reportes',
+                    orientation: 'landscape',
+                    buttons: [{
+                        text: 'Copiar',
+                        extend: 'copy'
+                    }, {
+                        extend: 'pdf',
+                    }, {
+                        extend: 'csv',
+                    }, {
+                        extend: 'excel',
+                    }, {
+                        text: 'Imprimir',
+                        extend: 'print'
+                    }]
                 },
-                /* fin de idiomas */
-                "responsive": true,
-                "lengthChange": true,
-                "autoWidth": false,
-                "buttons": /* Ajuste de botones */ [{
-                        extend: 'collection',
-                        text: 'Reportes',
-                        orientation: 'landscape',
-                        buttons: [{
-                            text: 'Copiar',
-                            extend: 'copy'
-                        }, {
-                            extend: 'pdf',
-                        }, {
-                            extend: 'csv',
-                        }, {
-                            extend: 'excel',
-                        }, {
-                            text: 'Imprimir',
-                            extend: 'print'
-                        }]
-                    },
-                    {
-                        extend: 'colvis',
-                        text: 'Visor de columnas'
-                    }
-                ],
-                /*Fin de ajuste de botones*/
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                {
+                    extend: 'colvis',
+                    text: 'Visor de columnas'
+                }
+            ],
+            /*Fin de ajuste de botones*/
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
-        });
-    </script>
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Obtener todos los elementos de búsqueda y conteo de registros por cada modal de productos
+        <?php foreach ($ventas_datos as $ventas_datos) { ?>
+            const searchInput<?php echo $ventas_datos['nro_venta']; ?> = document.getElementById('searchInput<?php echo $ventas_datos['nro_venta']; ?>');
+            const tabla_productos<?php echo $ventas_datos['nro_venta']; ?> = document.getElementById('tabla_productos<?php echo $ventas_datos['nro_venta']; ?>').getElementsByTagName('tbody')[0];
+            const recordCount<?php echo $ventas_datos['nro_venta']; ?> = document.getElementById('recordCount<?php echo $ventas_datos['nro_venta']; ?>');
+
+            searchInput<?php echo $ventas_datos['nro_venta']; ?>.addEventListener('keyup', function() {
+                const filter = searchInput<?php echo $ventas_datos['nro_venta']; ?>.value.toLowerCase();
+                let visibleRows = 0;
+
+                Array.from(tabla_productos<?php echo $ventas_datos['nro_venta']; ?>.getElementsByTagName('tr')).forEach(function(row) {
+                    if (row.classList.contains('total-row')) {
+                        return;
+                    }
+                    const cells = row.getElementsByTagName('td');
+                    let match = false;
+
+                    Array.from(cells).forEach(function(cell) {
+                        if (cell.textContent.toLowerCase().indexOf(filter) > -1) {
+                            match = true;
+                        }
+                    });
+
+                    if (match) {
+                        row.style.display = '';
+                        visibleRows++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                recordCount<?php echo $ventas_datos['nro_venta']; ?>.textContent = `Productos encontrados: ${visibleRows}`;
+            });
+
+            // Inicializa el contador de registros excluyendo la fila de total
+            const initialCount<?php echo $ventas_datos['nro_venta']; ?> = Array.from(tabla_productos<?php echo $ventas_datos['nro_venta']; ?>.getElementsByTagName('tr')).filter(row => !row.classList.contains('total-row')).length;
+            recordCount<?php echo $ventas_datos['nro_venta']; ?>.textContent = `Cantidad de Productos: ${initialCount<?php echo $ventas_datos['nro_venta']; ?>}`;
+        <?php } ?>
+    });
+</script>

@@ -14,7 +14,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
 
 <!-- Content Wrapper. Contains page content -->
 
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -32,8 +32,8 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
             <div class="row">
                 <div class="col-md-12">
                     <div class="content">
-                        <div class="card card-outline card-primary">
-                            <div class="card-header">
+                        <div class="card card-outline card-danger">
+                            <div class="card-header" style="background-color:orange">
                                 <form action="#">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -73,9 +73,6 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                 </div>
                                             </div>
                                         </div>
-
-
-
                                 </form>
                             </div>
                             <div class="card-tools">
@@ -87,10 +84,10 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                         <div class="card-body">
                             <div style="display: flex;">
                                 <h4><b>Detalle de la Compra</b></h4>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar_producto" style="margin-left: 15px;">
-                                    <i class="fas fa-search"></i>
-                                    Buscar Producto
+                                <button type="button" class="btn btn-primary" id="btn-buscar-producto" style="margin-left: 15px;">
+                                    <i class="fas fa-search"></i> Buscar Producto
                                 </button>
+
 
                             </div>
                             <!-- MODAL PARA BUSCAR PRODUCTO       MODAL PARA BUSCAR PRODUCTO       MODAL PARA BUSCAR PRODUCTO -->
@@ -100,25 +97,21 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                 session_start();
                             }
 
-                            if (isset($_SESSION['id_proveedorDelSelect'])) {
-                                $id_proveedorDelSelect = $_SESSION['id_proveedorDelSelect'];
-                            } else {
-                                $id_proveedorDelSelect = ''; // O algún valor por defecto o mensaje de error
-                            }
+                            $id_proveedorDelSelect = isset($_SESSION['id_proveedorDelSelect']) ? $_SESSION['id_proveedorDelSelect'] : '';
 
-                            // Verifica el valor de $id_proveedorDelSelect
-                            echo 'Ultimo proveedor seleccionado: ' . $id_proveedorDelSelect . '<br>';
+                            // // Verifica el valor de $id_proveedorDelSelect
+                            // echo 'Ultimo proveedor seleccionado: ' . $id_proveedorDelSelect . '<br>';
 
-                            if (empty($id_proveedorDelSelect)) {
-                                if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_proveedor'])) {
-                                    $id_proveedorDelSelect = $_POST['id_proveedor'];
-                                    $_SESSION['id_proveedorDelSelect'] = $id_proveedorDelSelect;
-                                } else {
-                                    echo 'No se ha seleccionado un proveedor válido.';
-                                    // Puedes manejar este caso de manera específica, por ejemplo, redirigir o mostrar un mensaje de error
-                                    // exit; // Descomentar si deseas detener la ejecución en caso de error
-                                }
-                            }
+                            // if (empty($id_proveedorDelSelect)) {
+                            //     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_proveedor'])) {
+                            //         $id_proveedorDelSelect = $_POST['id_proveedor'];
+                            //         $_SESSION['id_proveedorDelSelect'] = $id_proveedorDelSelect;
+                            //     } else {
+                            //         echo 'No se ha seleccionado un proveedor válido.';
+                            //         // Puedes manejar este caso de manera específica, por ejemplo, redirigir o mostrar un mensaje de error
+                            //         // exit; // Descomentar si deseas detener la ejecución en caso de error
+                            //     }
+                            // }
 
                             // Aquí puedes usar $id_proveedorDelSelect para listar productos
                             $productosXproveedor_datos = ListarProductosXProveedor($mysqli, $id_proveedorDelSelect);
@@ -135,6 +128,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                         <div class="modal-body">
                                             <div class="table table-responsive">
                                                 <table id="example1" class="table table-bordered table-striped table-sm">
+
                                                     <thead>
                                                         <tr>
                                                             <th>
@@ -261,35 +255,52 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
 
                                                 <button style="float: right;" id="btn_registrar_detalle_compra" class="btn btn-primary">Registrar</button>
                                                 <div id="respuesta_detalle_compra"></div>
-                                                <script>
-                                                    $("#btn_registrar_detalle_compra").click(function() {
-                                                        var nro_compra = "<?php echo $contador_de_compras + 1; ?>";
-                                                        var id_producto = $("#id_producto").val();
-                                                        var cantidad = $("#cantidad").val();
-                                                        var precio_unitario = $("#precio_unitario").val();
-                                                        var id_proveedor = $("#id_proveedor").val();
+                                                <!-- <script>
+                                                    $(document).ready(function() {
+                                                        $("#btn_registrar_detalle_compra").click(function() {
+                                                            var nro_compra = "<?php echo $contador_de_compras + 1; ?>";
+                                                            var id_producto = $("#id_producto").val();
+                                                            var cantidad = $("#cantidad").val();
+                                                            var precio_unitario = $("#precio_unitario").val();
+                                                            var id_proveedor = $("#id_proveedor").val();
 
-                                                        if (id_producto == "") {
-                                                            alert("Seleccione un producto");
-                                                        } else if (cantidad == "") {
-                                                            alert("Ingrese la cantidad");
-                                                        } else if (precio_unitario == "") {
-                                                            alert("Ingrese el precio unitario");
-                                                        } else {
-                                                            var url = "../app/controllers/compras/registrar_detalle_compra.php";
-                                                            $.get(url, {
-                                                                nro_compra: nro_compra,
-                                                                id_producto: id_producto,
-                                                                cantidad: cantidad,
-                                                                precio_unitario: precio_unitario,
-                                                                id_proveedor: id_proveedor
-                                                            }, function(datos) {
-                                                                $('#respuesta_detalle_compra').html(datos);
-                                                                $("#modal-buscar_producto").modal('hide'); // Cierra el modal
-                                                            });
-                                                        }
+                                                            if (id_producto == "") {
+                                                                alert("Seleccione un producto");
+                                                            } else if (cantidad == "") {
+                                                                alert("Ingrese la cantidad");
+                                                            } else if (precio_unitario == "") {
+                                                                alert("Ingrese el precio unitario");
+                                                            } else {
+                                                                var url = "../app/controllers/compras/registrar_detalle_compra.php";
+                                                                $.get(url, {
+                                                                    nro_compra: nro_compra,
+                                                                    id_producto: id_producto,
+                                                                    cantidad: cantidad,
+                                                                    precio_unitario: precio_unitario,
+                                                                    id_proveedor: id_proveedor
+                                                                }, function(datos) {
+                                                                    $('#respuesta_detalle_compra').html(datos);
+                                                                    $("#modal-buscar_producto").modal('hide');
+                                                                });
+                                                            }
+                                                        });
+
+                                                        $("#btn-buscar-producto").click(function(event) {
+                                                            var id_proveedor = $("#id_proveedor").val();
+                                                            console.log("ID del proveedor seleccionado: ", id_proveedor); // Línea de depuración
+                                                            if (!id_proveedor) {
+                                                                event.preventDefault(); // Evita que el modal se abra
+                                                                alert("Debes seleccionar un proveedor");
+                                                            } else {
+                                                                $('#modal-buscar_producto').modal('show'); // Abre el modal
+                                                            }
+                                                        });
                                                     });
-                                                </script>
+                                                </script> -->
+
+
+
+
 
                                                 <br><br>
                                             </div>
@@ -302,17 +313,17 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                             <br><br>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-sm table-hover table-striped">
-                                    <thead>
+                                    <thead style="background-color: gray;">
                                         <tr>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Codigo</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Producto</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Detalle</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Proveedor</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Categoria</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Cantidad</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Unitario</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Subtotal</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Accion</th>
+                                            <th style=" text-align:center;">Codigo</th>
+                                            <th style="text-align:center;">Producto</th>
+                                            <th style="text-align:center;">Detalle</th>
+                                            <th style="text-align:center;">Proveedor</th>
+                                            <th style="text-align:center;">Categoria</th>
+                                            <th style="text-align:center;">Cantidad</th>
+                                            <th style="text-align:center;">Precio Unitario</th>
+                                            <th style="text-align:center;">Precio Subtotal</th>
+                                            <th style="text-align:center;">Accion</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -429,8 +440,9 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="content">
-                    <div class="card card-outline card-primary">
-                        <div class="card-header">
+                    <div class="card card-outline card-danger">
+
+                        <div class="card-header" style="background-color:orange">
                             <div class="row">
                                 <div class="card-title"><i class="fa fa-shopping-bag" style="margin-right: 5px; margin-top: 5px;"></i>
                                     Detalle de la compra
@@ -438,8 +450,8 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-2">
+                            <div class="row justify-content-between">
+                                <div class=" col-md-2">
                                     <div class="form-group">
                                         <label for="">Fecha de pago/operación</label>
                                         <input type="date" class="form-control" id="fecha_operacion" required>
@@ -461,22 +473,16 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
 
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="">Usuario</label>
-                                        <input type="text" class="form-control" value="<?php echo $email_session; ?>" disabled>
-                                        <input type="text" id="id_usuario" hidden>
+                                        <label for="">Costo de la compra</label>
+                                        <input type="number" class="form-control" id="precio_compra_controlador" style="text-align: center;">
                                     </div>
                                 </div>
 
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="">Costo de la compra</label>
-                                        <input type="text" class="form-control" id="precio_compra_controlador" style="text-align: center;">
-                                    </div>
-                                </div>
-                                <!-- Div para mostrar la diferencia y el porcentaje -->
-                                <div class="col-md-2" id="resultado" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
-                                    <div class="form-group">
-
+                                        <label for="">Usuario</label>
+                                        <input type="text" class="form-control" value="<?php echo $email_session; ?>" disabled>
+                                        <input type="text" id="id_usuario" hidden>
                                     </div>
                                 </div>
                             </div>
@@ -539,32 +545,76 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                             // Pasar el contador de compras a JavaScript
                             $nro_compra_js = $contador_de_compras + 1;
                             ?>
+
                             <script>
                                 $(document).ready(function() {
                                     var precioTotal = <?php echo json_encode($precio_total); ?>;
+                                    var comprobantesExistentes = [];
+
+                                    // Función para cargar los comprobantes existentes
+                                    function cargarComprobantes() {
+                                        $.ajax({
+                                            url: "../app/controllers/compras/listado_de_comprobantes.php",
+                                            method: "GET",
+                                            success: function(data) {
+                                                comprobantesExistentes = JSON.parse(data);
+                                            },
+                                            error: function(error) {
+                                                console.log("Error al cargar comprobantes:", error);
+                                            }
+                                        });
+                                    }
+
+                                    cargarComprobantes();
 
                                     function calcularDiferenciaYPorcentaje() {
                                         var precioCompra = document.getElementById('precio_compra_controlador').value;
                                         var diferencia = precioCompra - precioTotal;
                                         var porcentaje = (diferencia / precioTotal) * 100;
-                                        var resultadoDiv = document.getElementById('resultado');
-                                        if (diferencia > 0) {
-                                            resultadoDiv.innerHTML = 'El costo final tiene un recargo del ' + porcentaje.toFixed(2) + '% sobre el precio total de compra.';
-                                        } else if (diferencia < 0) {
-                                            resultadoDiv.innerHTML = 'El costo final tiene un descuento del ' + Math.abs(porcentaje).toFixed(2) + '% sobre el precio total de compra.';
-                                        } else {
-                                            resultadoDiv.innerHTML = 'El precio introducido es igual al precio total';
-                                        }
+                                        return {
+                                            diferencia,
+                                            porcentaje
+                                        };
                                     }
 
-                                    document.getElementById('btn_guardar_compra').addEventListener('click', function() {
-                                        var precioCompra = document.getElementById('precio_compra_controlador').value;
-                                        var diferencia = precioCompra - precioTotal;
+                                    $("#btn_registrar_detalle_compra").click(function() {
+                                        var nro_compra = "<?php echo $contador_de_compras + 1; ?>";
+                                        var id_producto = $("#id_producto").val();
+                                        var cantidad = $("#cantidad").val();
+                                        var precio_unitario = $("#precio_unitario").val();
+                                        var id_proveedor = $("#id_proveedor").val();
 
-                                        if (diferencia != 0) {
-                                            $('#explicacionModal').modal('show');
+                                        if (id_producto == "") {
+                                            alert("Seleccione un producto");
+                                        } else if (cantidad == "") {
+                                            alert("Ingrese la cantidad");
+                                        } else if (precio_unitario == "") {
+                                            alert("Ingrese el precio unitario");
+                                        } else if (precio_unitario == 0 || precio_unitario === "0") {
+                                            alert("El precio unitario no puede ser 0");
                                         } else {
-                                            guardarCompra();
+                                            var url = "../app/controllers/compras/registrar_detalle_compra.php";
+                                            $.get(url, {
+                                                nro_compra: nro_compra,
+                                                id_producto: id_producto,
+                                                cantidad: cantidad,
+                                                precio_unitario: precio_unitario,
+                                                id_proveedor: id_proveedor
+                                            }, function(datos) {
+                                                $('#respuesta_detalle_compra').html(datos);
+                                                $("#modal-buscar_producto").modal('hide');
+                                            });
+                                        }
+                                    });
+
+                                    $("#btn-buscar-producto").click(function(event) {
+                                        var id_proveedor = $("#id_proveedor").val();
+                                        console.log("ID del proveedor seleccionado: ", id_proveedor); // Línea de depuración
+                                        if (!id_proveedor) {
+                                            event.preventDefault(); // Evita que el modal se abra
+                                            alert("Debes seleccionar un proveedor");
+                                        } else {
+                                            $('#modal-buscar_producto').modal('show'); // Abre el modal
                                         }
                                     });
 
@@ -575,11 +625,11 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                             alert('Por favor, complete la explicación de la diferencia.');
                                         } else {
                                             $('#explicacionModal').modal('hide');
-                                            guardarCompra(explicacion); // Pasamos la explicación
+                                            guardarCompra(explicacion, true); // Pasamos la explicación y un flag para evitar la verificación
                                         }
                                     });
 
-                                    function guardarCompra(explicacion = '') { // Añadimos un parámetro para la explicación
+                                    function guardarCompra(explicacion = '', explicacionIngresada = false) { // Añadimos un parámetro para evitar la verificación
                                         var nro_compra = <?php echo $nro_compra_js; ?>;
                                         var id_productos = <?php echo $id_productos_json; ?>;
                                         var cantidades = <?php echo $cantidades_json; ?>;
@@ -589,9 +639,13 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                         var comprobante = $("#comprobante").val();
                                         var precio_compra = $("#precio_compra_controlador").val();
                                         var id_usuario = '<?php echo $id_usuarios_sesion ?>';
-                                        var resultado = $("#resultado").text(); // Cambiado para extraer el texto
+                                        var resultado = ''; // Inicializamos la variable resultado
 
-                                        if (nro_compra == "") {
+                                        // Verificar si el comprobante ya existe
+                                        if (comprobantesExistentes.includes(comprobante)) {
+                                            $('#comprobante').focus();
+                                            alert("Ese comprobante ya existe.");
+                                        } else if (nro_compra == "") {
                                             $('#nro_compra').focus();
                                             alert("Debe llenar el campo de compra.");
                                         } else if (id_proveedor == "") {
@@ -609,36 +663,52 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                         } else if (precio_compra == "") {
                                             $('#precio_compra_controlador').focus();
                                             alert("Debe llenar el campo Costo de la compra.");
-                                        } else if (id_usuario == "") {
-                                            $('#id_usuario').focus();
-                                            alert("Debe llenar todos los campos de usuario.");
+                                        } else if (parseFloat(precio_compra) <= 0) {
+                                            $('#precio_compra_controlador').focus();
+                                            alert("El costo de la compra debe ser un valor positivo.");
                                         } else {
-                                            var url = "../app/controllers/compras/create.php";
-                                            $.get(url, {
-                                                nro_compra: nro_compra,
-                                                id_proveedor: id_proveedor,
-                                                fecha_operacion: fecha_operacion,
-                                                ingreso_mercaderia: ingreso_mercaderia,
-                                                comprobante: comprobante,
-                                                precio_compra: precio_compra,
-                                                id_usuario: id_usuario,
-                                                resultado: resultado,
-                                                explicacion_diferencia: explicacion, // Añadido
-                                                id_productos: JSON.stringify(id_productos),
-                                                cantidades: JSON.stringify(cantidades)
-                                            }, function(datos) {
-                                                $('#respuesta_create').html(datos);
-                                                if (datos.includes("La compra se ha registrado exitosamente.")) {
-                                                    location.reload();
-                                                }
-                                            });
+                                            var {
+                                                diferencia,
+                                                porcentaje
+                                            } = calcularDiferenciaYPorcentaje();
+
+                                            if (!explicacionIngresada && diferencia != 0) { //aca digo que si explicacionIngresada es falsa y diferencia distinto de cero
+                                                var mensaje = `El costo final tiene un ${diferencia > 0 ? 'recargo' : 'descuento'} de ${Math.abs(porcentaje.toFixed(2))}%. Por favor, explique la diferencia.`;
+                                                alert(mensaje);
+                                                $('#explicacionModal').modal('show');
+                                            } else {
+                                                var url = "../app/controllers/compras/create.php";
+                                                resultado = explicacionIngresada ? `El costo final tiene un ${diferencia > 0 ? 'recargo' : 'descuento'} de ${Math.abs(porcentaje.toFixed(2))}%.` : '---SIN DESCUENTO O RECARGA---';
+                                                $.get(url, {
+                                                    nro_compra: nro_compra,
+                                                    id_proveedor: id_proveedor,
+                                                    fecha_operacion: fecha_operacion,
+                                                    ingreso_mercaderia: ingreso_mercaderia,
+                                                    comprobante: comprobante,
+                                                    precio_compra: precio_compra,
+                                                    id_usuario: id_usuario,
+                                                    resultado: resultado,
+                                                    explicacion_diferencia: explicacion, // Añadido   
+                                                    id_productos: JSON.stringify(id_productos),
+                                                    cantidades: JSON.stringify(cantidades)
+                                                }, function(datos) {
+                                                    $('#respuesta_create').html(datos);
+                                                    if (datos.includes("La compra se ha registrado exitosamente.")) {
+                                                        location.reload();
+                                                    }
+                                                });
+                                            }
                                         }
                                     }
 
-                                    window.onload = calcularDiferenciaYPorcentaje;
-                                    document.getElementById('precio_compra_controlador').addEventListener('input', calcularDiferenciaYPorcentaje);
+                                    $("#btn_guardar_compra").click(function() {
+                                        guardarCompra(); // Primero llama a guardarCompra, se encargará de la diferencia si es necesario
+                                    });
                                 });
                             </script>
+
+
+
 
 
                         </div>

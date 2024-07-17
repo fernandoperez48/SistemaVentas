@@ -7,8 +7,7 @@ if ($rol_sesion == "EyD" || $rol_sesion == "Vendedor") {
 include '../layaout/parte1.php';
 include '../app/controllers/compras/listado_de_compras.php';
 
-?>
-<!-- Content Wrapper. Contains page content -->
+?><!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -17,7 +16,6 @@ include '../app/controllers/compras/listado_de_compras.php';
                 <div class="col-sm-12">
                     <h1 class="m-0">Listado de Compras</h1>
                 </div><!-- /.col -->
-
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
@@ -50,7 +48,6 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                 <center>Fecha de pago</center>
                                             </th>
                                             <th>
-
                                                 <center>Fecha de registro</center>
                                             </th>
                                             <th>
@@ -62,7 +59,6 @@ include '../app/controllers/compras/listado_de_compras.php';
                                             <th>
                                                 <center>Comprobante</center>
                                             </th>
-
                                             <th>
                                                 <center>Costo</center>
                                             </th>
@@ -72,47 +68,39 @@ include '../app/controllers/compras/listado_de_compras.php';
                                             <th>
                                                 <center>Descuento/recarga</center>
                                             </th>
-                                            <!-- <th>
-                                                <center>Acciones</center>
-                                            </th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
+
                                         <?php
                                         $contador = 0;
                                         foreach ($compras_datos as $compras) {
+                                            $id_compra = $compras['nro_compra'];
+                                            $contador++;
                                         ?>
                                             <tr>
                                                 <td>
-                                                    <center>
-                                                        <?php echo $compras['nro_compra']; ?>
-                                                    </center>
+                                                    <center><?php echo $compras['nro_compra']; ?></center>
+                                                </td>
+                                                <td>
+                                                    <center><?php echo $compras['fecha_registro']; ?></center>
+                                                </td>
+                                                <td>
+                                                    <center><?php echo $compras['fecha_compra_pago']; ?></center>
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <?php echo $compras['fecha_registro']; ?>
-                                                    </center>
-                                                </td>
-                                                <td>
-                                                    <center>
-                                                        <?php echo $compras['fecha_compra_pago']; ?>
-                                                    </center>
-                                                </td>
-                                                <td><!-- INICIO DE BOTON PRODUCTOS -->
-                                                    <center>
-                                                        <!-- Button trigger modal -->
-                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal_productos<?php echo $compras['nro_compra']; ?>">
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal_productos<?php echo $id_compra; ?>">
                                                             <i class="fa fa-shopping-basket"></i> Productos
                                                         </button>
-
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="Modal_productos<?php echo $compras['nro_compra']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal fade" id="Modal_productos<?php echo $id_compra; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-lg">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header" style="background-color:orange">
                                                                         <h5 class="modal-title" id="exampleModalLabel">
-                                                                            Productos de la compra nro
-                                                                            <?php echo $compras['nro_compra']; ?>, ingresados al local el día <?php echo $compras['fecha_ingreso_mercaderia']; ?>.</h5>
+                                                                            Productos de la compra nro <?php echo $compras['nro_compra']; ?>, ingresados al local el día <?php echo $compras['fecha_ingreso_mercaderia']; ?>.
+                                                                        </h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
@@ -121,30 +109,22 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                         <div class="table-responsive">
                                                                             <div class="row">
                                                                                 <div class="col-md-6">
-                                                                                    <input type="text" id="searchInput" class="form-control" placeholder="Buscar...">
+                                                                                    <input type="text" id="searchInput<?php echo $compras['nro_compra']; ?>" class="form-control" placeholder="Buscar...">
                                                                                 </div>
                                                                                 <div class="col-md-6 text-right">
-                                                                                    <span id="recordCount"></span>
+                                                                                    <span id="recordCount<?php echo $compras['nro_compra']; ?>"></span>
                                                                                 </div>
                                                                             </div>
-                                                                            <table id="tabla_productos" class="table table-bordered table-sm table-hover table-striped">
+                                                                            <table id="tabla_productos<?php echo $compras['nro_compra']; ?>" class="table table-bordered table-sm table-hover table-striped">
                                                                                 <thead style="background-color:gray">
                                                                                     <tr>
-                                                                                        <th>
-                                                                                            Código </th>
-                                                                                        <th>
-                                                                                            Producto</th>
-                                                                                        <th>
-                                                                                            Descripción</th>
-                                                                                        <th>
-                                                                                            Categoria</th>
-                                                                                        <th>
-                                                                                            Cantidad</th>
-                                                                                        <th>
-                                                                                            Precio Unitario</th>
-                                                                                        <th>
-                                                                                            Precio Subtotal</th>
-
+                                                                                        <th>Código</th>
+                                                                                        <th>Producto</th>
+                                                                                        <th>Descripción</th>
+                                                                                        <th>Categoría</th>
+                                                                                        <th>Cantidad</th>
+                                                                                        <th>Precio Unitario</th>
+                                                                                        <th>Precio Subtotal</th>
                                                                                     </tr>
                                                                                 </thead>
                                                                                 <tbody>
@@ -154,14 +134,14 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                                     $precio_unitario_total = 0;
                                                                                     $precio_total = 0;
                                                                                     $nro_compra = $compras['nro_compra'];
-                                                                                    $sql_detalle_compras = "SELECT *, pro.codigo as codigo_producto,pro.stock as stock,
-                                                                                    pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.id_producto as id_producto,
-                                                                                    cat.nombre_categoria as nombre_categoria
-                                                                                    FROM tb_detalle_compras as det_com
-                                                                                    INNER JOIN tb_almacen as pro ON det_com.id_producto = pro.id_producto 
-                                                                                    INNER JOIN tb_acategorias as cat ON cat.id_categoria = pro.id_categoria 
-                                                                                    WHERE nro_compra = '$nro_compra' 
-                                                                                    ORDER BY det_com.id_detalle_compras";
+                                                                                    $sql_detalle_compras = "SELECT *, pro.codigo as codigo_producto, pro.stock as stock,
+                                    pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.id_producto as id_producto,
+                                    cat.nombre_categoria as nombre_categoria
+                                    FROM tb_detalle_compras as det_com
+                                    INNER JOIN tb_almacen as pro ON det_com.id_producto = pro.id_producto 
+                                    INNER JOIN tb_acategorias as cat ON cat.id_categoria = pro.id_categoria 
+                                    WHERE nro_compra = '$nro_compra' 
+                                    ORDER BY det_com.id_detalle_compras";
                                                                                     $resultado_detalle_compras = $mysqli->query($sql_detalle_compras);
 
                                                                                     if ($resultado_detalle_compras) {
@@ -176,35 +156,23 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                                     ?>
                                                                                             <tr>
                                                                                                 <td>
-                                                                                                    <center>
-                                                                                                        <?php echo $detalle_compras['codigo_producto']; ?>
-                                                                                                    </center>
+                                                                                                    <center><?php echo $detalle_compras['codigo_producto']; ?></center>
                                                                                                     <input type="text" value="<?php echo $detalle_compras['id_producto']; ?>" id="id_producto<?php echo $contador_detalle_compras; ?>" hidden>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <center>
-                                                                                                        <?php echo $detalle_compras['nombre_producto']; ?>
-                                                                                                    </center>
+                                                                                                    <center><?php echo $detalle_compras['nombre_producto']; ?></center>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <center>
-                                                                                                        <?php echo $detalle_compras['descripcion']; ?>
-                                                                                                    </center>
+                                                                                                    <center><?php echo $detalle_compras['descripcion']; ?></center>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <center>
-                                                                                                        <?php echo $detalle_compras['nombre_categoria']; ?>
-                                                                                                    </center>
+                                                                                                    <center><?php echo $detalle_compras['nombre_categoria']; ?></center>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <center><span id="cantidad_detalle_compras<?php echo $contador_detalle_compras; ?>"><?php echo $detalle_compras['cantidad_producto']; ?></span>
-                                                                                                    </center>
-                                                                                                    <!--  <input type="text" id="stock_de_inventario<?php echo $contador_detalle_compras; ?>" value="<?php echo $detalle_compras['stock']; ?>" hidden> -->
+                                                                                                    <center><span id="cantidad_detalle_compras<?php echo $contador_detalle_compras; ?>"><?php echo $detalle_compras['cantidad_producto']; ?></span></center>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <center>
-                                                                                                        <?php echo $detalle_compras['precio_unitario']; ?>
-                                                                                                    </center>
+                                                                                                    <center><?php echo $detalle_compras['precio_unitario']; ?></center>
                                                                                                 </td>
                                                                                                 <td>
                                                                                                     <center>
@@ -215,42 +183,23 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                                                         ?>
                                                                                                     </center>
                                                                                                 </td>
-
                                                                                             </tr>
-
                                                                                     <?php
                                                                                         }
                                                                                     } else {
                                                                                         echo "Error en la consulta: " . $mysqli->error;
                                                                                     }
                                                                                     ?>
-
-
-
                                                                                     <tr class="total-row">
-                                                                                        </trclass>
-                                                                                        <th colspan="4" style="background-color: #e7e7e7; text-align:right;">
-                                                                                            Total</th>
+                                                                                        <th colspan="4" style="background-color: #e7e7e7; text-align:right;">Total</th>
                                                                                         <th>
-                                                                                            <center>
-                                                                                                <?php
-                                                                                                echo $cantidad_total;
-                                                                                                ?>
-                                                                                            </center>
+                                                                                            <center><?php echo $cantidad_total; ?></center>
                                                                                         </th>
                                                                                         <th>
-                                                                                            <center>
-                                                                                                <?php
-                                                                                                echo $precio_unitario_total;
-                                                                                                ?>
-                                                                                            </center>
+                                                                                            <center><?php echo $precio_unitario_total; ?></center>
                                                                                         </th>
                                                                                         <th style="background-color: yellow;">
-                                                                                            <center>
-                                                                                                <?php
-                                                                                                echo $precio_total;
-                                                                                                ?>
-                                                                                            </center>
+                                                                                            <center><?php echo $precio_total; ?></center>
                                                                                         </th>
                                                                                     </tr>
                                                                                 </tbody>
@@ -259,85 +208,46 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div> <!-- Button trigger modal -->
-                                                    </center>
-                                                </td><!-- FIN DE BOTON PRODUCTOS -->
-                                                <td>
-                                                    <center>
-                                                        <?php echo $compras['nombre_proveedor']; ?>
-                                                    </center>
-                                                </td>
-                                                <td>
-                                                    <center>
-                                                        <?php echo $compras['nro_comprobante']; ?>
+                                                        </div>
                                                     </center>
                                                 </td>
 
                                                 <td>
-                                                    <center>
-                                                        <?php echo $compras['costo']; ?>
-                                                    </center>
+                                                    <center><?php echo $compras['nombre_proveedor']; ?></center>
                                                 </td>
                                                 <td>
-                                                    <center>
-                                                        <?php echo $compras['nombre_usuario']; ?>
-                                                    </center>
+                                                    <center><?php echo $compras['nro_comprobante']; ?></center>
                                                 </td>
                                                 <td>
-                                                    <center>
-                                                        <?php echo $compras['resultado']; ?>
-                                                        <?php if ($compras['resultado']) { ?>
-                                                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#infoModal_<?php echo $compras['nro_compra']; ?>">
-                                                                <i class="fas fa-info-circle"></i>
-                                                            </button> <?php }; ?>
-                                                    </center>
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="infoModal_<?php echo $compras['nro_compra']; ?>" tabindex="-1" aria-labelledby="infoModalLabel_<?php echo $compras['nro_compra']; ?>" aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="infoModalLabel_<?php echo $compras['nro_compra']; ?>">Explicación de la Diferencia</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <?php echo nl2br($compras['explicacion_diferencia']); ?>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <center>$ <?php echo $compras['costo']; ?></center>
                                                 </td>
-                                                <!-- <td>
-                                                    <center>
-                                                        <div class="btn-group">
-                                                            <a href="show.php?id=<?php echo $nro_compra; ?>" type="button" class="btn btn-info btn-sm"><i class="fa fa-eye"></i>Ver</a>
-                                                            <a href="update.php?id=<?php echo $nro_compra; ?>" type="button" class="btn btn-success btn-sm"><i class="fa fa-pencil-alt"></i>Editar</a>
-                                                            <a href="delete.php?id=<?php echo $nro_compra; ?>" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Borrar</a>
-                                                        </div>
-                                                    </center>
-                                                </td> -->
+                                                <td>
+                                                    <center><?php echo $compras['nombre_usuario']; ?></center>
+                                                </td>
+                                                <td>
+                                                    <center><?php echo $compras['resultado']; ?></center>
+                                                </td>
                                             </tr>
                                         <?php
+                                            $contador++;
                                         }
                                         ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        <!-- /.card-body -->
                     </div>
+                    <!-- /.card -->
                 </div>
-
+                <!-- /.col -->
             </div>
-        </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
     </div>
-
+    <!-- /.content -->
 </div>
-
-
+<!-- /.content-wrapper -->
 <!-- /.content-wrapper -->
 <!-- Page specific script -->
 <?php include '../layaout/mensajes.php'; ?>
@@ -402,40 +312,43 @@ include '../app/controllers/compras/listado_de_compras.php';
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const searchInput = document.getElementById('searchInput');
-        const tabla_productos = document.getElementById('tabla_productos').getElementsByTagName('tbody')[0];
-        const recordCount = document.getElementById('recordCount');
+        // Obtener todos los elementos de búsqueda y conteo de registros por cada modal de productos
+        <?php foreach ($compras_datos as $compra) { ?>
+            const searchInput<?php echo $compra['nro_compra']; ?> = document.getElementById('searchInput<?php echo $compra['nro_compra']; ?>');
+            const tabla_productos<?php echo $compra['nro_compra']; ?> = document.getElementById('tabla_productos<?php echo $compra['nro_compra']; ?>').getElementsByTagName('tbody')[0];
+            const recordCount<?php echo $compra['nro_compra']; ?> = document.getElementById('recordCount<?php echo $compra['nro_compra']; ?>');
 
-        searchInput.addEventListener('keyup', function() {
-            const filter = searchInput.value.toLowerCase();
-            let visibleRows = 0;
+            searchInput<?php echo $compra['nro_compra']; ?>.addEventListener('keyup', function() {
+                const filter = searchInput<?php echo $compra['nro_compra']; ?>.value.toLowerCase();
+                let visibleRows = 0;
 
-            Array.from(tabla_productos.getElementsByTagName('tr')).forEach(function(row) {
-                if (row.classList.contains('total-row')) {
-                    return;
-                }
-                const cells = row.getElementsByTagName('td');
-                let match = false;
+                Array.from(tabla_productos<?php echo $compra['nro_compra']; ?>.getElementsByTagName('tr')).forEach(function(row) {
+                    if (row.classList.contains('total-row')) {
+                        return;
+                    }
+                    const cells = row.getElementsByTagName('td');
+                    let match = false;
 
-                Array.from(cells).forEach(function(cell) {
-                    if (cell.textContent.toLowerCase().indexOf(filter) > -1) {
-                        match = true;
+                    Array.from(cells).forEach(function(cell) {
+                        if (cell.textContent.toLowerCase().indexOf(filter) > -1) {
+                            match = true;
+                        }
+                    });
+
+                    if (match) {
+                        row.style.display = '';
+                        visibleRows++;
+                    } else {
+                        row.style.display = 'none';
                     }
                 });
 
-                if (match) {
-                    row.style.display = '';
-                    visibleRows++;
-                } else {
-                    row.style.display = 'none';
-                }
+                recordCount<?php echo $compra['nro_compra']; ?>.textContent = `Productos encontrados: ${visibleRows}`;
             });
 
-            recordCount.textContent = `Productos encontrados: ${visibleRows}`;
-        });
-
-        // Inicializa el contador de registros excluyendo la fila de total
-        const initialCount = Array.from(tabla_productos.getElementsByTagName('tr')).filter(row => !row.classList.contains('total-row')).length;
-        recordCount.textContent = `Cantidad de Productos: ${initialCount}`;
+            // Inicializa el contador de registros excluyendo la fila de total
+            const initialCount<?php echo $compra['nro_compra']; ?> = Array.from(tabla_productos<?php echo $compra['nro_compra']; ?>.getElementsByTagName('tr')).filter(row => !row.classList.contains('total-row')).length;
+            recordCount<?php echo $compra['nro_compra']; ?>.textContent = `Cantidad de Productos: ${initialCount<?php echo $compra['nro_compra']; ?>}`;
+        <?php } ?>
     });
 </script>

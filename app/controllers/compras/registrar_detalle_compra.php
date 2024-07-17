@@ -21,7 +21,6 @@ if ($result_check_proveedor->num_rows > 0) {
 
     if ($proveedor_existente != $id_proveedor) {
         // Si el proveedor existente no coincide con el proveedor actual, mostrar error
-
         echo "<script>
             alert('No se puede registrar el producto. El proveedor no coincide con el proveedor ya registrado en esta compra.');
             setTimeout(function() {
@@ -37,6 +36,8 @@ if ($result_check_producto->num_rows > 0) {
     $row = $result_check_producto->fetch_assoc();
     $cantidad_existente = $row['cantidad_producto'];
     $nueva_cantidad = $cantidad_existente + $cantidad;
+
+    // Mostrar el mensaje solo si ya hay productos existentes
     mostrarMensajePrecio();
 
     $sql_update = "UPDATE tb_detalle_compras SET cantidad_producto = '$nueva_cantidad' WHERE nro_compra = '$nro_compra' AND id_producto = '$id_producto'";

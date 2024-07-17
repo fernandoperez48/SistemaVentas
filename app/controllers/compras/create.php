@@ -2,6 +2,7 @@
 
 include '../../config.php';
 
+
 // Verificar si los parámetros existen antes de acceder a ellos
 $nro_compra = isset($_GET['nro_compra']) ? $_GET['nro_compra'] : '';
 $id_proveedor = isset($_GET['id_proveedor']) ? $_GET['id_proveedor'] : '';
@@ -10,11 +11,10 @@ $ingreso_mercaderia = isset($_GET['ingreso_mercaderia']) ? $_GET['ingreso_mercad
 $comprobante = isset($_GET['comprobante']) ? $_GET['comprobante'] : '';
 $precio_compra = isset($_GET['precio_compra']) ? $_GET['precio_compra'] : '';
 $id_usuario = isset($_GET['id_usuario']) ? $_GET['id_usuario'] : '';
-$resultado = isset($_GET['resultado']) ? $_GET['resultado'] : '';
+$resultado = $_GET['resultado'];
 $explicacion_diferencia = $_GET['explicacion_diferencia']; // Recibir la explicación
 $id_productos = isset($_GET['id_productos']) ? json_decode($_GET['id_productos'], true) : [];
 $cantidades = isset($_GET['cantidades']) ? json_decode($_GET['cantidades'], true) : [];
-
 
 
 // // Agregamos un mensaje de alerta para verificar la recepción de los datos
