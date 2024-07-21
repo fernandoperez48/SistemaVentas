@@ -22,7 +22,7 @@ if ($result_check_proveedor->num_rows > 0) {
     if ($proveedor_existente != $id_proveedor) {
         // Si el proveedor existente no coincide con el proveedor actual, mostrar error
         echo "<script>
-            alert('No se puede registrar el producto. El proveedor no coincide con el proveedor ya registrado en esta compra.');
+            alert('No se puede registrar el producto. El proveedor no coincide con el proveedor ya registrado en esta compra. Para eso deberá reiniciar la compra.');
             setTimeout(function() {
                 window.location.href = '$URL/compras/create.php';
             }, 5000); // 5000 milisegundos = 5 segundos
