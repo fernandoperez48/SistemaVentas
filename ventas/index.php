@@ -71,6 +71,8 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                         foreach ($ventas_datos as $venta) {
                                             $id_venta = $venta['nro_venta'];
                                             $id_cliente = $venta['id_cliente'];
+                                            $nombreApellido = $venta['nombre'] . ' ' . $venta['apellido'];
+
                                             $contador++;
                                         ?>
                                             <tr>
@@ -193,111 +195,113 @@ include '../app/controllers/clientes/listado_de_clientesemp.php';
                                                     </center>
                                                 </td>
                                                 <td>
-                                                    <!-- Button trigger modal -->
-                                                    <div class="btn-group">
-                                                        <a type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modal-ver<?php echo $id_cliente; ?>"><i class="fa fa-eye"></i>Ver</a>
+                                                    <center>
+                                                        <!-- Button trigger modal -->
+                                                        <div class="btn-group">
+                                                            <a type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modal-ver<?php echo $id_cliente; ?>"><i class="fa fa-eye"></i>Ver</a>
 
-                                                        <!-- modal para ver clientes-->
-                                                        <div class="modal fade" id="modal-ver<?php echo $id_cliente; ?>">
-                                                            <div class="modal-dialog modal-lg">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header" style="background-color:#088da5; color:white">
-                                                                        <h4 class="modal-title">Datos del cliente</h4>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <!-- <?php { ?>
-                                                                    <div class="modal-body">
-                                                                        <div class="row">
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                    <label>Nombre</label>
-                                                                                    <input type="text" id="nombre<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['nombre']; ?>" class="form-control" disabled>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                    <label>Apellido</label>
-                                                                                    <input type="text" id="apellido<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['apellido']; ?>" class="form-control" disabled>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                    <label>Telefono</label>
-                                                                                    <input type="number" id="tel<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['telefono'] ?>" disabled>
-                                                                                </div>
-                                                                            </div>
+                                                            <!-- modal para ver clientes-->
+                                                            <div class="modal fade" id="modal-ver<?php echo $id_cliente; ?>">
+                                                                <div class="modal-dialog modal-lg">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header" style="background-color:#088da5; color:white">
+                                                                            <h4 class="modal-title">Datos del cliente</h4>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
                                                                         </div>
-                                                                        <div class="row">
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                    <label>DNI</label>
-                                                                                    <input type="text" id="dni<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['dni']; ?>" class="form-control" disabled>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                    <label>Email</label>
-                                                                                    <input type="text" id="email<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['email']; ?>" disabled>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                    <label>Pais </label>
-                                                                                    <input type="text" id="pais<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['pais']; ?>" disabled>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                    <label>Provincia</label>
-                                                                                    <input type="text" id="prov<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['provincia']; ?>" disabled>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                    <label>Localidad </label>
-                                                                                    <input type="text" id="loc<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['ciudad']; ?>" disabled>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                    <label>Domicilio<b>*</b></label>
-                                                                                    <input type="text" id="dom<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['calle']; ?>" disabled>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                    <label>Nro<b>*</b></label>
-                                                                                    <input type="text" id="num<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['numero']; ?>" disabled>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                    <label>Piso </label>
-                                                                                    <input type="text" id="pis<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['piso']; ?>" disabled>
+                                                                        <?php { ?>
+                                                                            <div class="modal-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group">
+                                                                                            <label>Nombre</label>
+                                                                                            <input type="text" id="nombre<?php echo $id_cliente; ?>" value="<?php echo $nombreApellido ?>" class="form-control" disabled>
+                                                                                        </div>
+                                                                                    </div>
 
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group">
+                                                                                            <label>Telefono</label>
+                                                                                            <input type="number" id="tel<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $venta['telefono'] ?>" disabled>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group">
+                                                                                            <label>DNI</label>
+                                                                                            <input type="text" id="dni<?php echo $id_cliente; ?>" value="<?php echo $venta['cuitDni'] ?>" class="form-control" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group">
+                                                                                            <label>Email</label>
+                                                                                            <input type="text" id="email<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $venta['email'] ?>" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group">
+                                                                                            <label>Pais </label>
+                                                                                            <input type="text" id="pais<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $venta['pais']; ?>" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group">
+                                                                                            <label>Provincia</label>
+                                                                                            <input type="text" id="prov<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $venta['provincia']; ?>" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group">
+                                                                                            <label>Localidad </label>
+                                                                                            <input type="text" id="loc<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $venta['ciudad']; ?>" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group">
+                                                                                            <label>Domicilio<b>*</b></label>
+                                                                                            <input type="text" id="dom<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $venta['calle']; ?>" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group">
+                                                                                            <label>Nro<b>*</b></label>
+                                                                                            <input type="text" id="num<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $venta['numero']; ?>" disabled>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group">
+                                                                                            <label>Piso </label>
+                                                                                            <input type="text" id="pis<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $venta['piso']; ?>" disabled>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group">
+                                                                                            <label>Depto<b>*</b></label>
+                                                                                            <input type="text" id="dpto<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $venta['depto']; ?>" disabled>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="col-md-4">
-                                                                                <div class="form-group">
-                                                                                    <label>Depto<b>*</b></label>
-                                                                                    <input type="text" id="dpto<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['depto']; ?>" disabled>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                                                        <?php } ?>
                                                                     </div>
-                                                                    <?php } ?> -->
+                                                                    <!-- /.modal-content -->
                                                                 </div>
-                                                                <!-- /.modal-content -->
+                                                                <!-- /.modal-dialog -->
                                                             </div>
-                                                            <!-- /.modal-dialog -->
                                                         </div>
-                                                    </div>
+                                                    </center>
+                                                </td>
+                                                <td>
+                                                    <center><?php echo $venta['total_pagado']; ?></center>
                                                 </td>
                                                 <td>
                                                     <center>

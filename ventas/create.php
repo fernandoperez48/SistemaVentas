@@ -192,6 +192,15 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                 <input type="text" id="precio_unitario" class="form-control" disabled>
                                                             </div>
                                                         </div>
+                                                        <script>
+                                                            function allowOnlyNumbers(input) {
+                                                                input.value = input.value.replace(/[^0-9]/g, '');
+                                                            }
+
+                                                            document.getElementById('cantidad').addEventListener('input', function(e) {
+                                                                allowOnlyNumbers(e.target);
+                                                            });
+                                                        </script>
                                                     </div>
                                                     <button style="float: right;" id="btn_registrar_carrito" class="btn btn-primary">Registrar</button>
                                                     <div id="respuesta_carrito"></div>
@@ -863,6 +872,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
     });
 
 
+
     $(function() {
         $("#example3").DataTable({
             /* cambio de idiomas de datatable */
@@ -919,6 +929,17 @@ include '../app/controllers/ventas/listado_de_ventas.php';
 
     });
 </script>
+
+<script>
+    function allowOnlyNumbers(input) {
+        input.value = input.value.replace(/[^0-9]/g, '');
+    }
+
+    document.getElementById('cantidad').addEventListener('input', function(e) {
+        allowOnlyNumbers(e.target);
+    });
+</script>
+
 <!--modal para visualizar el formulario para agregar clientes -->
 <div class="modal fade" id="modal-agregar_cliente">
     <div class="modal-dialog modal-sm">
