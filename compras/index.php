@@ -225,8 +225,16 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                     <center><?php echo $compras['nombre_usuario']; ?></center>
                                                 </td>
                                                 <td>
-                                                    <center><?php echo $compras['resultado']; ?></center>
+                                                    <center>
+                                                        <?php echo $compras['resultado']; ?>
+                                                        <?php if ($compras['explicacion_diferencia']) { ?>
+                                                            <button class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="<?php echo htmlspecialchars($compras['explicacion_diferencia'], ENT_QUOTES); ?>">
+                                                                <i class="fas fa-question-circle"></i>
+                                                            </button>
+                                                        <?php }; ?>
+                                                    </center>
                                                 </td>
+
                                             </tr>
                                         <?php
                                             $contador++;
