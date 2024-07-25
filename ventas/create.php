@@ -96,7 +96,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                     <center>Precio Venta</center>
                                                                 </th>
                                                                 <th>
-                                                                    <center>Fecha Compra</center>
+                                                                    <center>Fecha Ingreso</center>
                                                                 </th>
                                                                 <th>
                                                                     <center>Usuario</center>
@@ -110,52 +110,83 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                 $id_producto = $productos_datos['id_producto']; ?>
                                                                 <tr>
                                                                     <td>
-                                                                        <?php echo $contador += 1; ?>
+                                                                        <center>
+                                                                            <?php echo $contador += 1; ?>
+                                                                        </center>
                                                                     </td>
                                                                     <td>
-                                                                        <button class="btn btn-info" id="btn_seleccionar<?php echo $productos_datos['id_producto']; ?>">Seleccionar</button>
-                                                                        <script>
-                                                                            $("#btn_seleccionar<?php echo $productos_datos['id_producto']; ?>").click(function() {
-                                                                                $("#id_producto").val("<?php echo $productos_datos['id_producto']; ?>");
-                                                                                $("#producto").val("<?php echo $productos_datos['nombre']; ?>");
-                                                                                $("#detalle").val("<?php echo $productos_datos['descripcion']; ?>");
-                                                                                $("#precio_unitario").val("<?php echo $productos_datos['precio_venta']; ?>");
-                                                                                $('#cantidad').focus();
+                                                                        <center>
+                                                                            <button class="btn btn-info" id="btn_seleccionar<?php echo $productos_datos['id_producto']; ?>">Seleccionar</button>
+                                                                            <script>
+                                                                                $("#btn_seleccionar<?php echo $productos_datos['id_producto']; ?>").click(function() {
+                                                                                    $("#id_producto").val("<?php echo $productos_datos['id_producto']; ?>");
+                                                                                    $("#producto").val("<?php echo $productos_datos['nombre']; ?>");
+                                                                                    $("#detalle").val("<?php echo $productos_datos['descripcion']; ?>");
+                                                                                    $("#precio_unitario").val("<?php echo $productos_datos['precio_venta']; ?>");
+                                                                                    $('#cantidad').focus();
 
 
-                                                                                //$("#modal-buscar_producto").modal("hide");
-                                                                            });
-                                                                        </script>
+                                                                                    //$("#modal-buscar_producto").modal("hide");
+                                                                                });
+                                                                            </script>
+                                                                        </center>
                                                                     </td>
                                                                     <td>
-                                                                        <?php echo $productos_datos['codigo']; ?>
+                                                                        <center>
+                                                                            <?php echo $productos_datos['codigo']; ?>
+                                                                        </center>
                                                                     </td>
                                                                     <td>
-                                                                        <?php echo $productos_datos['nombre_categoria']; ?>
+                                                                        <center>
+                                                                            <?php echo $productos_datos['nombre_categoria']; ?>
+                                                                        </center>
                                                                     </td>
                                                                     <td>
-                                                                        <img src="<?php echo $URL . "/almacen/img_productos" . $productos_datos['imagen']; ?>" width="50px">
+                                                                        <center>
+                                                                            <?php
+                                                                            // Asumiendo que $productos_datos['imagen'] contiene el valor del campo 'imagen'
+                                                                            if (empty($productos_datos['imagen']) || is_null($productos_datos['imagen'])) {
+                                                                                // Si el valor de imagen está vacío o es NULL, muestra la imagen predeterminada
+                                                                                echo '<img src="' . $URL . '/almacen/img/img_productossinimagen.jpg" width="50px">';
+                                                                            } else {
+                                                                                // Si el valor de imagen no está vacío ni es NULL, muestra la imagen correspondiente
+                                                                                echo '<img src="' . $URL . '/almacen/img/img_productos' . $productos_datos['imagen'] . '" width="50px">';
+                                                                            }
+                                                                            ?>
+                                                                        </center>
                                                                     </td>
                                                                     <td>
-                                                                        <?php echo $productos_datos['nombre']; ?>
+                                                                        <center>
+                                                                            <?php echo $productos_datos['nombre']; ?>
+                                                                        </center>
                                                                     </td>
                                                                     <td>
-                                                                        <?php echo $productos_datos['descripcion']; ?>
+                                                                        <center>
+                                                                            <?php echo $productos_datos['descripcion']; ?>
+                                                                        </center>
                                                                     </td>
                                                                     <td>
-                                                                        <?php echo $productos_datos['stock']; ?>
+                                                                        <center>
+                                                                            <?php echo $productos_datos['stock']; ?>
+                                                                        </center>
                                                                     </td>
                                                                     <td>
-                                                                        <center><?php echo $productos_datos['precio_compra']; ?></center>
+                                                                        <center>$ <?php echo $productos_datos['precio_compra']; ?></center>
                                                                     </td>
                                                                     <td>
-                                                                        <?php echo $productos_datos['precio_venta']; ?>
+                                                                        <center>
+                                                                            $ <?php echo $productos_datos['precio_venta']; ?>
+                                                                        </center>
                                                                     </td>
                                                                     <td>
-                                                                        <?php echo $productos_datos['fecha_ingreso']; ?>
+                                                                        <center>
+                                                                            <?php echo $productos_datos['fecha_ultimo_ingreso']; ?>
+                                                                        </center>
                                                                     </td>
                                                                     <td>
-                                                                        <?php echo $productos_datos['email']; ?>
+                                                                        <center>
+                                                                            <?php echo $productos_datos['nombres_usuario']; ?>
+                                                                        </center>
                                                                     </td>
 
                                                                 </tr>
@@ -288,15 +319,14 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                         <input type="text" id="stock_de_inventario<?php echo $contador_carrito; ?>" value="<?php echo $carrito_datos['stock']; ?>" hidden>
                                                     </td>
                                                     <td>
-                                                        <center><?php echo $carrito_datos['precio_venta']; ?></center>
+                                                        <center>$ <?php echo $carrito_datos['precio_venta']; ?></center>
                                                     </td>
                                                     <td>
-                                                        <center>
-                                                            <?php
-                                                            $cantidad = floatval($carrito_datos['cantidad']);
-                                                            $precio_venta = floatval($carrito_datos['precio_venta']);
-                                                            echo $subtotal = $cantidad * $precio_venta;
-                                                            ?>
+                                                        <center>$ <?php
+                                                                    $cantidad = floatval($carrito_datos['cantidad']);
+                                                                    $precio_venta = floatval($carrito_datos['precio_venta']);
+                                                                    echo $subtotal = $cantidad * $precio_venta;
+                                                                    ?>
                                                         </center>
                                                     </td>
                                                     <td>
@@ -327,17 +357,15 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                 </center>
                                             </th>
                                             <th>
-                                                <center>
-                                                    <?php
-                                                    echo $precio_unitario_total;
-                                                    ?>
+                                                <center>$ <?php
+                                                            echo $precio_unitario_total;
+                                                            ?>
                                                 </center>
                                             </th>
                                             <th style="background-color: yellow;">
-                                                <center>
-                                                    <?php
-                                                    echo $precio_total;
-                                                    ?>
+                                                <center>$ <?php
+                                                            echo $precio_total;
+                                                            ?>
                                                 </center>
                                             </th>
                                         </tr>
@@ -465,6 +493,14 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                         $("#celular_cliente").val("<?php echo $clientesper_datos['telefono']; ?>");
                                                                                         $("#email_cliente").val("<?php echo $clientesper_datos['email']; ?>");
                                                                                         $("#modal-buscar_clienteper").modal("hide");
+                                                                                        // Guardar en localStorage
+                                                                                        localStorage.setItem('cliente', JSON.stringify({
+                                                                                            id_cliente: "<?php echo $clientesper_datos['id_cliente']; ?>",
+                                                                                            nombre_cliente: "<?php echo $clientesper_datos['nombre']; ?>",
+                                                                                            nit_ci_cliente: "<?php echo $clientesper_datos['dni']; ?>",
+                                                                                            celular_cliente: "<?php echo $clientesper_datos['telefono']; ?>",
+                                                                                            email_cliente: "<?php echo $clientesper_datos['email']; ?>"
+                                                                                        }));
                                                                                     });
                                                                                 </script>
                                                                             </center>
@@ -562,6 +598,14 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                         $("#celular_cliente").val("<?php echo $clientesemp_datos['telefono']; ?>");
                                                                                         $("#email_cliente").val("<?php echo $clientesemp_datos['email']; ?>");
                                                                                         $("#modal-buscar_clienteemp").modal("hide");
+                                                                                        // Guardar en localStorage                                                                                        
+                                                                                        localStorage.setItem('cliente', JSON.stringify({
+                                                                                            id_cliente: "<?php echo $clientesemp_datos['id_cliente']; ?>",
+                                                                                            nombre_cliente: "<?php echo $clientesemp_datos['nombre']; ?>",
+                                                                                            nit_ci_cliente: "<?php echo $clientesemp_datos['cuit']; ?>",
+                                                                                            celular_cliente: "<?php echo $clientesemp_datos['telefono']; ?>",
+                                                                                            email_cliente: "<?php echo $clientesemp_datos['email']; ?>"
+                                                                                        }));
                                                                                     });
                                                                                 </script>
                                                                             </center>
@@ -620,6 +664,20 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                             <label for="">Email del Cliente</label>
                                             <input type="text" class="form-control" id="email_cliente">
                                         </div>
+                                        <script>
+                                            $(document).ready(function() {
+                                                var cliente = localStorage.getItem('cliente');
+                                                if (cliente) {
+                                                    cliente = JSON.parse(cliente);
+                                                    $("#id_cliente").val(cliente.id_cliente);
+                                                    $("#nombre_cliente").val(cliente.nombre_cliente);
+                                                    $("#nit_ci_cliente").val(cliente.nit_ci_cliente);
+                                                    $("#celular_cliente").val(cliente.celular_cliente);
+                                                    $("#email_cliente").val(cliente.email_cliente);
+                                                }
+                                            });
+                                        </script>
+
                                     </div>
                                 </div>
                             </div> <!-- /.card-body -->
@@ -640,7 +698,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="">Monto a cancelar</label>
-                                        <input type="text" class="form-control" id="total_a_cancelar" style="text-align:center; background-color:yellow" value="<?php echo $precio_total; ?>" disabled>
+                                        <input type="text" class="form-control" id="total_a_cancelar" style="text-align:center; background-color:yellow" value=<?php echo $precio_total; ?> disabled>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -670,11 +728,17 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                             Guardar venta
                                         </button>
                                         <div id="respuesta_registro_venta"></div>
+                                        <?php
+                                        $nombres_usuario_js = $nombres_sesion;
+                                        ?>
                                         <script>
                                             $("#btn_guardar_venta").click(function() {
                                                 var nro_venta = "<?php echo $contador_de_ventas + 1; ?>";
                                                 var id_cliente = $("#id_cliente").val();
                                                 var total_a_cancelar = $("#total_a_cancelar").val();
+                                                var usuario = "<?php echo $nombres_usuario_js; ?>";
+
+
                                                 if (id_cliente === "") {
                                                     alert("Seleccione un cliente");
                                                 } else if (parseInt(<?php echo $precio_total; ?>) === 0) {
@@ -718,10 +782,14 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                     $.get(url, {
                                                         nro_venta: nro_venta,
                                                         id_cliente: id_cliente,
-                                                        total_a_cancelar: total_a_cancelar
+                                                        total_a_cancelar: total_a_cancelar,
+                                                        usuario: usuario
                                                     }, function(datos) {
                                                         $('#respuesta_registro_venta').html(datos);
                                                     });
+                                                    // Al finalizar la venta o en cualquier otro punto necesario
+                                                    localStorage.removeItem('cliente');
+
                                                 }
 
 

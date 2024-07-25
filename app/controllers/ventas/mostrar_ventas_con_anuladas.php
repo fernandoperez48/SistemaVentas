@@ -8,7 +8,7 @@ d.calle,d.numero,d.ciudad,d.provincia,d.pais, d.piso, d.depto
                LEFT JOIN tb_empresas AS emp ON cl.id_empresa = emp.id_empresa
                LEFT JOIN tb_personas AS p ON cl.id_persona = p.id_persona 
                INNER JOIN tb_domicilios AS d ON COALESCE(emp.id_domicilio, p.id_domicilio) = d.id_domicilio  
-                   
+               WHERE ve.estado != 'anulada'        
                GROUP BY ve.nro_venta";
 
 $result_ventas = $mysqli->query($sql_ventas);
@@ -17,6 +17,6 @@ $ventas_datos = [];
 
 if ($result_ventas) {
     while ($row = $result_ventas->fetch_assoc()) {
-        $ventas_datos[] = $row;
+        $mostrar_ventas_datos[] = $row;
     }
 }

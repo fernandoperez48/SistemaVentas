@@ -208,7 +208,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                                     <?php echo $productosXproveedor_datos['stock']; ?>
                                                                 </td>
                                                                 <td>
-                                                                    <?php echo $productosXproveedor_datos['precio_compra']; ?>
+                                                                    $ <?php echo $productosXproveedor_datos['precio_compra']; ?>
                                                                 </td>
                                                                 <td>
                                                                     <?php echo $productosXproveedor_datos['fecha_ultimo_ingreso']; ?>
@@ -331,15 +331,14 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                         <input type="text" id="stock_de_inventario<?php echo $contador_detalle_compras; ?>" value="<?php echo $detalle_compras_datos['stock']; ?>" hidden>
                                                     </td>
                                                     <td>
-                                                        <center><?php echo $detalle_compras_datos['precio_unitario']; ?></center>
+                                                        <center>$ <?php echo $detalle_compras_datos['precio_unitario']; ?></center>
                                                     </td>
                                                     <td>
-                                                        <center>
-                                                            <?php
-                                                            $cantidad_producto = floatval($detalle_compras_datos['cantidad_producto']);
-                                                            $precio_unitario = floatval($detalle_compras_datos['precio_unitario']);
-                                                            echo $subtotal = $cantidad_producto * $precio_unitario;
-                                                            ?>
+                                                        <center>$ <?php
+                                                                    $cantidad_producto = floatval($detalle_compras_datos['cantidad_producto']);
+                                                                    $precio_unitario = floatval($detalle_compras_datos['precio_unitario']);
+                                                                    echo $subtotal = $cantidad_producto * $precio_unitario;
+                                                                    ?>
                                                         </center>
                                                     </td>
                                                     <td>
@@ -370,17 +369,15 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                 </center>
                                             </th>
                                             <th>
-                                                <center>
-                                                    <?php
-                                                    echo $precio_unitario_total;
-                                                    ?>
+                                                <center>$ <?php
+                                                            echo $precio_unitario_total;
+                                                            ?>
                                                 </center>
                                             </th>
                                             <th style="background-color: yellow;">
-                                                <center>
-                                                    <?php
-                                                    echo $precio_total;
-                                                    ?>
+                                                <center>$ <?php
+                                                            echo $precio_total;
+                                                            ?>
                                                 </center>
 
 
