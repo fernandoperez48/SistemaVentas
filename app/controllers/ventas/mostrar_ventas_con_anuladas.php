@@ -17,6 +17,6 @@ $ventas_datos = [];
 
 if ($result_ventas) {
     while ($row = $result_ventas->fetch_assoc()) {
-        $ventas_datos[] = $row;
+        $mostrar_ventas_datos[] = $row;
     }
 }

@@ -698,7 +698,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="">Monto a cancelar</label>
-                                        <input type="text" class="form-control" id="total_a_cancelar" style="text-align:center; background-color:yellow" value="$ <?php echo $precio_total; ?>" disabled>
+                                        <input type="text" class="form-control" id="total_a_cancelar" style="text-align:center; background-color:yellow" value=<?php echo $precio_total; ?> disabled>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
