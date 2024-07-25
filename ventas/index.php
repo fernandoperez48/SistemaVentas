@@ -59,6 +59,11 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                             <th>
                                                 <center>Total pagado</center>
                                             </th>
+                                            <?php if ($rol_sesion == "Administrador" || $id_rol == 4 || $rol_sesion == "Encargado de Ventas" || $id_rol == 3) { ?>
+                                                <th>
+                                                    <center>Estado</center>
+                                                </th>
+                                            <?php } ?>
                                         </tr>
                                     </thead>
                                     <tbody>
