@@ -172,15 +172,14 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                                                     <center><span id="cantidad_detalle_compras<?php echo $contador_detalle_compras; ?>"><?php echo $detalle_compras['cantidad_producto']; ?></span></center>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <center><?php echo $detalle_compras['precio_unitario']; ?></center>
+                                                                                                    <center>$ <?php echo $detalle_compras['precio_unitario']; ?></center>
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <center>
-                                                                                                        <?php
-                                                                                                        $cantidad = floatval($detalle_compras['cantidad_producto']);
-                                                                                                        $precio_unitario = floatval($detalle_compras['precio_unitario']);
-                                                                                                        echo $subtotal = $cantidad * $precio_unitario;
-                                                                                                        ?>
+                                                                                                    <center>$ <?php
+                                                                                                                $cantidad = floatval($detalle_compras['cantidad_producto']);
+                                                                                                                $precio_unitario = floatval($detalle_compras['precio_unitario']);
+                                                                                                                echo $subtotal = $cantidad * $precio_unitario;
+                                                                                                                ?>
                                                                                                     </center>
                                                                                                 </td>
                                                                                             </tr>
@@ -196,10 +195,10 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                                             <center><?php echo $cantidad_total; ?></center>
                                                                                         </th>
                                                                                         <th>
-                                                                                            <center><?php echo $precio_unitario_total; ?></center>
+                                                                                            <center>$ <?php echo $precio_unitario_total; ?></center>
                                                                                         </th>
                                                                                         <th style="background-color: yellow;">
-                                                                                            <center><?php echo $precio_total; ?></center>
+                                                                                            <center>$ <?php echo $precio_total; ?></center>
                                                                                         </th>
                                                                                     </tr>
                                                                                 </tbody>

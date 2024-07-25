@@ -132,10 +132,9 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                 }
                                                 ?>
                                                 <td>
-                                                    <center><?php echo $productos_datos['precio_compra']; ?></center>
+                                                    <center>$ <?php echo $productos_datos['precio_compra']; ?></center>
                                                 </td>
-                                                <td>
-                                                    <?php echo $productos_datos['precio_venta']; ?>
+                                                <td>$ <?php echo $productos_datos['precio_venta']; ?>
                                                 </td>
                                                 <td>
                                                     <?php echo $productos_datos['fecha_ultimo_ingreso']; ?>

@@ -5,11 +5,13 @@ $nro_venta = $_GET['nro_venta'];
 $id_cliente = $_GET['id_cliente'];
 $total_a_cancelar = $_GET['total_a_cancelar'];
 $fechaHora = date('Y-m-d H:i:s'); // Suponiendo que `$fechaHora` se obtiene así
+$usuario = $_GET['usuario'];
+
 
 $mysqli->begin_transaction();
 
-$sql = "INSERT INTO tb_ventas (nro_venta, id_cliente, total_pagado, fyh_creacion) 
-        VALUES ('$nro_venta', '$id_cliente', '$total_a_cancelar', '$fechaHora')";
+$sql = "INSERT INTO tb_ventas (nro_venta, id_cliente, total_pagado, fyh_creacion, usuario, estado) 
+        VALUES ('$nro_venta', '$id_cliente', '$total_a_cancelar', '$fechaHora', '$usuario', 'habilitada')";
 
 if ($mysqli->query($sql) === TRUE) {
     $mysqli->commit();
