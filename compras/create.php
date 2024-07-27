@@ -402,7 +402,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                         <div class="card-header" style="background-color:orange">
                             <div class="row">
                                 <div class="card-title"><i class="fa fa-shopping-bag" style="margin-right: 5px; margin-top: 5px;"></i>
-                                    Detalle de la compra
+                                    Detalle de la Compra
                                 </div>
                             </div>
                         </div>
@@ -611,6 +611,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
 
                 // Obtener el valor del proveedor seleccionado de la sesión
                 var id_proveedorDelSelect = "<?php echo $id_proveedorDelSelect; ?>";
+
                 // Establecer el valor del select con el valor obtenido de la sesión
                 document.getElementById('id_proveedor').value = id_proveedorDelSelect;
 

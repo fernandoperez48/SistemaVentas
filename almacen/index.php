@@ -50,6 +50,9 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                 <center>Categoria</center>
                                             </th>
                                             <th>
+                                                <center>Proveedor</center>
+                                            </th>
+                                            <th>
                                                 <center>Imagen</center>
                                             </th>
                                             <th>
@@ -89,6 +92,9 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                 </td>
                                                 <td>
                                                     <?php echo $productos_datos['nombre_categoria']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $productos_datos['nombre_proveedor']; ?>
                                                 </td>
                                                 <td>
                                                     <?php
