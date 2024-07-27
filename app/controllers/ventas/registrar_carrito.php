@@ -19,6 +19,10 @@ if ($result_check_producto->num_rows > 0) {
     $sql_update = "UPDATE tb_carrito SET cantidad = '$nueva_cantidad' WHERE nro_venta = '$nro_venta' AND id_producto = '$id_producto'";
 
     if ($mysqli->query($sql_update) === TRUE) {
+        // Actualizar stock
+        $sql_stock = "UPDATE tb_almacen SET stock = stock - $cantidad WHERE id_producto = '$id_producto'";
+        $mysqli->query($sql_stock);
+
         echo "<script>
             window.location.href = '$URL/ventas/create.php';
         </script>";
@@ -36,6 +40,10 @@ if ($result_check_producto->num_rows > 0) {
     $sql_insert = "INSERT INTO tb_carrito (nro_venta, id_producto, cantidad, fyh_creacion) VALUES ('$nro_venta', '$id_producto', '$cantidad', '$fechaHora')";
 
     if ($mysqli->query($sql_insert) === TRUE) {
+        // Actualizar stock
+        $sql_stock = "UPDATE tb_almacen SET stock = stock - $cantidad WHERE id_producto = '$id_producto'";
+        $mysqli->query($sql_stock);
+
         echo "<script>
             window.location.href = '$URL/ventas/create.php';
         </script>";

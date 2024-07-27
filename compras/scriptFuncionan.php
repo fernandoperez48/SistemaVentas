@@ -687,3 +687,32 @@
 
     });
 </script>
+$("#btn_registrar_detalle_compra").click(function() {
+var nro_compra = "<?php echo $contador_de_compras + 1; ?>";
+var id_producto = $("#id_producto").val();
+var cantidad = $("#cantidad").val();
+var precio_unitario = $("#precio_unitario").val().replace(',', '.'); // Convertir comas a puntos
+var id_proveedor = $("#id_proveedor").val();
+
+if (id_producto == "") {
+alert("Seleccione un producto");
+} else if (cantidad == "") {
+alert("Ingrese la cantidad");
+} else if (precio_unitario == "") {
+alert("Ingrese el precio unitario");
+} else if (precio_unitario == 0 || precio_unitario === "0") {
+alert("El precio unitario no puede ser 0");
+} else {
+var url = "../app/controllers/compras/registrar_detalle_compra.php";
+$.get(url, {
+nro_compra: nro_compra,
+id_producto: id_producto,
+cantidad: cantidad,
+precio_unitario: precio_unitario,
+id_proveedor: id_proveedor
+}, function(datos) {
+$('#respuesta_detalle_compra').html(datos);
+$("#modal-buscar_producto").modal('hide');
+});
+}
+});

@@ -240,23 +240,38 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                             var nro_venta = "<?php echo $contador_de_ventas + 1; ?>";
                                                             var id_producto = $("#id_producto").val();
                                                             var cantidad = $("#cantidad").val();
+                                                            var url_check_stock = "../app/controllers/ventas/verificar_stock.php";
+
                                                             if (id_producto == "") {
                                                                 alert("Seleccione un producto");
                                                             } else if (cantidad == "") {
                                                                 alert("Ingrese la cantidad");
+                                                            } else if (cantidad === "0") {
+                                                                alert("La cantidad no puede ser 0");
                                                             } else {
-                                                                //alert("listo para el controlador");
-                                                                var url = "../app/controllers/ventas/registrar_carrito.php";
-                                                                $.get(url, {
-                                                                    nro_venta: nro_venta,
+                                                                // Verificar el stock antes de registrar
+                                                                $.get(url_check_stock, {
                                                                     id_producto: id_producto,
                                                                     cantidad: cantidad
-                                                                }, function(datos) {
-                                                                    $('#respuesta_carrito').html(datos);
-                                                                });
+                                                                }, function(response) {
+                                                                    if (response.stock_suficiente) {
+                                                                        // Proceder con la solicitud de registro si hay stock suficiente
+                                                                        var url = "../app/controllers/ventas/registrar_carrito.php";
+                                                                        $.get(url, {
+                                                                            nro_venta: nro_venta,
+                                                                            id_producto: id_producto,
+                                                                            cantidad: cantidad
+                                                                        }, function(datos) {
+                                                                            $('#respuesta_carrito').html(datos);
+                                                                        });
+                                                                    } else {
+                                                                        alert("No hay suficiente stock disponible para este producto.");
+                                                                    }
+                                                                }, "json");
                                                             }
                                                         });
                                                     </script>
+
                                                     <br><br>
                                                 </div>
                                             </div>
@@ -738,43 +753,12 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                 var total_a_cancelar = $("#total_a_cancelar").val();
                                                 var usuario = "<?php echo $nombres_usuario_js; ?>";
 
-
                                                 if (id_cliente === "") {
                                                     alert("Seleccione un cliente");
                                                 } else if (parseInt(<?php echo $precio_total; ?>) === 0) {
                                                     alert("Seleccione productos");
                                                 } else {
-                                                    actualizar_stock();
                                                     guardar_venta();
-                                                }
-
-                                                function actualizar_stock() {
-                                                    var i = 1;
-                                                    var n = '<?php echo $contador_carrito; ?>';
-
-                                                    for (i = 1; i <= n; i++) {
-                                                        var a = 'stock_de_inventario' + i;
-                                                        var stock_de_inventario = $('#' + a).val();
-
-                                                        var b = 'cantidad_carrito' + i;
-                                                        var cantidad_carrito = $('#' + b).text();
-
-                                                        var c = 'id_producto' + i;
-                                                        var id_producto = $('#' + c).val();
-
-
-                                                        var stock_calculado = parseFloat(stock_de_inventario) - parseFloat(cantidad_carrito);
-
-                                                        //alert(stock_de_inventario+" "+cantidad_carrito+" "+stock_calculado+" "+id_producto);
-
-                                                        var url2 = "../app/controllers/ventas/actualizar_stock.php";
-                                                        $.get(url2, {
-                                                            id_producto: id_producto,
-                                                            stock_calculado: stock_calculado,
-                                                        }, function(datos) {
-                                                            guardar_venta();
-                                                        });
-                                                    }
                                                 }
 
                                                 function guardar_venta() {
@@ -789,12 +773,10 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                     });
                                                     // Al finalizar la venta o en cualquier otro punto necesario
                                                     localStorage.removeItem('cliente');
-
                                                 }
-
-
                                             });
                                         </script>
+
                                     </div>
                                 </div>
                             </div> <!-- /.card-body -->

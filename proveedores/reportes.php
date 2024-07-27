@@ -70,7 +70,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 <div class="col-md-12">
                     <div class="card card-outline card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Grafico de tortas - Cantidad de compras en dinero por Proveedor</h3>
+                            <h3 class="card-title">Grafico de tortas - Cantidad de compras (operaciones) por Proveedor</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
@@ -82,7 +82,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                         <!-- ACA EL GRAFICO PAPÁ DASLFMASDKLFNA      ACAA           GJADFOGJADIOGJADIOÑGJ-->
 
                         <div class="card-body">
-                            <div id="container3"></div>
+                            <div id="container2"></div>
 
                         </div>
                     </div>
@@ -99,7 +99,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 <div class="col-md-12">
                     <div class="card card-outline card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Grafico de tortas - Cantidad de compras (operaciones) por Proveedor</h3>
+                            <h3 class="card-title">Grafico de tortas - Cantidad de compras en dinero por Proveedor</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
@@ -111,7 +111,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                         <!-- ACA EL GRAFICO PAPÁ DASLFMASDKLFNA      ACAA           GJADFOGJADIOGJADIOÑGJ-->
 
                         <div class="card-body">
-                            <div id="container2"></div>
+                            <div id="container3"></div>
 
                         </div>
                     </div>
@@ -282,12 +282,10 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                         $stmt_proveedor->execute();
                         $cantidad = $stmt_proveedor->get_result()->fetch_assoc()['cnt'];
 
-
                         $stmt_nombre_proveedor = $mysqli->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
                         $stmt_nombre_proveedor->bind_param('i', $i);
                         $stmt_nombre_proveedor->execute();
                         $nombre_proveedor = $stmt_nombre_proveedor->get_result()->fetch_assoc()['nombre_proveedor'];
-
 
                         if ($total > 0) {
                             $porcentaje = ($cantidad / $total) * 100;

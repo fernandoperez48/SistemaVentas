@@ -4,7 +4,8 @@ include_once '../../config.php';
 $nro_compra = $_GET['nro_compra'];
 $id_producto = $_GET['id_producto'];
 $cantidad = $_GET['cantidad'];
-$precio_unitario = $_GET['precio_unitario'];
+$precio_unitario = str_replace(',', '.', $_GET['precio_unitario']); // Convertir comas a puntos
+$precio_unitario = floatval($precio_unitario); // Convertir a float
 $id_proveedor = $_GET['id_proveedor'];
 
 // Verificar si ya existe un registro para este producto en esta compra

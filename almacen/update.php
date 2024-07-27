@@ -39,7 +39,7 @@ include '../app/controllers/almacen/cargar_producto.php';
                         <div class="row">
                             <div class="col-md-12">
                                 <form action="../app/controllers/almacen/update.php" method="post" enctype="multipart/form-data">
-                                    <input type="text"  value="<?php echo $id_producto_get; ?>" name="id_producto" hidden>
+                                    <input type="text" value="<?php echo $id_producto_get; ?>" name="id_producto" hidden>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -55,27 +55,27 @@ include '../app/controllers/almacen/cargar_producto.php';
                                                 <div style="display: flex;">
                                                     <select name="id_categoria" id="" class="form-control" required>
                                                         <?php
-                                                        foreach ($categorias_datos as $categorias_datos) { 
-                                                            $nombre_categoria_tabla= $categorias_datos['nombre_categoria']; 
-                                                            $id_categoria=$categorias_datos['id_categoria']; ?>
+                                                        foreach ($categorias_datos as $categorias_datos) {
+                                                            $nombre_categoria_tabla = $categorias_datos['nombre_categoria'];
+                                                            $id_categoria = $categorias_datos['id_categoria']; ?>
                                                             <option value="<?php echo $id_categoria ?>" <?php
-                                                                                                    if ($nombre_categoria_tabla==$nombre_categoria) { ?> selected="selected" <?php
-                                                                                                    }
-                                                                                ?>><?php echo $nombre_categoria_tabla ?>
+                                                                                                        if ($nombre_categoria_tabla == $nombre_categoria) { ?> selected="selected" <?php
+                                                                                                                                                                                }
+                                                                                                                                                                                    ?>><?php echo $nombre_categoria_tabla ?>
                                                             </option>
                                                             ?>
                                                         <?php }
-                                                         ?>
+                                                        ?>
                                                         <?php
                                                         foreach ($roles_datos as $roles_datos) {
                                                             $rol_tabla = $roles_datos['rol'];
                                                             $id_rol = $roles_datos['id_rol'] ?>
-                                                            
+
                                                         <?php
                                                         }
                                                         ?>
                                                     </select>
-                                                   
+
                                                 </div>
                                             </div>
                                         </div>
@@ -93,7 +93,7 @@ include '../app/controllers/almacen/cargar_producto.php';
                                                     <input type="text" name="image_text" value="<?php echo $imagen; ?>" hidden>
                                                     <br>
                                                     <output id="list">
-                                                        <img src="<?php echo $URL."/almacen/img_productos".$productos_datos['imagen'] ;?>" width="150px">
+                                                        <img src="<?php echo $URL . "/almacen/img_productos" . $productos_datos['imagen']; ?>" width="150px">
                                                     </output>
                                                     <script>
                                                         function archivo(evt) {
@@ -134,13 +134,6 @@ include '../app/controllers/almacen/cargar_producto.php';
                                         </div>
                                     </div>
 
-
-
-
-
-
-
-
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group">
@@ -163,19 +156,32 @@ include '../app/controllers/almacen/cargar_producto.php';
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Precio compra:</label>
-                                                <input type="number" name="precio_compra" class="form-control" required value="<?= $precio_compra; ?>">
+                                                <input type="text" name="precio_compra" class="form-control" required value="<?= $precio_compra; ?>" oninput="formatInput(this)">
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Precio venta:</label>
-                                                <input type="number" name="precio_venta" class="form-control" required value="<?= $precio_venta; ?>">
+                                                <input type="text" name="precio_venta" class="form-control" required value="<?= $precio_venta; ?>" oninput="formatInput(this)">
                                             </div>
                                         </div>
+
+                                        <script>
+                                            function formatInput(input) {
+                                                // Permitir solo números y una coma
+                                                input.value = input.value.replace(/[^0-9,]/g, '');
+                                                // Asegurarse de que solo haya una coma
+                                                if ((input.value.match(/,/g) || []).length > 1) {
+                                                    input.value = input.value.slice(0, input.value.length - 1);
+                                                }
+                                            }
+                                        </script>
+
+
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="">Fecha de ingreso:</label>
-                                                <input type="date" name="fecha_ingreso" class="form-control" required value="<?= $fecha_ingreso; ?>">
+                                                <input type="date" name="fecha_ingreso" class="form-control" required value="<?= $fecha_ultimo_ingreso; ?>">
                                             </div>
                                         </div>
                                     </div>
