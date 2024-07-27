@@ -174,27 +174,23 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 data: [
                     <?php
                     // total de proveedores
-                    $stmt_total_proveedores = $mysqli->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
-                    $total_proveedores = $stmt_total_proveedores->fetch_assoc()['total_proveedores'];
+                    $stmt_total_proveedores = $mysqli->query("SELECT id_proveedor, nombre_proveedor FROM tb_proveedores");
+                    $proveedores = $stmt_total_proveedores->fetch_all(MYSQLI_ASSOC);
 
                     $stmt_total = $mysqli->query("SELECT COUNT(*) AS total FROM tb_almacen");
                     $total = $stmt_total->fetch_assoc()['total'];
 
                     // completo con objetos el array
                     $porcentajes = [];
-                    for ($i = 1; $i <= $total_proveedores; $i++) {
+                    foreach ($proveedores as $proveedor) {
+                        $id_proveedor = $proveedor['id_proveedor'];
+                        $nombre_proveedor = $proveedor['nombre_proveedor'];
+
                         $stmt_proveedor = $mysqli->prepare("SELECT COUNT(*) AS cnt FROM tb_almacen WHERE id_proveedor = ?");
-                        $stmt_proveedor->bind_param('i', $i);
+                        $stmt_proveedor->bind_param('i', $id_proveedor);
                         $stmt_proveedor->execute();
                         $cantidad = $stmt_proveedor->get_result()->fetch_assoc()['cnt'];
 
-                        // nombre según $i
-                        $stmt_nombre_proveedor = $mysqli->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
-                        $stmt_nombre_proveedor->bind_param('i', $i);
-                        $stmt_nombre_proveedor->execute();
-                        $nombre_proveedor = $stmt_nombre_proveedor->get_result()->fetch_assoc()['nombre_proveedor'];
-
-                        // uso el nombre según $i
                         if ($total > 0) {
                             $porcentaje = ($cantidad / $total) * 100;
                         } else {
@@ -267,25 +263,21 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                     <?php
 
 
-
-                    $stmt_total_proveedores = $mysqli->query("SELECT COUNT(*) AS total_proveedores FROM tb_proveedores");
-                    $total_proveedores = $stmt_total_proveedores->fetch_assoc()['total_proveedores'];
+                    $stmt_total_proveedores = $mysqli->query("SELECT id_proveedor, nombre_proveedor FROM tb_proveedores");
+                    $proveedores = $stmt_total_proveedores->fetch_all(MYSQLI_ASSOC);
 
                     $stmt_total = $mysqli->query("SELECT COUNT(*) AS total FROM tb_compras");
                     $total = $stmt_total->fetch_assoc()['total'];
 
-
                     $porcentajes = [];
-                    for ($i = 1; $i <= $total_proveedores; $i++) {
+                    foreach ($proveedores as $proveedor) {
+                        $id_proveedor = $proveedor['id_proveedor'];
+                        $nombre_proveedor = $proveedor['nombre_proveedor'];
+
                         $stmt_proveedor = $mysqli->prepare("SELECT COUNT(*) AS cnt FROM tb_compras WHERE id_proveedor = ?");
-                        $stmt_proveedor->bind_param('i', $i);
+                        $stmt_proveedor->bind_param('i', $id_proveedor);
                         $stmt_proveedor->execute();
                         $cantidad = $stmt_proveedor->get_result()->fetch_assoc()['cnt'];
-
-                        $stmt_nombre_proveedor = $mysqli->prepare("SELECT nombre_proveedor FROM tb_proveedores WHERE id_proveedor = ?");
-                        $stmt_nombre_proveedor->bind_param('i', $i);
-                        $stmt_nombre_proveedor->execute();
-                        $nombre_proveedor = $stmt_nombre_proveedor->get_result()->fetch_assoc()['nombre_proveedor'];
 
                         if ($total > 0) {
                             $porcentaje = ($cantidad / $total) * 100;
@@ -295,7 +287,6 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                         $porcentaje_dos_decimales = number_format($porcentaje, 2);
                         $porcentajes[] = ['name' => $nombre_proveedor, 'y' => $porcentaje];
                     }
-
                     $primera = true;
                     foreach ($porcentajes as $proveedor) {
                         if (!$primera) {
