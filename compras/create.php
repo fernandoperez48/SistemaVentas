@@ -331,7 +331,9 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                         <input type="text" id="stock_de_inventario<?php echo $contador_detalle_compras; ?>" value="<?php echo $detalle_compras_datos['stock']; ?>" hidden>
                                                     </td>
                                                     <td>
-                                                        <center>$ <?php echo $detalle_compras_datos['precio_unitario']; ?></center>
+                                                        <center>$ <?php echo number_format($detalle_compras_datos['precio_unitario'], 2, ',', '.'); ?></center>
+                                                    </td>
+
                                                     </td>
                                                     <td>
                                                         <center>$ <?php
@@ -612,59 +614,6 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                 // Establecer el valor del select con el valor obtenido de la sesión
                 document.getElementById('id_proveedor').value = id_proveedorDelSelect;
 
-                // function limpiar_compra_en_curso(nro_compra) {
-                //     $.ajax({
-                //         url: "../app/controllers/compras/limpiar_tabla.php",
-                //         method: "POST",
-                //         data: {
-                //             nro_compra: nro_compra
-                //         },
-                //         success: function(response) {
-                //             console.log("Tabla de compra en curso limpiada:", response);
-                //         },
-                //         error: function(xhr, status, error) {
-                //             console.error("Error al limpiar la tabla de compra en curso:", error);
-                //         }
-                //     });
-                // }
-
-
-                // function updateProveedor() {
-                //     var select = document.getElementById('id_proveedor');
-                //     var id_proveedorDelSelect = select.value;
-                //     let nro_compra = <?php echo $nro_compra_js; ?>;
-
-                //     // Verificar si se debe eliminar la compra en curso
-                //     $.post('../app/controllers/compras/limpiar_tabla.php', {
-                //         nro_compra: nro_compra
-                //     }, function(response) {
-                //         var result = JSON.parse(response);
-                //         if (result.success) {
-                //             console.log('Compra en curso eliminada con éxito.');
-
-                //             // Proceder con la actualización del proveedor
-                //             console.log('Valor del proveedor seleccionado:', id_proveedorDelSelect);
-
-                //             var xhr = new XMLHttpRequest();
-                //             xhr.open('POST', '../app/controllers/almacen/actualizar_proveedor.php', true);
-                //             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                //             xhr.onreadystatechange = function() {
-                //                 if (xhr.readyState == 4 && xhr.status == 200) {
-                //                     console.log('Proveedor actualizado:', xhr.responseText);
-                //                     if (xhr.responseText.includes('Proveedor actualizado')) {
-                //                         // Recarga la página para reflejar los cambios
-                //                         window.location.reload();
-                //                     }
-                //                 }
-                //             };
-                //             xhr.send('id_proveedor=' + encodeURIComponent(id_proveedorDelSelect));
-                //         } else {
-                //             alert('Error al intentar eliminar los registros.');
-                //         }
-                //     });
-                // }
-
-                // Variable global para almacenar el valor original del proveedor
                 // Variable global para almacenar el valor original del proveedor
                 var proveedorOriginal;
 
@@ -724,11 +673,6 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                     xhr.send('id_proveedor=' + encodeURIComponent(id_proveedor));
                 }
 
-
-
-
-
-
                 // Agregar el evento change al select de proveedores
                 $('#id_proveedor').change(updateProveedor);
 
@@ -777,11 +721,38 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                     };
                 }
 
+                function allowOnlyNumbersAndComma(input) {
+                    // Permitir solo números, comas y puntos
+                    var value = input.value.replace(/[^0-9,.]/g, '');
+
+                    // Si hay más de una coma o punto, permitir solo la primera ocurrencia
+                    var hasComma = value.indexOf(',') !== -1;
+                    var hasPoint = value.indexOf('.') !== -1;
+
+                    if (hasComma && value.indexOf(',') !== value.lastIndexOf(',')) {
+                        value = value.slice(0, value.lastIndexOf(','));
+                    }
+                    if (hasPoint && value.indexOf('.') !== value.lastIndexOf('.')) {
+                        value = value.slice(0, value.lastIndexOf('.'));
+                    }
+
+                    // Si hay tanto una coma como un punto, eliminar uno de ellos (priorizamos la coma)
+                    if (hasComma && hasPoint) {
+                        value = value.replace('.', '');
+                    }
+
+                    input.value = value;
+                }
+
+                document.getElementById('precio_unitario').addEventListener('input', function(e) {
+                    allowOnlyNumbersAndComma(e.target);
+                });
+
                 $("#btn_registrar_detalle_compra").click(function() {
                     var nro_compra = "<?php echo $contador_de_compras + 1; ?>";
                     var id_producto = $("#id_producto").val();
                     var cantidad = $("#cantidad").val();
-                    var precio_unitario = $("#precio_unitario").val();
+                    var precio_unitario = $("#precio_unitario").val().replace(',', '.'); // Convertir comas a puntos
                     var id_proveedor = $("#id_proveedor").val();
 
                     if (id_producto == "") {
@@ -851,6 +822,9 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                     } else if (id_proveedor == "") {
                         $('#id_proveedor').focus();
                         alert("Debe llenar el campo proveedor.");
+                    } else if (id_productos.length === 0 || cantidades.length === 0) {
+                        // Verificar si la lista de productos o cantidades está vacía
+                        alert("Debe seleccionar al menos un producto.");
                     } else if (fecha_operacion == "") {
                         $('#fecha_operacion').focus();
                         alert("Debe llenar el campo de fecha de pago/operación.");
@@ -909,13 +883,28 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                     allowOnlyNumbers(e.target);
                 });
 
+                document.getElementById('precio_compra_controlador').addEventListener('input', function(e) {
+                    allowOnlyNumbers(e.target);
+                });
+
                 document.getElementById('precio_unitario').addEventListener('input', function(e) {
                     allowOnlyNumbers(e.target);
                 });
 
-                document.getElementById('precio_compra_controlador').addEventListener('input', function(e) {
-                    allowOnlyNumbers(e.target);
-                });
+                function allowOnlyNumbers(input) {
+                    // Permitir solo números y una coma o un punto
+                    var value = input.value.replace(/[^0-9,.]/g, '');
+                    // Si hay más de una coma o punto, permitir solo la primera ocurrencia
+                    var hasComma = value.indexOf(',') !== -1;
+                    var hasPoint = value.indexOf('.') !== -1;
+                    if (hasComma && value.indexOf(',') !== value.lastIndexOf(',')) {
+                        value = value.slice(0, value.lastIndexOf(','));
+                    }
+                    if (hasPoint && value.indexOf('.') !== value.lastIndexOf('.')) {
+                        value = value.slice(0, value.lastIndexOf('.'));
+                    }
+                    input.value = value;
+                }
 
                 $("#btn_guardar_compra").click(function() {
                     guardarCompra(); // Primero llama a guardarCompra, se encargará de la diferencia si es necesario
