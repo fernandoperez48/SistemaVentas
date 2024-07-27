@@ -6,7 +6,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -24,8 +24,8 @@ include '../app/controllers/almacen/listado_de_productos.php';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-primary">
-                        <div class="card-header">
+                    <div class="card card-outline card-danger">
+                        <div class="card-header" style="background-color:orange">
                             <h3 class="card-title">Productos registrados</h3>
 
                             <div class="card-tools">
@@ -38,7 +38,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
                         <div class="card-body">
                             <div class="table table-responsive">
                                 <table id="example1" class="table table-bordered table-striped table-sm">
-                                    <thead>
+                                    <thead style="background-color: gray;">
                                         <tr>
                                             <th>
                                                 <center>Nro</center>

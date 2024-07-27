@@ -9,7 +9,7 @@ include '../layaout/parte1.php';
 include '../app/controllers/roles/listado_de_roles.php';
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -27,7 +27,7 @@ include '../app/controllers/roles/listado_de_roles.php';
 
         <div class="row">
             <div class="col-md-6">
-                <div class="card card-primary">
+                <div class="card card-orange">
                     <div class="card-header">
                         <h3 class="card-title">Llene los datos...</h3>
 
