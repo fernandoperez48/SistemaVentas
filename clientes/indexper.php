@@ -126,21 +126,7 @@ include '../app/controllers/clientes/listado_de_clientesper.php';
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Email</label>
-                                                                                        <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['email']; ?>" disabled>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-4">
-                                                                                    <div class="form-group">
-                                                                                        <?php if (!empty($venta['cuit'])) { ?>
-                                                                                            <label>Persona Autorizada</label>
-                                                                                            <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['persona_autorizada']; ?>" disabled>
-                                                                                        <?php } else { ?>
-                                                                                            <!-- Adding an empty div to maintain structure -->
-                                                                                            <div style="visibility: hidden;">
-                                                                                                <label>Hidden Label</label>
-                                                                                                <input type="text" class="form-control text-center" value="" disabled>
-                                                                                            </div>
-                                                                                        <?php } ?>
+                                                                                        <input type="text" class="form-control text-center" value="<?php echo $clientesper_datos['email']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -153,28 +139,28 @@ include '../app/controllers/clientes/listado_de_clientesper.php';
                                                                                 <div class=" col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Calle</label>
-                                                                                        <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['calle']; ?>" disabled>
+                                                                                        <input type="text" class="form-control text-center" value="<?php echo $clientesper_datos['calle']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
 
                                                                                 <div class="col-md-2">
                                                                                     <div class="form-group">
                                                                                         <label>Nro</label>
-                                                                                        <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['numero']; ?>" disabled>
+                                                                                        <input type="text" class="form-control text-center" value="<?php echo $clientesper_datos['numero']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
 
                                                                                 <div class="col-md-2">
                                                                                     <div class="form-group">
                                                                                         <label>Piso </label>
-                                                                                        <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['piso']; ?>" disabled>
+                                                                                        <input type="text" class="form-control text-center" value="<?php echo $clientesper_datos['piso']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
 
                                                                                 <div class="col-md-2">
                                                                                     <div class="form-group">
                                                                                         <label>Depto</label>
-                                                                                        <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['depto']; ?>" disabled>
+                                                                                        <input type="text" class="form-control text-center" value="<?php echo $clientesper_datos['depto']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -183,19 +169,19 @@ include '../app/controllers/clientes/listado_de_clientesper.php';
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Localidad </label>
-                                                                                        <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['ciudad']; ?>" disabled>
+                                                                                        <input type="text" class="form-control text-center" value="<?php echo $clientesper_datos['ciudad']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Provincia</label>
-                                                                                        <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['provincia']; ?>" disabled>
+                                                                                        <input type="text" class="form-control text-center" value="<?php echo $clientesper_datos['provincia']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Pais </label>
-                                                                                        <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['pais']; ?>" disabled>
+                                                                                        <input type="text" class="form-control text-center" value="<?php echo $clientesper_datos['pais']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
