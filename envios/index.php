@@ -6,7 +6,7 @@ include '../app/controllers/envios/listado_de_envios.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -24,8 +24,8 @@ include '../app/controllers/envios/listado_de_envios.php';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-primary">
-                        <div class="card-header">
+                    <div class="card card-outline card-danger">
+                        <div class="card-header" style="background-color:orange">
                             <h3 class="card-title">Envios registrados</h3>
 
                             <div class="card-tools">
@@ -38,265 +38,268 @@ include '../app/controllers/envios/listado_de_envios.php';
                         <div class="card-body">
                             <div class="table table-responsive">
                                 <table id="example1" class="table table-bordered table-striped table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <center>Nro</center>
-                                        </th>
-                                        <th>
-                                            <center>Nro Venta</center>
-                                        </th>
-                                        <th>
-                                            <center>Cliente</center>
-                                        </th>
-                                        <th>
-                                            <center>Fecha compra</center>
-                                        </th>
-                                        <th>
-                                            <center>Dirección Cliente</center>
-                                        </th>
-                                        <th>
-                                            <center>Dirección Envio</center>
-                                        </th>
-                                        <th>
-                                            <center>Precio</center>
-                                        </th>
-                                        <th>
-                                            <center>Estado</center>
-                                        </th>
-                                        
-                                        <th>
-                                            <center>Acciones</center>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $contador = 0;
-                                    foreach ($envios_datos as $envios_datos) { 
-                                        $id_envio = $envios_datos['IdVenta']; ?>
+                                    <thead style="background-color: gray;">
                                         <tr>
-                                            <td>
-                                                <?php echo $contador += 1; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $envios_datos['nro_venta']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $envios_datos['nombre'] . ' ' . $envios_datos['apellido']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $envios_datos['fyh_creacion']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $envios_datos['calle'] . ' ' . $envios_datos['numero']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $envios_datos['Direccion']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo '$'.$envios_datos['total_pagado']; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $envios_datos['estado']; ?>
-                                            </td>
-                                            <td>
-                                                <center>
+                                            <th>
+                                                <center>Nro</center>
+                                            </th>
+                                            <th>
+                                                <center>Nro Venta</center>
+                                            </th>
+                                            <th>
+                                                <center>Cliente</center>
+                                            </th>
+                                            <th>
+                                                <center>Fecha compra</center>
+                                            </th>
+                                            <th>
+                                                <center>Dirección Cliente</center>
+                                            </th>
+                                            <th>
+                                                <center>Dirección Envio</center>
+                                            </th>
+                                            <th>
+                                                <center>Precio</center>
+                                            </th>
+                                            <th>
+                                                <center>Estado</center>
+                                            </th>
 
-
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update<?php echo $id_envio; ?>">
-                                                        <i class="fa fa-pencil-alt"></i>
-                                                        Editar
-                                                    </button>
-                                                    <!-- modal para actualizar proveedores-->
-                                                    <div class="modal fade" id="modal-update<?php echo $id_envio; ?>">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header" style="background-color:darkgreen; color:white">
-                                                                    <h4 class="modal-title">Actualizacion del envio</h4>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <label>Nombre del cliente</label>
-                                                                                <input type="text" id="nombre_cliente<?php echo $id_envio; ?>" value="<?php echo $envios_datos['nombre'] . ' ' . $envios_datos['apellido']; ?>" class="form-control" disabled>                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <label>Fecha compra</label>
-                                                                                <input type="text" id="fecha<?php echo $id_envio; ?>" class="form-control" value="<?php echo $envios_datos['fyh_creacion']; ?>" disabled>                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                            <label>Direccion de envio</label>
-                                                                                <input type="text" id="direccion<?php echo $id_envio; ?>" class="form-control" value="<?php echo $envios_datos['Direccion']; ?>">
-                                                                                <small style="color:red; display:none" id="lbl_direccion<?php echo $id_envio; ?>">* Este campo es requerido</small>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                            <label>Total Pagado</label>
-                                                                                <input type="text" id="precio<?php echo $id_envio; ?>" class="form-control" value="<?php echo '$'.$envios_datos['total_pagado']; ?>" disabled>                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                            <label for="estado">Estado <b>*</b></label>
-                                                                                    <select class="form-control" name="estado" id="estado<?php echo $id_envio; ?>" value="<?php echo $envios_datos['estado']; ?>">
-                                                                                        <option value="Pendiente de envio">Pendiente de envío</option>
-                                                                                        <option value="Enviado">Enviado</option>
-                                                                                        <option value="Entregado">Entregado</option>
-                                                                                    </select>
-                                                                                <small style="color:red; display:none" id="lbl_estado<?php echo $id_envio; ?>">* Este campo es requerido</small>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="modal-footer justify-content-between">
-                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                                    <button type="button" class="btn btn-success" id="btn_update<?php echo $id_envio; ?>">Actualizar</button>
-                                                                    <div id="respuesta_update"></div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- /.modal-content -->
-                                                        </div>
-                                                        <!-- /.modal-dialog -->
-                                                    </div>
-                                                    <script>
-                                                        $('#btn_update<?php echo $id_envio; ?>').click(function() {
-
-                                                            var id_envio = '<?php echo $id_envio; ?>';
-                                                            var direccion = $('#direccion<?php echo $id_envio; ?>').val();
-                                                            var estado = $('#estado<?php echo $id_envio; ?>').val();
-
-                                                             if (direccion == '') {
-                                                                $('#direccion<?php echo $id_envio; ?>').focus();
-                                                                $('#lbl_direccion<?php echo $id_envio; ?>').css('display', 'block');
-                                                            } else if (estado == '') {
-                                                                $('#estado<?php echo $id_envio; ?>').focus();
-                                                                $('#lbl_estado<?php echo $id_envio; ?>').css('display', 'block');
-                                                            } else {
-                                                                var url = "../app/controllers/envios/update.php";
-                                                                $.get(url, {
-                                                                    id_envio: id_envio,
-                                                                    direccion: direccion,
-                                                                    estado: estado
-                                                                }, function(datos) {
-                                                                    $('#respuesta_update').html(datos);
-                                                                });
-                                                           }
-
-
-                                                        });
-                                                    </script>
-                                                </div>
-
-
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete<?php echo $id_envio; ?>">
-                                                        <i class="fa fa-trash"></i>
-                                                        Borrar
-                                                    </button>
-                                                    <!-- modal para borrar Envios-->
-                                                    <div class="modal fade" id="modal-delete<?php echo $id_envio; ?>">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header" style="background-color:red; color:white">
-                                                                    <h4 class="modal-title">¿Esta seguro de eliminar al envio?</h4>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <label>Nombre del cliente <b>*</b></label>
-                                                                                <input type="text" id="nombre_cliente<?php echo $id_envio; ?>" value="<?php echo $envios_datos['nombre'] . ' ' . $envios_datos['apellido']; ?>" class="form-control" disabled>
-                                                                                <small style="color:red; display:none" id="lbl_nombre<?php echo $id_envio; ?>">* Este campo es requerido</small>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <label>Fecha compra <b>*</b></label>
-                                                                                <input type="text" id="Fecha<?php echo $id_envio; ?>" class="form-control" value="<?php echo $envios_datos['fyh_creacion']; ?>" disabled>
-                                                                                <small style="color:red; display:none" id="lbl_fecha<?php echo $id_envio; ?>">* Este campo es requerido</small>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <label>Direccion de envio<b>*</b></label>
-                                                                                <input type="text" id="Direccion<?php echo $id_envio; ?>" class="form-control" value="<?php echo $envios_datos['Direccion']; ?>" disabled>
-                                                                                <small style="color:red; display:none" id="lbl_fecha<?php echo $id_envio; ?>">* Este campo es requerido</small>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <label>Total Pagado<b>*</b></label>
-                                                                                <input type="text" id="precio<?php echo $id_envio; ?>" class="form-control" value="<?php echo '$'.$envios_datos['total_pagado']; ?>" disabled>
-                                                                                <small style="color:red; display:none" id="lbl_precio<?php echo $id_envio; ?>">* Este campo es requerido</small>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group">
-                                                                                <label>Estado <b>*</b></label>
-                                                                                <input type="text" id="estado<?php echo $id_envio; ?>" class="form-control" value="<?php echo $envios_datos['estado']; ?>" disabled>
-                                                                                <small style="color:red; display:none" id="lbl_precio<?php echo $id_envio; ?>">* Este campo es requerido</small>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-
-
-
-                                                                </div>
-                                                                <div class="modal-footer justify-content-between">
-                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                                    <button type="button" class="btn btn-danger" id="btn_delete<?php echo $id_envio; ?>">Eliminar</button>
-                                                                    <div id="respuesta_delete<?php echo $id_envio; ?>"></div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- /.modal-content -->
-                                                        </div>
-                                                        <!-- /.modal-dialog -->
-                                                    </div>
-
-                                                    <script>
-                                                        $('#btn_delete<?php echo $id_envio; ?>').click(function() {
-
-                                                            var id_envio = '<?php echo $id_envio; ?>';
-
-                                                            var url2 = "../app/controllers/envios/delete.php";
-                                                            $.get(url2, {
-                                                                id_envio: id_envio
-                                                            }, function(datos) {
-                                                                $('#respuesta_delete<?php echo $id_envio; ?>').html(datos);
-                                                            });
-                                                        });
-                                                    </script>
-                                                </div>
-                                                </center>
-                                            </td>
-                                            <td>
+                                            <th>
+                                                <center>Acciones</center>
+                                            </th>
                                         </tr>
-                                    <?php
-                                    }
-                                    ?>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $contador = 0;
+                                        foreach ($envios_datos as $envios_datos) {
+                                            $id_envio = $envios_datos['IdVenta']; ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $contador += 1; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $envios_datos['nro_venta']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $envios_datos['nombre'] . ' ' . $envios_datos['apellido']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $envios_datos['fyh_creacion']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $envios_datos['calle'] . ' ' . $envios_datos['numero']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $envios_datos['Direccion']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo '$' . $envios_datos['total_pagado']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $envios_datos['estado']; ?>
+                                                </td>
+                                                <td>
+                                                    <center>
 
-                                </tbody>
+
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update<?php echo $id_envio; ?>">
+                                                                <i class="fa fa-pencil-alt"></i>
+                                                                Editar
+                                                            </button>
+                                                            <!-- modal para actualizar proveedores-->
+                                                            <div class="modal fade" id="modal-update<?php echo $id_envio; ?>">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header" style="background-color:darkgreen; color:white">
+                                                                            <h4 class="modal-title">Actualizacion del envio</h4>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Nombre del cliente</label>
+                                                                                        <input type="text" id="nombre_cliente<?php echo $id_envio; ?>" value="<?php echo $envios_datos['nombre'] . ' ' . $envios_datos['apellido']; ?>" class="form-control" disabled>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Fecha compra</label>
+                                                                                        <input type="text" id="fecha<?php echo $id_envio; ?>" class="form-control" value="<?php echo $envios_datos['fyh_creacion']; ?>" disabled>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Direccion de envio</label>
+                                                                                        <input type="text" id="direccion<?php echo $id_envio; ?>" class="form-control" value="<?php echo $envios_datos['Direccion']; ?>">
+                                                                                        <small style="color:red; display:none" id="lbl_direccion<?php echo $id_envio; ?>">* Este campo es requerido</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Total Pagado</label>
+                                                                                        <input type="text" id="precio<?php echo $id_envio; ?>" class="form-control" value="<?php echo '$' . $envios_datos['total_pagado']; ?>" disabled>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label for="estado">Estado <b>*</b></label>
+                                                                                        <select class="form-control" name="estado" id="estado<?php echo $id_envio; ?>" value="<?php echo $envios_datos['estado']; ?>">
+                                                                                            <option value="Pendiente de envio">Pendiente de envío</option>
+                                                                                            <option value="Enviado">Enviado</option>
+                                                                                            <option value="Entregado">Entregado</option>
+                                                                                        </select>
+                                                                                        <small style="color:red; display:none" id="lbl_estado<?php echo $id_envio; ?>">* Este campo es requerido</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="modal-footer justify-content-between">
+                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                                            <button type="button" class="btn btn-success" id="btn_update<?php echo $id_envio; ?>">Actualizar</button>
+                                                                            <div id="respuesta_update"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- /.modal-content -->
+                                                                </div>
+                                                                <!-- /.modal-dialog -->
+                                                            </div>
+                                                            <script>
+                                                                $('#btn_update<?php echo $id_envio; ?>').click(function() {
+
+                                                                    var id_envio = '<?php echo $id_envio; ?>';
+                                                                    var direccion = $('#direccion<?php echo $id_envio; ?>').val();
+                                                                    var estado = $('#estado<?php echo $id_envio; ?>').val();
+
+                                                                    if (direccion == '') {
+                                                                        $('#direccion<?php echo $id_envio; ?>').focus();
+                                                                        $('#lbl_direccion<?php echo $id_envio; ?>').css('display', 'block');
+                                                                    } else if (estado == '') {
+                                                                        $('#estado<?php echo $id_envio; ?>').focus();
+                                                                        $('#lbl_estado<?php echo $id_envio; ?>').css('display', 'block');
+                                                                    } else {
+                                                                        var url = "../app/controllers/envios/update.php";
+                                                                        $.get(url, {
+                                                                            id_envio: id_envio,
+                                                                            direccion: direccion,
+                                                                            estado: estado
+                                                                        }, function(datos) {
+                                                                            $('#respuesta_update').html(datos);
+                                                                        });
+                                                                    }
+
+
+                                                                });
+                                                            </script>
+                                                        </div>
+
+
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete<?php echo $id_envio; ?>">
+                                                                <i class="fa fa-trash"></i>
+                                                                Borrar
+                                                            </button>
+                                                            <!-- modal para borrar Envios-->
+                                                            <div class="modal fade" id="modal-delete<?php echo $id_envio; ?>">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header" style="background-color:red; color:white">
+                                                                            <h4 class="modal-title">¿Esta seguro de eliminar al envio?</h4>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Nombre del cliente <b>*</b></label>
+                                                                                        <input type="text" id="nombre_cliente<?php echo $id_envio; ?>" value="<?php echo $envios_datos['nombre'] . ' ' . $envios_datos['apellido']; ?>" class="form-control" disabled>
+                                                                                        <small style="color:red; display:none" id="lbl_nombre<?php echo $id_envio; ?>">* Este campo es requerido</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Fecha compra <b>*</b></label>
+                                                                                        <input type="text" id="Fecha<?php echo $id_envio; ?>" class="form-control" value="<?php echo $envios_datos['fyh_creacion']; ?>" disabled>
+                                                                                        <small style="color:red; display:none" id="lbl_fecha<?php echo $id_envio; ?>">* Este campo es requerido</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Direccion de envio<b>*</b></label>
+                                                                                        <input type="text" id="Direccion<?php echo $id_envio; ?>" class="form-control" value="<?php echo $envios_datos['Direccion']; ?>" disabled>
+                                                                                        <small style="color:red; display:none" id="lbl_fecha<?php echo $id_envio; ?>">* Este campo es requerido</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Total Pagado<b>*</b></label>
+                                                                                        <input type="text" id="precio<?php echo $id_envio; ?>" class="form-control" value="<?php echo '$' . $envios_datos['total_pagado']; ?>" disabled>
+                                                                                        <small style="color:red; display:none" id="lbl_precio<?php echo $id_envio; ?>">* Este campo es requerido</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label>Estado <b>*</b></label>
+                                                                                        <input type="text" id="estado<?php echo $id_envio; ?>" class="form-control" value="<?php echo $envios_datos['estado']; ?>" disabled>
+                                                                                        <small style="color:red; display:none" id="lbl_precio<?php echo $id_envio; ?>">* Este campo es requerido</small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+
+
+                                                                        </div>
+                                                                        <div class="modal-footer justify-content-between">
+                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                                            <button type="button" class="btn btn-danger" id="btn_delete<?php echo $id_envio; ?>">Eliminar</button>
+                                                                            <div id="respuesta_delete<?php echo $id_envio; ?>"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- /.modal-content -->
+                                                                </div>
+                                                                <!-- /.modal-dialog -->
+                                                            </div>
+
+                                                            <script>
+                                                                $('#btn_delete<?php echo $id_envio; ?>').click(function() {
+
+                                                                    var id_envio = '<?php echo $id_envio; ?>';
+
+                                                                    var url2 = "../app/controllers/envios/delete.php";
+                                                                    $.get(url2, {
+                                                                        id_envio: id_envio
+                                                                    }, function(datos) {
+                                                                        $('#respuesta_delete<?php echo $id_envio; ?>').html(datos);
+                                                                    });
+                                                                });
+                                                            </script>
+                                                        </div>
+                                                    </center>
+                                                </td>
+                                                <td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+
+                                    </tbody>
 
                                 </table>
                             </div>

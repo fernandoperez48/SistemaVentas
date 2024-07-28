@@ -181,7 +181,7 @@ include '../app/controllers/clientes/listado_de_clientesper.php';
                                                                                 <div class="col-md-4">
                                                                                     <div class="form-group">
                                                                                         <label>Pais </label>
-                                                                                        <input type="text" class="form-control text-center" value="<?php echo $clientesper_datos['pais']; ?>" disabled>
+                                                                                        <input type="text" class="form-control text-center" value="<?php echo ['pais']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
