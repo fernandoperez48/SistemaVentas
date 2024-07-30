@@ -18,7 +18,7 @@ $image_text = $_POST['image_text'];
 if ($_FILES['image']['name'] != null) {
     $nombreDelArchivo = date("Y-m-d-h-i-s");
     $image_text = $nombreDelArchivo . "__" . $_FILES['image']['name'];
-    $location = "../../../almacen/img_productos" . $image_text;
+    $location = "../../../almacen/img/img_productos" . $image_text;
     move_uploaded_file($_FILES['image']['tmp_name'], $location);
 } else {
     echo "no hay imagen nueva";

@@ -8,7 +8,7 @@ include '../app/controllers/almacen/cargar_producto.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -26,8 +26,8 @@ include '../app/controllers/almacen/cargar_producto.php';
 
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-primary">
-                    <div class="card-header">
+                <div class="card card-outline card-danger">
+                    <div class="card-header" style="background-color:orange">
                         <h3 class="card-title">Datos del Producto</h3>
 
                         <div class="card-tools">
@@ -68,8 +68,9 @@ include '../app/controllers/almacen/cargar_producto.php';
                                             <div class="form-group">
                                                 <label for="">Imagen del producto:</label>
                                                 <center>
-                                                    <img src="<?php echo $URL . "/almacen/img_productos" . $productos_datos['imagen']; ?>" width="200px">
+                                                    <img src="<?php echo $URL . "/almacen/img/img_productos" . $productos_datos['imagen']; ?>" width="100px">
                                                 </center>
+
                                             </div>
                                         </div>
                                     </div>

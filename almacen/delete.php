@@ -14,7 +14,7 @@ include '../app/controllers/almacen/cargar_producto.php';
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-12">
-                    <h1 class="m-0">Datos del producto: <?php echo $nombre; ?> a ser eliminado</h1>
+                    <h1 class="m-0">Datos del producto a ser eliminado: <?php echo $nombre; ?></h1>
                 </div><!-- /.col -->
 
             </div><!-- /.row -->
@@ -70,7 +70,7 @@ include '../app/controllers/almacen/cargar_producto.php';
                                                 <div class="form-group">
                                                     <label for="">Imagen del producto:</label>
                                                     <center>
-                                                        <img src="<?php echo $URL . "/almacen/img_productos" . $productos_datos['imagen']; ?>" width="200px">
+                                                        <img src="<?php echo $URL . "/almacen/img/img_productos" . $productos_datos['imagen']; ?>" width="200px">
                                                     </center>
                                                 </div>
                                             </div>

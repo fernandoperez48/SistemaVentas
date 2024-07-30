@@ -10,7 +10,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
 ?>
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -38,8 +38,8 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-primary">
-                        <div class="card-header">
+                    <div class="card card-outline card-danger">
+                        <div class="card-header" style="background-color:orange">
                             <h3 class="card-title">Grafico de tortas - Cantidad de Productos por Proveedor</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -68,8 +68,8 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-primary">
-                        <div class="card-header">
+                    <div class="card card-outline card-danger">
+                        <div class="card-header" style="background-color:orange">
                             <h3 class="card-title">Grafico de tortas - Cantidad de compras (operaciones) por Proveedor</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -97,8 +97,8 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-primary">
-                        <div class="card-header">
+                    <div class="card card-outline card-danger">
+                        <div class="card-header" style="background-color:orange">
                             <h3 class="card-title">Grafico de tortas - Cantidad de compras en dinero por Proveedor</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
