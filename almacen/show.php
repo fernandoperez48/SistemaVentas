@@ -8,7 +8,7 @@ include '../app/controllers/almacen/cargar_producto.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -26,8 +26,8 @@ include '../app/controllers/almacen/cargar_producto.php';
 
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-primary">
-                    <div class="card-header">
+                <div class="card card-outline card-danger">
+                    <div class="card-header" style="background-color:orange">
                         <h3 class="card-title">Datos del Producto</h3>
 
                         <div class="card-tools">
@@ -68,10 +68,28 @@ include '../app/controllers/almacen/cargar_producto.php';
                                             <div class="form-group">
                                                 <label for="">Imagen del producto:</label>
                                                 <center>
-                                                    <img src="<?php echo $URL . "/almacen/img_productos" . $productos_datos['imagen']; ?>" width="200px">
+                                                    <img src="<?php echo $URL . '/almacen/img/img_productos' . $productos_datos['imagen']; ?>" width="100px" data-toggle="modal" data-target="#imageModal">
                                                 </center>
                                             </div>
                                         </div>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="imageModalLabel">Imagen del Producto</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <img src="<?php echo $URL . '/almacen/img/img_productos' . $productos_datos['imagen']; ?>" class="img-fluid">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">

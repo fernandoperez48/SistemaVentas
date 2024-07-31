@@ -11,7 +11,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
 
 <!-- Content Wrapper. Contains page content -->
 
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -20,8 +20,8 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                     <h1 class="m-0">Ventas</h1>
                     <div class="content">
 
-                        <div class="card card-outline card-primary">
-                            <div class="card-header">
+                        <div class="card card-outline card-danger">
+                            <div class="card-header" style="background-color:orange">
                                 <!-- se cuenta la cantidad de ventas de la tabla correspondiente
                                  y se le agrega un numero mas para indicar qué numero de venta sera la próxima -->
                                 <?php
@@ -285,15 +285,15 @@ include '../app/controllers/ventas/listado_de_ventas.php';
 
                             <div class="table-responsive">
                                 <table class="table table-bordered table-sm table-hover table-striped">
-                                    <thead>
+                                    <thead style="background-color: gray;">
                                         <tr>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Nro</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Producto</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Detalle</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Cantidad</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Unitario</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Subtotal</th>
-                                            <th style="background-color: #e7e7e7; text-align:center;">Accion</th>
+                                            <th style="background-color: gray; text-align:center;">Nro</th>
+                                            <th style="background-color: gray; text-align:center;">Producto</th>
+                                            <th style="background-color: gray; text-align:center;">Detalle</th>
+                                            <th style="background-color: gray; text-align:center;">Cantidad</th>
+                                            <th style="background-color: gray; text-align:center;">Precio Unitario</th>
+                                            <th style="background-color: gray; text-align:center;">Precio Subtotal</th>
+                                            <th style="background-color: gray; text-align:center;">Accion</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -395,8 +395,8 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                     <!-- SECTOR SELECCIONAR CLIENTE  -->
                     <div class="row">
                         <div class="col-md-9">
-                            <div class="card card-outline card-primary">
-                                <div class="card-header">
+                            <div class="card card-outline card-danger">
+                                <div class="card-header" style="background-color:orange">
                                     <h3 class="card-title"><i class="fa fa-user-check"></i> Datos del Cliente</h3>
 
                                     <div class="card-tools">
@@ -698,8 +698,8 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                             </div> <!-- /.card-body -->
                         </div>
                         <div class="col-md-3">
-                            <div class="card card-outline card-primary">
-                                <div class="card-header">
+                            <div class="card card-outline card-danger">
+                                <div class="card-header" style="background-color:orange">
                                     <h3 class="card-title"><i class="fa fa-shopping-basket"></i> Registrar venta</h3>
 
                                     <div class="card-tools">
@@ -715,6 +715,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                         <label for="">Monto a cancelar</label>
                                         <input type="text" class="form-control" id="total_a_cancelar" style="text-align:center; background-color:yellow" value=<?php echo $precio_total; ?> disabled>
                                     </div>
+                                    <br>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -737,6 +738,8 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                             </div>
                                         </div>
                                     </div>
+                                    <br>
+
                                     <hr>
                                     <div class="form-group">
                                         <button id="btn_guardar_venta" class="btn btn-primary btn-block">

@@ -9,7 +9,7 @@ include '../app/controllers/usuarios/listado_de_usuarios.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -27,8 +27,8 @@ include '../app/controllers/usuarios/listado_de_usuarios.php';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-outline card-primary">
-                        <div class="card-header">
+                    <div class="card card-outline card-danger">
+                        <div class="card-header" style="background-color:orange">
                             <h3 class="card-title">Usuarios registrados</h3>
 
                             <div class="card-tools">
@@ -40,8 +40,8 @@ include '../app/controllers/usuarios/listado_de_usuarios.php';
                         <!-- /.card-header -->
                         <div class="card-body">
 
-                            <table id="example1" class="table table-bordered table-striped">
-                                <thead>
+                            <table id="example1" class="table table-bordered table-striped table-sm" style="border-color: black;">
+                                <thead style=" background-color: gray;">
                                     <tr>
                                         <th>
                                             <center>Nro</center>

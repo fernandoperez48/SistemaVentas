@@ -6,7 +6,7 @@ include '../app/controllers/categorias/listado_de_categorias.php';
 include '../app/controllers/almacen/cargar_producto.php';
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -24,8 +24,8 @@ include '../app/controllers/almacen/cargar_producto.php';
 
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-success">
-                    <div class="card-header">
+                <div class="card card-outline card-danger">
+                    <div class="card-header" style="background-color:orange">
                         <h3 class="card-title">Llene los datos...</h3>
 
                         <div class="card-tools">
@@ -93,7 +93,7 @@ include '../app/controllers/almacen/cargar_producto.php';
                                                     <input type="text" name="image_text" value="<?php echo $imagen; ?>" hidden>
                                                     <br>
                                                     <output id="list">
-                                                        <img src="<?php echo $URL . "/almacen/img_productos" . $productos_datos['imagen']; ?>" width="150px">
+                                                        <img src="<?php echo $URL . "/almacen/img/img_productos" . $productos_datos['imagen']; ?>" width="150px">
                                                     </output>
                                                     <script>
                                                         function archivo(evt) {

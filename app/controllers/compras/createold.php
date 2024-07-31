@@ -2,6 +2,7 @@
 
 include '../../config.php';
 
+
 // Verificar si los parámetros existen antes de acceder a ellos
 $nro_compra = isset($_GET['nro_compra']) ? $_GET['nro_compra'] : '';
 $id_proveedor = isset($_GET['id_proveedor']) ? $_GET['id_proveedor'] : '';
@@ -15,6 +16,20 @@ $explicacion_diferencia = $_GET['explicacion_diferencia']; // Recibir la explica
 $id_productos = isset($_GET['id_productos']) ? json_decode($_GET['id_productos'], true) : [];
 $cantidades = isset($_GET['cantidades']) ? json_decode($_GET['cantidades'], true) : [];
 
+
+// // Agregamos un mensaje de alerta para verificar la recepción de los datos
+// echo "Datos recibidos:<br>";
+// echo "Nro Compra: " . $nro_compra . "<br>";
+// echo "ID Proveedor: " . $id_proveedor . "<br>";
+// echo "Fecha Operación: " . $fecha_operacion . "<br>";
+// echo "Ingreso Mercadería: " . $ingreso_mercaderia . "<br>";
+// echo "Comprobante: " . $comprobante . "<br>";
+// echo "Precio Compra: " . $precio_compra . "<br>";
+// echo "ID Usuario: " . $id_usuario . "<br>";
+// echo "ID Productos: " . json_encode($id_productos) . "<br>";
+// echo "Cantidades: " . json_encode($cantidades) . "<br>";
+// echo "Resultado: " . json_encode($resultado) . "<br>";
+
 $fyh_creacion = date('Y-m-d H:i:s');
 
 $mysqli->begin_transaction();
@@ -27,16 +42,12 @@ VALUES ('$nro_compra', '$fecha_operacion', '$id_proveedor', '$comprobante', '$id
 if ($mysqli->query($insert_query)) {
     // Inicializamos una variable para verificar si se superó el stock máximo
     $se_supero_maximo = false;
-    // Si la inserción fue exitosa, obtenemos los precios unitarios y actualizamos el stock y el precio de compra
+    // Si la inserción fue exitosa, actualiza el stock de cada producto comprado
     for ($i = 0; $i < count($id_productos); $i++) {
         $id_producto = $id_productos[$i];
         $cantidad = $cantidades[$i];
-
-        // Obtener el precio unitario del producto desde tb_detalle_compras
-        $precio_unitario = obtenerPrecioUnitario($mysqli, $nro_compra, $id_producto);
-
-        // Actualizar el stock del producto en la base de datos y precio de compram Y LA ULTIMA FECHA DE INGRESO
-        $update_query = "UPDATE tb_almacen SET stock = stock + '$cantidad', precio_compra = '$precio_unitario', fecha_ultimo_ingreso = '$ingreso_mercaderia' WHERE id_producto = '$id_producto'";
+        // Actualizar el stock del producto en la base de datos y precio de compra  
+        $update_query = "UPDATE tb_almacen SET stock = stock + '$cantidad', precio_compra = '$precio_compra' WHERE id_producto = '$id_producto'";
 
         if ($mysqli->query($update_query)) {
             // Verificar si el stock actualizado supera el stock máximo permitido
@@ -46,6 +57,7 @@ if ($mysqli->query($insert_query)) {
                 $se_supero_maximo = true;
                 $nombre_producto = obtenerNombreProducto($mysqli, $id_producto);
             }
+            //echo "El stock del producto $nombre_producto ha sido actualizado correctamente.<br>"
         } else {
             echo "Error al actualizar el stock del producto con ID $id_producto: " . $mysqli->error . "<br>";
         }
@@ -65,19 +77,6 @@ if ($mysqli->query($insert_query)) {
 
 // Cerrar la conexión a la base de datos
 $mysqli->close();
-
-// Función para obtener el precio unitario de un producto en una compra específica
-function obtenerPrecioUnitario($mysqli, $nro_compra, $id_producto)
-{
-    $query = "SELECT precio_unitario FROM tb_detalle_compras WHERE nro_compra = '$nro_compra' AND id_producto = '$id_producto'";
-    $result = $mysqli->query($query);
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        return $row['precio_unitario'];
-    } else {
-        return 0;
-    }
-}
 
 // Función para obtener el stock actualizado de un producto
 function obtenerStockActualizado($mysqli, $id_producto)

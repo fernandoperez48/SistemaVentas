@@ -79,7 +79,7 @@ include 'app/controllers/envios/listado_de_envios.php';
                 </div>
               </a>
 
-              <a href="<?php echo $URL ?>clientes/indexper.php" class="small-box-footer">
+              <a href="<?php echo $URL ?>/clientes/indexper.php" class="small-box-footer">
                 Mas detalle <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>
@@ -106,7 +106,7 @@ include 'app/controllers/envios/listado_de_envios.php';
                 </div>
               </a>
 
-              <a href="<?php echo $URL ?>clientes/indexemp.php" class="small-box-footer">
+              <a href="<?php echo $URL ?>/clientes/indexemp.php" class="small-box-footer">
                 Mas detalle <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>

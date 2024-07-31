@@ -8,7 +8,7 @@ include '../layaout/parte1.php';
 include '../app/controllers/categorias/listado_de_categorias.php';
 ?>
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -35,8 +35,8 @@ include '../app/controllers/categorias/listado_de_categorias.php';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="card card-outline card-primary">
-                        <div class="card-header">
+                    <div class="card card-outline card-danger">
+                        <div class="card-header" style="background-color:orange">
                             <h3 class="card-title">Categorias registradas</h3>
 
                             <div class="card-tools">
@@ -237,7 +237,7 @@ include '../app/controllers/categorias/listado_de_categorias.php';
 <div class="modal fade" id="modal-create">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header" style="background-color:blue; color:white">
+            <div class="modal-header" style="background-color:orange; color:white">
                 <h4 class="modal-title">Creacion de una nueva categoria</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
