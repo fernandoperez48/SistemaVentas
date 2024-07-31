@@ -41,13 +41,13 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                     <h3 class="card-title">Filtros de Precios</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                            <i class="fas fa-minus"></i>
+                                            <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
                                     <!-- /.card-tools -->
                                 </div>
                                 <!-- /.card-header -->
-                                <div class="card-body collapse show">
+                                <div class="card-body collapse">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="priceType">Tipo de Precio:</label>
