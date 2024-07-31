@@ -37,8 +37,10 @@ include '../app/controllers/almacen/listado_de_productos.php';
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="table table-responsive">
+
                                 <table id="example1" class="table table-bordered table-striped table-sm">
                                     <thead style="background-color: gray;">
+
                                         <tr>
                                             <th>
                                                 <center>Nro</center>
@@ -99,14 +101,25 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                 <td>
                                                     <?php
                                                     // Asumiendo que $productos_datos['imagen'] contiene el valor del campo 'imagen'
-                                                    if (empty($productos_datos['imagen']) || is_null($productos_datos['imagen'])) {
-                                                        // Si el valor de imagen está vacío o es NULL, muestra la imagen predeterminada
-                                                        echo '<img src="' . $URL . '/almacen/img/img_productossinimagen.jpg" width="50px">';
-                                                    } else {
-                                                        // Si el valor de imagen no está vacío ni es NULL, muestra la imagen correspondiente
-                                                        echo '<img src="' . $URL . '/almacen/img/img_productos' . $productos_datos['imagen'] . '" width="50px">';
-                                                    }
+                                                    $imageSrc = empty($productos_datos['imagen']) || is_null($productos_datos['imagen']) ? $URL . '/almacen/img/img_productossinimagen.jpg' : $URL . '/almacen/img/img_productos' . $productos_datos['imagen'];
                                                     ?>
+                                                    <img src="<?php echo $imageSrc; ?>" width="50px" data-toggle="modal" data-target="#imageModal<?php echo $productos_datos['id_producto']; ?>">
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="imageModal<?php echo $productos_datos['id_producto']; ?>" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel<?php echo $productos_datos['id_producto']; ?>" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="imageModalLabel<?php echo $productos_datos['id_producto']; ?>">Imagen del Producto</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <img src="<?php echo $imageSrc; ?>" class="img-fluid">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
 
 
@@ -180,9 +193,8 @@ include '../app/controllers/almacen/listado_de_productos.php';
 <?php include '../layaout/parte2.php'; ?>
 
 <script>
-    $(function() {
-        $("#example1").DataTable({
-            /* cambio de idiomas de datatable */
+    $(document).ready(function() {
+        var table = $("#example1").DataTable({
             "pageLength": 5,
             language: {
                 "emptyTable": "No hay información",
@@ -204,11 +216,10 @@ include '../app/controllers/almacen/listado_de_productos.php';
                     "previous": "Anterior"
                 }
             },
-            /* fin de idiomas */
             "responsive": true,
             "lengthChange": true,
             "autoWidth": false,
-            "buttons": /* Ajuste de botones */ [{
+            "buttons": [{
                     extend: 'collection',
                     text: 'Reportes',
                     orientation: 'landscape',
@@ -231,8 +242,41 @@ include '../app/controllers/almacen/listado_de_productos.php';
                     text: 'Visor de columnas'
                 }
             ],
-            /*Fin de ajuste de botones*/
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            // Coloca los filtros dentro del contenedor de DataTables
+            "dom": '<"top"lfB><"filter-price">rt<"bottom"ip><"clear">'
+        });
 
+        // Agregar los campos de filtro de precio a DataTables
+        $('div.filter-price').html(
+            '<label for="minPrice">Precio mínimo:</label>' +
+            '<input type="number" id="minPrice" class="form-control" placeholder="Precio mínimo" style="display:inline-block; width:auto; margin-left:10px; margin-right:20px;">' +
+            '<label for="maxPrice">Precio máximo:</label>' +
+            '<input type="number" id="maxPrice" class="form-control" placeholder="Precio máximo" style="display:inline-block; width:auto; margin-left:10px;">'
+        );
+
+        // Función para filtrar según el rango de precios
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var min = parseFloat($('#minPrice').val(), 10);
+                var max = parseFloat($('#maxPrice').val(), 10);
+                var price = parseFloat(data[8].replace(/[^\d.-]/g, '')) || 0; // Usa el índice correcto para la columna de precios
+
+                if ((isNaN(min) && isNaN(max)) ||
+                    (isNaN(min) && price <= max) ||
+                    (min <= price && isNaN(max)) ||
+                    (min <= price && price <= max)) {
+                    return true;
+                }
+                return false;
+            }
+        );
+
+        // Event listeners para los campos de filtro de precio
+        $('#minPrice, #maxPrice').keyup(function() {
+            table.draw();
+        });
+
+        // Añadir los botones a DataTables
+        table.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
 </script>

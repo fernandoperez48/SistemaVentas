@@ -22,21 +22,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="<?php echo $URL; ?>/public/templates/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <style>
-        .img-container {
-            position: relative;
-            width: 100px;
-        }
 
-        .img-container img {
-            width: 100%;
-            transition: transform 0.3s;
-        }
-
-        .img-container:hover img {
-            transform: scale(3);
-        }
-    </style>
     <style type="text/css">
         .highcharts-figure,
         .highcharts-data-table table {
