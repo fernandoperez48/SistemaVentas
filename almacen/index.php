@@ -36,11 +36,45 @@ include '../app/controllers/almacen/listado_de_productos.php';
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <div class="table table-responsive">
+                            <div class="card col-md-4">
+                                <div class="card-header" style="background-color:#ffe8cd">
+                                    <h3 class="card-title">Filtros de Precios</h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body collapse show">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="priceType">Tipo de Precio:</label>
+                                            <div>
+                                                <input type="checkbox" id="priceCompra" checked> Precio Compra
+                                                <input type="checkbox" id="priceVenta"> Precio Venta
+                                            </div>
+                                        </div>
 
+                                        <div class="row container-fluid">
+                                            <div class="form-group col-md-5">
+                                                <label for="minPrice">Precio mínimo:</label>
+                                                <input type="number" id="minPrice" class="form-control" placeholder="Precio mínimo">
+                                            </div>
+                                            <div class="form-group col-md-5">
+                                                <label for="maxPrice">Precio máximo:</label>
+                                                <input type="number" id="maxPrice" class="form-control" placeholder="Precio máximo">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="table table-responsive">
                                 <table id="example1" class="table table-bordered table-striped table-sm">
                                     <thead style="background-color: gray;">
-
                                         <tr>
                                             <th>
                                                 <center>Nro</center>
@@ -200,7 +234,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
                 "emptyTable": "No hay información",
                 "decimal": "",
                 "info": "Mostrando _START_ a _END_ de _TOTAL_ Productos",
-                "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
+                "infoEmpty": "Mostrando 0 a 0 de 0 Productos",
                 "infoFiltered": "(Filtrado de _MAX_ total Productos)",
                 "infoPostFix": "",
                 "thousands": ",",
@@ -211,7 +245,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
                 "zeroRecords": "Sin resultados encontrados",
                 "paginate": {
                     "first": "Primero",
-                    "last": "Ultimo",
+                    "last": "Último",
                     "next": "Siguiente",
                     "previous": "Anterior"
                 }
@@ -242,29 +276,24 @@ include '../app/controllers/almacen/listado_de_productos.php';
                     text: 'Visor de columnas'
                 }
             ],
-            // Coloca los filtros dentro del contenedor de DataTables
             "dom": '<"top"lfB><"filter-price">rt<"bottom"ip><"clear">'
         });
 
-        // Agregar los campos de filtro de precio a DataTables
-        $('div.filter-price').html(
-            '<label for="minPrice">Precio mínimo:</label>' +
-            '<input type="number" id="minPrice" class="form-control" placeholder="Precio mínimo" style="display:inline-block; width:auto; margin-left:10px; margin-right:20px;">' +
-            '<label for="maxPrice">Precio máximo:</label>' +
-            '<input type="number" id="maxPrice" class="form-control" placeholder="Precio máximo" style="display:inline-block; width:auto; margin-left:10px;">'
-        );
 
-        // Función para filtrar según el rango de precios
+
+        // Función para filtrar según el rango de precios y el tipo de precio
         $.fn.dataTable.ext.search.push(
             function(settings, data, dataIndex) {
                 var min = parseFloat($('#minPrice').val(), 10);
                 var max = parseFloat($('#maxPrice').val(), 10);
-                var price = parseFloat(data[8].replace(/[^\d.-]/g, '')) || 0; // Usa el índice correcto para la columna de precios
+                var priceCompra = parseFloat(data[8].replace(/[^\d.-]/g, '')) || 0; // Índice de columna para precio compra
+                var priceVenta = parseFloat(data[9].replace(/[^\d.-]/g, '')) || 0; // Índice de columna para precio venta
 
-                if ((isNaN(min) && isNaN(max)) ||
-                    (isNaN(min) && price <= max) ||
-                    (min <= price && isNaN(max)) ||
-                    (min <= price && price <= max)) {
+                var filterCompra = $('#priceCompra').is(':checked');
+                var filterVenta = $('#priceVenta').is(':checked');
+
+                if ((filterCompra && (isNaN(min) && isNaN(max) || (isNaN(min) && priceCompra <= max) || (min <= priceCompra && isNaN(max)) || (min <= priceCompra && priceCompra <= max))) ||
+                    (filterVenta && (isNaN(min) && isNaN(max) || (isNaN(min) && priceVenta <= max) || (min <= priceVenta && isNaN(max)) || (min <= priceVenta && priceVenta <= max)))) {
                     return true;
                 }
                 return false;
@@ -272,7 +301,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
         );
 
         // Event listeners para los campos de filtro de precio
-        $('#minPrice, #maxPrice').keyup(function() {
+        $('#minPrice, #maxPrice, #priceCompra, #priceVenta').change(function() {
             table.draw();
         });
 
