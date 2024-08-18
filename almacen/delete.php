@@ -1,6 +1,9 @@
 <?php
 include '../app/config.php';
 include '../layaout/sesion.php';
+if ($rol_sesion != "Administrador") {
+    header('Location: ..//index.php');
+}
 include '../layaout/parte1.php';
 
 include '../app/controllers/almacen/cargar_producto.php';

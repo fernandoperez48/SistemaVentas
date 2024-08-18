@@ -22,6 +22,7 @@ if (!$mysqli->set_charset("utf8")) {
 }
 
 $URL = "http://localhost/SistemaVentas";
+$URL2 = "http://localhost/SistemaVentas/";
 
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $fechaHora = date("Y-m-d H:i:s");

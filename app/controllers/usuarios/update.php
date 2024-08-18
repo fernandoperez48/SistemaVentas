@@ -1,67 +1,41 @@
 <?php
 include '../../config.php';
-$nombres = $_POST['nombres'];
+
+$id_usuarios = $_POST['id_usuario'];
+$nombres = $_POST['nombre_usuario'];
 $email = $_POST['email'];
-$password_user = $_POST['password_user'];
-$password_repeat = $_POST['password_repeat'];
-$id_usuarios = $_POST['id_usuarios'];
-$rol = $_POST['rol'];
-$fechaHora = date("Y-m-d H:i:s");  // Assuming you need a timestamp
+$password_user = $_POST['contraseña'];
+$password_repeat = $_POST['repita_contraseña'];
+$rol = $_POST['rolupdate'];
+$fechaHora = date("Y-m-d H:i:s");
+$password_user = password_hash($password_user, PASSWORD_DEFAULT);
 
-if ($password_user == "") {
-    if ($password_user == $password_repeat) {
-        $sql = "UPDATE tb_usuarios 
-                SET nombres='$nombres', 
-                    email='$email', 
-                    id_rol='$rol', 
-                    fyh_actualizacion='$fechaHora' 
-                WHERE id_usuarios='$id_usuarios'";
+// Actualizar datos del proveedor
+$sql_usuarios = "UPDATE tb_usuarios SET 
+    nombres='$nombres', 
+                        email='$email', 
+                        id_rol='$rol', 
+                        password_user='$password_user', 
+                        fyh_actualizacion='$fechaHora' 
+                    WHERE id_usuarios='$id_usuarios'";
 
-        if ($mysqli->query($sql) === TRUE) {
-            session_start();
-            $_SESSION['mensaje'] = "Se actualizó el usuario correctamente";
-            $_SESSION['icono'] = "success";
-            header('location: ' . $URL . 'usuarios/');
-        } else {
-            session_start();
-            $_SESSION['mensaje'] = "Error al actualizar el usuario";
-            $_SESSION['icono'] = "error";
-            header('location: ' . $URL . 'usuarios/update.php?id=' . $id_usuarios);
-        }
-    } else {
-        session_start();
-        $_SESSION['mensaje'] = "Las contraseñas no coinciden";
-        $_SESSION['icono'] = "error";
-        header('location: ' . $URL . 'usuarios/update.php?id=' . $id_usuarios);
-    }
+// Iniciar sesión
+session_start();
+
+// Ejecutar las consultas
+if ($mysqli->query($sql_usuarios) === true) {
+    $_SESSION['mensaje'] = "Se actualizó al proveedor correctamente";
+    $_SESSION['icono'] = "success";
 } else {
-    if ($password_user == $password_repeat) {
-        $password_user = password_hash($password_user, PASSWORD_DEFAULT);
-        $sql = "UPDATE tb_usuarios 
-                SET nombres='$nombres', 
-                    email='$email', 
-                    id_rol='$rol', 
-                    password_user='$password_user', 
-                    fyh_actualizacion='$fechaHora' 
-                WHERE id_usuarios='$id_usuarios'";
-
-        if ($mysqli->query($sql) === TRUE) {
-            session_start();
-            $_SESSION['mensaje'] = "Se actualizó el usuario correctamente";
-            $_SESSION['icono'] = "success";
-            header('location: ' . $URL . 'usuarios/');
-        } else {
-            session_start();
-            $_SESSION['mensaje'] = "Error al actualizar el usuario";
-            $_SESSION['icono'] = "error";
-            header('location: ' . $URL . 'usuarios/update.php?id=' . $id_usuarios);
-        }
-    } else {
-        session_start();
-        $_SESSION['mensaje'] = "Las contraseñas no coinciden";
-        $_SESSION['icono'] = "error";
-        header('location: ' . $URL . 'usuarios/update.php?id=' . $id_usuarios);
-    }
+    $_SESSION['mensaje'] = "No se pudo actualizar al proveedor o su domicilio";
+    $_SESSION['icono'] = "error";
 }
 
-$mysqli->close();
+// Redirigir
+?>
+<script>
+    window.location.href = '<?php echo $URL; ?>/usuarios/';
+</script>
+<?php
+exit();
+?>

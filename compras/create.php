@@ -240,6 +240,15 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                                                             <input type="text" id="cantidad" class="form-control">
                                                         </div>
                                                     </div>
+                                                    <script>
+                                                        function allowOnlyNumbers(input) {
+                                                            input.value = input.value.replace(/[^0-9]/g, '');
+                                                        }
+
+                                                        document.getElementById('cantidad').addEventListener('input', function(e) {
+                                                            allowOnlyNumbers(e.target);
+                                                        });
+                                                    </script>
                                                     <div class="col-md-2">
                                                         <div class="form-group">
                                                             <label for="">Precio Unitario</label>
