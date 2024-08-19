@@ -139,7 +139,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                     ?>
                                                     <img src="<?php echo $imageSrc; ?>" width="50px" data-toggle="modal" data-target="#imageModal<?php echo $productos_datos['id_producto']; ?>">
                                                     <!-- Modal -->
-                                                    <div class="modal fade" id="imageModal<?php echo $productos_datos['id_producto']; ?>" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel<?php echo $productos_datos['id_producto']; ?>" aria-hidden="true">
+                                                    <div class="modal fade" id="imageModal<?php echo $productos_datos['id_producto']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">

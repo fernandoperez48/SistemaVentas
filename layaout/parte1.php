@@ -94,12 +94,17 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav container-fluid">
 
-                <a class="navbar-brand">
-                    <a href="http://localhost/SistemaVentas/index.php"> <img href="../index.php" src="<?php echo $URL; ?>/public/images/fainsumocartel.png" alt="logofainsumos" style="max-width:150px;"></a>
+                <a class="navbar-brand" href="http://localhost/SistemaVentas/index.php">
+                    <img src="<?php echo $URL; ?>/public/images/fainsumocartel.png" alt="logofainsumos" style="max-width:150px;">
                 </a>
+
                 <li>
-                    <a href="http://localhost/SistemaVentas/index.php" class="nav-link" role="button"><?php echo $nombres_sesion ?>/<?php echo $rol_sesion ?></a>
+                    <a href="#" class="nav-link" role="button" data-toggle="modal" data-target="#modal-usuario">
+                        <?php echo $nombres_sesion ?>/<?php echo $rol_sesion ?>
+                    </a>
                 </li>
+
+
 
                 <!--Usuarios        ------Usuarios------        Usuario-->
                 <?php if ($rol_sesion == "Administrador") { ?>
@@ -232,7 +237,7 @@
 
                 <!--Cerrar Sesion      ------Cerrar Sesion------        Cerrar Sesion-->
                 <li class="nav-item">
-                    <a href="../app/controllers/login/cerrar_sesion.php" class="nav-link" style="background-color:#ff6961">
+                    <a href="<?php echo $URL ?>/app/controllers/login/cerrar_sesion.php" class="nav-link" style="background-color:#ff6961">
                         <i class="nav-icon fas fa-door-closed"> Salir</i>
                     </a>
                 </li>
@@ -253,3 +258,21 @@
             </ul>
         </nav>
         <!-- /.n
+         
+                <!-- Modal -->
+        <div class="modal fade" id="modal-usuario" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-usuarioLabel"><?php echo $nombres_sesion ?> - <?php echo $rol_sesion ?></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <?php $imageSrc = empty($imagen_sesion) || is_null($imagen_sesion) ? $URL . '/usuarios/img/img_usuariossinimagen.jpg' : $URL . '/usuarios/img/img_usuarios' . $imagen_sesion; ?>
+                        <img src="<?php echo $imageSrc; ?>" width="200px" style="display: block; margin: 0 auto;" class="img-fluid" alt="Imagen de <?php echo $nombres_sesion ?>">
+                    </div>
+                </div>
+            </div>
+        </div>
