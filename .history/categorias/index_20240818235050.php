@@ -76,7 +76,7 @@ include '../app/controllers/categorias/listado_de_categorias.php';
                                             <td>
                                                 <center>
                                                     <div class="btn-group">
-                                                        <button <?php if ($rol_sesion != "Administrador" && $rol_sesion != "Almacen") echo 'disabled'; ?> type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update<?php echo $id_categoria; ?>">
+                                                        <button <?php if ($rol_sesion != "Administrador" || $rol_sesion != "Almacen") echo 'disabled'; ?> type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update<?php echo $id_categoria; ?>">
                                                             <i class="fa fa-pencil-alt"></i>
                                                             Editar
                                                         </button>
