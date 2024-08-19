@@ -115,6 +115,22 @@ include '../app/controllers/roles/listado_de_roles.php';
                                                                                         <input type="text" id="rol<?php echo $id_usuario; ?>" class="form-control" value="<?php echo $usuarios_datos['rol']; ?>" disabled>
                                                                                     </div>
                                                                                 </div>
+                                                                                <div class="col-md-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="">Imagen del producto:</label>
+                                                                                        <center>
+                                                                                            <img src="<?php echo $URL . '/almacen/img/img_productos' . $productos_datos['imagen']; ?>" width="100px" data-toggle="modal" data-target="#imageModal">
+                                                                                        </center>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-12">
+                                                                                    <div class="form-group">
+                                                                                        <label for="">Imagen del producto:</label>
+                                                                                        <center>
+                                                                                            <img src="<?php echo $URL . '/almacen/img/img_productos' . $productos_datos['imagen']; ?>" width="100px" data-toggle="modal" data-target="#imageModal">
+                                                                                        </center>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
 
                                                                         </div>

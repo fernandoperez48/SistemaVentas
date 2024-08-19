@@ -4,7 +4,7 @@ session_start();
 if (isset($_SESSION['email'])) {
     //echo "Si existe sesion de ".$_SESSION['email'];
     $email_session = $_SESSION['email'];
-    $sql = "SELECT us.id_usuarios as id_usuarios, us.nombres as nombres, us.email as email, 
+    $sql = "SELECT us.id_usuarios as id_usuarios, us.nombres as nombres, us.email as email, us.imagen as imagen, 
             rol.rol as rol, rol.id_rol 
             FROM tb_usuarios as us 
             INNER JOIN tb_roles as rol ON us.id_rol=rol.id_rol 
@@ -33,6 +33,7 @@ if (isset($_SESSION['email'])) {
     foreach ($usuarios as $usuario) {
         $id_usuarios_sesion = $usuario['id_usuarios'];
         $nombres_sesion = $usuario['nombres'];
+        $imagen_sesion = $usuario['imagen'];
         $rol_sesion = $usuario['rol'];
         $id_rol = $usuario['id_rol'];
     }
