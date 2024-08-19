@@ -112,7 +112,7 @@
                         <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Usuarios</a>
                         <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
                             <li><a href="<?php echo $URL ?>/usuarios" class="dropdown-item">Listado de Usuarios</a></li>
-                            <!-- <li><a href="<?php echo $URL ?>/usuarios/create.php" class="dropdown-item">Creacion de Usuarios</a></li> -->
+                            <li><a href="<?php echo $URL ?>/usuarios/create.php" class="dropdown-item">Creacion de Usuarios</a></li>
                         </ul>
                     </li>
                 <?php } ?>
@@ -124,13 +124,19 @@
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
                         <!-- Level one dropdown -->
                         <li class="dropdown-submenu dropdown-hover">
-                            <a href="<?php echo $URL ?>/clientes/indexper.php" class="dropdown-item">Personas</a>
+                            <a id="dropdownSubMenu2" href="<?php echo $URL ?>/clientes/indexper.php" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Personas</a>
+                            <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
+                                <li><a href="<?php echo $URL ?>/clientes/indexper.php" class="dropdown-item">Listado</a></li>
+                            </ul>
                         </li>
                         <!-- End Level one -->
                         <li class="dropdown-divider"></li>
                         <!-- Level one dropdown -->
                         <li class="dropdown-submenu dropdown-hover">
-                            <a href="<?php echo $URL ?>/clientes/indexemp.php" class="dropdown-item">Empresas</a>
+                            <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Empresas</a>
+                            <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow " style="background-color:#343a40;">
+                                <li><a href="<?php echo $URL ?>/clientes/indexemp.php" class="dropdown-item">Listado</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
