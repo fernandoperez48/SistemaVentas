@@ -1,6 +1,6 @@
 <?php
 
-$sql_usuarios = "SELECT us.id_usuarios as id_usuarios, us.nombres as nombres, us.email as email, rol.rol as rol FROM tb_usuarios as us INNER JOIN tb_roles as rol ON us.id_rol=rol.id_rol";
+$sql_usuarios = "SELECT us.id_usuarios as id_usuarios, us.nombres as nombres, us.email as email, us.imagen as imagen, rol.rol as rol FROM tb_usuarios as us INNER JOIN tb_roles as rol ON us.id_rol=rol.id_rol";
 
 $result_usuarios = $mysqli->query($sql_usuarios);
 
