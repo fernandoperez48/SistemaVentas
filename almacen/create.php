@@ -1,13 +1,14 @@
 <?php
 include '../app/config.php';
 include '../layaout/sesion.php';
-if ($rol_sesion == "Vendedor" || $rol_sesion == "EyD") {
+if ($rol_sesion != "Administrador") {
     header('Location: ..//index.php');
 }
 include '../layaout/parte1.php';
 include '../app/controllers/almacen/listado_de_productos.php';
 include '../app/controllers/categorias/listado_de_categorias.php';
 include '../app/controllers/proveedores/listado_de_proveedores.php';
+
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="background-color:gray">
@@ -48,26 +49,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="">Codigo:</label>
-                                                    <?php
-                                                    function ceros($numero)
-                                                    {
-                                                        $len = 0;
-                                                        $cantidad_ceros = 5;
-                                                        $aux = $numero;
-                                                        $pos = strlen($numero);
-                                                        $len = $cantidad_ceros - $pos;
-                                                        for ($i = 0; $i < $len; $i++) {
-                                                            $aux = "0" . $aux;
-                                                        }
-                                                        return $aux;
-                                                    }
-                                                    $contador_de_id_productos = 1;
-                                                    foreach ($productos_datos as $productos_datos) {
-                                                        $contador_de_id_productos++;
-                                                    }
-                                                    ?>
-                                                    <input type="text" class="form-control" value="<?php echo "p-" . ceros($contador_de_id_productos); ?>" disabled>
-                                                    <input type="text" name="codigo" value="<?php echo "p-" . ceros($contador_de_id_productos); ?>" hidden>
+                                                    <input type="text" name="codigo" class="form-control" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">

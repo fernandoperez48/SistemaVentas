@@ -19,7 +19,8 @@ if (!$mysqli->set_charset("utf8")) {
     die("Error al configurar el conjunto de caracteres: " . $mysqli->error);
 }
 
-$URL = "http://localhost/SistemaVentas/";
+$URL = "http://localhost/SistemaVentas";
+$URL2 = "http://localhost/SistemaVentas/";
 
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $fechaHora = date("Y-m-d H:i:s");

@@ -61,7 +61,6 @@ include '../app/controllers/roles/listado_de_roles.php';
                                             ?>
 
                                         </select>
-
                                     </div>
                                     <div class="form-group">
                                         <label for="">Contraseña</label>

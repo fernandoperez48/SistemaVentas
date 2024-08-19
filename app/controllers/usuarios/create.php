@@ -1,29 +1,49 @@
 <?php
 include '../../config.php';
 
-$nombres = $_POST['nombres'];
-$email = $_POST['email'];
-$rol = $_POST['rol'];
-$password_user = $_POST['password_user'];
-$password_repeat = $_POST['password_repeat'];
+$nombre_usuario = $_GET['nombre_usuario'];
+$email = $_GET['email'];
+$rol = $_GET['rol'];
+$contraseña = $_GET['contraseña'];
+$repita_contraseña = $_GET['repita_contraseña'];
 
-if ($password_user == $password_repeat) {
-    $password_hashed = password_hash($password_user, PASSWORD_DEFAULT);
+if (!empty($nombre_usuario) && !empty($rol) && !empty($email)) {
+    // Insertar en la tabla tb_usuarios    
+    $sql_usuario = "INSERT INTO tb_usuarios(nombres, email, id_rol, password_user) 
+                      VALUES ('$nombre_usuario', '$email', '$rol', '$contraseña')";
+    $resultado_usuario = $mysqli->query($sql_usuario);
 
-    $sql = "INSERT INTO tb_usuarios(nombres, email, id_rol, password_user, fyh_creacion) 
-            VALUES ('$nombres', '$email', '$rol', '$password_hashed', '$fechaHora')";
-
-    if ($mysqli->query($sql) === TRUE) {
+    if ($resultado_usuario) {
+        $id_usuarios = $mysqli->insert_id;
+        //echo "Guardado correctamente";
         session_start();
         $_SESSION['mensaje'] = "Se registró el usuario correctamente";
-        header('location: ' . $URL . 'usuarios/');
+        $_SESSION['icono'] = "success";
+?>
+        <script>
+            window.location.href = '<?php echo $URL; ?>/usuarios/';
+        </script>
+    <?php
     } else {
-        echo "Error: " . $sql . "<br>" . $mysqli->error;
+        //echo "No se pudo registrar el usuario";
+        session_start();
+        $_SESSION['mensaje'] = "No se pudo registrar el usuario";
+        $_SESSION['icono'] = "error";
+    ?>
+        <script>
+            window.location.href = '<?php echo $URL; ?>/usuarios/';
+        </script>
+    <?php
     }
 } else {
+    //echo "Faltan campos obligatorios";
     session_start();
-    $_SESSION['mensaje'] = "Las contraseñas no coinciden";
-    header('location: ' . $URL . 'usuarios/create.php');
+    $_SESSION['mensaje'] = "Faltan campos obligatorios";
+    $_SESSION['icono'] = "error";
+    ?>
+    <script>
+        window.location.href = '<?php echo $URL; ?>/usuarios/';
+    </script>
+<?php
 }
-
-$mysqli->close();
+?>

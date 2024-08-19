@@ -165,17 +165,17 @@
 
 
                 <!--Productos       ------Productos------        Productos-->
-                <?php if ($rol_sesion == "Administrador" || $id_usuarios_sesion == "4" || $id_usuarios_sesion == "3") { ?>
-                    <li class="nav-item dropdown dropdown-hover">
-                        <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Productos</a>
-                        <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
-                            <li><a href="<?php echo $URL ?>/almacen" class="dropdown-item">Listado de Productos</a></li>
-                            <?php if ($rol_sesion == "Administrador" || $id_usuarios_sesion == "4") { ?>
-                                <li><a href="<?php echo $URL ?>/almacen/create.php" class="dropdown-item">Crear Producto</a></li>
-                            <?php } ?>
-                        </ul>
-                    </li>
-                <?php } ?>
+
+                <li class="nav-item dropdown dropdown-hover">
+                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Productos</a>
+                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
+                        <li><a href="<?php echo $URL ?>/almacen" class="dropdown-item">Listado de Productos</a></li>
+                        <?php if ($rol_sesion == "Administrador" || $id_usuarios_sesion == "4") { ?>
+                            <li><a href="<?php echo $URL ?>/almacen/create.php" class="dropdown-item">Crear Producto</a></li>
+                        <?php } ?>
+                    </ul>
+                </li>
+
 
                 <!--Proveedores      ------Proveedores------        Proveedores-->
 

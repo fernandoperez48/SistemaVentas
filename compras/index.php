@@ -115,7 +115,7 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                                     <span id="recordCount<?php echo $compras['nro_compra']; ?>"></span>
                                                                                 </div>
                                                                             </div>
-                                                                            <table id="tabla_productos<?php echo $compras['nro_compra']; ?>" class="table table-bordered table-sm table-hover table-striped">
+                                                                            <table id="tabla_productos<?php echo $compras['nro_compra']; ?>" class="example2 table table-bordered table-sm table-hover table-striped">
                                                                                 <thead style="background-color:gray">
                                                                                     <tr>
                                                                                         <th>Código</th>
@@ -202,6 +202,63 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                                         </th>
                                                                                     </tr>
                                                                                 </tbody>
+                                                                                <script>
+                                                                                    $(function() {
+                                                                                        $("#example2").DataTable({
+                                                                                            /* cambio de idiomas de datatable */
+                                                                                            "pageLength": 5,
+                                                                                            language: {
+                                                                                                "emptyTable": "No hay información",
+                                                                                                "decimal": "",
+                                                                                                "info": "Mostrando _START_ a _END_ de _TOTAL_ Compras",
+                                                                                                "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
+                                                                                                "infoFiltered": "(Filtrado de _MAX_ total Compras)",
+                                                                                                "infoPostFix": "",
+                                                                                                "thousands": ",",
+                                                                                                "lengthMenu": "Mostrar _MENU_ Compras",
+                                                                                                "loadingRecords": "Cargando...",
+                                                                                                "processing": "Procesando...",
+                                                                                                "search": "Buscador:",
+                                                                                                "zeroRecords": "Sin resultados encontrados",
+                                                                                                "paginate": {
+                                                                                                    "first": "Primero",
+                                                                                                    "last": "Ultimo",
+                                                                                                    "next": "Siguiente",
+                                                                                                    "previous": "Anterior"
+                                                                                                }
+                                                                                            },
+                                                                                            /* fin de idiomas */
+                                                                                            "responsive": true,
+                                                                                            "lengthChange": true,
+                                                                                            "autoWidth": false,
+                                                                                            "buttons": /* Ajuste de botones */ [{
+                                                                                                    extend: 'collection',
+                                                                                                    text: 'Reportes',
+                                                                                                    orientation: 'landscape',
+                                                                                                    buttons: [{
+                                                                                                        text: 'Copiar',
+                                                                                                        extend: 'copy'
+                                                                                                    }, {
+                                                                                                        extend: 'pdf',
+                                                                                                    }, {
+                                                                                                        extend: 'csv',
+                                                                                                    }, {
+                                                                                                        extend: 'excel',
+                                                                                                    }, {
+                                                                                                        text: 'Imprimir',
+                                                                                                        extend: 'print'
+                                                                                                    }]
+                                                                                                },
+                                                                                                {
+                                                                                                    extend: 'colvis',
+                                                                                                    text: 'Visor de columnas'
+                                                                                                }
+                                                                                            ],
+                                                                                            /*Fin de ajuste de botones*/
+                                                                                        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+                                                                                    });
+                                                                                </script>
                                                                             </table>
                                                                         </div>
                                                                     </div>
@@ -317,6 +374,7 @@ include '../app/controllers/compras/listado_de_compras.php';
 
     });
 </script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Obtener todos los elementos de búsqueda y conteo de registros por cada modal de productos

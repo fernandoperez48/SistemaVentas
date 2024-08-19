@@ -15,24 +15,6 @@ $fecha_ingreso = $_POST['fecha_ingreso'];
 $id_producto = $_POST['id_producto'];
 $image_text = $_POST['image_text'];
 
-// Validar que stock_minimo no sea mayor que stock_maximo y viceversa
-if ($stock_minimo > $stock_maximo) {
-    session_start();
-    $_SESSION['mensaje'] = "El stock mínimo no puede ser mayor que el stock máximo.";
-    $_SESSION['icono'] = "error";
-    header('Location: ' . $URL . '/almacen/update.php?id=' . $id_producto);
-    exit();
-}
-
-// Validar que los valores de stock no sean negativos
-if ($stock < 0 || $stock_minimo < 0 || $stock_maximo < 0) {
-    session_start();
-    $_SESSION['mensaje'] = "Los valores de stock no pueden ser negativos.";
-    $_SESSION['icono'] = "error";
-    header('Location: ' . $URL . '/almacen/update.php?id=' . $id_producto);
-    exit();
-}
-
 if ($_FILES['image']['name'] != null) {
     $nombreDelArchivo = date("Y-m-d-h-i-s");
     $image_text = $nombreDelArchivo . "__" . $_FILES['image']['name'];
@@ -41,7 +23,6 @@ if ($_FILES['image']['name'] != null) {
 } else {
     echo "no hay imagen nueva";
 }
-
 
 $sql = "UPDATE tb_almacen SET 
             id_categoria='$id_categoria',
@@ -67,5 +48,5 @@ if ($mysqli->query($sql) === TRUE) {
     session_start();
     $_SESSION['mensaje'] = "No se actualizó el producto correctamente";
     $_SESSION['icono'] = "error";
-    header('Location: ' . $URL . '/almacen/update.php?id=' . $id_producto);
+    header('Location: ' . $URL2 . 'almacen/update.php?id=' . $id_producto . '');
 }
