@@ -124,13 +124,25 @@
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
                         <!-- Level one dropdown -->
                         <li class="dropdown-submenu dropdown-hover">
-                            <a href="<?php echo $URL ?>/clientes/indexper.php" class="dropdown-item">Personas</a>
+                            <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Personas</a>
+                            <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
+                                <li><a href="<?php echo $URL ?>/clientes/indexper.php" class="dropdown-item">Listado</a></li>
+                                <?php if ($rol_sesion == "Administrador" || $id_usuarios_sesion == "3") { ?>
+                                    <li><a href="<?php echo $URL ?>/clientes/createper.php" class="dropdown-item">Crear</a></li>
+                                <?php } ?>
+                            </ul>
                         </li>
                         <!-- End Level one -->
                         <li class="dropdown-divider"></li>
                         <!-- Level one dropdown -->
                         <li class="dropdown-submenu dropdown-hover">
-                            <a href="<?php echo $URL ?>/clientes/indexemp.php" class="dropdown-item">Empresas</a>
+                            <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Empresas</a>
+                            <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow " style="background-color:#343a40;">
+                                <li><a href="<?php echo $URL ?>/clientes/indexemp.php" class="dropdown-item">Listado</a></li>
+                                <?php if ($rol_sesion == "Administrador" || $id_usuarios_sesion == "3") { ?>
+                                    <li><a href="<?php echo $URL ?>/clientes/createemp.php" class="dropdown-item">Crear</a></li>
+                                <?php } ?>
+                            </ul>
                         </li>
                     </ul>
                 </li>

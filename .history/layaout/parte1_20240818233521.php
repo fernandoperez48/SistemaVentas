@@ -124,13 +124,13 @@
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
                         <!-- Level one dropdown -->
                         <li class="dropdown-submenu dropdown-hover">
-                            <a href="<?php echo $URL ?>/clientes/indexper.php" class="dropdown-item">Personas</a>
+                            <li><a href="<?php echo $URL ?>/clientes/indexper.php" class="dropdown-item">Personas</a></li>
                         </li>
                         <!-- End Level one -->
                         <li class="dropdown-divider"></li>
                         <!-- Level one dropdown -->
                         <li class="dropdown-submenu dropdown-hover">
-                            <a href="<?php echo $URL ?>/clientes/indexemp.php" class="dropdown-item">Empresas</a>
+                        <a href="<?php echo $URL ?>/clientes/indexemp.php" class="dropdown-item">Empresas</a>
                         </li>
                     </ul>
                 </li>
