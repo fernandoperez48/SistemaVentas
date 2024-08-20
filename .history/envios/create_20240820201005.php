@@ -265,7 +265,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                     <div class="card-body" style="display: block;">
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="../app/controllers/envios/create.php" method="post" enctype="multipart/form-data">
+                                <form action="./app/controllers/envios/create.php" method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">

@@ -318,7 +318,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                         <a href="index.php" class="btn btn-secondary">Cancelar</a>
                                         <button type="submit" class="btn btn-primary">Guardar</button>
                                     </div>
-                                </form>
+                                    </form>
 
                             </div>
                         </div>
