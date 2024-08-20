@@ -126,7 +126,7 @@ include '../app/controllers/roles/listado_de_roles.php';
                                                                                             <label for="">Imagen del usuario:</label>
                                                                                             <?php $imageSrc = empty($imagen_usuario) || is_null($imagen_usuario) ? $URL . '/usuarios/img/img_usuariossinimagen.jpg' : $URL . '/usuarios/img/img_usuarios' . $imagen_usuario; ?>
                                                                                             <center>
-                                                                                                <img src="<?php echo $imageSrc; ?>" width="200px" style="display: block; margin: 0 auto;" class="img-fluid" alt="Imagen de <?php echo $nombres_usuario ?>">
+                                                                                                <img src="<?php echo $imageSrc; ?>" width="200px" style="display: block; margin: 0 auto;" class="img-fluid" alt="Imagen de <?php echo $nombre_usuario ?>">
                                                                                             </center>
                                                                                         </div>
                                                                                     </div>
@@ -291,81 +291,83 @@ include '../app/controllers/roles/listado_de_roles.php';
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Nombre Usuario<b>*</b></label>
-                            <input type="text" id="nombre_usuario" class="form-control" placeholder="Nombre del Usuario">
-                            <small style="color:red; display:none" id="lbl_nombre">* Este campo es requerido</small>
+                <form id="form-create-user" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Nombre Usuario<b>*</b></label>
+                                <input type="text" id="nombre_usuario" class="form-control" placeholder="Nombre del Usuario">
+                                <small style="color:red; display:none" id="lbl_nombre">* Este campo es requerido</small>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" id="email" class="form-control" placeholder="Email">
-                            <small style="color:red; display:none" id="lbl_email">* Este campo es requerido</small>
-                            <small style="color:red; display:none" id="lbl_email_invalid">* El email no es válido</small>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="email" class="form-control" placeholder="Email">
+                                <small style="color:red; display:none" id="lbl_email">* Este campo es requerido</small>
+                                <small style="color:red; display:none" id="lbl_email_invalid">* El email no es válido</small>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Rol</label>
-                            <select name="rol" id="rol" class="form-control" required>
-                                <?php
-                                foreach ($roles_datos as $roles_datos) { ?>
-                                    <option value="<?php echo $roles_datos['id_rol'] ?>"><?php echo $roles_datos['rol'] ?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
-                            <small style="color:red; display:none" id="lbl_rol">* Este campo es requerido</small>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Contraseña</label>
-                            <input type="passsword" class="form-control" name="password_user" id="contraseña" required>
-                            <small style="color:red; display:none" id="lbl_contraseña">* Este campo es requerido</small>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Repita la contraseña</label>
-                            <input type="password" class="form-control" name="password_repeat" id="repita_contraseña" required>
-                            <small style="color:red; display:none" id="lbl_repita_contraseña">* Este campo es requerido</small>
-                            <small style="color:red; display:none" id="lbl_contraseña_no_coincide">* Las contraseñas no coinciden</small>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="">Imagen del producto:</label>
-                            <input type="file" name="image" class="form-control" id="file">
-                            <br>
-                            <output id="list"></output>
-                            <script>
-                                function archivo(evt) {
-                                    var files = evt.target.files; // FileList object
-                                    // Obtenemos la imagen del campo "file".
-                                    for (var i = 0, f; f = files[i]; i++) {
-                                        //Solo admitimos imágenes.
-                                        if (!f.type.match('image.*')) {
-                                            continue;
-                                        }
-                                        var reader = new FileReader();
-                                        reader.onload = (function(theFile) {
-                                            return function(e) {
-                                                // Insertamos la imagen
-                                                document.getElementById("list").innerHTML = ['<img class="thumb thumbnail" src="', e.target.result, '" width="100%" title="', (theFile.name), '"/>'].join('');
-                                            };
-                                        })(f);
-                                        reader.readAsDataURL(f);
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Rol</label>
+                                <select name="rol" id="rol" class="form-control" required>
+                                    <?php
+                                    foreach ($roles_datos as $roles_datos) { ?>
+                                        <option value="<?php echo $roles_datos['id_rol'] ?>"><?php echo $roles_datos['rol'] ?></option>
+                                    <?php
                                     }
-                                }
-                                document.getElementById('file').addEventListener('change', archivo, false);
-                            </script>
+                                    ?>
+                                </select>
+                                <small style="color:red; display:none" id="lbl_rol">* Este campo es requerido</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Contraseña</label>
+                                <input type="passsword" class="form-control" name="password_user" id="contraseña" required>
+                                <small style="color:red; display:none" id="lbl_contraseña">* Este campo es requerido</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Repita la contraseña</label>
+                                <input type="password" class="form-control" name="password_repeat" id="repita_contraseña" required>
+                                <small style="color:red; display:none" id="lbl_repita_contraseña">* Este campo es requerido</small>
+                                <small style="color:red; display:none" id="lbl_contraseña_no_coincide">* Las contraseñas no coinciden</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Imagen del producto:</label>
+                                <input type="file" name="image" class="form-control" id="file">
+                                <br>
+                                <output id="list"></output>
+                                <script>
+                                    function archivo(evt) {
+                                        var files = evt.target.files; // FileList object
+                                        // Obtenemos la imagen del campo "file".
+                                        for (var i = 0, f; f = files[i]; i++) {
+                                            //Solo admitimos imágenes.
+                                            if (!f.type.match('image.*')) {
+                                                continue;
+                                            }
+                                            var reader = new FileReader();
+                                            reader.onload = (function(theFile) {
+                                                return function(e) {
+                                                    // Insertamos la imagen
+                                                    document.getElementById("list").innerHTML = ['<img class="thumb thumbnail" src="', e.target.result, '" width="100%" title="', (theFile.name), '"/>'].join('');
+                                                };
+                                            })(f);
+                                            reader.readAsDataURL(f);
+                                        }
+                                    }
+                                    document.getElementById('file').addEventListener('change', archivo, false);
+                                </script>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -440,15 +442,17 @@ include '../app/controllers/roles/listado_de_roles.php';
 </script>
 <script>
     $('#btn_create').click(function() {
-        // Ocultar todos los mensajes de error al iniciar
+        // Ocultar mensajes de error al iniciar
         $('small').css('display', 'none');
+
         var nombre_usuario = $('#nombre_usuario').val();
         var email = $('#email').val();
         var rol = $('#rol').val();
         var contraseña = $('#contraseña').val();
         var repita_contraseña = $('#repita_contraseña').val();
+        var file = document.getElementById('file').files[0];
 
-        // Función para validar email
+        // Validaciones
         function validarEmail(email) {
             var re = /\S+@\S+\.\S+/;
             return re.test(email);
@@ -476,29 +480,39 @@ include '../app/controllers/roles/listado_de_roles.php';
             $('#repita_contraseña').focus();
             $('#lbl_contraseña_no_coincide').css('display', 'block');
         } else {
-            // Si todo está bien, hacer la petición AJAX
-            $.get('../app/controllers/usuarios/verificar.php', {
-                nombre_usuario: nombre_usuario,
-                email: email,
-                rol: rol,
-                contraseña: contraseña,
-                repita_contraseña: repita_contraseña
-            }, function(response) {
-                var datos = JSON.parse(response);
-                if (datos.status === 'error') {
-                    alert(datos.message);
-                } else {
-                    var url = "../app/controllers/usuarios/create.php";
-                    $.get(url, {
-                        nombre_usuario: nombre_usuario,
-                        email: email,
-                        rol: rol,
-                        contraseña: contraseña,
-                        repita_contraseña: repita_contraseña
-                    }, function(datos) {
-                        $('#respuesta').html(datos);
-                    });
-                }
+            // Crear el objeto FormData
+            var formData = new FormData();
+            formData.append('nombre_usuario', nombre_usuario);
+            formData.append('email', email);
+            formData.append('rol', rol);
+            formData.append('contraseña', contraseña);
+            formData.append('repita_contraseña', repita_contraseña);
+            if (file) {
+                formData.append('image', file); // Agregar la imagen
+            }
+
+            $.ajax({
+                url: '../app/controllers/usuarios/create.php',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(datos) {
+                    if (datos.trim() === "registrado") {
+                        // Mostrar el mensaje de éxito
+
+
+                        // Cerrar el modal
+                        $('#modal-create').modal('hide');
+
+                        // Opcional: Recargar la tabla o el contenido que muestra la lista de usuarios
+                        location.reload();
+                    } else {
+                        // Mostrar el mensaje de error
+                        alert("No se pudo registrar el usuario");
+                    }
+                },
+
             });
         }
     });
