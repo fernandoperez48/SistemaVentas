@@ -312,18 +312,16 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                             </div>
                                         </div>
                                     </div>
-
-                                    <br>
-                                    <div class="form-group">
-                                        <a href="index.php" class="btn btn-secondary">Cancelar</a>
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
-                                    </div>
-                                </form>
-
                             </div>
                         </div>
 
 
+                        <br>
+                        <div class="form-group">
+                            <a href="index.php" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                        </form>
                     </div>
                 </div>
 

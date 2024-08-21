@@ -20,7 +20,7 @@ if ($mysqli->query($sql) === TRUE) {
     session_start();
     $_SESSION['mensaje'] = "Se registró el producto correctamente";
     $_SESSION['icono'] = "success";
-    header('location: ' . $URL . 'envios/');
+    header('location: ' . $URL . './envios/');
 } else {
     //echo "No se guardó correctamente";
     session_start();

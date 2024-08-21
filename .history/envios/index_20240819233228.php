@@ -317,7 +317,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                                 $cantidad_total = 0;
                                                                                                 $precio_unitario_total = 0;
                                                                                                 $precio_total = 0;
-                                                                                                $nro_venta = $envios_datos['nro_venta'];
+                                                                                                $nro_venta = $ventas_datos['nro_venta'];
                                                                                                 $sql_carrito = "SELECT *, pro.nombre AS nombre_producto, pro.descripcion AS descripcion, pro.precio_venta AS precio_venta, pro.stock AS stock, pro.id_producto AS id_producto 
                                                                                                                     FROM tb_carrito AS carr 
                                                                                                                     INNER JOIN tb_almacen AS pro ON carr.id_producto = pro.id_producto 

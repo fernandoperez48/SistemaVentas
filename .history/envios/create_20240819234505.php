@@ -265,7 +265,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                     <div class="card-body" style="display: block;">
                         <div class="row">
                             <div class="col-md-12">
-                                <form action="../app/controllers/envios/create.php" method="post" enctype="multipart/form-data">
+                                <form action="./app/controllers/envios/create.php" method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -312,18 +312,16 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                             </div>
                                         </div>
                                     </div>
-
-                                    <br>
-                                    <div class="form-group">
-                                        <a href="index.php" class="btn btn-secondary">Cancelar</a>
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
-                                    </div>
-                                </form>
-
                             </div>
                         </div>
 
 
+                        <br>
+                        <div class="form-group">
+                            <a href="index.php" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                        </form>
                     </div>
                 </div>
 
