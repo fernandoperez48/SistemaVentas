@@ -70,7 +70,8 @@ include '../app/controllers/roles/listado_de_roles.php';
                                     foreach ($usuarios_datos as $usuarios_datos) {
                                         $id_usuario = $usuarios_datos['id_usuarios'];
                                         $nombre_usuario = $usuarios_datos['nombres'];
-                                        $imagen_usuario = $usuarios_datos['imagen']; ?>
+                                        $imagen_usuario = $usuarios_datos['imagen'];
+                                        $id_rol_usuario = $usuarios_datos['id_rol']; ?>
                                         <tr>
                                             <td>
                                                 <center><?php echo $contador = $contador + 1; ?></center>
@@ -148,11 +149,12 @@ include '../app/controllers/roles/listado_de_roles.php';
                                     Editar
                                 </button>
                                 <!-- modal para actualizar usuarios-->
+
                                 <div class="modal fade" id="modal-update<?php echo $id_usuario; ?>">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header" style="background-color:darkgreen; color:white">
-                                                <h4 class="modal-title">Actualizacion del usuario</h4>
+                                                <h4 class="modal-title">Actualización del usuario</h4>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -173,18 +175,21 @@ include '../app/controllers/roles/listado_de_roles.php';
                                                             <small style="color:red; display:none" id="lbl_email<?php echo $id_usuario; ?>">* Este campo es requerido</small>
                                                         </div>
                                                     </div>
+
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="">Rol</label>
                                                             <select name="rolupdate" id="rolupdate<?php echo $id_usuario; ?>" class="form-control" required>
                                                                 <?php
+                                                                $rol_usuario_actual = $id_rol_usuario; // Asegúrate de que $usuario tenga el rol actual
+
                                                                 foreach ($roles_datos as $roles_datosupdate) { ?>
-                                                                    <option value="<?php echo $roles_datosupdate['id_rol'] ?>"><?php echo $roles_datosupdate['rol'] ?></option>
+                                                                    <option value="<?php echo $roles_datosupdate['id_rol'] ?>" <?php echo ($roles_datosupdate['id_rol'] == $rol_usuario_actual) ? 'selected' : ''; ?>><?php echo $roles_datosupdate['rol'] ?></option>
                                                                 <?php
                                                                 }
                                                                 ?>
                                                             </select>
-                                                            <small style="color:red; display:none" id="lbl_rolupdate">* Este campo es requerido</small>
+                                                            <small style="color:red; display:none" id="lbl_rolupdate<?php echo $id_usuario; ?>">* Este campo es requerido</small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -195,11 +200,43 @@ include '../app/controllers/roles/listado_de_roles.php';
                                                             <input type="text" class="form-control" name="password_user" id="contraseña<?php echo $id_usuario; ?>" required>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="">Repita la contraseña</label>
-                                                        <input type="text" class="form-control" name="password_repeat" id="repita_contraseña<?php echo $id_usuario; ?>" required>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="">Repita la contraseña</label>
+                                                            <input type="text" class="form-control" name="password_repeat" id="repita_contraseña<?php echo $id_usuario; ?>" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="">Imagen del producto:</label>
+                                                            <input type="file" name="image" class="form-control" id="fileupdate<?php echo $id_usuario; ?>">
+                                                            <br>
+                                                            <output id="list<?php echo $id_usuario; ?>"></output>
+                                                            <script>
+                                                                function archivo<?php echo $id_usuario; ?>(evt) {
+                                                                    var files = evt.target.files; // FileList object
+                                                                    // Obtenemos la imagen del campo "fileupdate".
+                                                                    for (var i = 0, f; f = files[i]; i++) {
+                                                                        //Solo admitimos imágenes.
+                                                                        if (!f.type.match('image.*')) {
+                                                                            continue;
+                                                                        }
+                                                                        var reader = new FileReader();
+                                                                        reader.onload = (function(theFile) {
+                                                                            return function(e) {
+                                                                                // Insertamos la imagen
+                                                                                document.getElementById("list<?php echo $id_usuario; ?>").innerHTML = ['<img class="thumb thumbnail" src="', e.target.result, '" width="100%" title="', (theFile.name), '"/>'].join('');
+                                                                            };
+                                                                        })(f);
+                                                                        reader.readAsDataURL(f);
+                                                                    }
+                                                                }
+                                                                document.getElementById('fileupdate<?php echo $id_usuario; ?>').addEventListener('change', archivo<?php echo $id_usuario; ?>, false);
+                                                            </script>
+                                                        </div>
                                                     </div>
                                                 </div>
+
                                             </div>
 
                                             <div class="modal-footer justify-content-between">
@@ -211,14 +248,23 @@ include '../app/controllers/roles/listado_de_roles.php';
                                     </div>
                                     <!-- /.modal-dialog -->
                                 </div>
+
                                 <script>
                                     $('#btn_update<?php echo $id_usuario; ?>').click(function() {
-                                        var id_usuario = '<?php echo $id_usuario; ?>';
-                                        var nombre_usuario = $('#nombre_usuario<?php echo $id_usuario; ?>').val();
-                                        var email = $('#email<?php echo $id_usuario; ?>').val();
-                                        var rolupdate = $('#rolupdate<?php echo $id_usuario; ?>').val();
-                                        var contraseña = $('#contraseña<?php echo $id_usuario; ?>').val();
-                                        var repita_contraseña = $('#repita_contraseña<?php echo $id_usuario; ?>').val();
+                                        let id_usuario = '<?php echo $id_usuario; ?>';
+                                        let nombre_usuario = $('#nombre_usuario<?php echo $id_usuario; ?>').val();
+                                        let email = $('#email<?php echo $id_usuario; ?>').val();
+                                        let rolupdate = $('#rolupdate<?php echo $id_usuario; ?>').val();
+                                        let contraseña = $('#contraseña<?php echo $id_usuario; ?>').val();
+                                        let repita_contraseña = $('#repita_contraseña<?php echo $id_usuario; ?>').val();
+                                        let file = document.getElementById('fileupdate<?php echo $id_usuario; ?>').files[0];
+
+                                        // Validaciones
+                                        function validarEmail(email) {
+                                            let re = /\S+@\S+\.\S+/;
+                                            return re.test(email);
+                                        }
+
                                         // Verificar si todos los campos requeridos están llenos
                                         if (nombre_usuario === '' || email === '' || rolupdate === '' || contraseña === '' || repita_contraseña === '') {
                                             alert('Todos los campos marcados con * son obligatorios.');
@@ -226,33 +272,45 @@ include '../app/controllers/roles/listado_de_roles.php';
                                             // Validar si las contraseñas no coinciden
                                             alert('Las contraseñas no coinciden. Por favor, verifícalas.');
                                         } else {
-                                            // Realizar la solicitud AJAX para enviar los datos actualizados
+
+                                            // Crear el objeto FormData
+                                            let formData = new FormData();
+                                            formData.append('id_usuario', id_usuario);
+                                            formData.append('nombre_usuario', nombre_usuario);
+                                            formData.append('email', email);
+                                            formData.append('rolupdate', rolupdate);
+                                            formData.append('contraseña', contraseña);
+                                            formData.append('repita_contraseña', repita_contraseña);
+                                            if (file) {
+                                                formData.append('image', file); // Agregar la imagen
+                                            }
+
                                             $.ajax({
-                                                type: "POST", // Cambiar a POST para enviar datos sensibles
-                                                url: "../app/controllers/usuarios/update.php",
-                                                data: {
-                                                    id_usuario: id_usuario,
-                                                    nombre_usuario: nombre_usuario,
-                                                    email: email,
-                                                    rolupdate: rolupdate,
-                                                    contraseña: contraseña,
-                                                    repita_contraseña: repita_contraseña
+                                                url: '../app/controllers/usuarios/update.php',
+                                                type: 'POST',
+                                                data: formData,
+                                                contentType: false,
+                                                processData: false,
+                                                success: function(datos) {
+                                                    if (datos.trim() === "actualizado") {
+                                                        // Mostrar el mensaje de éxito
+
+                                                        // Cerrar el modal
+                                                        $('#modal-update<?php echo $id_usuario; ?>').modal('hide');
+
+                                                        // Opcional: Recargar la tabla o el contenido que muestra la lista de usuarios
+                                                        location.reload();
+                                                    } else {
+                                                        // Mostrar el mensaje de error
+                                                        alert("No se pudo registrar el usuario");
+                                                    }
                                                 },
-                                                success: function(response) {
-                                                    // Manejar la respuesta del servidor
-                                                    $('#respuesta_update<?php echo $id_usuario; ?>').html(response);
-                                                    console.log("Solicitud AJAX exitosa. Respuesta del servidor:", response);
-                                                },
-                                                error: function(xhr, textStatus, errorThrown) {
-                                                    console.log("Error en la solicitud AJAX:");
-                                                    console.log("Estado: " + textStatus);
-                                                    console.log("Error: " + errorThrown);
-                                                    console.log("Respuesta del servidor: " + xhr.responseText);
-                                                }
+
                                             });
                                         }
                                     });
                                 </script>
+
                                 <div id="respuesta_update<?php echo $id_usuario; ?>"></div>
                             </div>
 
@@ -339,7 +397,7 @@ include '../app/controllers/roles/listado_de_roles.php';
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">Imagen del producto:</label>
+                                <label for="">Imagen del usuario:</label>
                                 <input type="file" name="image" class="form-control" id="file">
                                 <br>
                                 <output id="list"></output>
@@ -445,16 +503,16 @@ include '../app/controllers/roles/listado_de_roles.php';
         // Ocultar mensajes de error al iniciar
         $('small').css('display', 'none');
 
-        var nombre_usuario = $('#nombre_usuario').val();
-        var email = $('#email').val();
-        var rol = $('#rol').val();
-        var contraseña = $('#contraseña').val();
-        var repita_contraseña = $('#repita_contraseña').val();
-        var file = document.getElementById('file').files[0];
+        let nombre_usuario = $('#nombre_usuario').val();
+        let email = $('#email').val();
+        let rol = $('#rol').val();
+        let contraseña = $('#contraseña').val();
+        let repita_contraseña = $('#repita_contraseña').val();
+        let file = document.getElementById('file').files[0];
 
         // Validaciones
         function validarEmail(email) {
-            var re = /\S+@\S+\.\S+/;
+            let re = /\S+@\S+\.\S+/;
             return re.test(email);
         }
 
