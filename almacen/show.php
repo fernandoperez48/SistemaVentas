@@ -29,7 +29,6 @@ include '../app/controllers/almacen/cargar_producto.php';
                 <div class="card card-outline card-danger">
                     <div class="card-header" style="background-color:orange">
                         <h3 class="card-title">Datos del Producto</h3>
-
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                             </button>
@@ -40,30 +39,40 @@ include '../app/controllers/almacen/cargar_producto.php';
                     <div class="card-body" style="display: block;">
                         <div class="row">
                             <div class="col-md-12">
-
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="">Codigo:</label>
                                             <input type="text" class="form-control" value="<?php echo $codigo; ?>" disabled>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="">Categoria:</label>
                                             <div style="display: flex;">
-
                                                 <input type="text" class="form-control" value="<?php echo $nombre_categoria; ?>" disabled>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="">Nombre del producto:</label>
                                             <input type="text" name="nombre" value="<?php echo $nombre; ?>" class="form-control" disabled>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="">Proveedor:</label>
+                                            <input type="text" name="proveedor" value="<?php echo $proveedor; ?>" class="form-control" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="">Usuario</label>
+                                            <input type="text" class="form-control" value="<?php echo $email ?>" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="">Imagen del producto:</label>
@@ -72,7 +81,6 @@ include '../app/controllers/almacen/cargar_producto.php';
                                                 </center>
                                             </div>
                                         </div>
-
                                         <!-- Modal -->
                                         <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -89,53 +97,46 @@ include '../app/controllers/almacen/cargar_producto.php';
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="">Usuario</label>
-                                            <input type="text" class="form-control" value="<?php echo $email ?>" disabled>
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Descripcion del producto:</label>
                                             <textarea name="descripcion" id="" cols="30" rows="3" class="form-control" disabled><?php echo $descripcion; ?></textarea>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <div class="form-group">
                                             <label for="">Stock:</label>
                                             <input type="number" name="stock" class="form-control" value="<?php echo $stock; ?>" disabled>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <div class="form-group">
                                             <label for="">Stock minimo:</label>
                                             <input type="number" name="stock_minimo" class="form-control" disabled value="<?php echo $stock_minimo; ?>">
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <div class="form-group">
                                             <label for="">Stock maximo:</label>
                                             <input type="number" name="stock_maximo" class="form-control" disabled value="<?php echo $stock_maximo; ?>">
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <div class="form-group">
                                             <label for="">Precio compra:</label>
                                             <input type="number" name="precio_compra" class="form-control" disabled value="<?php echo $precio_compra; ?>">
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <div class="form-group">
                                             <label for="">Precio venta:</label>
                                             <input type="number" name="precio_venta" class="form-control" disabled value="<?php echo $precio_venta; ?>">
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <div class="form-group">
                                             <label for="">Fecha de carga:</label>
                                             <input type="date" name="fecha_carga" class="form-control" disabled value="<?php echo $fecha_carga; ?>">
@@ -147,16 +148,19 @@ include '../app/controllers/almacen/cargar_producto.php';
                                             <input type="date" name="fecha_ultimo_ingreso" class="form-control" disabled value="<?php echo $fecha_ultimo_ingreso; ?>">
                                         </div>
                                     </div>
+
+                                    <br>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <a href="index.php" class="btn btn-secondary">Volver</a>
+
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
 
-
-                        <br>
-                        <div class="form-group">
-                            <a href="index.php" class="btn btn-secondary">Volver</a>
-
-                        </div>
 
                     </div>
                 </div>
