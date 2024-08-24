@@ -2,12 +2,12 @@
 
 if ($id_rol == 1 || $id_rol == 4) {
 
-    $sql_proveedores = "SELECT p.*, d.*, ci.nombre as iva, ci.id as idIva
+    $sql_proveedores = "SELECT p.*, d.*, ci.nombre as iva
                     FROM tb_proveedores as p
                     INNER JOIN tb_domicilios as d ON p.id_domicilio = d.id_domicilio
                     INNER JOIN tb_condicion_iva as ci ON ci.id = p.condicion_iva";
 } else {
-    $sql_proveedores = "SELECT p.*, d.*, ci.nombre as iva, ci.id as idIva
+    $sql_proveedores = "SELECT p.*, d.*, ci.nombre as iva
                         FROM tb_proveedores as p
                         INNER JOIN tb_domicilios as d ON p.id_domicilio = d.id_domicilio
                         INNER JOIN tb_condicion_iva as ci ON ci.id = p.condicion_iva
