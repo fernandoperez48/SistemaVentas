@@ -288,15 +288,7 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group">
                                                                                     <label>Condición IVA <b>*</b></label>
-                                                                                    <select name="" id="iva<?php echo $id_proveedor; ?>" class="form-control" required>
-                                                                                        <option value="<?php echo $proveedores_datos['idIva']; ?>" selected><?php echo $proveedores_datos['iva']; ?></option>
-                                                                                        <option value="1">Consumidor Final</option>
-                                                                                        <option value="2">Exento</option>
-                                                                                        <option value="3">Exterior</option>
-                                                                                        <option value="4">IVA NO Alcanzado</option>
-                                                                                        <option value="5">Monotributista</option>
-                                                                                        <option value="6">Responsable Inscripto</option>
-                                                                                    </select>
+                                                                                    <input type="text" id="iva<?php echo $id_proveedor; ?>" class="form-control" value="<?php echo $proveedores_datos['iva']; ?>">
                                                                                     <small style="color:red; display:none" id="lbl_iva<?php echo $id_proveedor; ?>">* Este campo es requerido</small>
                                                                                 </div>
                                                                             </div>

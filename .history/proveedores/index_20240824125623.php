@@ -288,8 +288,8 @@ include '../app/controllers/paises/listado_de_paises.php'; ?>
                                                                             <div class="col-md-4">
                                                                                 <div class="form-group">
                                                                                     <label>Condición IVA <b>*</b></label>
-                                                                                    <select name="" id="iva<?php echo $id_proveedor; ?>" class="form-control" required>
-                                                                                        <option value="<?php echo $proveedores_datos['idIva']; ?>" selected><?php echo $proveedores_datos['iva']; ?></option>
+                                                                                    <select name="" id="iva <?php echo $id_proveedor; ?>" class="form-control" value="<?php echo $proveedores_datos['iva']; ?>"  required>
+                                                                                        <option value="" selected>Seleccione condición</option>
                                                                                         <option value="1">Consumidor Final</option>
                                                                                         <option value="2">Exento</option>
                                                                                         <option value="3">Exterior</option>
