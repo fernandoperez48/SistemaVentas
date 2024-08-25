@@ -98,6 +98,12 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                 <center>Descripcion</center>
                                             </th>
                                             <th>
+                                                <center>Talle</center>
+                                            </th>
+                                            <th>
+                                                <center>Color</center>
+                                            </th>
+                                            <th>
                                                 <center>Stock</center>
                                             </th>
                                             <th>
@@ -162,6 +168,12 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                 </td>
                                                 <td>
                                                     <?php echo $productos_datos['descripcion']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $productos_datos['talle']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $productos_datos['color']; ?>
                                                 </td>
                                                 <?php
                                                 $stock_actual = $productos_datos['stock'];

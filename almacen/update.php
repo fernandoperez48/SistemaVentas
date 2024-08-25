@@ -94,13 +94,25 @@ include '../app/controllers/almacen/cargar_producto.php';
                                         </div>
                                         <div class="col-md-5">
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">Nombre del producto:</label>
                                                         <input type="text" value="<?php echo $nombre; ?>" name="nombre" class="form-control" required>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="">Talle:</label>
+                                                        <input type="text" name="talle" value="<?php echo $talle; ?>" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="">Color:</label>
+                                                        <input type="text" name="color" value="<?php echo $color; ?>" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">Proveedor:</label>
                                                         <input type="text" name="proveedor" value="<?php echo $proveedor; ?>" class="form-control" disabled>
@@ -163,7 +175,9 @@ include '../app/controllers/almacen/cargar_producto.php';
                                                         <input type="text" name="image_text" value="<?php echo $imagen; ?>" hidden>
                                                         <br>
                                                         <output id="list">
-                                                            <img src="<?php echo $URL . "/almacen/img/img_productos" . $productos_datos['imagen']; ?>" width="150px">
+                                                            <center>
+                                                                <img src="<?php echo $URL . "/almacen/img/img_productos" . $productos_datos['imagen']; ?>" width="150px">
+                                                            </center>
                                                         </output>
                                                         <script>
                                                             function archivo(evt) {
@@ -204,13 +218,14 @@ include '../app/controllers/almacen/cargar_producto.php';
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <a href="index.php" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-success">Actualizar</button>
+                </div>
+                </form>
             </div>
             <br>
-            <div class="form-group">
-                <a href="index.php" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-success">Actualizar</button>
-            </div>
-            </form>
+
         </div>
     </div>
 
