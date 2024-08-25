@@ -3,7 +3,7 @@ include '../app/config.php';
 include '../layaout/sesion.php';
 include '../layaout/parte1.php';
 include '../app/controllers/ventas/listado_de_ventas.php';
-
+include '../app/controllers/envios/listado_de_estados.php';
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="background-color:gray">
@@ -272,6 +272,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                 <label for="">Usuario</label>
                                                 <input type="text" class="form-control" value="<?php echo $email_session ?>" disabled>
                                                 <input type="text" name="id_usuario" value="<?php echo $id_usuarios_sesion ?>" hidden>
+                                                <input type="text" name="nombres_usuario" value="<?php echo $nombres_sesion ?>" hidden>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -301,14 +302,19 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                 <input type="date" name="fecha_envio" id="fecha_envio" class="form-control" required>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="estado">Estado</label>
-                                                <select class="form-control" name="estado" id="estado">
-                                                    <option value="Pendiente de envio">Pendiente de envío</option>
-                                                    <option value="Enviado">Enviado</option>
-                                                    <option value="Entregado">Entregado</option>
-                                                </select>
+                                                <label for="">Estado:</label>
+                                                <div style="display: flex;">
+                                                    <select name="estado" id="" class="form-control" required>
+                                                        <?php
+                                                        foreach ($estado_envios_datos as $estado_envios_datos) { ?>
+                                                            <option value="<?php echo $estado_envios_datos['nombre_estado']; ?>"><?php echo $estado_envios_datos['nombre_estado']; ?></option>
+                                                            ?>
+                                                        <?php } ?>
+                                                    </select>
+                                                    <a href="<?php echo $URL; ?>/categorias" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

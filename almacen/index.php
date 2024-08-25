@@ -36,9 +36,9 @@ include '../app/controllers/almacen/listado_de_productos.php';
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <div class="card col-md-4">
+                            <div class="card col-md-12">
                                 <div class="card-header" style="background-color:#ffe8cd">
-                                    <h3 class="card-title">Filtros de Precios</h3>
+                                    <h3 class="card-title">Filtros</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-plus"></i>
@@ -48,27 +48,41 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body collapse">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="priceType">Tipo de Precio:</label>
-                                            <div>
-                                                <input type="checkbox" id="priceCompra" checked> Precio Compra
-                                                <input type="checkbox" id="priceVenta"> Precio Venta
+                                    <div class="card col-md-2">
+                                        <div class="card-header" style="background-color:#ffe8cd">
+                                            <h3 class="card-title">Filtros de Precios</h3>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
                                             </div>
                                         </div>
-
-                                        <div class="row container-fluid">
-                                            <div class="form-group col-md-5">
-                                                <label for="minPrice">Precio mínimo:</label>
-                                                <input type="number" id="minPrice" class="form-control" placeholder="Precio mínimo">
-                                            </div>
-                                            <div class="form-group col-md-5">
-                                                <label for="maxPrice">Precio máximo:</label>
-                                                <input type="number" id="maxPrice" class="form-control" placeholder="Precio máximo">
+                                        <!-- /.card-header -->
+                                        <div class="card-body collapse show">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <div class="col-md-6">
+                                                            <input type="checkbox" id="priceCompra" checked> Precio Compra
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input type="checkbox" id="priceVenta"> Precio Venta
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row container-fluid">
+                                                    <div class="form-group col-md-5">
+                                                        <label for="minPrice">Precio mínimo:</label>
+                                                        <input type="number" id="minPrice" class="form-control" placeholder="Precio mínimo">
+                                                    </div>
+                                                    <div class="form-group col-md-5">
+                                                        <label for="maxPrice">Precio máximo:</label>
+                                                        <input type="number" id="maxPrice" class="form-control" placeholder="Precio máximo">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
 
