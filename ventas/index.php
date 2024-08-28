@@ -64,6 +64,9 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                     <center>Estado</center>
                                                 </th>
                                             <?php } ?>
+                                            <th>
+                                                <center>Factura</center>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -368,6 +371,9 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                     }
                                                                 }
                                                             </script>
+                                                        </td>
+                                                        <td>
+                                                            <a href="factura1.php?nro_venta=<?php echo $nro_venta;?>" class="btn btn-success"><i class="fa fa-print"> Imprimir</i></a>
                                                         </td>
                                                     <?php } ?>
                                                 </tr>

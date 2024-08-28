@@ -20,3 +20,5 @@ if ($result_ventas) {
         $mostrar_ventas_datos[] = $row;
     }
 }
+
+$qr="";
