@@ -36,7 +36,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <div class="card col-md-12">
+                            <!-- <div class="card col-md-12">
                                 <div class="card-header" style="background-color:#ffe8cd">
                                     <h3 class="card-title">Filtros</h3>
                                     <div class="card-tools">
@@ -44,9 +44,9 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                             <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
-                                    <!-- /.card-tools -->
+                                    
                                 </div>
-                                <!-- /.card-header -->
+                                
                                 <div class="card-body collapse">
                                     <div class="card col-md-2">
                                         <div class="card-header" style="background-color:#ffe8cd">
@@ -57,7 +57,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                 </button>
                                             </div>
                                         </div>
-                                        <!-- /.card-header -->
+                                        
                                         <div class="card-body collapse show">
                                             <div class="col-md-12">
                                                 <div class="form-group">
@@ -84,7 +84,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="table table-responsive">
                                 <table id="example1" class="table table-bordered table-striped table-sm">
@@ -157,7 +157,7 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                     // Asumiendo que $productos_datos['imagen'] contiene el valor del campo 'imagen'
                                                     $imageSrc = empty($productos_datos['imagen']) || is_null($productos_datos['imagen']) ? $URL . '/almacen/img/img_productossinimagen.jpg' : $URL . '/almacen/img/img_productos' . $productos_datos['imagen'];
                                                     ?>
-                                                    <img src="<?php echo $imageSrc; ?>" width="50px" data-toggle="modal" data-target="#imageModal<?php echo $productos_datos['id_producto']; ?>">
+                                                    <img src="<?php echo $imageSrc; ?>" width="50px" height="50px" data-toggle="modal" data-target="#imageModal<?php echo $productos_datos['id_producto']; ?>">
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="imageModal<?php echo $productos_datos['id_producto']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -180,8 +180,16 @@ include '../app/controllers/almacen/listado_de_productos.php';
                                                 <td>
                                                     <?php echo $productos_datos['nombre']; ?>
                                                 </td>
+                                                <?php
+                                                $descripcion = $productos_datos['descripcion'];
+                                                $maxLength = 60; // Número máximo de caracteres que deseas mostrar
+
+                                                if (strlen($descripcion) > $maxLength) {
+                                                    $descripcion = substr($descripcion, 0, $maxLength) . '...'; // Agrega '...' al final si el texto es más largo
+                                                }
+                                                ?>
                                                 <td>
-                                                    <?php echo $productos_datos['descripcion']; ?>
+                                                    <?php echo $descripcion; ?>
                                                 </td>
                                                 <td>
                                                     <?php echo $productos_datos['talle']; ?>
@@ -260,6 +268,8 @@ include '../app/controllers/almacen/listado_de_productos.php';
     $(document).ready(function() {
         var table = $("#example1").DataTable({
             "pageLength": 5,
+            searching: true,
+
             language: {
                 "emptyTable": "No hay información",
                 "decimal": "",
@@ -309,31 +319,24 @@ include '../app/controllers/almacen/listado_de_productos.php';
             "dom": '<"top"lfB><"filter-price">rt<"bottom"ip><"clear">'
         });
 
+        // Añadir inputs en los encabezados de las columnas
+        $('#example1 thead tr').clone(true).appendTo('#example1 thead');
+        $('#example1 thead tr:eq(1) th').each(function() {
+            var title = $(this).text().trim();
 
-
-        // Función para filtrar según el rango de precios y el tipo de precio
-        $.fn.dataTable.ext.search.push(
-            function(settings, data, dataIndex) {
-                var min = parseFloat($('#minPrice').val(), 10);
-                var max = parseFloat($('#maxPrice').val(), 10);
-                var priceCompra = parseFloat(data[8].replace(/[^\d.-]/g, '')) || 0; // Índice de columna para precio compra
-                var priceVenta = parseFloat(data[9].replace(/[^\d.-]/g, '')) || 0; // Índice de columna para precio venta
-
-                var filterCompra = $('#priceCompra').is(':checked');
-                var filterVenta = $('#priceVenta').is(':checked');
-
-                if ((filterCompra && (isNaN(min) && isNaN(max) || (isNaN(min) && priceCompra <= max) || (min <= priceCompra && isNaN(max)) || (min <= priceCompra && priceCompra <= max))) ||
-                    (filterVenta && (isNaN(min) && isNaN(max) || (isNaN(min) && priceVenta <= max) || (min <= priceVenta && isNaN(max)) || (min <= priceVenta && priceVenta <= max)))) {
-                    return true;
-                }
-                return false;
+            // Especificar qué columnas no deberían tener filtros
+            if (title !== 'Nro' && title !== 'Imagen' && title !== 'Acciones') {
+                $(this).html('<input type="text" placeholder="Ingresar ' + '" style="width: 80%; box-sizing: border-box;" />');
+            } else {
+                $(this).html(''); // Deja la celda vacía para "Nro" y "Imagen"
             }
-        );
 
-        // Event listeners para los campos de filtro de precio
-        $('#minPrice, #maxPrice, #priceCompra, #priceVenta').change(function() {
-            table.draw();
+            $('input', this).on('keyup change', function() {
+                table.column($(this).parent().index() + ':visible').search(this.value).draw();
+            });
         });
+
+
 
         // Añadir los botones a DataTables
         table.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
