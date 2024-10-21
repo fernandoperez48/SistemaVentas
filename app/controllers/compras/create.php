@@ -3,7 +3,7 @@
 include '../../config.php';
 
 // Verificar si los parámetros existen antes de acceder a ellos
-$nro_compra = isset($_GET['nro_compra']) ? $_GET['nro_compra'] : '';
+//$nro_compra = isset($_GET['nro_compra']) ? $_GET['nro_compra'] : '';
 $id_proveedor = isset($_GET['id_proveedor']) ? $_GET['id_proveedor'] : '';
 $fecha_operacion = isset($_GET['fecha_operacion']) ? $_GET['fecha_operacion'] : '';
 $ingreso_mercaderia = isset($_GET['ingreso_mercaderia']) ? $_GET['ingreso_mercaderia'] : '';
@@ -18,22 +18,47 @@ $cantidades = isset($_GET['cantidades']) ? json_decode($_GET['cantidades'], true
 $fyh_creacion = date('Y-m-d H:i:s');
 
 $mysqli->begin_transaction();
+// Obtengo el último valor de compra que creé en el detalle de compra
+$sql_max_nro_compra = "SELECT MAX(nro_compra) AS ultimo_nro_compra FROM tb_compras";
+$result = $mysqli->query($sql_max_nro_compra);
 
-// Inserta la compra
-$insert_query = "INSERT INTO tb_compras (nro_compra, fecha_compra_pago, id_proveedor, nro_comprobante, id_usuario, costo, fecha_ingreso_mercaderia, fecha_registro, resultado, explicacion_diferencia) 
-VALUES ('$nro_compra', '$fecha_operacion', '$id_proveedor', '$comprobante', '$id_usuario', '$precio_compra', '$ingreso_mercaderia', '$fyh_creacion', '$resultado', '$explicacion_diferencia')";
+if ($result) {
+    $row = $result->fetch_assoc();
+    $ultimo_nro_compra = $row['ultimo_nro_compra'];
+} else {
+    // Manejar el error de la consulta
+    echo "Error al obtener el último número de compra: " . $mysqli->error;
+    exit(); // Salir si no se puede obtener el último nro_compra
+}
 
-// Ejecutar la consulta de inserción
-if ($mysqli->query($insert_query)) {
+// Actualiza la compra
+$update_query = "UPDATE tb_compras 
+SET 
+    fecha_compra_pago = '$fecha_operacion', 
+    id_proveedor = '$id_proveedor', 
+    nro_comprobante = '$comprobante', 
+    id_usuario = '$id_usuario', 
+    costo = '$precio_compra', 
+    fecha_ingreso_mercaderia = '$ingreso_mercaderia', 
+    fecha_registro = '$fyh_creacion', 
+    resultado = '$resultado', 
+    explicacion_diferencia = '$explicacion_diferencia' 
+WHERE 
+    nro_compra = '$ultimo_nro_compra'";
+
+
+
+// Ejecutar la consulta de actualizacion
+if ($mysqli->query($update_query)) {
     // Inicializamos una variable para verificar si se superó el stock máximo
     $se_supero_maximo = false;
-    // Si la inserción fue exitosa, obtenemos los precios unitarios y actualizamos el stock y el precio de compra
+    // Si la actualizacion fue exitosa, obtenemos los precios unitarios y actualizamos el stock y el precio de compra
     for ($i = 0; $i < count($id_productos); $i++) {
         $id_producto = $id_productos[$i];
         $cantidad = $cantidades[$i];
 
         // Obtener el precio unitario del producto desde tb_detalle_compras
-        $precio_unitario = obtenerPrecioUnitario($mysqli, $nro_compra, $id_producto);
+        $precio_unitario = obtenerPrecioUnitario($mysqli, $ultimo_nro_compra, $id_producto);
 
         // Actualizar el stock del producto en la base de datos y precio de compram Y LA ULTIMA FECHA DE INGRESO
         $update_query = "UPDATE tb_almacen SET stock = stock + '$cantidad', precio_compra = '$precio_unitario', fecha_ultimo_ingreso = '$ingreso_mercaderia' WHERE id_producto = '$id_producto'";
@@ -67,9 +92,9 @@ if ($mysqli->query($insert_query)) {
 $mysqli->close();
 
 // Función para obtener el precio unitario de un producto en una compra específica
-function obtenerPrecioUnitario($mysqli, $nro_compra, $id_producto)
+function obtenerPrecioUnitario($mysqli, $ultimo_nro_compra, $id_producto)
 {
-    $query = "SELECT precio_unitario FROM tb_detalle_compras WHERE nro_compra = '$nro_compra' AND id_producto = '$id_producto'";
+    $query = "SELECT precio_unitario FROM tb_detalle_compras WHERE nro_compra = '$ultimo_nro_compra' AND id_producto = '$id_producto'";
     $result = $mysqli->query($query);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
