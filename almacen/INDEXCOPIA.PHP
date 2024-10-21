@@ -4,9 +4,6 @@ include '../layaout/sesion.php';
 include '../layaout/parte1.php';
 include '../app/controllers/almacen/listado_de_productos.php';
 
-include '../app/controllers/categorias/listado_de_categorias.php';
-include '../app/controllers/proveedores/listado_de_proveedores.php';
-
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="background-color:gray">
@@ -185,7 +182,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                                 </td>
                                                 <?php
                                                 $descripcion = $productos_datos['descripcion'];
-                                                $maxLength = 35; // Número máximo de caracteres que deseas mostrar
+                                                $maxLength = 60; // Número máximo de caracteres que deseas mostrar
 
                                                 if (strlen($descripcion) > $maxLength) {
                                                     $descripcion = substr($descripcion, 0, $maxLength) . '...'; // Agrega '...' al final si el texto es más largo
@@ -319,67 +316,27 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                     text: 'Visor de columnas'
                 }
             ],
-            "dom": '<"top"lfB><"filter-price">rt<"bottom"ip><"clear">',
-
-
-
+            "dom": '<"top"lfB><"filter-price">rt<"bottom"ip><"clear">'
         });
 
         // Añadir inputs en los encabezados de las columnas
-
         $('#example1 thead tr').clone(true).appendTo('#example1 thead');
-        $('#example1 thead tr:eq(1) th').each(function(index) {
+        $('#example1 thead tr:eq(1) th').each(function() {
             var title = $(this).text().trim();
 
-            // Crear select para Categoría
-            if (title === 'Categoria') {
-                $(this).html('<select class="form-control" id="selectCategoria" style="width: 80%; height: 30px; font-size: 14px; box-sizing: border-box;"><option value="">...</option></select>');
-                // Añadir opciones de categorías desde PHP
-                <?php foreach ($categorias_datos as $categoria) { ?>
-                    $('#selectCategoria').append('<option value="<?php echo $categoria['nombre_categoria']; ?>"><?php echo $categoria['nombre_categoria']; ?></option>');
-                <?php } ?>
-            }
-            // Crear select para Proveedor
-            else if (title === 'Proveedor') {
-                $(this).html('<select class="form-control" id="selectProveedor" style="width: 80%; height: 30px; font-size: 14px; box-sizing: border-box;"><option value="">...</option></select>');
-                // Añadir opciones de proveedores desde PHP
-                <?php foreach ($proveedores_datos as $proveedor) { ?>
-                    $('#selectProveedor').append('<option value="<?php echo $proveedor['nombre_proveedor']; ?>"><?php echo $proveedor['nombre_proveedor']; ?></option>');
-                <?php } ?>
-            }
-            // Para las demás columnas usar input de búsqueda
-            else if (title !== 'Nro' && title !== 'Imagen' && title !== 'Acciones') {
-                $(this).html('<input type="text" placeholder="Buscar" style="width: 80%; box-sizing: border-box;" />');
+            // Especificar qué columnas no deberían tener filtros
+            if (title !== 'Nro' && title !== 'Imagen' && title !== 'Acciones') {
+                $(this).html('<input type="text" placeholder="Ingresar ' + '" style="width: 80%; box-sizing: border-box;" />');
             } else {
-                $(this).html(''); // Deja la celda vacía para "Nro", "Imagen", y "Acciones"
+                $(this).html(''); // Deja la celda vacía para "Nro" y "Imagen"
             }
 
-            // Filtro para los inputs
             $('input', this).on('keyup change', function() {
                 table.column($(this).parent().index() + ':visible').search(this.value).draw();
             });
-
-            // Filtro para el select de Categoría
-            $('#selectCategoria').on('change', function() {
-                var categoriaIndex = $('#selectCategoria').closest('th').index(); // Obtiene el índice de la columna
-                table.column(categoriaIndex).search(this.value).draw();
-            });
-            // Filtro para el select de Proveedor
-            $('#selectProveedor').on('change', function() {
-                var proveedorIndex = $('#selectProveedor').closest('th').index(); // Obtiene el índice de la columna
-                table.column(proveedorIndex).search(this.value).draw();
-            });
-
-
-            // // Filtro para el select de Proveedor mal hecho
-            // $('#selectProveedor').on('change', function() {
-            //     table.column(index).search(this.value).draw();
-            // });
-
         });
 
-        // Aquí definimos que la fila clonada (segunda fila con los inputs) no sea ordenable
-        $('#example1 thead tr:eq(1) th').removeClass('sorting').off('click');
+
 
         // Añadir los botones a DataTables
         table.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');

@@ -132,10 +132,10 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                                         $precio_total = 0;
                                                                                         $nro_venta = $venta['nro_venta'];
                                                                                         $sql_carrito = "SELECT carr.*, pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, pro.stock as stock, pro.id_producto as id_producto 
-                                                                FROM tb_carrito as carr 
-                                                                INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto 
-                                                                WHERE nro_venta = '$nro_venta' 
-                                                                ORDER BY carr.id_carrito";
+                                                                                        FROM tb_carrito as carr 
+                                                                                        INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto 
+                                                                                        WHERE nro_venta = '$nro_venta' 
+                                                                                        ORDER BY carr.id_carrito";
                                                                                         $resultado_carrito = $mysqli->query($sql_carrito);
 
                                                                                         if ($resultado_carrito) {
@@ -373,8 +373,9 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                             </script>
                                                         </td>
                                                         <td>
-                                                            <center><a href="factura1.php?nro_venta=<?php echo $nro_venta;?>" class="btn btn-success"><i class="fa fa-print"> Imprimir</i></a></center>
+                                                            <a href="factura1.php?nro_venta=<?php echo $nro_venta; ?>" class="btn btn-success" target="_blank"><i class="fa fa-print"> Imprimir</i></a>
                                                         </td>
+
                                                     <?php } ?>
                                                 </tr>
                                             <?php
