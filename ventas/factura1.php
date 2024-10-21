@@ -11,9 +11,15 @@ class PDF extends FPDF
         $this->SetFont('Times', 'B', 20);
         $this->Image('../public/images/logo.jpg', 15, 5, 33);
         $this->setXY(100, 5);
-        $this->Cell(50, 20, 'Factura X', 1, 0, 'C', 0);
+        $this->Cell(40, 20, 'Factura X', 1, 0, 'C', 0);
         $this->Ln(30);
 
+        $this->SetFont('Times', '', 15);
+        $this->Cell(45, 10, 'San Luis 2025', 0, 0, 'C', 0);
+        $this->Ln(5);
+        $this->Cell(45, 10, 'Puerto Deseado', 0, 0, 'C', 0);
+        $this->Ln(5);
+        $this->Cell(45, 10, 'Chubut', 0, 0, 'C', 0);
 
         /*// Añadir datos del cliente
         $this->SetFont('Helvetica', '', 12);
@@ -36,6 +42,8 @@ class PDF extends FPDF
         $this->Cell(0, 10, 'Pagina ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
     }
 }
+
+
 
 
 $data = new Conexion();
@@ -133,8 +141,10 @@ $pdf->nro_factura = '0001-00000001';
 
 $pdf->AddPage();
 $pdf->SetAutoPageBreak(true, 20);
-$pdf->setX(50);
-$pdf->SetFont('Helvetica', 'B', 10);
+
+$pdf->setY(30);
+$pdf->setX(70);
+$pdf->SetFont('Helvetica', 'B', 11);
 
 
 // Obtener el último número de factura
@@ -157,18 +167,19 @@ $stmt_update->execute();
 $pdf->nro_factura = str_pad($nuevo_nro_factura, 8, '0', STR_PAD_LEFT);
 
 // Agregar los datos del cliente en el PDF
-$pdf->Cell(100, 5, 'Cliente: ' . $pdf->nombre_cliente, 0, 1);
-$pdf->setX(50);
-$pdf->Cell(100, 5, 'CUIT: ' . $pdf->cuit_cliente, 0, 1);
-$pdf->setX(50);
-$pdf->Cell(100, 5, 'Domicilio: ' . $pdf->direccion_cliente, 0, 1);
-$pdf->setX(50);
-$pdf->Cell(100, 5, 'Telefono: ' . $pdf->telefono_cliente, 0, 1);
-$pdf->setX(50);
-$pdf->Cell(100, 5, 'Fecha de Compra: ' . $pdf->fecha_compra, 0, 1);
-$pdf->setX(50);
-$pdf->Cell(100, 5, 'Numero de Factura: ' . $pdf->nro_factura, 0, 1);
+$pdf->Cell(130, 8, 'Cliente: ' . $pdf->nombre_cliente, 1, 1);
+$pdf->setX(70);
+$pdf->Cell(130, 8, 'CUIT: ' . $pdf->cuit_cliente, 1, 1);
+$pdf->setX(70);
+$pdf->Cell(130, 8, 'Domicilio: ' . $pdf->direccion_cliente, 1, 1);
+$pdf->setX(70);
+$pdf->Cell(130, 8, 'Telefono: ' . $pdf->telefono_cliente, 1, 1);
+$pdf->setX(70);
+$pdf->Cell(130, 8, 'Fecha de Compra: ' . $pdf->fecha_compra, 1, 1);
+$pdf->setX(70);
+$pdf->Cell(130, 8, 'Numero de Factura: ' . $pdf->nro_factura, 1, 1);
 $pdf->Ln(10);
+
 
 
 
