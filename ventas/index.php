@@ -373,7 +373,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                             </script>
                                                         </td>
                                                         <td>
-                                                            <a href="factura1.php?nro_venta=<?php echo $nro_venta;?>" class="btn btn-success"><i class="fa fa-print"> Imprimir</i></a>
+                                                            <center><a href="factura1.php?nro_venta=<?php echo $nro_venta;?>" class="btn btn-success"><i class="fa fa-print"> Imprimir</i></a></center>
                                                         </td>
                                                     <?php } ?>
                                                 </tr>
