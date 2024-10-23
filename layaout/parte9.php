@@ -463,3 +463,125 @@
     </div>
     <!-- /.sidebar -->
 </aside>
+
+
+
+
+SÍ. aL Día de hoy mi codigo está así: "
+<script>
+    $(document).ready(function() {
+        var table = $("#example1").DataTable({
+            "pageLength": 5,
+            searching: true,
+
+            language: {
+                "emptyTable": "No hay información",
+                "decimal": "",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Productos",
+                "infoEmpty": "Mostrando 0 a 0 de 0 Productos",
+                "infoFiltered": "(Filtrado de _MAX_ total Productos)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Productos",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscador:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "buttons": [{
+                    extend: 'collection',
+                    text: 'Reportes',
+                    orientation: 'landscape',
+                    buttons: [{
+                        text: 'Copiar',
+                        extend: 'copy'
+                    }, {
+                        extend: 'pdf',
+                    }, {
+                        extend: 'csv',
+                    }, {
+                        extend: 'excel',
+                    }, {
+                        text: 'Imprimir',
+                        extend: 'print'
+                    }]
+                },
+                {
+                    extend: 'colvis',
+                    text: 'Visor de columnas'
+                }
+            ],
+            "dom": '<"top"lfB><"filter-price">rt<"bottom"ip><"clear">',
+        });
+
+        // Añadir inputs en los encabezados de las columnas
+
+        $('#example1 thead tr').clone(true).appendTo('#example1 thead');
+        $('#example1 thead tr:eq(1) th').each(function(index) {
+            var title = $(this).text().trim();
+
+            if (title === 'Precio Compra') {
+                // Crear dos inputs para valor numérico en la misma fila
+                $(this).html('<div style="display: flex; gap: 10px;">' +
+                    '<input type="number" class="form-control" placeholder="Min Compra" id="minPriceCompra" style="height: 30px; width: 70px;">' +
+                    '<input type="number" class="form-control" placeholder="Max Compra" id="maxPriceCompra" style="height: 30px; width: 70px;">' +
+                    '</div>');
+            }
+            // Crear select para Categoría
+            else if (title === 'Categoria') {
+                $(this).html('<select class="form-control" id="selectCategoria" style="width: 80%; height: 30px; font-size: 14px; box-sizing: border-box;"><option value="">...</option></select>');
+                // Añadir opciones de categorías desde PHP
+                <?php foreach ($categorias_datos as $categoria) { ?>
+                    $('#selectCategoria').append('<option value="<?php echo $categoria['nombre_categoria']; ?>"><?php echo $categoria['nombre_categoria']; ?></option>');
+                <?php } ?>
+            }
+            // Crear select para Proveedor
+            else if (title === 'Proveedor') {
+                $(this).html('<select class="form-control" id="selectProveedor" style="width: 80%; height: 30px; font-size: 14px; box-sizing: border-box;"><option value="">...</option></select>');
+                // Añadir opciones de proveedores desde PHP
+                <?php foreach ($proveedores_datos as $proveedor) { ?>
+                    $('#selectProveedor').append('<option value="<?php echo $proveedor['nombre_proveedor']; ?>"><?php echo $proveedor['nombre_proveedor']; ?></option>');
+                <?php } ?>
+            }
+            // Para las demás columnas usar input de búsqueda
+            else if (title !== 'Nro' && title !== 'Imagen' && title !== 'Acciones') {
+                $(this).html('<input type="text" placeholder="Buscar" style="width: 80%; box-sizing: border-box;" />');
+            } else {
+                $(this).html(''); // Deja la celda vacía para "Nro", "Imagen", y "Acciones"
+            }
+
+            // Filtro para los inputs
+            $('input', this).on('keyup change', function() {
+                table.column($(this).parent().index() + ':visible').search(this.value).draw();
+            });
+
+            // Filtro para el select de Categoría
+            $('#selectCategoria').on('change', function() {
+                var categoriaIndex = $('#selectCategoria').closest('th').index(); // Obtiene el índice de la columna
+                table.column(categoriaIndex).search(this.value).draw();
+            });
+            // Filtro para el select de Proveedor
+            $('#selectProveedor').on('change', function() {
+                var proveedorIndex = $('#selectProveedor').closest('th').index(); // Obtiene el índice de la columna
+                table.column(proveedorIndex).search(this.value).draw();
+            });
+
+        });
+
+        // Aquí definimos que la fila clonada (segunda fila con los inputs) no sea ordenable
+        $('#example1 thead tr:eq(1) th').removeClass('sorting').off('click');
+
+        // Añadir los botones a DataTables
+        table.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+    });
+</script>". Estoy pensando cómo hacer el filtro para los imputs de id="minPriceCompra" y id="maxPriceCompra". El tipo de dato del campo precio_compra es double en la base de datos. Y yo el valor de las filas para ese campo lo presento así en mi tabla: "<center>$ <?php echo $productos_datos['precio_compra']; ?></center>". Lo traigo de otro lado con una consulta sql. Ademas yo identifico que estoy y quiero filtrar a los valores donde el title es "Precio Compra". Creo que debo sacar el $ y que se lea en double. La idea es que el minPriceCompra filtre para que se muestren los valores mayores que minPriceCompra y al reves para maxPriceCompra. Entiendes lo que digo?

@@ -320,9 +320,6 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 }
             ],
             "dom": '<"top"lfB><"filter-price">rt<"bottom"ip><"clear">',
-
-
-
         });
 
         // Añadir inputs en los encabezados de las columnas
@@ -331,8 +328,15 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
         $('#example1 thead tr:eq(1) th').each(function(index) {
             var title = $(this).text().trim();
 
+            if (title === 'Precio Compra') {
+                // Crear dos inputs para valor numérico en la misma fila
+                $(this).html('<div style="display: flex; gap: 10px;">' +
+                    '<input type="number" class="form-control" placeholder="Min Compra" id="minPriceCompra" style="height: 30px; width: 70px;">' +
+                    '<input type="number" class="form-control" placeholder="Max Compra" id="maxPriceCompra" style="height: 30px; width: 70px;">' +
+                    '</div>');
+            }
             // Crear select para Categoría
-            if (title === 'Categoria') {
+            else if (title === 'Categoria') {
                 $(this).html('<select class="form-control" id="selectCategoria" style="width: 80%; height: 30px; font-size: 14px; box-sizing: border-box;"><option value="">...</option></select>');
                 // Añadir opciones de categorías desde PHP
                 <?php foreach ($categorias_datos as $categoria) { ?>
@@ -354,6 +358,24 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 $(this).html(''); // Deja la celda vacía para "Nro", "Imagen", y "Acciones"
             }
 
+            // Filtro por rango de precio
+            $('#minPriceCompra, #maxPriceCompra').on('keyup change', function() {
+                var minPrice = parseFloat($('#minPriceCompra').val()) || 0;
+                var maxPrice = parseFloat($('#maxPriceCompra').val()) || Infinity;
+
+                table.draw();
+            });
+
+            $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+                var minPrice = parseFloat($('#minPriceCompra').val()) || 0;
+                var maxPrice = parseFloat($('#maxPriceCompra').val()) || Infinity;
+
+                // Elimina el símbolo $ y convierte a número
+                var priceCompra = parseFloat(data[2].replace(/[\$,]/g, '')) || 0; // Suponiendo que la columna de Precio Compra es la 3ª (índice 2)
+
+                return (priceCompra >= minPrice && priceCompra <= maxPrice);
+            });
+
             // Filtro para los inputs
             $('input', this).on('keyup change', function() {
                 table.column($(this).parent().index() + ':visible').search(this.value).draw();
@@ -370,12 +392,6 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 table.column(proveedorIndex).search(this.value).draw();
             });
 
-
-            // // Filtro para el select de Proveedor mal hecho
-            // $('#selectProveedor').on('change', function() {
-            //     table.column(index).search(this.value).draw();
-            // });
-
         });
 
         // Aquí definimos que la fila clonada (segunda fila con los inputs) no sea ordenable
@@ -383,5 +399,6 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
 
         // Añadir los botones a DataTables
         table.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
     });
 </script>

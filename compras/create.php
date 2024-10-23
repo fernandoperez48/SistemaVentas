@@ -100,7 +100,7 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                             $id_proveedorDelSelect = isset($_SESSION['id_proveedorDelSelect']) ? $_SESSION['id_proveedorDelSelect'] : '';
 
                             // // Verifica el valor de $id_proveedorDelSelect
-                            echo 'Ultimo proveedor seleccionado: ' . $id_proveedorDelSelect . '<br>';
+                            // echo 'Ultimo proveedor seleccionado: ' . $id_proveedorDelSelect . '<br>';
 
                             // if (empty($id_proveedorDelSelect)) {
                             //     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_proveedor'])) {
@@ -878,12 +878,14 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                             }, function(datos) {
                                 $('#respuesta_create').html(datos);
                                 if (datos.includes("La compra se ha registrado exitosamente.")) {
-                                    location.reload();
+
+                                    location.reload(); // Recarga solo después de actualizar los precios
                                 }
                             });
                         }
                     }
                 }
+
 
                 function allowOnlyNumbers(input) {
                     input.value = input.value.replace(/[^0-9]/g, '');
@@ -916,8 +918,9 @@ include '../app/controllers/almacen/funcionListar.php'; ?>
                     input.value = value;
                 }
 
+                // Cuando se hace clic en el botón de guardar compra
                 $("#btn_guardar_compra").click(function() {
-                    guardarCompra(); // Primero llama a guardarCompra, se encargará de la diferencia si es necesario
+                    guardarCompra(); // Llamamos a guardarCompra que ahora manejará la recarga y actualización de precios
                 });
             });
         </script>

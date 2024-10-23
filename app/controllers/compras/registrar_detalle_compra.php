@@ -8,6 +8,26 @@ $precio_unitario = str_replace(',', '.', $_GET['precio_unitario']); // Convertir
 $precio_unitario = floatval($precio_unitario); // Convertir a float
 $id_proveedor = $_GET['id_proveedor'];
 
+// Verificar si ya existe la compra en tb_compras
+$sql_check_compra = "SELECT * FROM tb_compras WHERE nro_compra = '$nro_compra'";
+$result_check_compra = $mysqli->query($sql_check_compra);
+
+// Si la compra no existe, crear el registro en tb_compras
+if ($result_check_compra->num_rows == 0) {
+    $sql_insert_compra = "INSERT INTO tb_compras (nro_compra, id_proveedor) VALUES ('$nro_compra', '$id_proveedor')";
+
+    if ($mysqli->query($sql_insert_compra) !== TRUE) {
+        // Si hay un error al registrar la compra, mostrar un mensaje
+        session_start();
+        $_SESSION['mensaje'] = "No se pudo registrar la compra";
+        $_SESSION['icono'] = "error";
+        echo "<script>
+            window.location.href = '$URL/compras/create.php';
+        </script>";
+        exit(); // Detener ejecución si la inserción falla
+    }
+}
+
 // Verificar si ya existe un registro para este producto en esta compra
 $sql_check_producto = "SELECT * FROM tb_detalle_compras WHERE nro_compra = '$nro_compra' AND id_producto = '$id_producto'";
 $result_check_producto = $mysqli->query($sql_check_producto);
@@ -59,6 +79,8 @@ if ($result_check_producto->num_rows > 0) {
 } else {
     // Si no existe el producto en la compra, insertar el nuevo detalle de compra
     $sql_insert = "INSERT INTO tb_detalle_compras (nro_compra, id_producto, cantidad_producto, precio_unitario, id_proveedor) VALUES ('$nro_compra', '$id_producto', '$cantidad', '$precio_unitario', '$id_proveedor')";
+
+
 
     if ($mysqli->query($sql_insert) === TRUE) {
         echo "<script>
