@@ -11,7 +11,6 @@ include '../app/controllers/roles/listado_de_roles.php';
 include_once 'ModalEditarUsuario.php';
 include_once 'ModalCreateUser.php';
 include_once 'ModalVerUsuario.php';
-include_once 'Reporte.php';
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="background-color:gray">
@@ -115,7 +114,9 @@ include_once 'Reporte.php';
                                             <?php
                                                                 }
                                             ?>
+
                                 </tbody>
+
                             </table>
                         </div>
             </div>
@@ -123,6 +124,8 @@ include_once 'Reporte.php';
     </div>
 </div>
 </div>
+
+
 </div>
 
 <?php include '../layaout/mensajes.php'; ?>

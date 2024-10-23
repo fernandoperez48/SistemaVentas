@@ -10,11 +10,10 @@ include '../app/controllers/roles/listado_de_roles.php';
 // Incluir el archivo de la clase del modal
 include_once 'ModalEditarUsuario.php';
 include_once 'ModalCreateUser.php';
-include_once 'ModalVerUsuario.php';
-include_once 'Reporte.php';
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="background-color:gray">
+    <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -27,12 +26,10 @@ include_once 'Reporte.php';
                         </button>
                     </h1>
                 </div>
+
             </div>
         </div>
     </div>
-
-    <!-- modal para registrar usuarios-->
-    <?php echo ModalAgregarUsuario::render($roles_datos);?>
 
 
     <div class="content">
@@ -47,7 +44,9 @@ include_once 'Reporte.php';
                                 </button>
                             </div>
                         </div>
+
                         <div class="card-body">
+
                             <table id="example1" class="table table-bordered table-striped table-sm" style="border-color: black;">
                                 <thead style=" background-color: gray;">
                                     <tr>
@@ -83,52 +82,113 @@ include_once 'Reporte.php';
                                                             </button>
                                                             <!-- modal para ver usuarios-->
                                                             <?php
-                                                            // Renderizar el modal utilizando la clase ModalVerUsuario
-                                                            echo ModalVerUsuario::render($id_usuario, $nombre_usuario, $usuarios_datos, $imagen_usuario, $URL);
-                                                            ?>
+                                // Llamar al método estático render de la clase ModalVerUsuario -->
+                                echo ModalVerUsuario::render();
+                                ?>
                                                             <!-- /.modal-content -->
                                                         </div>
                                                         <!-- /.modal-dialog -->
                                                     </div>
-                                                </div>
-                                                <?php if ($rol_sesion == "Administrador") { ?>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal-update<?php echo $id_usuario; ?>">
-                                                            <i class="fa fa-pencil-alt"></i>
-                                                            Editar
-                                                        </button>
-                                                        <!-- modal para actualizar usuarios-->
-
-                                                        <?php
-                                                        // Llamar al método estático render de la clase ModalEditarUsuario -->
-                                                        echo ModalEditarUsuario::render($id_usuario, $nombre_usuario, $usuarios_datos, $roles_datos, $id_rol_usuario);
-                                                        ?>
-                                                        <div id="respuesta_update<?php echo $id_usuario; ?>"></div>
-                                                    </div>
-                                                <?php
-                                                                }
-                                                ?>
-                                                </div>
-                                                </center>
-                                                </td>
-                                                </tr>
-                                            <?php
-                                                                }
-                                            ?>
-                                </tbody>
-                            </table>
                         </div>
+                        <?php if ($rol_sesion == "Administrador") { ?>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal-update<?php echo $id_usuario; ?>">
+                                    <i class="fa fa-pencil-alt"></i>
+                                    Editar
+                                </button>
+                                <!-- modal para actualizar usuarios-->
+
+                                <?php
+                                // Llamar al método estático render de la clase ModalEditarUsuario -->
+                                echo ModalEditarUsuario::render($id_usuario, $nombre_usuario, $usuarios_datos, $roles_datos, $id_rol_usuario);
+                                ?>
+                                <div id="respuesta_update<?php echo $id_usuario; ?>"></div>
+                            </div>
+                        <?php
+                                        }
+                        ?>
+
+                    </div>
+                    </center>
+                    </td>
+                    </tr>
+                <?php
+                                    }
+                ?>
+
+                </tbody>
+
+                </table>
+                </div>
+
             </div>
         </div>
     </div>
+
 </div>
 </div>
+<!-- modal para registrar usuarios-->
+<?php echo ModalAgregarUsuario::render($roles_datos);?>
+
 </div>
 
 <?php include '../layaout/mensajes.php'; ?>
 <?php include '../layaout/parte2.php'; ?>
 
-<?php
-    // Llamar al método estático render de la clase Reporte -->
-    echo Reporte::render();
-?>
+<script>
+    $(function() {
+        $("#example1").DataTable({
+            /* cambio de idiomas de datatable */
+            "pageLength": 10,
+            language: {
+                "emptyTable": "No hay información",
+                "decimal": "",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Usuarios",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Usuarios",
+                "infoFiltered": "(Filtrado de _MAX_ total Usuarios)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Usuarios",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscador:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+            /* fin de idiomas */
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "buttons": /* Ajuste de botones */ [{
+                    extend: 'collection',
+                    text: 'Reportes',
+                    orientation: 'landscape',
+                    buttons: [{
+                        text: 'Copiar',
+                        extend: 'copy'
+                    }, {
+                        extend: 'pdf',
+                    }, {
+                        extend: 'csv',
+                    }, {
+                        extend: 'excel',
+                    }, {
+                        text: 'Imprimir',
+                        extend: 'print'
+                    }]
+                },
+                {
+                    extend: 'colvis',
+                    text: 'Visor de columnas'
+                }
+            ],
+            /*Fin de ajuste de botones*/
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+    });
+</script>

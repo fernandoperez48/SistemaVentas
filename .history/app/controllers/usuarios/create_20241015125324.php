@@ -1,5 +1,4 @@
 <?php
-/*include '../../config.php';
 
 // Obtener los datos del usuario
 $nombre_usuario = $_POST['nombre_usuario'];
@@ -48,17 +47,13 @@ curl_close($ch);
 if ($response === false) {
     echo 'Error al registrar el usuario.';
 } else {
-    session_start();
-    $_SESSION['mensaje'] = "Se registró el usuario correctamente";
-    $_SESSION['icono'] = "success";
-    echo "registrado";
     echo 'Usuario registrado correctamente: ' . $response;
 }
-*/
 
 
 
-include '../../config.php';
+
+/*include '../../config.php';
 
 // Obtener los datos del usuario
 $nombre_usuario = $_POST['nombre_usuario'];
@@ -95,4 +90,4 @@ if ($resultado_usuario) {
     echo "registrado";
 } else {
     echo "No se pudo registrar el usuario";
-}
+}*/

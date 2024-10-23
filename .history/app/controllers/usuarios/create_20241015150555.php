@@ -54,11 +54,11 @@ if ($response === false) {
     echo "registrado";
     echo 'Usuario registrado correctamente: ' . $response;
 }
-*/
 
 
 
-include '../../config.php';
+
+/*include '../../config.php';
 
 // Obtener los datos del usuario
 $nombre_usuario = $_POST['nombre_usuario'];
@@ -95,4 +95,4 @@ if ($resultado_usuario) {
     echo "registrado";
 } else {
     echo "No se pudo registrar el usuario";
-}
+}*/
