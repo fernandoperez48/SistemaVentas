@@ -1,11 +1,10 @@
 <?php
-/*include '../../config.php';
 
 // Obtener los datos del usuario
 $nombre_usuario = $_POST['nombre_usuario'];
 $email = $_POST['email'];
 $rol = $_POST['rol'];
-$pass = $_POST['contraseña'];
+$contraseña = $_POST['contraseña'];
 
 // Verificar si se ha subido una imagen
 if (isset($_FILES['image']) && $_FILES['image']['name'] != '') {
@@ -30,9 +29,13 @@ $post_data = [
     'nombre_usuario' => $nombre_usuario,
     'email' => $email,
     'rol' => $rol,
-    'pass' => $pass,
-    'filename' => $filename
+    'contraseña' => $contraseña
 ];
+
+// Si se subió una imagen, añadirla a los datos
+if (isset($image)) {
+    $post_data['image'] = new CURLFile($image['tmp_name'], $image['type'], $image['name']);
+}
 
 // Inicializar cURL
 $ch = curl_init($url);
@@ -48,17 +51,13 @@ curl_close($ch);
 if ($response === false) {
     echo 'Error al registrar el usuario.';
 } else {
-    session_start();
-    $_SESSION['mensaje'] = "Se registró el usuario correctamente";
-    $_SESSION['icono'] = "success";
-    echo "registrado";
     echo 'Usuario registrado correctamente: ' . $response;
 }
-*/
 
 
 
-include '../../config.php';
+
+/*include '../../config.php';
 
 // Obtener los datos del usuario
 $nombre_usuario = $_POST['nombre_usuario'];
@@ -95,4 +94,4 @@ if ($resultado_usuario) {
     echo "registrado";
 } else {
     echo "No se pudo registrar el usuario";
-}
+}*/

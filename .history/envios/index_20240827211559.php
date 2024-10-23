@@ -60,126 +60,8 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                     <tbody id= "envios-body">
 
                                     </tbody>
-
-                                </table>
-
-                                
-                                                            <!-- modal buscar producto-->
-                                                            <div class="modal fade" id="Modal_productos<?php echo $id_envio; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-lg">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header" style="background-color: #08c2ec">
-                                                                            <h5 class="modal-title" id="exampleModalLabel">Productos de la venta nro <?php echo $envios_datos['nro_venta']; ?></h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="table-responsive">
-                                                                                <table class="table table-bordered table-sm table-hover table-striped">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Nro</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Producto</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Detalle</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Cantidad</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Unitario</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Subtotal</th>
-
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        <?php
-                                                                                        $contador_carrito = 0;
-                                                                                        $cantidad_total = 0;
-                                                                                        $precio_unitario_total = 0;
-                                                                                        $precio_total = 0;
-                                                                                        $nro_venta = $envios_datos['nro_venta'];
-                                                                                        $sql_carrito = "SELECT *, pro.nombre AS nombre_producto, pro.descripcion AS descripcion, pro.precio_venta AS precio_venta, pro.stock AS stock, pro.id_producto AS id_producto 
-                                                                                                                    FROM tb_carrito AS carr 
-                                                                                                                    INNER JOIN tb_almacen AS pro ON carr.id_producto = pro.id_producto 
-                                                                                                                    WHERE nro_venta = '$nro_venta' 
-                                                                                                                    ORDER BY carr.id_carrito";
-
-                                                                                        $resultado_carrito = $mysqli->query($sql_carrito);
-
-                                                                                        if ($resultado_carrito) {
-                                                                                            while ($carrito_datos = $resultado_carrito->fetch_assoc()) {
-                                                                                                $id_carrito = $carrito_datos['id_carrito'];
-                                                                                                $contador_carrito += 1;
-                                                                                                $cantidad_total += $carrito_datos['cantidad'];
-                                                                                                $precio_unitario_total += $carrito_datos['precio_venta'];
-                                                                                                $precio_total += ($carrito_datos['cantidad'] * $carrito_datos['precio_venta']);
-                                                                                        ?>
-                                                                                                <tr>
-                                                                                                    <td>
-                                                                                                        <center><?php echo $contador_carrito; ?></center>
-                                                                                                        <input type="text" value="<?php echo $carrito_datos['id_producto']; ?>" id="id_producto<?php echo $contador_carrito; ?>" hidden>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center><?php echo $carrito_datos['nombre_producto']; ?></center>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center><?php echo $carrito_datos['descripcion']; ?></center>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center><span id="cantidad_carrito<?php echo $contador_carrito; ?>"><?php echo $carrito_datos['cantidad']; ?></span></center>
-                                                                                                        <input type="text" id="stock_de_inventario<?php echo $contador_carrito; ?>" value="<?php echo $carrito_datos['stock']; ?>" hidden>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center><?php echo $carrito_datos['precio_venta']; ?></center>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center>
-                                                                                                            <?php
-                                                                                                            $cantidad = floatval($carrito_datos['cantidad']);
-                                                                                                            $precio_venta = floatval($carrito_datos['precio_venta']);
-                                                                                                            echo $subtotal = $cantidad * $precio_venta;
-                                                                                                            ?>
-                                                                                                        </center>
-                                                                                                    </td>
-
-                                                                                                </tr>
-                                                                                        <?php
-                                                                                            }
-                                                                                        } else {
-                                                                                            echo "Error al ejecutar la consulta: " . $mysqli->error;
-                                                                                        }
-                                                                                        ?>
-                                                                                        <tr>
-                                                                                            <th colspan="3" style="background-color: #e7e7e7; text-align:right;">Total</th>
-                                                                                            <th>
-                                                                                                <center>
-                                                                                                    <?php
-                                                                                                    echo $cantidad_total;
-                                                                                                    ?>
-                                                                                                </center>
-                                                                                            </th>
-                                                                                            <th>
-                                                                                                <center>
-                                                                                                    <?php
-                                                                                                    echo $precio_unitario_total;
-                                                                                                    ?>
-                                                                                                </center>
-                                                                                            </th>
-                                                                                            <th style="background-color: yellow;">
-                                                                                                <center>
-                                                                                                    <?php
-                                                                                                    echo $precio_total;
-                                                                                                    ?>
-                                                                                                </center>
-                                                                                            </th>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- fin modal buscar producto -->
-                                                        </div>
+                                </table>                             
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -375,6 +257,78 @@ include '../app/controllers/ventas/listado_de_ventas.php';
             `;
 
             document.body.insertAdjacentHTML('beforeend', modalDelete);
+
+            const modalBuscarProductos = `
+            <!-- Modal para buscar producto -->
+            <div class="modal fade" id="modal-productos${id_envio}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #08c2ec">
+                            <h5 class="modal-title" id="exampleModalLabel">Productos de la venta nro ${envios_datos.nro_venta}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-sm table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Nro</th>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Producto</th>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Detalle</th>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Cantidad</th>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Unitario</th>
+                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody-productos${id_envio}">
+                                        ${productos.map((producto, index) => `
+                                            <tr>
+                                                <td>
+                                                    <center>${index + 1}</center>
+                                                    <input type="text" value="${producto.id_producto}" id="id_producto${index + 1}" hidden>
+                                                </td>
+                                                <td>
+                                                    <center>${producto.nombre_producto}</center>
+                                                </td>
+                                                <td>
+                                                    <center>${producto.descripcion}</center>
+                                                </td>
+                                                <td>
+                                                    <center><span id="cantidad_carrito${index + 1}">${producto.cantidad}</span></center>
+                                                    <input type="text" id="stock_de_inventario${index + 1}" value="${producto.stock}" hidden>
+                                                </td>
+                                                <td>
+                                                    <center>${producto.precio_venta}</center>
+                                                </td>
+                                                <td>
+                                                    <center>${(producto.cantidad * producto.precio_venta).toFixed(2)}</center>
+                                                </td>
+                                            </tr>`).join('')}
+                                        <tr>
+                                            <th colspan="3" style="background-color: #e7e7e7; text-align:right;">Total</th>
+                                            <th>
+                                                <center>${cantidad_total}</center>
+                                            </th>
+                                            <th>
+                                                <center>${precio_unitario_total}</center>
+                                            </th>
+                                            <th style="background-color: yellow;">
+                                                <center>${precio_total.toFixed(2)}</center>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', modalBuscarProductos);
+
 
 
             });

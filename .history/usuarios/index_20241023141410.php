@@ -115,7 +115,9 @@ include_once 'Reporte.php';
                                             <?php
                                                                 }
                                             ?>
+
                                 </tbody>
+
                             </table>
                         </div>
             </div>
@@ -123,6 +125,8 @@ include_once 'Reporte.php';
     </div>
 </div>
 </div>
+
+
 </div>
 
 <?php include '../layaout/mensajes.php'; ?>

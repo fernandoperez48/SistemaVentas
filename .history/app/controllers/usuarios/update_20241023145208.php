@@ -128,4 +128,9 @@ if (!empty($nombres) && !empty($rol) && !empty($email) && !empty($password_user)
 } else {
     echo "Faltan campos obligatorios.";
 }
+
+
+
+
+
 ?>
