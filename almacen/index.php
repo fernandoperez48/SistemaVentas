@@ -350,6 +350,9 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 <?php foreach ($proveedores_datos as $proveedor) { ?>
                     $('#selectProveedor').append('<option value="<?php echo $proveedor['nombre_proveedor']; ?>"><?php echo $proveedor['nombre_proveedor']; ?></option>');
                 <?php } ?>
+                //crear imput para stock
+            } else if (title === 'Stock') {
+                $(this).html('<input type="number" class="form-control" placeholder="Stock" id="stock" style="width: 80%; box-sizing: border-box;">'); //mij
             }
             // Para las demás columnas usar input de búsqueda
             else if (title !== 'Nro' && title !== 'Imagen' && title !== 'Acciones') {
@@ -357,6 +360,8 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
             } else {
                 $(this).html(''); // Deja la celda vacía para "Nro", "Imagen", y "Acciones"
             }
+
+
 
             // Filtro por rango de precio
             $('#minPriceCompra, #maxPriceCompra').on('keyup change', function() {
@@ -391,6 +396,17 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                 var proveedorIndex = $('#selectProveedor').closest('th').index(); // Obtiene el índice de la columna
                 table.column(proveedorIndex).search(this.value).draw();
             });
+
+
+            // Filtro por valor de stock
+            $('#stock').on('keyup change', function() {
+                var stockValue = $('#stock').val(); // Obtener el valor del input de stock
+                var stockIndex = $('#stock').closest('th').index(); // Obtener el índice de la columna Stock
+
+                // Filtrar la columna correspondiente al stock según el valor ingresado
+                table.column(stockIndex).search(stockValue).draw();
+            });
+
 
         });
 
