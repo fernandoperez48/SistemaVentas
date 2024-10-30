@@ -1,21 +1,50 @@
 <?php
 include '../../config.php';
+include '../../../layaout/sesion.php';
 
-$codigo = $_POST['codigo'];
-$id_categoria = $_POST['id_categoria'];
-$nombre = $_POST['nombre'];
-$id_usuario = $_POST['id_usuario'];
-$descripcion = $_POST['descripcion'];
-$stock = $_POST['stock'];
-$stock_minimo = $_POST['stock_minimo'];
-$stock_maximo = $_POST['stock_maximo'];
-$precio_compra = str_replace(',', '.', $_POST['precio_compra']); // Convertir coma a punto
-$precio_venta = str_replace(',', '.', $_POST['precio_venta']); // Convertir coma a punto
-$fecha_ingreso = $_POST['fecha_ingreso'];
+// Recibir y sanitizar los datos enviados
 $id_producto = $_POST['id_producto'];
-$image_text = $_POST['image_text'];
+$nombre_producto = $_POST['nombre_producto'];
+$id_categoria = $_POST['id_categoria'];
+$descripcion = $_POST['descripcion'];
+$talle = $_POST['talle'];
+$color = $_POST['color'];
+$proveedor = $_POST['proveedor'];
+$stock = $_POST['stock'];
+$stock_minimo = $_POST['stockminimo'];
+$stock_maximo = $_POST['stockmaximo'];
+$precio_compra = str_replace(',', '.', $_POST['precio_compra']);
+$precio_venta = str_replace(',', '.', $_POST['precio_venta']);
+$fecha_ingreso = $_POST['fecha_ingreso'];
+$id_usuario = $id_usuarios_sesion;
+$fechaHora = date("Y-m-d H:i:s");
 
-// Validar que stock_minimo no sea mayor que stock_maximo y viceversa
+// // Inicializar el nombre del archivo
+// $filename = "";
+
+
+// // Obtener la imagen actual del producto
+// $result = $mysqli->query("SELECT imagen FROM tb_almacen WHERE id_producto = '$id_producto'");
+// $currentImage = $result->fetch_assoc();
+// $filename = $currentImage['imagen'] ? $currentImage['imagen'] : "sinimagen.jpg";
+
+// // Verificar si se ha subido una imagen
+// if (isset($_FILES['image']) && $_FILES['image']['name'] != '') {
+//     $nombreDelArchivo = date("Y-m-d-h-i-s");
+//     $filename = $nombreDelArchivo . "__" . $_FILES['image']['name'];
+//     $location = "../../../almacen/img/img_productos" . $filename;
+
+//     // Intentar mover el archivo subido a la ubicación deseada
+//     if (!move_uploaded_file($_FILES['image']['tmp_name'], $location)) {
+//         // Si falla la subida, registrar un error y finalizar el script
+//         echo "Error al subir la imagen.";
+//         exit;
+//     }
+// }
+
+
+
+// Validar que stock_minimo no sea mayor que stock_maximo
 if ($stock_minimo > $stock_maximo) {
     session_start();
     $_SESSION['mensaje'] = "El stock mínimo no puede ser mayor que el stock máximo.";
@@ -33,39 +62,30 @@ if ($stock < 0 || $stock_minimo < 0 || $stock_maximo < 0) {
     exit();
 }
 
-if ($_FILES['image']['name'] != null) {
-    $nombreDelArchivo = date("Y-m-d-h-i-s");
-    $image_text = $nombreDelArchivo . "__" . $_FILES['image']['name'];
-    $location = "../../../almacen/img/img_productos" . $image_text;
-    move_uploaded_file($_FILES['image']['tmp_name'], $location);
-} else {
-    echo "no hay imagen nueva";
-}
 
-
+// Consulta SQL para actualizar el producto en la base de datos
 $sql = "UPDATE tb_almacen SET 
             id_categoria='$id_categoria',
-            nombre='$nombre',
+            nombre='$nombre_producto',
             id_usuario='$id_usuario',
             descripcion='$descripcion',
             stock='$stock',
             stock_minimo='$stock_minimo',
             stock_maximo='$stock_maximo',
             precio_compra='$precio_compra',
-            imagen='$image_text',
+            imagen = '$filename',
             precio_venta='$precio_venta',
             fecha_ultimo_ingreso='$fecha_ingreso',
             fyh_actualizacion='$fechaHora'
          WHERE id_producto='$id_producto'";
 
-if ($mysqli->query($sql) === TRUE) {
+$resultado_producto = $mysqli->query($sql);
+
+if ($resultado_producto) {
     session_start();
-    $_SESSION['mensaje'] = "Se actualizó el producto correctamente";
+    $_SESSION['mensaje'] = "Se actualizó el usuario correctamente";
     $_SESSION['icono'] = "success";
-    header('Location: ' . $URL . '/almacen/');
+    echo "actualizado";
 } else {
-    session_start();
-    $_SESSION['mensaje'] = "No se actualizó el producto correctamente";
-    $_SESSION['icono'] = "error";
-    header('Location: ' . $URL . '/almacen/update.php?id=' . $id_producto);
+    echo "No se pudo registrar el usuario";
 }

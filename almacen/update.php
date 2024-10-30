@@ -46,6 +46,7 @@ include '../app/controllers/almacen/cargar_producto.php';
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="row">
+                                                <!-- codigo -->
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="">Codigo:</label>

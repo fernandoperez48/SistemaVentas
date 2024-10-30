@@ -36,7 +36,9 @@ include '../app/controllers/almacen/cargar_producto.php';
                         <!-- /.card-tools -->
                     </div>
                     <!-- /.card-header -->
+                    golass
                     <div class="card-body" style="display: block;">
+                        gola
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">

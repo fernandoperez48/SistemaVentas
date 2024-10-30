@@ -1,9 +1,11 @@
 <?php
 
-class ModalAgregarUsuario {
-    public static function render($roles_datos) {
+class ModalAgregarUsuario
+{
+    public static function render($roles_datos)
+    {
         ob_start(); // Iniciar el buffer de salida
-        ?>
+?>
         <div class="modal fade" id="modal-create">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -103,85 +105,86 @@ class ModalAgregarUsuario {
 
         <script>
             $('#btn_create').click(function() {
-            // Ocultar mensajes de error al iniciar
-            $('small').css('display', 'none');
+                // Ocultar mensajes de error al iniciar
+                $('small').css('display', 'none');
 
-            let nombre_usuario = $('#nombre_usuario').val();
-            let email = $('#email').val();
-            let rol = $('#rol').val();
-            let contraseña = $('#contraseña').val();
-            let repita_contraseña = $('#repita_contraseña').val();
-            let file = document.getElementById('file').files[0];
+                let nombre_usuario = $('#nombre_usuario').val();
+                let email = $('#email').val();
+                let rol = $('#rol').val();
+                let contraseña = $('#contraseña').val();
+                let repita_contraseña = $('#repita_contraseña').val();
+                let file = document.getElementById('file').files[0];
 
-            // Validaciones
-            function validarEmail(email) {
-                let re = /\S+@\S+\.\S+/;
-                return re.test(email);
-            }
-
-            if (nombre_usuario == '') {
-                $('#nombre_usuario').focus();
-                $('#lbl_nombre').css('display', 'block');
-            } else if (email == '') {
-                $('#email').focus();
-                $('#lbl_email').css('display', 'block');
-            } else if (!validarEmail(email)) {
-                $('#email').focus();
-                $('#lbl_email_invalid').css('display', 'block');
-            } else if (rol == '') {
-                $('#rol').focus();
-                $('#lbl_rol').css('display', 'block');
-            } else if (contraseña == '') {
-                $('#contraseña').focus();
-                $('#lbl_contraseña').css('display', 'block');
-            } else if (repita_contraseña == '') {
-                $('#repita_contraseña').focus();
-                $('#lbl_repita_contraseña').css('display', 'block');
-            } else if (contraseña !== repita_contraseña) {
-                $('#repita_contraseña').focus();
-                $('#lbl_contraseña_no_coincide').css('display', 'block');
-            } else {
-                // Crear el objeto FormData
-                var formData = new FormData();
-                formData.append('nombre_usuario', nombre_usuario);
-                formData.append('email', email);
-                formData.append('rol', rol);
-                formData.append('contraseña', contraseña);
-                formData.append('repita_contraseña', repita_contraseña);
-                if (file) {
-                    formData.append('image', file); // Agregar la imagen
+                // Validaciones
+                function validarEmail(email) {
+                    let re = /\S+@\S+\.\S+/;
+                    return re.test(email);
                 }
 
-                $.ajax({
-                    url: '../app/controllers/usuarios/create.php',
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(datos) {
-                        console.log(datos); // Agrega este log para verificar qué está recibiendo
-
-                        if (datos) {
-                            // Mostrar el mensaje de éxito
-
-                            // Cerrar el modal
-                            $('#modal-create').modal('hide');
-
-                            // Opcional: Recargar la tabla o el contenido que muestra la lista de usuarios
-                            location.reload();
+                if (nombre_usuario == '') {
+                    $('#nombre_usuario').focus();
+                    $('#lbl_nombre').css('display', 'block');
+                } else if (email == '') {
+                    $('#email').focus();
+                    $('#lbl_email').css('display', 'block');
+                } else if (!validarEmail(email)) {
+                    $('#email').focus();
+                    $('#lbl_email_invalid').css('display', 'block');
+                } else if (rol == '') {
+                    $('#rol').focus();
+                    $('#lbl_rol').css('display', 'block');
+                } else if (contraseña == '') {
+                    $('#contraseña').focus();
+                    $('#lbl_contraseña').css('display', 'block');
+                } else if (repita_contraseña == '') {
+                    $('#repita_contraseña').focus();
+                    $('#lbl_repita_contraseña').css('display', 'block');
+                } else if (contraseña !== repita_contraseña) {
+                    $('#repita_contraseña').focus();
+                    $('#lbl_contraseña_no_coincide').css('display', 'block');
+                } else {
+                    // Verificar si ya existe un usuario con los mismos datos antes de crear
+                    $.get('../app/controllers/usuarios/verificar.php', {
+                        nombre_usuario: nombre_usuario,
+                        email: email
+                    }, function(response) {
+                        var datos = JSON.parse(response);
+                        if (datos.status === 'error') {
+                            alert(datos.message);
                         } else {
-                            // Mostrar el mensaje de error
-                            alert("No se pudo registrar el usuario");
-                            alert("No se pudo registrar el usuario: " + datos); // Incluye el mensaje exacto
+                            // Si no hay conflictos, proceder con la creación del usuario
+                            var formData = new FormData();
+                            formData.append('nombre_usuario', nombre_usuario);
+                            formData.append('email', email);
+                            formData.append('rol', rol);
+                            formData.append('contraseña', contraseña);
+                            formData.append('repita_contraseña', repita_contraseña);
+                            if (file) {
+                                formData.append('image', file); // Agregar la imagen
+                            }
 
+                            $.ajax({
+                                url: '../app/controllers/usuarios/create.php',
+                                type: 'POST',
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                success: function(datos) {
+                                    if (datos.trim() === "registrado") {
+                                        // Mostrar el mensaje de éxito
+                                        $('#modal-create').modal('hide');
+                                        location.reload();
+                                    } else {
+                                        alert("No se pudo registrar el usuario");
+                                    }
+                                }
+                            });
                         }
-                    },
-
-                });
-            }
+                    });
+                }
             });
         </script>
-        <?php
+<?php
         return ob_get_clean(); // Devolver el contenido del buffer de salida
     }
 }

@@ -20,7 +20,7 @@ include_once 'Reporte.php';
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1 class="m-0">Listado de Usuarios
-                        <button 
+                        <button
                             <?php if ($rol_sesion != "Administrador") echo 'disabled'; ?> type="button" class="btn btn-warning ml-3" data-toggle="modal" data-target="#modal-create">
                             <i class="fa fa-plus"></i>
                             Agregar Nuevo
@@ -32,7 +32,7 @@ include_once 'Reporte.php';
     </div>
 
     <!-- modal para registrar usuarios-->
-    <?php echo ModalAgregarUsuario::render($roles_datos);?>
+    <?php echo ModalAgregarUsuario::render($roles_datos); ?>
 
 
     <div class="content">
@@ -51,11 +51,21 @@ include_once 'Reporte.php';
                             <table id="example1" class="table table-bordered table-striped table-sm" style="border-color: black;">
                                 <thead style=" background-color: gray;">
                                     <tr>
-                                        <th><center>Nro</center></th>
-                                        <th><center>Nombres</center></th>
-                                        <th><center>Correo</center></th>
-                                        <th><center>Rol del usuario</center></th>
-                                        <th><center>Acciones</center></th>
+                                        <th>
+                                            <center>Nro</center>
+                                        </th>
+                                        <th>
+                                            <center>Nombres</center>
+                                        </th>
+                                        <th>
+                                            <center>Correo</center>
+                                        </th>
+                                        <th>
+                                            <center>Rol del usuario</center>
+                                        </th>
+                                        <th>
+                                            <center>Acciones</center>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -90,34 +100,34 @@ include_once 'Reporte.php';
                                                         </div>
                                                         <!-- /.modal-dialog -->
                                                     </div>
-                                                </div>
-                                                <?php if ($rol_sesion == "Administrador") { ?>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal-update<?php echo $id_usuario; ?>">
-                                                            <i class="fa fa-pencil-alt"></i>
-                                                            Editar
-                                                        </button>
-                                                        <!-- modal para actualizar usuarios-->
-
-                                                        <?php
-                                                        // Llamar al método estático render de la clase ModalEditarUsuario -->
-                                                        echo ModalEditarUsuario::render($id_usuario, $nombre_usuario, $usuarios_datos, $roles_datos, $id_rol_usuario);
-                                                        ?>
-                                                        <div id="respuesta_update<?php echo $id_usuario; ?>"></div>
-                                                    </div>
-                                                <?php
-                                                                }
-                                                ?>
-                                                </div>
-                                                </center>
-                                                </td>
-                                                </tr>
-                                            <?php
-                                                                }
-                                            ?>
-                                </tbody>
-                            </table>
                         </div>
+                        <?php if ($rol_sesion == "Administrador") { ?>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal-update<?php echo $id_usuario; ?>">
+                                    <i class="fa fa-pencil-alt"></i>
+                                    Editar
+                                </button>
+                                <!-- modal para actualizar usuarios-->
+
+                                <?php
+                                            // Llamar al método estático render de la clase ModalEditarUsuario -->
+                                            echo ModalEditarUsuario::render($id_usuario, $nombre_usuario, $usuarios_datos, $roles_datos, $id_rol_usuario);
+                                ?>
+                                <div id="respuesta_update<?php echo $id_usuario; ?>"></div>
+                            </div>
+                        <?php
+                                        }
+                        ?>
+                    </div>
+                    </center>
+                    </td>
+                    </tr>
+                <?php
+                                    }
+                ?>
+                </tbody>
+                </table>
+                </div>
             </div>
         </div>
     </div>
@@ -129,6 +139,6 @@ include_once 'Reporte.php';
 <?php include '../layaout/parte2.php'; ?>
 
 <?php
-    // Llamar al método estático render de la clase Reporte -->
-    echo Reporte::render();
+// Llamar al método estático render de la clase Reporte -->
+echo Reporte::render();
 ?>
