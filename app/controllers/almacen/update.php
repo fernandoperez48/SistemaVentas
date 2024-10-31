@@ -19,28 +19,28 @@ $fecha_ingreso = $_POST['fecha_ingreso'];
 $id_usuario = $id_usuarios_sesion;
 $fechaHora = date("Y-m-d H:i:s");
 
-// // Inicializar el nombre del archivo
-// $filename = "";
+// Inicializar el nombre del archivo
+$filename = "";
 
 
-// // Obtener la imagen actual del producto
-// $result = $mysqli->query("SELECT imagen FROM tb_almacen WHERE id_producto = '$id_producto'");
-// $currentImage = $result->fetch_assoc();
-// $filename = $currentImage['imagen'] ? $currentImage['imagen'] : "sinimagen.jpg";
+// Obtener la imagen actual del producto
+$result = $mysqli->query("SELECT imagen FROM tb_almacen WHERE id_producto = '$id_producto'");
+$currentImage = $result->fetch_assoc();
+$filename = $currentImage['imagen'] ? $currentImage['imagen'] : "sinimagen.jpg";
 
-// // Verificar si se ha subido una imagen
-// if (isset($_FILES['image']) && $_FILES['image']['name'] != '') {
-//     $nombreDelArchivo = date("Y-m-d-h-i-s");
-//     $filename = $nombreDelArchivo . "__" . $_FILES['image']['name'];
-//     $location = "../../../almacen/img/img_productos" . $filename;
+// Verificar si se ha subido una imagen
+if (isset($_FILES['image']) && $_FILES['image']['name'] != '') {
+    $nombreDelArchivo = date("Y-m-d-h-i-s");
+    $filename = $nombreDelArchivo . "__" . $_FILES['image']['name'];
+    $location = "../../../almacen/img/img_productos" . $filename;
 
-//     // Intentar mover el archivo subido a la ubicación deseada
-//     if (!move_uploaded_file($_FILES['image']['tmp_name'], $location)) {
-//         // Si falla la subida, registrar un error y finalizar el script
-//         echo "Error al subir la imagen.";
-//         exit;
-//     }
-// }
+    // Intentar mover el archivo subido a la ubicación deseada
+    if (!move_uploaded_file($_FILES['image']['tmp_name'], $location)) {
+        // Si falla la subida, registrar un error y finalizar el script
+        echo "Error al subir la imagen.";
+        exit;
+    }
+}
 
 
 
