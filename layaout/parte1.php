@@ -3,6 +3,7 @@
 <html lang="es">
 
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sistema de Ventas</title>
@@ -23,6 +24,7 @@
     <script src="<?php echo $URL; ?>/public/templates/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <style type="text/css">
         .highcharts-figure,
         .highcharts-data-table table {

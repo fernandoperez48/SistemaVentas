@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <?php include_once '../app/config.php'; ?>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -102,7 +104,7 @@
       }
 
       if (!validarEmail(email)) {
-        alert('Debes escribir un correo electrónico.');
+        alert('Formato no valido para correo electrónico.');
       } else if (contraseña === '') {
         //si contraseña esta vacia
         alert('La contraseña esta vacia');

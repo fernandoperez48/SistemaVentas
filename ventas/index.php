@@ -5,10 +5,12 @@ include '../layaout/parte1.php';
 include '../app/controllers/ventas/mostrar_ventas_con_anuladas.php';
 include '../app/controllers/ventas/listado_de_ventas.php';
 
-
-
+include_once 'ModalProductos.php';
+include_once 'ModalVerClientes.php';
+include_once 'Reporte.php';
 
 ?>
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" style="background-color:gray">
     <!-- Content Header (Page header) -->
@@ -93,109 +95,12 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                 <i class="fa fa-shopping-basket"></i> Productos
                                                             </button>
 
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="Modal_productos<?php echo $id_venta; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-lg">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header" style="background-color: #08c2ec">
-                                                                            <h5 class="modal-title" id="exampleModalLabel">Productos de la venta nro <?php echo $id_venta; ?></h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="table-responsive">
-                                                                                <div class="row">
-                                                                                    <div class="col-md-6">
-                                                                                        <input type="text" id="searchInput<?php echo $venta['nro_venta']; ?>" class="form-control" placeholder="Buscar...">
-                                                                                    </div>
-                                                                                    <div class="col-md-6 text-right">
-                                                                                        <span id="recordCount<?php echo $venta['nro_venta']; ?>"></span>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <table id="tabla_productos<?php echo $venta['nro_venta']; ?>" class="table table-bordered table-sm table-hover table-striped">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Nro</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Producto</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Detalle</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Cantidad</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Unitario</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Subtotal</th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        <?php
-                                                                                        $contador_carrito = 0;
-                                                                                        $cantidad_total = 0;
-                                                                                        $precio_unitario_total = 0;
-                                                                                        $precio_total = 0;
-                                                                                        $nro_venta = $venta['nro_venta'];
-                                                                                        $sql_carrito = "SELECT carr.*, pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, pro.stock as stock, pro.id_producto as id_producto 
-                                                                                        FROM tb_carrito as carr 
-                                                                                        INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto 
-                                                                                        WHERE nro_venta = '$nro_venta' 
-                                                                                        ORDER BY carr.id_carrito";
-                                                                                        $resultado_carrito = $mysqli->query($sql_carrito);
+                                                            <!-- Modal para ver productos-->
+                                                            <?php
+                                                            // Renderizar el modal utilizando la clase ModalProductos
+                                                            echo ModalProductos::render($id_venta, $venta, $mysqli);
+                                                            ?>
 
-                                                                                        if ($resultado_carrito) {
-                                                                                            $carrito_datos = $resultado_carrito->fetch_all(MYSQLI_ASSOC);
-
-                                                                                            foreach ($carrito_datos as $carrito) {
-                                                                                                $id_carrito = $carrito['id_carrito'];
-                                                                                                $contador_carrito++;
-                                                                                                $cantidad_total += $carrito['cantidad'];
-                                                                                                $precio_unitario_total += $carrito['precio_venta'];
-                                                                                                $precio_total += ($carrito['cantidad'] * $carrito['precio_venta']);
-                                                                                        ?>
-                                                                                                <tr>
-                                                                                                    <td>
-                                                                                                        <center><?php echo $contador_carrito; ?></center>
-                                                                                                        <input type="text" value="<?php echo $carrito['id_producto']; ?>" id="id_producto<?php echo $contador_carrito; ?>" hidden>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center><?php echo $carrito['nombre_producto']; ?></center>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center><?php echo $carrito['descripcion']; ?></center>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center><span id="cantidad_carrito<?php echo $contador_carrito; ?>"><?php echo $carrito['cantidad']; ?></span></center>
-                                                                                                        <input type="text" id="stock_de_inventario<?php echo $contador_carrito; ?>" value="<?php echo $carrito['stock']; ?>" hidden>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center>$ <?php echo $carrito['precio_venta']; ?></center>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center>$ <?php echo $subtotal = floatval($carrito['cantidad']) * floatval($carrito['precio_venta']); ?></center>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                        <?php
-                                                                                            }
-                                                                                        } else {
-                                                                                            echo "Error en la consulta: " . $mysqli->error;
-                                                                                        }
-                                                                                        ?>
-
-                                                                                        <tr class="total-row">
-                                                                                            <th colspan="3" style="background-color: #e7e7e7; text-align:right;">Total</th>
-                                                                                            <th>
-                                                                                                <center><?php echo $cantidad_total; ?></center>
-                                                                                            </th>
-                                                                                            <th>
-                                                                                                <center>$ <?php echo $precio_unitario_total; ?></center>
-                                                                                            </th>
-                                                                                            <th style="background-color: yellow;">
-                                                                                                <center>$ <?php echo $precio_total; ?></center>
-                                                                                            </th>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </center>
                                                     </td>
                                                     <td>
@@ -204,129 +109,10 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                             <div class="btn-group">
                                                                 <a type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modal-ver<?php echo $id_cliente; ?>"><i class="fa fa-eye"></i> <?php echo $nombreApellido ?></a>
                                                                 <!-- modal para ver clientes-->
-                                                                <div class="modal fade" id="modal-ver<?php echo $id_cliente; ?>">
-                                                                    <div class="modal-dialog modal-lg">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header" style="background-color:#088da5; color:white">
-                                                                                <h4 class="modal-title">Datos del cliente</h4>
-                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <?php { ?>
-                                                                                <div class="modal-body">
-
-                                                                                    <div class="row justify-content-between">
-                                                                                        <div class="col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <label>Nombre y Apellido</label>
-                                                                                                <input type="text" value="<?php echo $nombreApellido ?>" class="form-control text-center" disabled>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="col-md-3">
-                                                                                            <div class="form-group">
-                                                                                                <?php if (!empty($venta['cuit'])) : ?>
-                                                                                                    <label>CUIT</label>
-                                                                                                <?php else : ?>
-                                                                                                    <label>DNI</label>
-                                                                                                <?php endif; ?>
-                                                                                                <input type="text" value="<?php echo $venta['cuitDni'] ?>" class="form-control text-center" disabled>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="col-md-3">
-                                                                                            <div class="form-group">
-                                                                                                <label>Telefono</label>
-                                                                                                <input type="number" class="form-control text-center" value="<?php echo $venta['telefono'] ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-
-
-                                                                                    <div class="row">
-                                                                                        <div class="col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <label>Email</label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $venta['email']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <?php if (!empty($venta['cuit'])) { ?>
-                                                                                                    <label>Persona Autorizada</label>
-                                                                                                    <input type="text" class="form-control text-center" value="<?php echo $venta['persona_autorizada']; ?>" disabled>
-                                                                                                <?php } else { ?>
-                                                                                                    <!-- Adding an empty div to maintain structure -->
-                                                                                                    <div style="visibility: hidden;">
-                                                                                                        <label>Hidden Label</label>
-                                                                                                        <input type="text" class="form-control text-center" value="" disabled>
-                                                                                                    </div>
-                                                                                                <?php } ?>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-
-
-                                                                                    <hr>
-                                                                                    <h5>Datos Domicilio</h5>
-
-                                                                                    <div class="row justify-content-between">
-                                                                                        <div class=" col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <label>Calle</label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $venta['calle']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="col-md-2">
-                                                                                            <div class="form-group">
-                                                                                                <label>Nro</label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $venta['numero']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="col-md-2">
-                                                                                            <div class="form-group">
-                                                                                                <label>Piso </label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $venta['piso']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="col-md-2">
-                                                                                            <div class="form-group">
-                                                                                                <label>Depto</label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $venta['depto']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <div class="row">
-                                                                                        <div class="col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <label>Localidad </label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $venta['ciudad']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <label>Provincia</label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $venta['provincia']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <label>Pais </label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $venta['pais']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                        </div>
-                                                                    <?php } ?>
-                                                                    </div>
-                                                                    <!-- /.modal-content -->
-                                                                </div>
+                                                                <?php
+                                                                // Renderizar el modal utilizando la clase ModalProductos
+                                                                echo ModalVerClientes::render($id_cliente, $nombreApellido, $venta);
+                                                                ?>
                                                                 <!-- /.modal-dialog -->
                                                             </div>
                                                         </center>
@@ -405,108 +191,10 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                             </button>
 
                                                             <!-- Modal -->
-                                                            <div class="modal fade" id="Modal_productos<?php echo $id_venta; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-lg">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header" style="background-color: #08c2ec">
-                                                                            <h5 class="modal-title" id="exampleModalLabel">Productos de la venta nro <?php echo $id_venta; ?></h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="table-responsive">
-                                                                                <div class="row">
-                                                                                    <div class="col-md-6">
-                                                                                        <input type="text" id="searchInput<?php echo $listado_con_anuladas_venta['nro_venta']; ?>" class="form-control" placeholder="Buscar...">
-                                                                                    </div>
-                                                                                    <div class="col-md-6 text-right">
-                                                                                        <span id="recordCount<?php echo $listado_con_anuladas_venta['nro_venta']; ?>"></span>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <table id="tabla_productos<?php echo $listado_con_anuladas_venta['nro_venta']; ?>" class="table table-bordered table-sm table-hover table-striped">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Nro</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Producto</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Detalle</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Cantidad</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Unitario</th>
-                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Subtotal</th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        <?php
-                                                                                        $contador_carrito = 0;
-                                                                                        $cantidad_total = 0;
-                                                                                        $precio_unitario_total = 0;
-                                                                                        $precio_total = 0;
-                                                                                        $nro_venta = $listado_con_anuladas_venta['nro_venta'];
-                                                                                        $sql_carrito = "SELECT carr.*, pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, pro.stock as stock, pro.id_producto as id_producto 
-                                                                FROM tb_carrito as carr 
-                                                                INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto 
-                                                                WHERE nro_venta = '$nro_venta' 
-                                                                ORDER BY carr.id_carrito";
-                                                                                        $resultado_carrito = $mysqli->query($sql_carrito);
-
-                                                                                        if ($resultado_carrito) {
-                                                                                            $carrito_datos = $resultado_carrito->fetch_all(MYSQLI_ASSOC);
-
-                                                                                            foreach ($carrito_datos as $carrito) {
-                                                                                                $id_carrito = $carrito['id_carrito'];
-                                                                                                $contador_carrito++;
-                                                                                                $cantidad_total += $carrito['cantidad'];
-                                                                                                $precio_unitario_total += $carrito['precio_venta'];
-                                                                                                $precio_total += ($carrito['cantidad'] * $carrito['precio_venta']);
-                                                                                        ?>
-                                                                                                <tr>
-                                                                                                    <td>
-                                                                                                        <center><?php echo $contador_carrito; ?></center>
-                                                                                                        <input type="text" value="<?php echo $carrito['id_producto']; ?>" id="id_producto<?php echo $contador_carrito; ?>" hidden>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center><?php echo $carrito['nombre_producto']; ?></center>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center><?php echo $carrito['descripcion']; ?></center>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center><span id="cantidad_carrito<?php echo $contador_carrito; ?>"><?php echo $carrito['cantidad']; ?></span></center>
-                                                                                                        <input type="text" id="stock_de_inventario<?php echo $contador_carrito; ?>" value="<?php echo $carrito['stock']; ?>" hidden>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center>$ <?php echo $carrito['precio_venta']; ?></center>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <center>$ <?php echo $subtotal = floatval($carrito['cantidad']) * floatval($carrito['precio_venta']); ?></center>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                        <?php
-                                                                                            }
-                                                                                        } else {
-                                                                                            echo "Error en la consulta: " . $mysqli->error;
-                                                                                        }
-                                                                                        ?>
-
-                                                                                        <tr class="total-row">
-                                                                                            <th colspan="3" style="background-color: #e7e7e7; text-align:right;">Total</th>
-                                                                                            <th>
-                                                                                                <center><?php echo $cantidad_total; ?></center>
-                                                                                            </th>
-                                                                                            <th>
-                                                                                                <center>$ <?php echo $precio_unitario_total; ?></center>
-                                                                                            </th>
-                                                                                            <th style="background-color: yellow;">
-                                                                                                <center>$ <?php echo $precio_total; ?></center>
-                                                                                            </th>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            <?php
+                                                            // Renderizar el modal utilizando la clase ModalProductos
+                                                            echo ModalProductos::render($id_venta, $venta, $mysqli);
+                                                            ?>
                                                         </center>
                                                     </td>
                                                     <td>
@@ -515,129 +203,10 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                             <div class="btn-group">
                                                                 <a type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modal-ver<?php echo $id_cliente; ?>"><i class="fa fa-eye"></i> <?php echo $nombreApellido ?></a>
                                                                 <!-- modal para ver clientes-->
-                                                                <div class="modal fade" id="modal-ver<?php echo $id_cliente; ?>">
-                                                                    <div class="modal-dialog modal-lg">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header" style="background-color:#088da5; color:white">
-                                                                                <h4 class="modal-title">Datos del cliente</h4>
-                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <?php { ?>
-                                                                                <div class="modal-body">
-
-                                                                                    <div class="row justify-content-between">
-                                                                                        <div class="col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <label>Nombre y Apellido</label>
-                                                                                                <input type="text" value="<?php echo $nombreApellido ?>" class="form-control text-center" disabled>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="col-md-3">
-                                                                                            <div class="form-group">
-                                                                                                <?php if (!empty($listado_con_anuladas_venta['cuit'])) : ?>
-                                                                                                    <label>CUIT</label>
-                                                                                                <?php else : ?>
-                                                                                                    <label>DNI</label>
-                                                                                                <?php endif; ?>
-                                                                                                <input type="text" value="<?php echo $listado_con_anuladas_venta['cuitDni'] ?>" class="form-control text-center" disabled>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="col-md-3">
-                                                                                            <div class="form-group">
-                                                                                                <label>Telefono</label>
-                                                                                                <input type="number" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['telefono'] ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-
-
-                                                                                    <div class="row">
-                                                                                        <div class="col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <label>Email</label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['email']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <?php if (!empty($venta['cuit'])) { ?>
-                                                                                                    <label>Persona Autorizada</label>
-                                                                                                    <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['persona_autorizada']; ?>" disabled>
-                                                                                                <?php } else { ?>
-                                                                                                    <!-- Adding an empty div to maintain structure -->
-                                                                                                    <div style="visibility: hidden;">
-                                                                                                        <label>Hidden Label</label>
-                                                                                                        <input type="text" class="form-control text-center" value="" disabled>
-                                                                                                    </div>
-                                                                                                <?php } ?>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-
-
-                                                                                    <hr>
-                                                                                    <h5>Datos Domicilio</h5>
-
-                                                                                    <div class="row justify-content-between">
-                                                                                        <div class=" col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <label>Calle</label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['calle']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="col-md-2">
-                                                                                            <div class="form-group">
-                                                                                                <label>Nro</label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['numero']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="col-md-2">
-                                                                                            <div class="form-group">
-                                                                                                <label>Piso </label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['piso']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="col-md-2">
-                                                                                            <div class="form-group">
-                                                                                                <label>Depto</label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['depto']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <div class="row">
-                                                                                        <div class="col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <label>Localidad </label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['ciudad']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <label>Provincia</label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['provincia']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-md-4">
-                                                                                            <div class="form-group">
-                                                                                                <label>Pais </label>
-                                                                                                <input type="text" class="form-control text-center" value="<?php echo $listado_con_anuladas_venta['pais']; ?>" disabled>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                        </div>
-                                                                    <?php } ?>
-                                                                    </div>
-                                                                    <!-- /.modal-content -->
-                                                                </div>
+                                                                <?php
+                                                                // Renderizar el modal utilizando la clase ModalProductos
+                                                                echo ModalVerClientes::render($id_cliente, $nombreApellido, $venta);
+                                                                ?>
                                                                 <!-- /.modal-dialog -->
                                                             </div>
                                                         </center>
@@ -677,64 +246,11 @@ include '../app/controllers/ventas/listado_de_ventas.php';
 <?php include '../layaout/mensajes.php'; ?>
 <?php include '../layaout/parte2.php'; ?>
 
+<?php
+// Llamar al método estático render de la clase Reporte -->
+echo Reporte::render();
+?>
 
-<script>
-    $(function() {
-        $("#example1").DataTable({
-            /* cambio de idiomas de datatable */
-            "pageLength": 5,
-            language: {
-                "emptyTable": "No hay información",
-                "decimal": "",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Compras",
-                "infoEmpty": "Mostrando 0 to 0 of 0 Productos",
-                "infoFiltered": "(Filtrado de _MAX_ total Compras)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ Compras",
-                "loadingRecords": "Cargando...",
-                "processing": "Procesando...",
-                "search": "Buscador:",
-                "zeroRecords": "Sin resultados encontrados",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Ultimo",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
-            },
-            /* fin de idiomas */
-            "responsive": true,
-            "lengthChange": true,
-            "autoWidth": false,
-            "buttons": /* Ajuste de botones */ [{
-                    extend: 'collection',
-                    text: 'Reportes',
-                    orientation: 'landscape',
-                    buttons: [{
-                        text: 'Copiar',
-                        extend: 'copy'
-                    }, {
-                        extend: 'pdf',
-                    }, {
-                        extend: 'csv',
-                    }, {
-                        extend: 'excel',
-                    }, {
-                        text: 'Imprimir',
-                        extend: 'print'
-                    }]
-                },
-                {
-                    extend: 'colvis',
-                    text: 'Visor de columnas'
-                }
-            ],
-            /*Fin de ajuste de botones*/
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-
-    });
-</script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Obtener todos los elementos de búsqueda y conteo de registros por cada modal de productos
