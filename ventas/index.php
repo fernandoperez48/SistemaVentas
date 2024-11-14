@@ -162,8 +162,9 @@ include_once 'Reporte.php';
                                                         <td>
 
 
-                                                            <form action="factura.php" method="get" target="_blank">
+                                                            <form action="factura.php" method="post" target="_blank">
                                                                 <input type="hidden" name="id_venta" value="<?php echo $id_venta; ?>">
+                                                                <input type="hidden" name="id_cliente" value="<?php echo $id_cliente; ?>">
                                                                 <button type="submit" class="btn btn-success">Imprimirr</button>
                                                             </form>
 

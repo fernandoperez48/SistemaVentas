@@ -3,21 +3,89 @@ require('../fpdf/fpdf.php');
 include '../app/config.php';
 
 
-$id_venta = $_GET['id_venta'];
+$id_venta = $_POST['id_venta'];
+$id_cliente = $_POST['id_cliente'];
+
+// Consulta para obtener los detalles del cliente
+$sql_cliente = "SELECT cli.*, 
+                       COALESCE(per.nombre, emp.nombre) AS nombre_cliente, 
+                       per.nombre as nombre_per, per.apellido as apellido_per, 
+                       per.dni as dni_per, per.telefono as telefono_per, 
+                       emp.razon_social as razon_social, emp.cuit as cuit,
+                       
+                       dom_per.calle as calle_per, dom_per.numero as numero_per, 
+                       dom_per.ciudad as ciudad_per, dom_per.provincia as provincia_per,
+                       
+                       dom_emp.calle as calle_emp, dom_emp.numero as numero_emp, 
+                       dom_emp.ciudad as ciudad_emp, dom_emp.provincia as provincia_emp
+
+                 FROM tb_clientes AS cli
+                LEFT JOIN tb_personas AS per ON cli.id_persona = per.id_persona
+                LEFT JOIN tb_empresas AS emp ON cli.id_empresa = emp.id_empresa
+                LEFT JOIN tb_domicilios AS dom_per ON per.id_domicilio = dom_per.id_domicilio
+                LEFT JOIN tb_domicilios AS dom_emp ON emp.id_domicilio = dom_emp.id_domicilio
+                WHERE cli.id_cliente = '$id_cliente'";
+
+$resultado_cliente = $mysqli->query($sql_cliente);
+
+if (!$resultado_cliente) {
+    die("Error en la consulta de cliente: " . $mysqli->error);
+}
+
+// Obtener los datos del cliente
+$cliente = $resultado_cliente->fetch_assoc();
+// Acceder correctamente a los campos
+$nombre_cliente = $cliente['nombre_cliente'];
+if ($cliente['dni_per']) {
+    $domicilio = [
+        'calle' => $cliente['calle_per'],
+        'numero' => $cliente['numero_per'],
+        'ciudad' => $cliente['ciudad_per'],
+        'provincia' => $cliente['provincia_per']
+    ];
+} else {
+    // Si no es persona (es empresa), obtenemos el domicilio de la empresa
+    $domicilio = [
+        'calle' => $cliente['calle_emp'],
+        'numero' => $cliente['numero_emp'],
+        'ciudad' => $cliente['ciudad_emp'],
+        'provincia' => $cliente['provincia_emp']
+    ];
+}
+$razon_nombreYapellido = $cliente['razon_social'] ?? ($cliente['nombre_per'] . ' ' . $cliente['apellido_per']); // En caso de que no sea una empresa, usar el nombre del cliente
+$cuit_dni = $cliente['cuit'] ?? $cliente['dni_per']; // En caso de que no haya cuit para la empresa, usar el cuit del cliente
+
+
 
 // Realiza la consulta para obtener los detalles del carrito y productos
-$sql_carrito = "SELECT carr.cantidad, pro.codigo as codigo_producto, pro.unidad_de_medida as unidad_de_medida, pro.nombre AS nombre_producto,
+$sql_carrito = "SELECT carr.cantidad, 
+            pro.codigo as codigo_producto, 
+            pro.unidad_de_medida as unidad_de_medida, 
+            pro.nombre AS nombre_producto,
          carr.precio_unitario AS precio_unitario
-         FROM tb_carrito AS carr
-         INNER JOIN tb_almacen AS pro ON carr.id_producto = pro.id_producto
-         WHERE carr.nro_venta = '$id_venta'
-         ORDER BY carr.id_carrito";
+
+
+      FROM 
+    tb_carrito AS carr
+INNER JOIN 
+    tb_almacen AS pro ON carr.id_producto = pro.id_producto
+INNER JOIN 
+    tb_ventas AS ven ON carr.nro_venta = ven.nro_venta
+
+WHERE 
+    carr.nro_venta = '$id_venta'
+ORDER BY 
+    carr.id_carrito";
 
 $resultado_carrito = $mysqli->query($sql_carrito);
+
+
 
 if (!$resultado_carrito) {
     die("Error en la consulta: " . $mysqli->error);
 }
+
+
 
 // Preparación de datos para el PDF
 $productos = [];
@@ -75,9 +143,8 @@ class PDF extends FPDF
         $this->Cell(0, 10, 'Pagina ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
     }
 
-    function FacturaDetalle()
+    function FacturaDetalle($razon_nombreYapellido)
     {
-
         $this->SetY(19);
         $y_position = $this->GetY(); // Obtiene la posición vertical actual (Y) después de la primera MultiCell
         $this->SetFont('Arial', 'B', 10);
@@ -137,7 +204,7 @@ class PDF extends FPDF
         $this->Cell(95, 8, 'Domicilio Comercial:', 'LR', '', false);
 
         $this->SetFont('Arial', '', 9);
-        $this->SetXY(43, 44);
+        $this->SetXY(43, 45);
         $this->Cell(95, 6, 'Pueyrredon Esquina Colon 0 - Puerto', '', '1', false);
         $this->SetX(10,);
         $this->Cell(95, 3, '', 'LR', '0', false);
@@ -159,13 +226,26 @@ class PDF extends FPDF
         $this->SetFont('Arial', 'B', 30);
         $this->SetXY(10, 63);
         $this->Cell(190, 15, '', '1', '1', false);
+
+        $this->SetXY(10, 63);
+        $this->SetFont('Arial', 'B', 9);
+        $this->Cell(95, 8, 'CUIT:', '', '0', 'L');
+        $this->SetXy(20, 63);
+        $this->SetFont('Arial', '', 9);
+        $this->Cell(73, 8, '20-32490902-9', '', '', 'L');
+        $this->SetXy(60, 63);
+        $this->SetFont('Arial', 'b', 9);
+        $this->Cell(60, 8, 'Nombre o Razon Social:', '', '0', 'L');
+        $this->SetXy(99, 63);
+        $this->SetFont('Arial', '', 9);
+        $this->Cell(73, 8, $razon_nombreYapellido, '', '', 'L');
     }
 
     function TablaProductos($productos)
     {
         // Si llega a este punto, cargamos el PDF con los productos
-        if (isset($_GET['id_venta'])) {
-            $nro_venta = $_GET['id_venta'];
+        if (isset($_POST['id_venta'])) {
+            $nro_venta = $_POST['id_venta'];
 
             $this->SetY(90);
             // Cabecera de la tabla de productos
@@ -243,12 +323,10 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 
 // Llamada a las funciones para armar la factura
-$pdf->FacturaDetalle();
+$pdf->FacturaDetalle($razon_nombreYapellido);
 $pdf->TablaProductos($productos);
 
 $pdf->Totales();
 
 // Generar el archivo PDF
 $pdf->Output();
-
-// Mensaje de éxito ya no es necesario ya que no estamos haciendo una condición adicional.
