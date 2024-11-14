@@ -45,7 +45,7 @@ class ModalProductos
                                     $precio_unitario_total = 0;
                                     $precio_total = 0;
                                     $nro_venta = $venta['nro_venta'];
-                                    $sql_carrito = "SELECT carr.*, pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.precio_venta as precio_venta, pro.stock as stock, pro.id_producto as id_producto 
+                                    $sql_carrito = "SELECT carr.*, pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.stock as stock, pro.id_producto as id_producto 
                                                                                         FROM tb_carrito as carr 
                                                                                         INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto 
                                                                                         WHERE nro_venta = '$nro_venta' 
@@ -59,8 +59,8 @@ class ModalProductos
                                             $id_carrito = $carrito['id_carrito'];
                                             $contador_carrito++;
                                             $cantidad_total += $carrito['cantidad'];
-                                            $precio_unitario_total += $carrito['precio_venta'];
-                                            $precio_total += ($carrito['cantidad'] * $carrito['precio_venta']);
+                                            $precio_unitario_total += $carrito['precio_unitario'];
+                                            $precio_total += ($carrito['cantidad'] * $carrito['precio_unitario']);
                                     ?>
                                             <tr>
                                                 <td>
@@ -78,10 +78,10 @@ class ModalProductos
                                                     <input type="text" id="stock_de_inventario<?php echo $contador_carrito; ?>" value="<?php echo $carrito['stock']; ?>" hidden>
                                                 </td>
                                                 <td>
-                                                    <center>$ <?php echo $carrito['precio_venta']; ?></center>
+                                                    <center>$ <?php echo $carrito['precio_unitario']; ?></center>
                                                 </td>
                                                 <td>
-                                                    <center>$ <?php echo $subtotal = floatval($carrito['cantidad']) * floatval($carrito['precio_venta']); ?></center>
+                                                    <center>$ <?php echo $subtotal = floatval($carrito['cantidad']) * floatval($carrito['precio_unitario']); ?></center>
                                                 </td>
                                             </tr>
                                     <?php

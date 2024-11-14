@@ -5,6 +5,7 @@ $nro_venta = $_GET['nro_venta'];
 $id_producto = $_GET['id_producto'];
 $cantidad = $_GET['cantidad'];
 $fechaHora = date('Y-m-d H:i:s');
+$precio_unitario = $_GET['precio_unitario'];
 
 // Verificar si ya existe un registro para este producto en esta venta
 $sql_check_producto = "SELECT * FROM tb_carrito WHERE nro_venta = '$nro_venta' AND id_producto = '$id_producto'";
@@ -37,7 +38,7 @@ if ($result_check_producto->num_rows > 0) {
     }
 } else {
     // Si no existe, insertar el nuevo detalle de venta
-    $sql_insert = "INSERT INTO tb_carrito (nro_venta, id_producto, cantidad, fyh_creacion) VALUES ('$nro_venta', '$id_producto', '$cantidad', '$fechaHora')";
+    $sql_insert = "INSERT INTO tb_carrito (nro_venta, id_producto, cantidad, precio_unitario, fyh_creacion) VALUES ('$nro_venta', '$id_producto', '$cantidad', '$precio_unitario', '$fechaHora')";
 
     if ($mysqli->query($sql_insert) === TRUE) {
         // Actualizar stock

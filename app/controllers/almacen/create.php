@@ -1,16 +1,27 @@
 <?php
 include '../../config.php';
 // Función para generar el código del producto
+
 function generarCodigo($mysqli)
 {
-    $sql = "SELECT COUNT(*) AS total FROM tb_almacen";
+    // Consulta para obtener el código con el valor numérico más alto ignorando el prefijo 'p-'
+    $sql = "SELECT codigo FROM tb_almacen ORDER BY CAST(SUBSTRING(codigo, 3) AS UNSIGNED) DESC LIMIT 1";
     $result = $mysqli->query($sql);
     $row = $result->fetch_assoc();
-    $contador_de_id_productos = $row['total'] + 1;
 
-    // Formatear el número con ceros a la izquierda
-    return 'p-' . str_pad($contador_de_id_productos, 5, '0', STR_PAD_LEFT);
+    // Si hay al menos un código en la tabla, extraemos el número
+    if ($row) {
+        $ultimo_numero = (int)substr($row['codigo'], 2); // Eliminamos el prefijo 'p-' y convertimos a entero
+        $nuevo_numero = $ultimo_numero + 1; // Sumamos 1 al último número
+    } else {
+        // Si no hay registros, comenzamos desde el número 1
+        $nuevo_numero = 1;
+    }
+
+    // Formateamos el nuevo número con ceros a la izquierda
+    return 'p-' . str_pad($nuevo_numero, 5, '0', STR_PAD_LEFT);
 }
+
 
 $codigo = generarCodigo($mysqli);
 $id_categoria = $_POST['id_categoria'];

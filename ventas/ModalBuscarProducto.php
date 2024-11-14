@@ -194,10 +194,13 @@
                                         var nro_venta = "<?php echo $contador_de_ventas + 1; ?>";
                                         var id_producto = $("#id_producto").val();
                                         var cantidad = $("#cantidad").val();
+                                        var precio_unitario = $("#precio_unitario").val();
                                         var url_check_stock = "../app/controllers/ventas/verificar_stock.php";
 
                                         if (id_producto == "") {
                                             alert("Seleccione un producto");
+                                        } else if (precio_unitario == "") {
+                                            alert("Falta el precio Unitario");
                                         } else if (cantidad == "") {
                                             alert("Ingrese la cantidad");
                                         } else if (cantidad === "0") {
@@ -214,7 +217,8 @@
                                                     $.get(url, {
                                                         nro_venta: nro_venta,
                                                         id_producto: id_producto,
-                                                        cantidad: cantidad
+                                                        cantidad: cantidad,
+                                                        precio_unitario: precio_unitario
                                                     }, function(datos) {
                                                         $('#respuesta_carrito').html(datos);
                                                     });
