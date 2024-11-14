@@ -12,6 +12,7 @@ $sql_cliente = "SELECT cli.*,
                        per.nombre as nombre_per, per.apellido as apellido_per, 
                        per.dni as dni_per, per.telefono as telefono_per, 
                        emp.razon_social as razon_social, emp.cuit as cuit,
+                    cond_iva.nombre as nombre_condicion_iva,
                        
                        dom_per.calle as calle_per, dom_per.numero as numero_per, 
                        dom_per.ciudad as ciudad_per, dom_per.provincia as provincia_per,
@@ -24,6 +25,7 @@ $sql_cliente = "SELECT cli.*,
                 LEFT JOIN tb_empresas AS emp ON cli.id_empresa = emp.id_empresa
                 LEFT JOIN tb_domicilios AS dom_per ON per.id_domicilio = dom_per.id_domicilio
                 LEFT JOIN tb_domicilios AS dom_emp ON emp.id_domicilio = dom_emp.id_domicilio
+                LEFT JOIN tb_condicion_iva AS cond_iva ON cli.condicion_iva = cond_iva.id
                 WHERE cli.id_cliente = '$id_cliente'";
 
 $resultado_cliente = $mysqli->query($sql_cliente);
@@ -44,6 +46,7 @@ if ($cliente['dni_per']) {
         'provincia' => $cliente['provincia_per']
     ];
 } else {
+
     // Si no es persona (es empresa), obtenemos el domicilio de la empresa
     $domicilio = [
         'calle' => $cliente['calle_emp'],
@@ -52,6 +55,7 @@ if ($cliente['dni_per']) {
         'provincia' => $cliente['provincia_emp']
     ];
 }
+$condicion_iva = $cliente['nombre_condicion_iva'];
 $razon_nombreYapellido = $cliente['razon_social'] ?? ($cliente['nombre_per'] . ' ' . $cliente['apellido_per']); // En caso de que no sea una empresa, usar el nombre del cliente
 $cuit_dni = $cliente['cuit'] ?? $cliente['dni_per']; // En caso de que no haya cuit para la empresa, usar el cuit del cliente
 
@@ -143,7 +147,7 @@ class PDF extends FPDF
         $this->Cell(0, 10, 'Pagina ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
     }
 
-    function FacturaDetalle($razon_nombreYapellido)
+    function FacturaDetalle($razon_nombreYapellido, $cuit_dni, $condicion_iva)
     {
         $this->SetY(19);
         $y_position = $this->GetY(); // Obtiene la posición vertical actual (Y) después de la primera MultiCell
@@ -199,7 +203,7 @@ class PDF extends FPDF
 
         $this->SetFont('Arial', 'B', 9);
         $this->SetY(40);
-        $this->Cell(95, 8, '', 'LR', '', false);
+        $this->Cell(95, 9, 'asdasdasd', 'LR', '', false);
         $this->SetY(44);
         $this->Cell(95, 8, 'Domicilio Comercial:', 'LR', '', false);
 
@@ -221,7 +225,7 @@ class PDF extends FPDF
 
         $this->SetFont('Arial', 'B', 12);
         $this->SetXY(10, 52);
-        $this->Cell(190, 9, '', 'B', '', false);
+        $this->Cell(190, 10, '', 'B', '', false);
 
         $this->SetFont('Arial', 'B', 30);
         $this->SetXY(10, 63);
@@ -229,16 +233,23 @@ class PDF extends FPDF
 
         $this->SetXY(10, 63);
         $this->SetFont('Arial', 'B', 9);
-        $this->Cell(95, 8, 'CUIT:', '', '0', 'L');
-        $this->SetXy(20, 63);
+        $this->Cell(95, 8, 'CUIT/DNI:', '', '0', 'L');
+        $this->SetXy(27, 63);
         $this->SetFont('Arial', '', 9);
-        $this->Cell(73, 8, '20-32490902-9', '', '', 'L');
+        $this->Cell(73, 8, $cuit_dni, '', '', 'L');
         $this->SetXy(60, 63);
         $this->SetFont('Arial', 'b', 9);
         $this->Cell(60, 8, 'Nombre o Razon Social:', '', '0', 'L');
         $this->SetXy(99, 63);
         $this->SetFont('Arial', '', 9);
         $this->Cell(73, 8, $razon_nombreYapellido, '', '', 'L');
+        $this->SetXY(10, 69);
+        $this->SetFont('Arial', 'B', 9);
+        $this->Cell(95, 8, 'Condición frente al IVA:', '', '0', 'L');
+        $this->SetXY(50, 69);
+        $this->SetFont('Arial', '', 9);
+        $this->Cell(95, 8, $condicion_iva, '', '0', 'L');
+        $this->SetXy(20, 63);
     }
 
     function TablaProductos($productos)
@@ -323,7 +334,7 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 
 // Llamada a las funciones para armar la factura
-$pdf->FacturaDetalle($razon_nombreYapellido);
+$pdf->FacturaDetalle($razon_nombreYapellido, $cuit_dni, $condicion_iva);
 $pdf->TablaProductos($productos);
 
 $pdf->Totales();
