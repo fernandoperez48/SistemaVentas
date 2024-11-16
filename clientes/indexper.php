@@ -3,6 +3,7 @@ include '../app/config.php';
 include '../layaout/sesion.php';
 include '../layaout/parte1.php';
 include '../app/controllers/clientes/listado_de_clientesper.php';
+include '../app/controllers/clientes/listado_condicion_iva.php';
 
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -112,6 +113,8 @@ include '../app/controllers/clientes/listado_de_clientesper.php';
                                                                                         <input type="text" value="<?php echo $clientesper_datos['dni']; ?>" class="form-control text-center" disabled>
                                                                                     </div>
                                                                                 </div>
+
+
 
                                                                                 <div class="col-md-3">
                                                                                     <div class="form-group">
@@ -311,7 +314,8 @@ include '../app/controllers/clientes/listado_de_clientesper.php';
                                                         <script>
                                                             $('#btn_update<?php echo $id_cliente; ?>').click(function() {
                                                                 console.log("Script cargado y ejecutándose");
-                                                                var id_cliente = '<?php echo $id_cliente; ?>';
+                                                                var id_cliente = '<?php echo $clientesper_datos['id_cliente']; ?>';
+                                                                // var id_cliente = '<?php echo $id_cliente; ?>';
                                                                 var nombre_cliente = $('#nombre_clienteU<?php echo $id_cliente; ?>').val();
                                                                 var apellido_cliente = $('#apellido_clienteU<?php echo $id_cliente; ?>').val();
                                                                 var telefono = $('#telefonoU<?php echo $id_cliente; ?>').val();
@@ -370,7 +374,7 @@ include '../app/controllers/clientes/listado_de_clientesper.php';
                                                     <div class="btn-group">
 
                                                         <a type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-delete<?php echo $id_cliente; ?>"><i class="fa fa-trash"></i>Borrar</a>
-
+                                                        <!-- modal para eliminar clientes-->
                                                         <div class="modal fade" id="modal-delete<?php echo $id_cliente; ?>">
                                                             <div class="modal-dialog modal-lg">
                                                                 <div class="modal-content">
@@ -565,6 +569,20 @@ include '../app/controllers/clientes/listado_de_clientesper.php';
                         <div class="form-group">
                             <label>DNI</label>
                             <input type="text" id="dniC" class="form-control" placeholder="XX-XXXXXXXX-X">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="">Condicion frente al IVA</label>
+                            <select name="condicion_iva" id="condicion_iva" class="form-control" required>
+                                <?php
+                                foreach ($condicion_iva_datos as $condicion_iva_dato) { ?>
+                                    <option value="<?php echo $condicion_iva_dato['id'] ?>"><?php echo $condicion_iva_dato['nombre'] ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                            <small style="color:red; display:none" id="lbl_rol">* Este campo es requerido</small>
                         </div>
                     </div>
                 </div>
