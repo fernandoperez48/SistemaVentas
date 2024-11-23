@@ -44,13 +44,19 @@ class Reporte
                                 extend: 'copy'
                             }, {
                                 extend: 'pdf',
+                                exportOptions: {
+                                    columns: ':not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(5)):not(:nth-child(8)):not(:nth-child(9)):not(:last-child)' // Excluye la última columna
+                                }
                             }, {
                                 extend: 'csv',
                             }, {
                                 extend: 'excel',
                             }, {
                                 text: 'Imprimir',
-                                extend: 'print'
+                                extend: 'print',
+                                exportOptions: {
+                                    columns: ':not(:last-child)' // Excluye la última columna
+                                }
                             }]
                         },
                         {

@@ -11,7 +11,7 @@ class Reporte
             $(function() {
                 $("#example1").DataTable({
                     /* cambio de idiomas de datatable */
-                    "pageLength": 10,
+                    "pageLength": 5,
                     language: {
                         "emptyTable": "No hay información",
                         "decimal": "",

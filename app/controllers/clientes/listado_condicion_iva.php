@@ -5,7 +5,7 @@ FROM tb_condicion_iva AS tb_cond_iva";
 
 $result_condicion_iva = $mysqli->query($sql_condicion_iva);
 
-$clientesper_datos = [];
+$condicion_iva_datos = [];
 
 if ($result_condicion_iva) {
     while ($row = $result_condicion_iva->fetch_assoc()) {

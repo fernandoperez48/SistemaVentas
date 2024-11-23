@@ -2,8 +2,8 @@
 include '../../config.php';
 
 $id_cliente = $_POST['id_cliente'];
-$nombre_cliente= $_POST['nombre_cliente'];
-$razon_social= $_POST['razon_social'];
+$nombre_cliente = $_POST['nombre_cliente'];
+$razon_social = $_POST['razon_social'];
 $telefono = $_POST['telefono'];
 $cuit = $_POST['cuit'];
 $email = $_POST['email'];
@@ -14,6 +14,7 @@ $domicilio = $_POST['domicilio'];
 $numero = $_POST['numero'];
 $piso = $_POST['piso'];
 $depto = $_POST['depto'];
+$persona_autorizada = $_POST['persona_autorizada'];
 $id_domicilio = $_POST['id_domicilio'];
 
 // Actualizar datos del cliente
@@ -23,6 +24,7 @@ $sql_cliente = "UPDATE tb_empresas as e
     e.nombre='$nombre_cliente',
     e.razon_social='$razon_social',
     e.telefono='$telefono',
+    e.persona_autorizada='$persona_autorizada',
     e.email='$email'
 WHERE c.id_cliente='$id_cliente'";
 

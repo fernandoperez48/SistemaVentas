@@ -50,7 +50,7 @@ class ModalAgregarUsuario
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="">Contraseña</label>
-                                        <input type="passsword" class="form-control" name="password_user" id="contraseña" required>
+                                        <input type="password" class="form-control" name="password_user" id="contraseña" required>
                                         <small style="color:red; display:none" id="lbl_contraseña">* Este campo es requerido</small>
                                     </div>
                                 </div>

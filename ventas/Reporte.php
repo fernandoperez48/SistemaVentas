@@ -51,7 +51,11 @@ class Reporte
                                 extend: 'excel',
                             }, {
                                 text: 'Imprimir',
-                                extend: 'print'
+                                extend: 'print',
+                                exportOptions: {
+                                    columns: ':not(:nth-child(3)):not(:nth-child(4)):not(:nth-child(6)):not(:nth-child(7))' // Excluir 3ra, 4ta y 6ta columna
+                                }
+
                             }]
                         },
                         {

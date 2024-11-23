@@ -53,13 +53,13 @@ class ModalEditarUsuario
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Contraseña</label>
-                                    <input type="text" class="form-control" name="password_user" id="contraseña<?php echo $id_usuario; ?>" required>
+                                    <input type="password" class="form-control" name="password_user" id="contraseña<?php echo $id_usuario; ?>" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Repita la contraseña</label>
-                                    <input type="text" class="form-control" name="password_repeat" id="repita_contraseña<?php echo $id_usuario; ?>" required>
+                                    <input type="password" class="form-control" name="password_repeat" id="repita_contraseña<?php echo $id_usuario; ?>" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
