@@ -11,7 +11,7 @@ include_once 'ModalEditarProducto.php';
 include_once 'ModalVerProducto.php';
 include_once 'Reporte.php';
 ?>
-?>
+
 <div class="content-wrapper" style="background-color:gray">
 
     <div class="content-header">

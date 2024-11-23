@@ -51,11 +51,14 @@ class Reporte
                                 extend: 'csv',
                             }, {
                                 extend: 'excel',
+                                exportOptions: {
+                                    columns: ':not(:nth-child(1)):not(:nth-child(5)):not(:last-child)' // Excluye la última columna
+                                }
                             }, {
                                 text: 'Imprimir',
                                 extend: 'print',
                                 exportOptions: {
-                                    columns: ':not(:last-child)' // Excluye la última columna
+                                    columns: ':not(:nth-child(5)):not(:last-child)' // Excluye la última columna
                                 }
                             }]
                         },
