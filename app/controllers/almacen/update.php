@@ -69,6 +69,8 @@ $sql = "UPDATE tb_almacen SET
             nombre='$nombre_producto',
             id_usuario='$id_usuario',
             descripcion='$descripcion',
+            talle='$talle',
+            color='$color',
             stock='$stock',
             stock_minimo='$stock_minimo',
             stock_maximo='$stock_maximo',
@@ -83,9 +85,9 @@ $resultado_producto = $mysqli->query($sql);
 
 if ($resultado_producto) {
     session_start();
-    $_SESSION['mensaje'] = "Se actualizó el producto correctamente";
+    $_SESSION['mensaje'] = "Se actualizó el usuario correctamente";
     $_SESSION['icono'] = "success";
     echo "actualizado";
 } else {
-    echo "No se pudo registrar el usuario";
+    echo "No se pudo registrar el usuario correctamente";
 }
