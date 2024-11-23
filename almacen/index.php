@@ -11,6 +11,10 @@ include_once 'ModalEditarProducto.php';
 include_once 'ModalVerProducto.php';
 include_once 'Reporte.php';
 ?>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1849070a4d75cb7e5c188a52d40d95c2c0e7b97b
 <div class="content-wrapper" style="background-color:gray">
 
     <div class="content-header">

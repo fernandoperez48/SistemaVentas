@@ -11,6 +11,7 @@ include '../app/controllers/roles/listado_de_roles.php';
 include_once 'ModalEditarUsuario.php';
 include_once 'ModalCreateUser.php';
 include_once 'ModalVerUsuario.php';
+include_once 'ModalEliminarUsuario.php';
 include_once 'Reporte.php';
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -100,39 +101,49 @@ include_once 'Reporte.php';
                                                         </div>
                                                         <!-- /.modal-dialog -->
                                                     </div>
-                        </div>
-                        <?php if ($rol_sesion == "Administrador") { ?>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal-update<?php echo $id_usuario; ?>">
-                                    <i class="fa fa-pencil-alt"></i>
-                                    Editar
-                                </button>
-                                <!-- modal para actualizar usuarios-->
+                                                    <?php if ($rol_sesion == "Administrador") { ?>
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal-update<?php echo $id_usuario; ?>">
+                                                                <i class="fa fa-pencil-alt"></i>
+                                                                Editar
+                                                            </button>
+                                                            <!-- modal para actualizar usuarios-->
+                                                            <?php
+                                                            // Llamar al método estático render de la clase ModalEditarUsuario -->
+                                                            echo ModalEditarUsuario::render($id_usuario, $nombre_usuario, $usuarios_datos, $roles_datos, $id_rol_usuario);
+                                                            ?>
+                                                            <div id="respuesta_update<?php echo $id_usuario; ?>"></div>
+                                                        </div>
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-eliminar<?php echo $id_usuario; ?>">
+                                                                <i class="fa fa-pencil-alt"></i>
+                                                                Eliminar
+                                                            </button>
+                                                            <!-- modal para eliminar usuarios-->
 
-                                <?php
-                                            // Llamar al método estático render de la clase ModalEditarUsuario -->
-                                            echo ModalEditarUsuario::render($id_usuario, $nombre_usuario, $usuarios_datos, $roles_datos, $id_rol_usuario);
-                                ?>
-                                <div id="respuesta_update<?php echo $id_usuario; ?>"></div>
-                            </div>
-                        <?php
-                                        }
-                        ?>
-                    </div>
-                    </center>
-                    </td>
-                    </tr>
-                <?php
+                                                            <?php
+                                                            // Llamar al método estático render de la clase ModalEditarUsuario -->
+                                                            echo ModalEliminarUsuario::render($id_usuario, $usuarios_datos);
+                                                            ?>
+                                                            <div id="respuesta_eliminar<?php echo $id_usuario; ?>"></div>
+                                                        </div>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                    <?php
                                     }
-                ?>
-                </tbody>
-                </table>
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 
 <?php include '../layaout/mensajes.php'; ?>

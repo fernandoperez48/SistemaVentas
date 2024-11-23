@@ -4,17 +4,23 @@ include '../../config.php';
 $id_usuario = $_POST['id_usuario'];
 
 $sql = "DELETE FROM tb_usuarios WHERE id_usuarios = '$id_usuario'";
-
-if ($mysqli->query($sql) === TRUE) {
+if ($mysqli->query($sql) === true) {
     session_start();
-    $_SESSION['mensaje'] = "Se eliminó el usuario correctamente";
+    $_SESSION['mensaje'] = "Se eliminó al usuario correctamente";
     $_SESSION['icono'] = "success";
-    header('location: ' . $URL . 'usuarios/');
+?>
+    <script>
+        window.location.href = '<?php echo $URL; ?>/usuarios/';
+    </script>
+<?php
 } else {
     session_start();
-    $_SESSION['mensaje'] = "No se pudo eliminar el usuario";
+    $_SESSION['mensaje'] = "No se pudo eliminar al usuario";
     $_SESSION['icono'] = "error";
-    header('location: ' . $URL . 'usuarios/');
+?>
+    <script>
+        window.location.href = '<?php echo $URL; ?>/usuarios';
+    </script>
+<?php
 }
-
-$mysqli->close();
+?>
