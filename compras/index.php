@@ -346,6 +346,9 @@ include '../app/controllers/compras/listado_de_compras.php';
             "responsive": true,
             "lengthChange": true,
             "autoWidth": false,
+            "order": [
+                [1, "desc"]
+            ], // Cambia '0' por el índice de la columna de fecha
             "buttons": /* Ajuste de botones */ [{
                     extend: 'collection',
                     text: 'Reportes',

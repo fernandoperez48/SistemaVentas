@@ -83,7 +83,7 @@ $resultado_producto = $mysqli->query($sql);
 
 if ($resultado_producto) {
     session_start();
-    $_SESSION['mensaje'] = "Se actualizó el usuario correctamente";
+    $_SESSION['mensaje'] = "Se actualizó el producto correctamente";
     $_SESSION['icono'] = "success";
     echo "actualizado";
 } else {

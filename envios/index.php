@@ -190,6 +190,40 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                                                     </center>
                                                                 </th>
                                                             </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <center>${index + 1}</center>
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal_productos${id_envio}">
+                                                                        <i class="fa fa-shopping-basket"></i>
+                                                                        ${envios.nro_venta}
+                                                                    </button>
+                                                                </td>
+                                                                <td>${envios.nombre} ${envios.apellido}</td>
+                                                                <td>${envios.fyh_creacion}</td>
+                                                                <td>${envios.calle} ${envios.numero}</td>
+                                                                <td>${envios.Direccion}</td>
+                                                                <td>$${envios.total_pagado}</td>
+                                                                <td>${envios.estado}</td>
+                                                                <td>${envios.nombre_usuario}</td>
+                                                                <td>
+                                                                    <center>
+                                                                        <div class="btn-group">
+                                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update${id_envio}">
+                                                                                <i class="fa fa-pencil-alt"></i>
+                                                                                Editar
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="btn-group">
+                                                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete${id_envio}">
+                                                                                <i class="fa fa-trash"></i>
+                                                                                Borrar
+                                                                            </button>
+                                                                        </div>
+                                                                    </center>
+                                                                </td>
+                                                            </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>

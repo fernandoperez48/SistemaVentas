@@ -90,7 +90,7 @@ class ModalEditarProducto
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="">Proveedor</label>
-                                                <select name="proveedorupdate" id="proveedorupdate<?php echo $id_producto; ?>" class="form-control" required>
+                                                <select name="proveedorupdate" id="proveedorupdate<?php echo $id_producto; ?>" class="form-control" disabled>
                                                     <?php
                                                     $id_proveedor_actual = $proveedores_datos['id_proveedor'];
                                                     foreach ($proveedores_datos as $proveedores_datosupdate) { ?>

@@ -27,7 +27,7 @@ class ModalEditarProv
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Numero de contacto <b>*</b></label>
+                                    <label>Celular<b>*</b></label>
                                     <input type="number" id="celular<?php echo $id_proveedor; ?>" class="form-control" value="<?php echo $proveedores_datos['celular']; ?>">
                                     <small style="color:red; display:none" id="lbl_celular<?php echo $id_proveedor; ?>">* Este campo es requerido</small>
                                 </div>
