@@ -100,7 +100,7 @@ $total_precio = 0;
 
 while ($carrito = $resultado_carrito->fetch_assoc()) {
     $cantidad = $carrito['cantidad'];
-    $precio_unitario = $carrito['precio_unitario'];
+    $precio_unitario = $carrito['precio_unitario'] / 1.21;
     $subtotal = $cantidad * $precio_unitario;
     // Calcula el subtotal con IVA
     $subtotal_con_iva = $subtotal * 1.21;
@@ -268,7 +268,7 @@ class PDF extends FPDF
             $this->Cell(60, 7, 'Producto/Servicios', 1, '', '', 'true');
             $this->Cell(15, 7, 'Cantidad', 1, '', '', 'true');
             $this->Cell(15, 7, 'U. Medida', 1, '', '', 'true');
-            $this->Cell(16, 7, 'Precio Unit.', 1, '', '', 'true');
+            $this->Cell(16, 7, 'Precio S/I', 1, '', '', 'true');
             $this->Cell(12, 7, '% Bonif', 1, '', '', 'true');
             $this->Cell(18, 7, 'Subtotal', 1, '', '', 'true');
             $this->MultiCell(12, 3.5, 'Alicuota' . "\n" . 'IVA', 1, '', 'true');

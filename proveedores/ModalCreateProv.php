@@ -19,48 +19,49 @@ class ModalCreateProv
                     </div>
                     <div class="modal-body">
                         <div class="row">
-
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Nombre Proveedor<b>*</b></label>
                                     <input type="text" id="nombre_proveedor" class="form-control" placeholder="Nombre del Proveedor">
-                                    <small style="color:red; display:none" id="lbl_nombre">* Este campo es requerido</small>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Telefono</label>
-                                    <input type="number" id="telefono" class="form-control" placeholder="Telefono">
-                                    <small style="color:red; display:none" id="lbl_telefono">* Este campo es requerido</small>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Empresa</label>
+                                    <label>Empresa<b>*</b></label>
                                     <input type="text" id="empresa" class="form-control" placeholder="Empresa">
-                                    <small style="color:red; display:none" id="lbl_empresa">* Este campo es requerido</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Telefono<b>*</b></label>
+                                    <input type="number" id="telefono" class="form-control" placeholder="Telefono">
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" id="email" class="form-control" placeholder="Email">
-                                    <small style="color:red; display:none" id="lbl_email">* Este campo es requerido</small>
-                                    <small style="color:red; display:none" id="lbl_email_invalid">* El email no es válido</small>
+                                    <label>CUIT<b>*</b></label>
+                                    <input type="text" id="cuit" class="form-control" placeholder="XX-XXXXXXXX-X">
+                                    <small style="color:red; display:none" id="lbl_cuit">* Este cuit no es Valido</small>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>CUIT</label>
-                                    <input type="text" id="cuit" class="form-control" placeholder="XX-XXXXXXXX-X">
-                                    <small style="color:red; display:none" id="lbl_cuit">* Este campo es requerido</small>
+                                    <label>Responsable Comercial<b>*</b></label>
+                                    <input type="text" id="responsable_comercial" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label>Condicion IVA</label>
+                                <div class="form-group">
+                                    <label>Telefono/Celular de R.C.<b>*</b></label>
+                                    <input type="number" id="celular" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Condicion IVA<b>*</b></label>
                                 <select name="" id="condicion_iva" class="form-control" required>
                                     <option value="" selected>Seleccione condición</option>
                                     <option value="1">Consumidor Final</option>
@@ -70,21 +71,25 @@ class ModalCreateProv
                                     <option value="5">Monotributista</option>
                                     <option value="6">Responsable Inscripto</option>
                                 </select>
-                                <small style="color:red; display:none" id="lbl_condicion_iva">* Este campo es requerido</small>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Email<b>*</b></label>
+                                    <input type="email" id="email" class="form-control" placeholder="Email">
+                                    <small style="color:red; display:none" id="lbl_email_invalid">* El email no es válido</small>
+                                </div>
                             </div>
                         </div>
-
                         <div class="row">
+
                             <div class="form-group">
                                 <label for="">Domicilio</label>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" name="" id="calle" placeholder="Calle">
-                                        <small style="color:red; display:none" id="lbl_calle">* Este campo es requerido</small>
+                                        <input type="text" class="form-control" name="" id="calle" placeholder="Calle*">
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="number" class="form-control" name="" id="numero" placeholder="Numero">
-                                        <small style="color:red; display:none" id="lbl_numero">* Este campo es requerido</small>
+                                        <input type="number" class="form-control" name="" id="numero" placeholder="Numero*">
                                     </div>
                                     <div class="col-md-2">
                                         <input type="text" class="form-control" name="" id="piso" placeholder="Piso">
@@ -96,35 +101,18 @@ class ModalCreateProv
                                 <br>
                                 <div class="row">
                                     <div class="col">
-                                        <input type="text" class="form-control" name="" id="localidad" placeholder="Localidad">
-                                        <small style="color:red; display:none" id="lbl_localidad">* Este campo es requerido</small>
+                                        <input type="text" class="form-control" name="" id="localidad" placeholder="Localidad*">
+
                                     </div>
                                     <div class="col">
-                                        <input type="text" class="form-control" name="" id="provincia" placeholder="Provincia">
-                                        <small style="color:red; display:none" id="lbl_provincia">* Este campo es requerido</small>
+                                        <input type="text" class="form-control" name="" id="provincia" placeholder="Provincia*">
+
                                     </div>
                                     <br>
                                     <div class="col">
-                                        <input type="text" class="form-control" name="" id="pais" placeholder="Pais">
-                                        <small style="color:red; display:none" id="lbl_pais">* Este campo es requerido</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                        <input type="text" class="form-control" name="" id="pais" placeholder="Pais*">
 
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Responsable Comercial<b>*</b></label>
-                                    <input type="text" id="responsable_comercial" class="form-control">
-                                    <small style="color:red; display:none" id="lbl_responsable_comercial">* Este campo es requerido</small>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Telefono/Celular de R.C.<b>*</b></label>
-                                    <input type="number" id="celular" class="form-control">
-                                    <small style="color:red; display:none" id="lbl_celular">* Este campo es requerido</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -180,52 +168,14 @@ class ModalCreateProv
                     return numeroDNI >= 6000000 && numeroDNI <= 50000000;
                 }
 
+                if (nombre_proveedor === '' || empresa === '' || telefono === '' || cuit === '' || responsable_comercial === '' || celular === '' || condicion_iva === '' || email === '' || pais === '' || provincia === '' || localidad === '' || calle === '' || numero === '') {
+                    alert('Todos los campos marcados con * son obligatorios.');
 
-                if (nombre_proveedor == '') {
-                    $('#nombre_proveedor').focus();
-                    $('#lbl_nombre').css('display', 'block');
-                } else if (telefono == '') {
-                    $('#telefono').focus();
-                    $('#lbl_telefono').css('display', 'block');
-                } else if (empresa == '') {
-                    $('#empresa').focus();
-                    $('#lbl_empresa').css('display', 'block');
-                } else if (email == '') {
-                    $('#email').focus();
-                    $('#lbl_email').css('display', 'block');
+
                 } else if (!validarEmail(email)) {
-                    $('#email').focus();
-                    $('#lbl_email_invalid').css('display', 'block');
+                    alert('El formato de email no es valido');
                 } else if (!validarCUIT(cuit)) {
-                    $('#cuit').focus();
-                    $('#lbl_cuit_invalid').css('display', 'block');
-                } else if (cuit == '') {
-                    $('#cuit').focus();
-                    $('#lbl_cuit').css('display', 'block');
-                } else if (condicion_iva == '') {
-                    $('#condicion_iva').focus();
-                    $('#lbl_condicion_iva').css('display', 'block');
-                } else if (calle == '') {
-                    $('#calle').focus();
-                    $('#lbl_calle').css('display', 'block');
-                } else if (numero == '') {
-                    $('#numero').focus();
-                    $('#lbl_numero').css('display', 'block');
-                } else if (localidad == '') {
-                    $('#localidad').focus();
-                    $('#lbl_localidad').css('display', 'block');
-                } else if (provincia == '') {
-                    $('#provincia').focus();
-                    $('#lbl_provincia').css('display', 'block');
-                } else if (pais == '') {
-                    $('#pais').focus();
-                    $('#lbl_pais').css('display', 'block');
-                } else if (responsable_comercial == '') {
-                    $('#responsable_comercial').focus();
-                    $('#lbl_responsable_comercial').css('display', 'block');
-                } else if (celular == '') {
-                    $('#celular').focus();
-                    $('#lbl_celular').css('display', 'block');
+                    alert('El cuit es inválido');
                 } else {
                     // Verificar si ya existe un proveedor con los mismos datos
                     $.get('../app/controllers/proveedores/verificar.php', {

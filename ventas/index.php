@@ -47,6 +47,9 @@ include_once 'Reporte.php';
                                     <thead style="background-color: gray;">
                                         <tr>
                                             <th>
+                                                <center>Fecha de venta</center>
+                                            </th>
+                                            <th>
                                                 <center>Nro</center>
                                             </th>
                                             <th>
@@ -83,6 +86,9 @@ include_once 'Reporte.php';
                                                 $contador++;
                                         ?>
                                                 <tr>
+                                                    <td>
+                                                        <center><?php echo $venta['fyh_creacion']; ?></center>
+                                                    </td>
                                                     <td>
                                                         <center> <?php echo $contador; ?></center>
                                                     </td>
@@ -165,7 +171,7 @@ include_once 'Reporte.php';
                                                             <form action="factura.php" method="post" target="_blank">
                                                                 <input type="hidden" name="id_venta" value="<?php echo $id_venta; ?>">
                                                                 <input type="hidden" name="id_cliente" value="<?php echo $id_cliente; ?>">
-                                                                <button type="submit" class="btn btn-success">Imprimirr</button>
+                                                                <button type="submit" class="btn btn-success">Imprimir</button>
                                                             </form>
 
 

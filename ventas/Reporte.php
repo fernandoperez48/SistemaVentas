@@ -36,6 +36,9 @@ class Reporte
                     "responsive": true,
                     "lengthChange": true,
                     "autoWidth": false,
+                    "order": [
+                        [0, "desc"]
+                    ], // Cambia '0' por el índice de la columna de fecha
                     "buttons": /* Ajuste de botones */ [{
                             extend: 'collection',
                             text: 'Reportes',

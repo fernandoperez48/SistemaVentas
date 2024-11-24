@@ -69,6 +69,8 @@ $sql = "UPDATE tb_almacen SET
             nombre='$nombre_producto',
             id_usuario='$id_usuario',
             descripcion='$descripcion',
+            talle='$talle',
+            color='$color',
             stock='$stock',
             stock_minimo='$stock_minimo',
             stock_maximo='$stock_maximo',
@@ -87,5 +89,5 @@ if ($resultado_producto) {
     $_SESSION['icono'] = "success";
     echo "actualizado";
 } else {
-    echo "No se pudo registrar el usuario";
+    echo "No se pudo registrar el usuario correctamente";
 }

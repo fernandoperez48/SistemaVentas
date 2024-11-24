@@ -8,7 +8,7 @@
     ?>
 
             <div class="modal fade" id="modal-buscar_producto">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header" style="background-color:#446DF6; color:white">
                             <h4 class="modal-title">Busqueda del producto</h4>
@@ -54,9 +54,6 @@
                                             <th>
                                                 <center>Fecha Ingreso</center>
                                             </th>
-                                            <th>
-                                                <center>Usuario</center>
-                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -80,8 +77,6 @@
                                                                 $("#detalle").val("<?php echo $productos_datos['descripcion']; ?>");
                                                                 $("#precio_unitario").val("<?php echo $productos_datos['precio_venta']; ?>");
                                                                 $('#cantidad').focus();
-
-
                                                                 //$("#modal-buscar_producto").modal("hide");
                                                             });
                                                         </script>
@@ -137,11 +132,6 @@
                                                 <td>
                                                     <center>
                                                         <?php echo $productos_datos['fecha_ultimo_ingreso']; ?>
-                                                    </center>
-                                                </td>
-                                                <td>
-                                                    <center>
-                                                        <?php echo $productos_datos['nombres_usuario']; ?>
                                                     </center>
                                                 </td>
                                             </tr>
@@ -236,6 +226,7 @@
                     </div>
                 </div>
             </div>
+
     <?php
             return ob_get_clean(); // Devolver el contenido del buffer de salida
         }
