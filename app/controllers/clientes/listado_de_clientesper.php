@@ -1,6 +1,6 @@
 <?php
 
-$sql_clientesper = "SELECT cl.id_cliente, cl.saldo, cond_iva.nombre as nombre_iva,
+$sql_clientesper = "SELECT cl.id_cliente, cl.saldo, cond_iva.nombre as nombre_iva, cond_iva.id as id_iva, 
                     p.dni, p.nombre, p.apellido, p.telefono, p.email, p.id_domicilio,
                     d.calle,d.numero,d.ciudad,d.provincia,d.pais, d.piso, d.depto
                     FROM tb_clientes as cl 

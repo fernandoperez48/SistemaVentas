@@ -60,10 +60,10 @@ class ModalUpdatePer
                                 <div class="form-group">
                                     <label for="">Condicion frente al IVA</label>
                                     <select name="condicion_iva" id="condicion_iva<?php echo $id_cliente; ?>" class="form-control" required>
-                                        <option value="" selected disabled>Elija opción</option>
+
                                         <?php
                                         foreach ($condicion_iva_datos as $condicion_iva_dato) { ?>
-                                            <option value="<?php echo $condicion_iva_dato['id'] ?>"><?php echo $condicion_iva_dato['nombre'] ?></option>
+                                            <option value="<?php echo $clientesper_datos['id_iva'] ?>"><?php echo $condicion_iva_dato['nombre'] ?></option>
                                         <?php
                                         }
                                         ?>
