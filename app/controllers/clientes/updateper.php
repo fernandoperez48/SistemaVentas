@@ -18,19 +18,20 @@ $id_domicilio = $_POST['id_domicilio'];
 $condicion_iva = $_POST['condicion_iva'];
 
 // Actualizar datos del cliente
-$sql_cliente = "UPDATE tb_personas as p
-    INNER JOIN tb_clientes AS C on c.id_persona = p.id_persona SET     
-    p.dni='$dni',
-    p.nombre='$nombre_cliente',
-    p.apellido='$apellido_cliente',
-    p.telefono='$telefono',
-    p.email='$email'
-WHERE c.id_cliente='$id_cliente'";
+$sql_cliente = "UPDATE tb_personas AS p
+    INNER JOIN tb_clientes AS c ON c.id_persona = p.id_persona
+    INNER JOIN tb_condicion_iva AS cond_iva ON c.condicion_iva = cond_iva.id
+SET 
+    p.dni = '$dni',
+    p.nombre = '$nombre_cliente',
+    p.apellido = '$apellido_cliente',
+    p.telefono = '$telefono',
+    p.email = '$email',
+    c.condicion_iva = '$condicion_iva'
+WHERE c.id_cliente = '$id_cliente'";
 
-$sql_condicion_iva = "UPDATE tb_clientes as cl
-    INNER JOIN tb_condicion_iva AS cond_iva ON cl.condicion_iva = cond_iva.id SET 
-    cl.condicion_iva='$condicion_iva'
-WHERE cl.id_cliente='$id_cliente'";
+
+
 
 // Actualizar datos del domicilio
 $sql_domicilio = "UPDATE tb_domicilios SET 
@@ -49,7 +50,7 @@ WHERE id_domicilio='$id_domicilio'";
 session_start();
 
 // Ejecutar las consultas
-if ($mysqli->query($sql_cliente) === true && $mysqli->query($sql_domicilio) === true && $mysqli->query($sql_condicion_iva) === true) {
+if ($mysqli->query($sql_cliente) === true && $mysqli->query($sql_domicilio) === true) {
     $_SESSION['mensaje'] = "Se actualizó al cliente correctamente";
     $_SESSION['icono'] = "success";
 } else {
