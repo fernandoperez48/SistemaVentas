@@ -96,7 +96,7 @@ include_once 'Reporte.php';
                                                     <div class="btn-group">
                                                         <a type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal-update<?php echo $id_cliente; ?>"><i class="fa fa-pencil-alt"></i>Editar</a>
                                                         <!-- modal para actualizar clientes personas-->
-                                                        <?php echo ModalUpdatePer::render($id_cliente, $clientesper_datos, $id_domicilio, $condicion_iva_datos); ?>
+                                                        <?php echo ModalUpdatePer::render($id_cliente, $clientesper_datos, $id_domicilio); ?>
                                                         <div id="respuesta_update<?php echo $id_cliente; ?>"></div>
                                                     </div>
                                                     <div class="btn-group">

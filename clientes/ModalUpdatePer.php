@@ -2,7 +2,7 @@
 
 class ModalUpdatePer
 {
-    public static function render($id_cliente, $clientesper_datos, $id_domicilio, $condicion_iva_datos)
+    public static function render($id_cliente, $clientesper_datos, $id_domicilio)
     {
         ob_start(); // Iniciar el buffer de salida
 ?>
@@ -59,14 +59,14 @@ class ModalUpdatePer
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="">Condicion frente al IVA</label>
-                                    <select name="condicion_iva" id="condicion_iva<?php echo $id_cliente; ?>" class="form-control" required>
-
-                                        <?php
-                                        foreach ($condicion_iva_datos as $condicion_iva_dato) { ?>
-                                            <option value="<?php echo $clientesper_datos['id_iva'] ?>"><?php echo $condicion_iva_dato['nombre'] ?></option>
-                                        <?php
-                                        }
-                                        ?>
+                                    <select name="" id="condicion_iva<?php echo $id_cliente; ?>" class="form-control" required>
+                                        <option value="<?php echo $clientesper_datos['id_iva']; ?>" selected><?php echo $clientesper_datos['nombre_iva']; ?></option>
+                                        <option value="1">Consumidor Final</option>
+                                        <option value="2">Exento</option>
+                                        <option value="3">Exterior</option>
+                                        <option value="4">IVA NO Alcanzado</option>
+                                        <option value="5">Monotributista</option>
+                                        <option value="6">Responsable Inscripto</option>
                                     </select>
                                     <small style="color:red; display:none" id="lbl_rol">* Este campo es requerido</small>
                                 </div>
