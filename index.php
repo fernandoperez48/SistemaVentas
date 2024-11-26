@@ -39,7 +39,7 @@ include 'app/controllers/envios/listado_de_envios.php';
                 <h3><?php echo $contador_de_usuarios ?></h3>
                 <p>Usuarios Registrados</p>
               </div>
-              <a href="<?php echo $URL ?>/usuarios/create.php">
+              <a href="#">
                 <div class="icon">
                   <i class="fas fa-user-plus"></i>
                 </div>
@@ -69,7 +69,7 @@ include 'app/controllers/envios/listado_de_envios.php';
                 <h3><?php echo $contador_de_clientesper; ?></h3>
                 <p>Clientes Comunes Registrados</p>
               </div>
-              <a href="<?php echo $URL ?>/clientes/createper.php">
+              <a href="#">
                 <div class="icon">
                   <!-- <i class="fas fa-user-plus"></i> -->
 
@@ -100,7 +100,7 @@ include 'app/controllers/envios/listado_de_envios.php';
                 <h3><?php echo $contador_de_clientesemp; ?></h3>
                 <p>Clientes empresas registradas</p>
               </div>
-              <a href="<?php echo $URL ?>/clientes/createemp.php">
+              <a href="#">
                 <div class="icon">
                   <i class="fas fa-user-plus"></i>
                 </div>
@@ -179,7 +179,7 @@ include 'app/controllers/envios/listado_de_envios.php';
               <h3><?php echo $contador_de_productos ?></h3>
               <p>Productos Registrados</p>
             </div>
-            <a href="<?php echo $URL ?>/almacen/create.php">
+            <a href="#">
               <div class="icon">
                 <i class="fas fa-list"></i>
               </div>
@@ -204,7 +204,7 @@ include 'app/controllers/envios/listado_de_envios.php';
               <h3><?php echo $contador_de_proveedores ?></h3>
               <p>Proveedores Registrados</p>
             </div>
-            <a href="<?php echo $URL ?>/proveedores">
+            <a href="#">
               <div class="icon">
                 <i class="material-symbols-outlined">
                   domain_add
@@ -231,7 +231,7 @@ include 'app/controllers/envios/listado_de_envios.php';
               <h3><?php echo $contador_de_compras ?></h3>
               <p>Compras Registradas</p>
             </div>
-            <a href="<?php echo $URL ?>/compras/create.php">
+            <a href="#">
               <div class="icon">
 
                 <i class="fas fa-cart-plus"></i>
@@ -258,7 +258,7 @@ include 'app/controllers/envios/listado_de_envios.php';
               <h3><?php echo $contador_de_ventas ?></h3>
               <p>Ventas Realizadas</p>
             </div>
-            <a href="<?php echo $URL ?>/compras/create.php">
+            <a href="#">
               <div class="icon">
 
                 <i class="fas fa-cart-plus"></i>
@@ -285,7 +285,7 @@ include 'app/controllers/envios/listado_de_envios.php';
                 <h3><?php echo $contador_de_envios ?></h3>
                 <p>Envios Registradas</p>
               </div>
-              <a href="<?php echo $URL ?>/envios/create.php">
+              <a href="#">
                 <div class="icon">
                   <i class="fas fa-fw fa-plane"></i>
                 </div>
