@@ -150,53 +150,41 @@ class ModalCreatePer
                     return /^\d+$/.test(dni) && numeroDNI >= 6000000 && numeroDNI <= 50000000;
                 }
 
-                  // Reinicia los mensajes de error
-                 $('.form-group small').css('display', 'none');
+                if (nombre == '') {
+                    $('#nombre_empresa').focus();
+                    $('#lbl_nombreC').css('display', 'block');
+                } else if (apellido == '') {
+                    $('#apellidoC').focus();
+                    $('#lbl_apellidoC').css('display', 'block');
+                } else if (email == '') {
+                    $('#emailC').focus();
+                    $('#lbl_emailC').css('display', 'block');
+                } else if (!validarEmail(email)) {
+                    $('#emailC').focus();
+                    $('#lbl_email_invalid').css('display', 'block');
+                } else if (!validarDNI(dni)) {
+                    $('#dniC').focus();
+                    $('#lbl_dni_invalid').css('display', 'block');
+                } else {
 
-                // Variables de control
-            var hasError = false;
-
-            // Validaciones
-            if (nombre === '') {
-                $('#lbl_nombreC').css('display', 'block');
-                hasError = true;
-            }
-            if (apellido === '') {
-                $('#lbl_apellidoC').css('display', 'block');
-                hasError = true;
-            }
-            if (email === '') {
-                $('#lbl_emailC').css('display', 'block');
-                hasError = true;
-            } else if (!validarEmail(email)) {
-                $('#lbl_email_invalid').css('display', 'block');
-                hasError = true;
-            }
-            if (!validarDNI(dni)) {
-                $('#lbl_dni_invalid').css('display', 'block');
-                hasError = true;
-            }
-
-            // Si no hay errores, realiza la solicitud
-            if (!hasError) {
-                var url = "../app/controllers/clientes/create.php";
-                $.get(url, {
-                    nombre: nombre,
-                    apellido: apellido,
-                    telefono: telefono,
-                    email: email,
-                    dni: dni,
-                    calle: calle,
-                    numero: numero,
-                    piso: piso,
-                    depto: depto,
-                    localidad: localidad,
-                    provincia: provincia,
-                    pais: pais,
-                    condicion_iva: condicion_iva
-                }, function(datos) {
-                    $('#respuesta').html(datos);
-                });
+                    var url = "../app/controllers/clientes/create.php";
+                    $.get(url, {
+                        nombre: nombre,
+                        apellido: apellido,
+                        telefono: telefono,
+                        email: email,
+                        dni: dni,
+                        calle: calle,
+                        numero: numero,
+                        piso: piso,
+                        depto: depto,
+                        localidad: localidad,
+                        provincia: provincia,
+                        pais: pais,
+                        condicion_iva: condicion_iva
+                    }, function(datos) {
+                        $('#respuesta').html(datos);
+                    });
                 }
 
 

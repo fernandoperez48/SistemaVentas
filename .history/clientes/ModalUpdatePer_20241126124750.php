@@ -137,6 +137,7 @@ class ModalUpdatePer
             $('#btn_update<?php echo $id_cliente; ?>').click(function() {
                 console.log("Script cargado y ejecutándose");
                 var id_cliente = '<?php echo $clientesper_datos['id_cliente']; ?>';
+                /* var id_cliente = '<?php echo $id_cliente; ?>';*/
                 var nombre_cliente = $('#nombre_clienteU<?php echo $id_cliente; ?>').val();
                 var apellido_cliente = $('#apellido_clienteU<?php echo $id_cliente; ?>').val();
                 var telefono = $('#telefonoU<?php echo $id_cliente; ?>').val();
