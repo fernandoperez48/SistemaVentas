@@ -24,11 +24,7 @@ if (!$mysqli->set_charset("utf8")) {
     die("Error al configurar el conjunto de caracteres: " . $mysqli->error);
 }
 
-if ($_SERVER['HTTP_HOST'] == 'localhost') {
-    $URL = "http://localhost/SistemaVentas/";
-} else {
-    $URL = "http://fainsumos.000.pe";
-}
+$URL = "http://localhost/SistemaVentas/";
 $URL2 = "http://localhost/SistemaVentas/";
 
 date_default_timezone_set('America/Argentina/Buenos_Aires');

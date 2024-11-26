@@ -96,7 +96,7 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav container-fluid">
 
-                <a class="navbar-brand" href="<?php echo $URL; ?>index.php">
+                <a class="navbar-brand" href="<?php echo $URL; ?>/index.php">
                     <img src="<?php echo $URL; ?>/public/images/fainsumocartel.png" alt="logofainsumos" style="max-width:150px;">
                 </a>
 
