@@ -35,6 +35,7 @@
             margin: 1em auto;
         }
 
+
         .highcharts-data-table table {
             font-family: Verdana, sans-serif;
             border-collapse: collapse;
@@ -74,7 +75,6 @@
         input[type="number"] {
             min-width: 50px;
         }
-
     </style>
 
     <!-- jQuery -->
@@ -95,30 +95,21 @@
 
 
     <div class="wrapper">
-        <!-- <nav class="main-header navbar navbar-expand navbar-black navbar-dark"> -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class=" navbar navbar-expand navbar-black navbar-dark">
             <!-- Left navbar links -->
-            <div class="container-fluid">
+            <ul class="navbar-nav container-fluid">
 
-                        <!-- Logo -->
                 <a class="navbar-brand" href="<?php echo $URL; ?>index.php">
                     <img src="<?php echo $URL; ?>/public/images/fainsumocartel.png" alt="logofainsumos" style="max-width:150px;">
                 </a>
 
-                        <!-- Botón hamburguesa -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Opciones del menú -->
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav mr-auto">
-                <!-- Menú de usuarios -->
                 <li>
                     <a href="#" class="nav-link" role="button" data-toggle="modal" data-target="#modal-usuario">
                         <?php echo $nombres_sesion ?>/<?php echo $rol_sesion ?>
                     </a>
                 </li>
+
+
 
                 <!--Usuarios        ------Usuarios------        Usuario-->
                 <?php if ($rol_sesion == "Administrador") { ?>
@@ -138,13 +129,13 @@
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
                         <!-- Level one dropdown -->
                         <li class="dropdown-submenu dropdown-hover">
-                            <a href="<?php echo $URL ?>/clientes/indexper.php" class="dropdown-item">Personas</a>
+                            <a href="<?php echo $URL ?>clientes/indexper.php" class="dropdown-item">Personas</a>
                         </li>
                         <!-- End Level one -->
                         <li class="dropdown-divider"></li>
                         <!-- Level one dropdown -->
                         <li class="dropdown-submenu dropdown-hover">
-                            <a href="<?php echo $URL ?>/clientes/indexemp.php" class="dropdown-item">Empresas</a>
+                            <a href="<?php echo $URL ?>clientes/indexemp.php" class="dropdown-item">Empresas</a>
                         </li>
                     </ul>
                 </li>
@@ -176,7 +167,7 @@
                 <li class="nav-item dropdown dropdown-hover">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Productos</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
-                        <li><a href="<?php echo $URL ?>/almacen" class="dropdown-item">Listado de Productos</a></li>
+                            <li><a href="<?php echo $URL ?>/almacen" class="dropdown-item">Listado de Productos</a></li>
                         <?php if ($rol_sesion == "Administrador" || $id_rol == "4") { ?>
                             <li><a href="<?php echo $URL ?>/almacen/create.php" class="dropdown-item">Crear Producto</a></li>
                         <?php } ?>
@@ -189,6 +180,8 @@
 
 
                 <!--Proveedores      ------Proveedores------        Proveedores-->
+
+                <!--Usuarios        ------Usuarios------        Usuario-->
                 <?php if ($id_rol != "5") { ?>
                     <li class="nav-item dropdown dropdown-hover">
                         <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Proveedores</a>
@@ -232,23 +225,23 @@
                     </ul>
                 </li>
 
+                <!--Cerrar Sesion      ------Cerrar Sesion------        Cerrar Sesion-->
+                <li class="nav-item">
+                    <a href="<?php echo $URL ?>/app/controllers/login/cerrar_sesion.php" class="nav-link" style="background-color:#ff6961">
+                        <i class="nav-icon fas fa-door-closed"> Salir</i>
+                    </a>
+                </li>
             </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
-            <!-- Botón Salir -->
-            <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a href="<?php echo $URL ?>/app/controllers/login/cerrar_sesion.php" class="nav-link" style="background-color:#ff6961">
-                                    <i class="nav-icon fas fa-door-closed"></i> Salir
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-        <!-- /.n
-         
-                -- Modal -->
+        <!-- Modal -->
         <div class="modal fade" id="modal-usuario" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -265,8 +258,3 @@
                 </div>
             </div>
         </div>
-    
-    </div>
-
-    <!-- Bootstrap JavaScript Bundle con Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

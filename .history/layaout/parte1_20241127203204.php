@@ -74,7 +74,6 @@
         input[type="number"] {
             min-width: 50px;
         }
-
     </style>
 
     <!-- jQuery -->
@@ -112,7 +111,7 @@
 
                 <!-- Opciones del menú -->
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav me-auto">
                 <!-- Menú de usuarios -->
                 <li>
                     <a href="#" class="nav-link" role="button" data-toggle="modal" data-target="#modal-usuario">

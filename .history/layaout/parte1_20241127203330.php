@@ -75,6 +75,15 @@
             min-width: 50px;
         }
 
+        .navbar-nav .nav-link {
+            color: white;
+            transition: color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffcc00;
+        }
+
     </style>
 
     <!-- jQuery -->
@@ -112,7 +121,7 @@
 
                 <!-- Opciones del menú -->
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav me-auto">
                 <!-- Menú de usuarios -->
                 <li>
                     <a href="#" class="nav-link" role="button" data-toggle="modal" data-target="#modal-usuario">

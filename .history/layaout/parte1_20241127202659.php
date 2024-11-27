@@ -74,7 +74,6 @@
         input[type="number"] {
             min-width: 50px;
         }
-
     </style>
 
     <!-- jQuery -->
@@ -112,7 +111,7 @@
 
                 <!-- Opciones del menú -->
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav me-auto">
                 <!-- Menú de usuarios -->
                 <li>
                     <a href="#" class="nav-link" role="button" data-toggle="modal" data-target="#modal-usuario">
@@ -267,6 +266,3 @@
         </div>
     
     </div>
-
-    <!-- Bootstrap JavaScript Bundle con Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

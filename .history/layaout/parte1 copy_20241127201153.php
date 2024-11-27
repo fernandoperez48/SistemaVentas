@@ -74,7 +74,6 @@
         input[type="number"] {
             min-width: 50px;
         }
-
     </style>
 
     <!-- jQuery -->
@@ -98,27 +97,19 @@
         <!-- <nav class="main-header navbar navbar-expand navbar-black navbar-dark"> -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <!-- Left navbar links -->
-            <div class="container-fluid">
+            <ul class="navbar-nav container-fluid">
 
-                        <!-- Logo -->
                 <a class="navbar-brand" href="<?php echo $URL; ?>index.php">
                     <img src="<?php echo $URL; ?>/public/images/fainsumocartel.png" alt="logofainsumos" style="max-width:150px;">
                 </a>
 
-                        <!-- Botón hamburguesa -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Opciones del menú -->
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav mr-auto">
-                <!-- Menú de usuarios -->
                 <li>
                     <a href="#" class="nav-link" role="button" data-toggle="modal" data-target="#modal-usuario">
                         <?php echo $nombres_sesion ?>/<?php echo $rol_sesion ?>
                     </a>
                 </li>
+
+
 
                 <!--Usuarios        ------Usuarios------        Usuario-->
                 <?php if ($rol_sesion == "Administrador") { ?>
@@ -180,10 +171,6 @@
                         <?php if ($rol_sesion == "Administrador" || $id_rol == "4") { ?>
                             <li><a href="<?php echo $URL ?>/almacen/create.php" class="dropdown-item">Crear Producto</a></li>
                         <?php } ?>
-                        <!-- Productos Críticos -->
-                        <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Vendedor" || $rol_sesion == "Encargado de Compras") { ?>
-                            <li><a href="<?php echo $URL ?>productos_criticos.php" class="dropdown-item">Productos Críticos</a></li>
-                        <?php } ?>
                     </ul>
                 </li>
 
@@ -232,19 +219,32 @@
                     </ul>
                 </li>
 
+                <!-- Productos Críticos -->
+                <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Vendedor" || $rol_sesion == "Encargado de Compras") { ?>
+                    <li class="nav-item">
+                        <a href="<?php echo $URL ?>/productos_criticos.php" class="nav-link">Productos Críticos</a>
+                    </li>
+                <?php } ?>
+
+                <!--Cerrar Sesion      ------Cerrar Sesion------        Cerrar Sesion-->
+                <li class="nav-item">
+                    <a href="<?php echo $URL ?>/app/controllers/login/cerrar_sesion.php" class="nav-link" style="background-color:#ff6961">
+                        <i class="nav-icon fas fa-door-closed"> Salir</i>
+                    </a>
+                </li>
             </ul>
 
-            <!-- Botón Salir -->
-            <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a href="<?php echo $URL ?>/app/controllers/login/cerrar_sesion.php" class="nav-link" style="background-color:#ff6961">
-                                    <i class="nav-icon fas fa-door-closed"></i> Salir
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
 
         <!-- /.n
          
@@ -267,6 +267,3 @@
         </div>
     
     </div>
-
-    <!-- Bootstrap JavaScript Bundle con Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

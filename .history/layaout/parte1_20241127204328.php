@@ -98,7 +98,7 @@
         <!-- <nav class="main-header navbar navbar-expand navbar-black navbar-dark"> -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <!-- Left navbar links -->
-            <div class="container-fluid">
+            <div class="container">
 
                         <!-- Logo -->
                 <a class="navbar-brand" href="<?php echo $URL; ?>index.php">
