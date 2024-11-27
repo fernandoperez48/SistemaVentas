@@ -166,13 +166,9 @@
                 <li class="nav-item dropdown dropdown-hover">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Productos</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
-                            <li><a href="<?php echo $URL ?>/almacen" class="dropdown-item">Listado de Productos</a></li>
+                        <li><a href="<?php echo $URL ?>/almacen" class="dropdown-item">Listado de Productos</a></li>
                         <?php if ($rol_sesion == "Administrador" || $id_rol == "4") { ?>
                             <li><a href="<?php echo $URL ?>/almacen/create.php" class="dropdown-item">Crear Producto</a></li>
-                        <?php } ?>
-                        <!-- Productos Críticos -->
-                        <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Vendedor" || $rol_sesion == "Encargado de Compras") { ?>
-                            <li><a href="<?php echo $URL ?>productos_criticos.php" class="dropdown-item">Productos Críticos</a></li>
                         <?php } ?>
                     </ul>
                 </li>
@@ -223,6 +219,13 @@
                         <?php } ?>
                     </ul>
                 </li>
+
+                <!-- Productos Críticos -->
+                <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Vendedor" || $rol_sesion == "Encargado de Compras") { ?>
+                    <li class="nav-item">
+                        <a href="<?php echo $URL ?>productos_criticos.php" class="nav-link">Productos Críticos</a>
+                    </li>
+                <?php } ?>
 
                 <!--Cerrar Sesion      ------Cerrar Sesion------        Cerrar Sesion-->
                 <li class="nav-item">

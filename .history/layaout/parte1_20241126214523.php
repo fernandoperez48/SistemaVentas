@@ -172,7 +172,9 @@
                         <?php } ?>
                         <!-- Productos Críticos -->
                         <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Vendedor" || $rol_sesion == "Encargado de Compras") { ?>
-                            <li><a href="<?php echo $URL ?>productos_criticos.php" class="dropdown-item">Productos Críticos</a></li>
+                            <li class="nav-item">
+                                <a href="<?php echo $URL ?>productos_criticos.php" class="nav-link">Productos Críticos</a>
+                            </li>
                         <?php } ?>
                     </ul>
                 </li>
@@ -223,6 +225,13 @@
                         <?php } ?>
                     </ul>
                 </li>
+
+                <!-- Productos Críticos -->
+                <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Vendedor" || $rol_sesion == "Encargado de Compras") { ?>
+                    <li class="nav-item">
+                        <a href="<?php echo $URL ?>productos_criticos.php" class="nav-link">Productos Críticos</a>
+                    </li>
+                <?php } ?>
 
                 <!--Cerrar Sesion      ------Cerrar Sesion------        Cerrar Sesion-->
                 <li class="nav-item">
