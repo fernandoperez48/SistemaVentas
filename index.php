@@ -23,7 +23,6 @@ include 'app/controllers/envios/listado_de_envios.php';
       <br><br>
       <div class="row">
 
-
         <!-- USUARIOS -->
         <?php if ($rol_sesion == "Administrador") { ?>
 
@@ -53,7 +52,6 @@ include 'app/controllers/envios/listado_de_envios.php';
 
 
         <!-- CLIENTE -->
-
         <?php if ($rol_sesion == "Administrador") { ?>
           <!-------------- PERSONAS -->
           <div class="col-lg-4 col-6">
@@ -74,7 +72,7 @@ include 'app/controllers/envios/listado_de_envios.php';
                   <!-- <i class="fas fa-user-plus"></i> -->
 
                   <i class="material-symbols-outlined">
-                    group_add
+
                   </i>
                 </div>
               </a>
@@ -142,7 +140,6 @@ include 'app/controllers/envios/listado_de_envios.php';
 
         <!-- CATEGORIAS -->
         <div class="col-lg-4 col-6">
-
           <div class="small-box" style="background-color:#ffd09e">
             <div class="inner">
               <?php
@@ -167,7 +164,6 @@ include 'app/controllers/envios/listado_de_envios.php';
 
         <!-- PRODUCTOS -->
         <div class="col-lg-4 col-6">
-
           <div class="small-box" style="background-color:#e574a1">
             <div class="inner">
               <?php
@@ -207,7 +203,7 @@ include 'app/controllers/envios/listado_de_envios.php';
             <a href="#">
               <div class="icon">
                 <i class="material-symbols-outlined">
-                  domain_add
+
                 </i>
               </div>
             </a>
@@ -301,8 +297,9 @@ include 'app/controllers/envios/listado_de_envios.php';
     </div>
   </div>
 
-  <!-- Main content -->
 </div>
-<!-- /.content-wrapper -->
+
+</div>
+<!--  FIN DE WRAAPPER DE PARTE1.PHP -->
 
 <?php include 'layaout/parte2.php'; ?>

@@ -20,7 +20,6 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                         </a>
                     </h1>
                 </div><!-- /.col -->
-
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
@@ -432,7 +431,6 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                                         ?>
 
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
@@ -440,14 +438,15 @@ include '../app/controllers/ventas/listado_de_ventas.php';
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <!-- Main content -->
 </div>
-<!-- /.content-wrapper -->
-<!-- Page specific script -->
+
+</div>
+<!--  FIN DE WRAAPPER DE PARTE1.PHP -->
+
 <?php include '../layaout/mensajes.php'; ?>
 <?php include '../layaout/parte2.php'; ?>
 

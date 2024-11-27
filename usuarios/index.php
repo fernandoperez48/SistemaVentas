@@ -35,7 +35,6 @@ include_once 'Reporte.php';
     <!-- modal para registrar usuarios-->
     <?php echo ModalAgregarUsuario::render($roles_datos); ?>
 
-
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -145,6 +144,9 @@ include_once 'Reporte.php';
         </div>
     </div>
 </div>
+
+</div>
+<!--  FIN DE WRAAPPER DE PARTE1.PHP -->
 
 <?php include '../layaout/mensajes.php'; ?>
 <?php include '../layaout/parte2.php'; ?>

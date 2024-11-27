@@ -1,14 +1,3 @@
-<!-- Control Sidebar -->
-
-<!-- /.control-sidebar -->
-
-<!-- Main Footer -->
-
-<!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-
-
 <!-- Bootstrap 4 -->
 <script src="<?php echo $URL; ?>/public/templates/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
@@ -26,6 +15,7 @@
 <script src="<?php echo $URL; ?>/public/templates/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="<?php echo $URL; ?>/public/templates/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="<?php echo $URL; ?>/public/templates/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
 </body>
 
 </html>

@@ -35,6 +35,7 @@
             margin: 1em auto;
         }
 
+
         .highcharts-data-table table {
             font-family: Verdana, sans-serif;
             border-collapse: collapse;
@@ -94,7 +95,7 @@
 
 
     <div class="wrapper">
-        <nav class="main-header navbar navbar-expand navbar-black navbar-dark">
+        <nav class=" navbar navbar-expand navbar-black navbar-dark">
             <!-- Left navbar links -->
             <ul class="navbar-nav container-fluid">
 
@@ -231,25 +232,16 @@
                     </a>
                 </li>
             </ul>
-
-            <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
-
-                <!-- Notifications Dropdown Menu -->
-
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
-
             </ul>
         </nav>
 
-        <!-- /.n
-         
-                <!-- Modal -->
+        <!-- Modal -->
         <div class="modal fade" id="modal-usuario" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">

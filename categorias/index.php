@@ -11,9 +11,9 @@ include_once 'ModalUpdateCat.php';
 
 
 ?>
-<!-- Content Wrapper. Contains page content -->
+
 <div class="content-wrapper" style="background-color:gray">
-    <!-- Content Header (Page header) -->
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -30,10 +30,10 @@ include_once 'ModalUpdateCat.php';
 
                 </div><!-- /.col -->
 
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+            </div>
+        </div>
     </div>
-    <!-- /.content-header -->
+
 
     <div class="content">
         <div class="container-fluid">
@@ -112,128 +112,129 @@ include_once 'ModalUpdateCat.php';
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
-        <!-- Main content -->
     </div>
-    <!-- /.content-wrapper -->
-    <!-- Page specific script -->
-    <?php include '../layaout/mensajes.php'; ?>
-    <?php include '../layaout/parte2.php'; ?>
+</div>
 
-    <script>
-        $(function() {
-            $("#example1").DataTable({
-                /* cambio de idiomas de datatable */
-                "pageLength": 5,
-                language: {
-                    "emptyTable": "No hay información",
-                    "decimal": "",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Categorias",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Categorias",
-                    "infoFiltered": "(Filtrado de _MAX_ total Categorias)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Categorias",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscador:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
+</div>
+<!--  FIN DE WRAAPPER DE PARTE1.PHP -->
+
+
+<?php include '../layaout/mensajes.php'; ?>
+<?php include '../layaout/parte2.php'; ?>
+
+<script>
+    $(function() {
+        $("#example1").DataTable({
+            /* cambio de idiomas de datatable */
+            "pageLength": 5,
+            language: {
+                "emptyTable": "No hay información",
+                "decimal": "",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Categorias",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Categorias",
+                "infoFiltered": "(Filtrado de _MAX_ total Categorias)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Categorias",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscador:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+            /* fin de idiomas */
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "buttons": /* Ajuste de botones */ [{
+                    extend: 'collection',
+                    text: 'Reportes',
+                    orientation: 'landscape',
+                    buttons: [{
+                        text: 'Copiar',
+                        extend: 'copy'
+                    }, {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: ':not(:last-child)' // Excluye la última columna
+                        }
+                    }, {
+                        extend: 'csv',
+                    }, {
+                        extend: 'excel',
+                    }, {
+                        text: 'Imprimir',
+                        extend: 'print',
+                        exportOptions: {
+                            columns: ':not(:last-child)' // Excluye la última columna
+                        }
+                    }]
                 },
-                /* fin de idiomas */
-                "responsive": true,
-                "lengthChange": true,
-                "autoWidth": false,
-                "buttons": /* Ajuste de botones */ [{
-                        extend: 'collection',
-                        text: 'Reportes',
-                        orientation: 'landscape',
-                        buttons: [{
-                            text: 'Copiar',
-                            extend: 'copy'
-                        }, {
-                            extend: 'pdf',
-                            exportOptions: {
-                                columns: ':not(:last-child)' // Excluye la última columna
-                            }
-                        }, {
-                            extend: 'csv',
-                        }, {
-                            extend: 'excel',
-                        }, {
-                            text: 'Imprimir',
-                            extend: 'print',
-                            exportOptions: {
-                                columns: ':not(:last-child)' // Excluye la última columna
-                            }
-                        }]
-                    },
-                    {
-                        extend: 'colvis',
-                        text: 'Visor de columnas'
-                    }
-                ],
-                /*Fin de ajuste de botones*/
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                {
+                    extend: 'colvis',
+                    text: 'Visor de columnas'
+                }
+            ],
+            /*Fin de ajuste de botones*/
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
-        });
-    </script>
+    });
+</script>
 
-    <!-- modal para registrar categorias-->
-    <div class="modal fade" id="modal-create">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:orange; color:white">
-                    <h4 class="modal-title">Creacion de una nueva categoria</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Nombre de la categoria <b>*</b></label>
-                                <input type="text" id="nombre_categoria" class="form-control">
-                                <small style="color:red; display:none" id="lbl_create">* Este campo es requerido</small>
-                            </div>
+<!-- modal para registrar categorias-->
+<div class="modal fade" id="modal-create">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:orange; color:white">
+                <h4 class="modal-title">Creacion de una nueva categoria</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Nombre de la categoria <b>*</b></label>
+                            <input type="text" id="nombre_categoria" class="form-control">
+                            <small style="color:red; display:none" id="lbl_create">* Este campo es requerido</small>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn_create">Guardar</button>
-                </div>
             </div>
-            <!-- /.modal-content -->
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btn_create">Guardar</button>
+            </div>
         </div>
-        <!-- /.modal-dialog -->
+        <!-- /.modal-content -->
     </div>
-    <script>
-        $('#btn_create').click(function() {
-            var nombre_categoria = $('#nombre_categoria').val();
+    <!-- /.modal-dialog -->
+</div>
+<script>
+    $('#btn_create').click(function() {
+        var nombre_categoria = $('#nombre_categoria').val();
 
-            if (nombre_categoria == '') {
-                $('#nombre_categoria').focus();
-                $('#lbl_create').css('display', 'block');
-            } else {
-                var url = "../app/controllers/categorias/registro_de_categorias.php";
-                $.get(url, {
-                    nombre_categoria: nombre_categoria
-                }, function(datos) {
-                    $('#respuesta').html(datos);
-                });
-            }
+        if (nombre_categoria == '') {
+            $('#nombre_categoria').focus();
+            $('#lbl_create').css('display', 'block');
+        } else {
+            var url = "../app/controllers/categorias/registro_de_categorias.php";
+            $.get(url, {
+                nombre_categoria: nombre_categoria
+            }, function(datos) {
+                $('#respuesta').html(datos);
+            });
+        }
 
 
-        });
-    </script>
-    <div id="respuesta"></div>
+    });
+</script>
+<div id="respuesta"></div>

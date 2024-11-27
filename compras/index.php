@@ -7,9 +7,9 @@ if ($rol_sesion == "EyD" || $rol_sesion == "Vendedor") {
 include '../layaout/parte1.php';
 include '../app/controllers/compras/listado_de_compras.php';
 
-?><!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper" style="background-color:gray">
-    <!-- Content Header (Page header) -->
+?>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" style="background-color:gray"> <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -18,8 +18,7 @@ include '../app/controllers/compras/listado_de_compras.php';
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+    </div><!-- /.content-header -->
 
     <div class="content">
         <div class="container-fluid">
@@ -303,16 +302,15 @@ include '../app/controllers/compras/listado_de_compras.php';
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
         </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content -->
+    </div><!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
-<!-- /.content-wrapper -->
+
+</div>
+<!--  FIN DE WRAAPPER DE PARTE1.PHP -->
+
 <!-- Page specific script -->
 <?php include '../layaout/mensajes.php'; ?>
 <?php include '../layaout/parte2.php'; ?>

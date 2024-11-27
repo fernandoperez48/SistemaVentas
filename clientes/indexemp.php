@@ -129,12 +129,12 @@ include_once 'ReporteEmp.php';
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
+</div>
 
 </div>
+<!--  FIN DE WRAAPPER DE PARTE1.PHP -->
 
 
 <?php include '../layaout/mensajes.php'; ?>
