@@ -11,12 +11,9 @@ include_once 'ModalEditarProducto.php';
 include_once 'ModalVerProducto.php';
 include_once 'Reporte.php';
 ?>
-<<<<<<< HEAD
-=======
 
->>>>>>> 1849070a4d75cb7e5c188a52d40d95c2c0e7b97b
+
 <div class="content-wrapper" style="background-color:gray">
-
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -26,6 +23,7 @@ include_once 'Reporte.php';
             </div>
         </div>
     </div>
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -227,6 +225,8 @@ include_once 'Reporte.php';
     </div>
 </div>
 
+</div>
+<!--  FIN DE WRAAPPER DE PARTE1.PHP -->
 
 <?php include '../layaout/mensajes.php'; ?>
 <?php include '../layaout/parte2.php'; ?>

@@ -49,14 +49,14 @@ class ModalAgregarUsuario
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="">Contraseña</label>
+                                        <label for="">Contraseña<b>*</b></label>
                                         <input type="password" class="form-control" name="password_user" id="contraseña" required>
                                         <small style="color:red; display:none" id="lbl_contraseña">* Este campo es requerido</small>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="">Repita la contraseña</label>
+                                        <label for="">Repita la contraseña<b>*</b></label>
                                         <input type="password" class="form-control" name="password_repeat" id="repita_contraseña" required>
                                         <small style="color:red; display:none" id="lbl_repita_contraseña">* Este campo es requerido</small>
                                         <small style="color:red; display:none" id="lbl_contraseña_no_coincide">* Las contraseñas no coinciden</small>

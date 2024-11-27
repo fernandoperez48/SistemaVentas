@@ -26,10 +26,7 @@ include_once 'Reporte.php';
                             Agregar Nuevo
                         </button>
                     </h1>
-
-
                 </div><!-- /.col -->
-
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
@@ -162,24 +159,18 @@ include_once 'Reporte.php';
                         <!-- /.card-body -->
                     </div>
                 </div>
-
             </div>
         </div>
-
         <!-- Main content -->
     </div>
-
-    <!-- /.content-wrapper -->
-
-    <!-- Page specific script -->
-    <?php include '../layaout/mensajes.php'; ?>
-    <?php include '../layaout/parte2.php'; ?>
-
-
-    <!-- /.modal-dialog -->
 </div>
 
+</div>
+<!--  FIN DE WRAAPPER DE PARTE1.PHP -->
 
+<!-- Page specific script -->
+<?php include '../layaout/mensajes.php'; ?>
+<?php include '../layaout/parte2.php'; ?>
 
 <!-- SCRIPTSSS DE LA TABLA-->
 <!-- Table example1 -->

@@ -20,7 +20,6 @@ include_once 'Reporte.php';
                 <div class="col-sm-12">
                     <h1 class="m-0">Listado de Ventas realizadas</h1>
                 </div><!-- /.col -->
-
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
@@ -33,7 +32,6 @@ include_once 'Reporte.php';
                     <div class="card card-outline card-danger">
                         <div class="card-header" style="background-color:orange">
                             <h3 class="card-title">Ventas registradas</h3>
-
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                                 </button>
@@ -278,19 +276,17 @@ include_once 'Reporte.php';
                                 </table>
                             </div>
                         </div>
-
                         <!-- /.card-body -->
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
-    <!-- Main content -->
 </div>
-<!-- /.content -->
-<!-- /.content-wrapper -->
+
+</div>
+<!--  FIN DE WRAAPPER DE PARTE1.PHP -->
+
 <!-- Page specific script -->
 <?php include '../layaout/mensajes.php'; ?>
 <?php include '../layaout/parte2.php'; ?>

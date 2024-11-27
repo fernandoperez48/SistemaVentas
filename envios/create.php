@@ -14,14 +14,12 @@ include '../app/controllers/envios/listado_de_estados.php';
                 <div class="col-sm-12">
                     <h1 class="m-0">Registro de un nuevo Envio</h1>
                 </div><!-- /.col -->
-
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
 
     <div class="content">
-
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-outline card-danger">
@@ -340,9 +338,8 @@ include '../app/controllers/envios/listado_de_estados.php';
 </div>
 
 </div>
+<!--  FIN DE WRAAPPER DE PARTE1.PHP -->
 
-<!-- Main content -->
 
-<!-- /.content-wrapper -->
 <?php include '../layaout/mensajes.php'; ?>
 <?php include '../layaout/parte2.php'; ?>
