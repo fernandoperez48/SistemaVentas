@@ -92,8 +92,6 @@
 </head>
 
 <body class="hold-transition layout-top-nav">
-
-
     <div class="wrapper">
         <nav class=" navbar navbar-expand navbar-black navbar-dark">
             <!-- Left navbar links -->
@@ -109,8 +107,6 @@
                     </a>
                 </li>
 
-
-
                 <!--Usuarios        ------Usuarios------        Usuario-->
                 <?php if ($rol_sesion == "Administrador") { ?>
                     <li class="nav-item dropdown back dropdown-hover">
@@ -123,7 +119,6 @@
                 <?php } ?>
 
                 <!--Clientes        ------Clientes------        Clientes-->
-
                 <li class="nav-item dropdown dropdown-hover">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Clientes</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
@@ -153,7 +148,6 @@
                 <?php } ?>
 
                 <!--Categorias       ------Categorias------        Categorias-->
-
                 <li class="nav-item dropdown dropdown-hover">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Categorias</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
@@ -163,7 +157,6 @@
 
 
                 <!--Productos       ------Productos------        Productos-->
-
                 <li class="nav-item dropdown dropdown-hover">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Productos</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
@@ -174,10 +167,7 @@
                     </ul>
                 </li>
 
-
                 <!--Proveedores      ------Proveedores------        Proveedores-->
-
-                <!--Usuarios        ------Usuarios------        Usuario-->
                 <?php if ($id_rol != "5") { ?>
                     <li class="nav-item dropdown dropdown-hover">
                         <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Proveedores</a>
