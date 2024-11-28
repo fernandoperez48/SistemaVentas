@@ -74,9 +74,11 @@ include 'app/controllers/almacen/listado_de_productos.php';
                                     ?>
                                 </tbody>
                             </table>
-                        </div> <!-- /.card-body -->
+                        </div>
+                        <!-- /.card-body -->
                     </div>
                 </div>
+
                 <!-- Productos con mayor stock que el máximo -->
                 <div class="col-md-12">
                     <div class="card card-outline card-danger">
@@ -126,21 +128,18 @@ include 'app/controllers/almacen/listado_de_productos.php';
                                     ?>
                                 </tbody>
                             </table>
-                        </div><!-- /.card-body -->
+                        </div>
+                        <!-- /.card-body -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Page specific script -->
+    <?php include 'layaout/mensajes.php'; ?>
+    <?php include 'layaout/parte2.php'; ?>
 </div>
-
-</div>
-<!--  FIN DE WRAAPPER DE PARTE1.PHP -->
-
-<!-- Page specific script -->
-<?php include 'layaout/mensajes.php'; ?>
-<?php include 'layaout/parte2.php'; ?>
-
 
 <!-- DataTables Script -->
 <script>

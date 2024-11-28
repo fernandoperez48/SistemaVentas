@@ -92,6 +92,8 @@
 </head>
 
 <body class="hold-transition layout-top-nav">
+
+
     <div class="wrapper">
         <!-- <nav class="main-header navbar navbar-expand navbar-black navbar-dark"> -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -110,7 +112,7 @@
 
                 <!-- Opciones del menú -->
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav me-auto">
                 <!-- Menú de usuarios -->
                 <li>
                     <a href="#" class="nav-link" role="button" data-toggle="modal" data-target="#modal-usuario">
@@ -130,6 +132,7 @@
                 <?php } ?>
 
                 <!--Clientes        ------Clientes------        Clientes-->
+
                 <li class="nav-item dropdown dropdown-hover">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Clientes</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
@@ -159,6 +162,7 @@
                 <?php } ?>
 
                 <!--Categorias       ------Categorias------        Categorias-->
+
                 <li class="nav-item dropdown dropdown-hover">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Categorias</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
@@ -168,6 +172,7 @@
 
 
                 <!--Productos       ------Productos------        Productos-->
+
                 <li class="nav-item dropdown dropdown-hover">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Productos</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
@@ -181,6 +186,7 @@
                         <?php } ?>
                     </ul>
                 </li>
+
 
                 <!--Proveedores      ------Proveedores------        Proveedores-->
                 <?php if ($id_rol != "5") { ?>

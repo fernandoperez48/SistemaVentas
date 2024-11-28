@@ -29,7 +29,7 @@ include 'app/controllers/almacen/listado_de_productos.php';
                 <div class="col-md-12">
                     <div class="card card-outline card-danger">
                         <div class="card-header" style="background-color:orange">
-                            <h3 class="card-title">Productos con menor stock que el mínimo</h3>
+                            <h3 class="card-title">Productos críticos con menor stock que el mínimo</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -74,14 +74,16 @@ include 'app/controllers/almacen/listado_de_productos.php';
                                     ?>
                                 </tbody>
                             </table>
-                        </div> <!-- /.card-body -->
+                        </div>
+                        <!-- /.card-body -->
                     </div>
                 </div>
+
                 <!-- Productos con mayor stock que el máximo -->
                 <div class="col-md-12">
                     <div class="card card-outline card-danger">
                         <div class="card-header" style="background-color:orange">
-                            <h3 class="card-title">Productos con mayor stock que el máximo</h3>
+                            <h3 class="card-title">Productos críticos con mayor stock que el máximo</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -126,21 +128,18 @@ include 'app/controllers/almacen/listado_de_productos.php';
                                     ?>
                                 </tbody>
                             </table>
-                        </div><!-- /.card-body -->
+                        </div>
+                        <!-- /.card-body -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Page specific script -->
+    <?php include 'layaout/mensajes.php'; ?>
+    <?php include 'layaout/parte2.php'; ?>
 </div>
-
-</div>
-<!--  FIN DE WRAAPPER DE PARTE1.PHP -->
-
-<!-- Page specific script -->
-<?php include 'layaout/mensajes.php'; ?>
-<?php include 'layaout/parte2.php'; ?>
-
 
 <!-- DataTables Script -->
 <script>

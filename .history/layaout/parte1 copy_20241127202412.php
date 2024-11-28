@@ -74,7 +74,6 @@
         input[type="number"] {
             min-width: 50px;
         }
-
     </style>
 
     <!-- jQuery -->
@@ -92,6 +91,8 @@
 </head>
 
 <body class="hold-transition layout-top-nav">
+
+
     <div class="wrapper">
         <!-- <nav class="main-header navbar navbar-expand navbar-black navbar-dark"> -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -110,13 +111,25 @@
 
                 <!-- Opciones del menú -->
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav me-auto">
                 <!-- Menú de usuarios -->
                 <li>
                     <a href="#" class="nav-link" role="button" data-toggle="modal" data-target="#modal-usuario">
                         <?php echo $nombres_sesion ?>/<?php echo $rol_sesion ?>
                     </a>
                 </li>
+
+                <!-- Usuarios -->
+                <?php if ($rol_sesion == "Administrador") { ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Usuarios
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="usuariosDropdown">
+                            <li><a class="dropdown-item" href="<?php echo $URL ?>/usuarios">Listado de Usuarios</a></li>
+                        </ul>
+                    </li>
+                <?php } ?>
 
                 <!--Usuarios        ------Usuarios------        Usuario-->
                 <?php if ($rol_sesion == "Administrador") { ?>
@@ -130,6 +143,7 @@
                 <?php } ?>
 
                 <!--Clientes        ------Clientes------        Clientes-->
+
                 <li class="nav-item dropdown dropdown-hover">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Clientes</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
@@ -159,6 +173,7 @@
                 <?php } ?>
 
                 <!--Categorias       ------Categorias------        Categorias-->
+
                 <li class="nav-item dropdown dropdown-hover">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Categorias</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
@@ -168,6 +183,7 @@
 
 
                 <!--Productos       ------Productos------        Productos-->
+
                 <li class="nav-item dropdown dropdown-hover">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Productos</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
@@ -175,12 +191,9 @@
                         <?php if ($rol_sesion == "Administrador" || $id_rol == "4") { ?>
                             <li><a href="<?php echo $URL ?>/almacen/create.php" class="dropdown-item">Crear Producto</a></li>
                         <?php } ?>
-                        <!-- Productos Críticos -->
-                        <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Vendedor" || $rol_sesion == "Encargado de Compras") { ?>
-                            <li><a href="<?php echo $URL ?>productos_criticos.php" class="dropdown-item">Productos Críticos</a></li>
-                        <?php } ?>
                     </ul>
                 </li>
+
 
                 <!--Proveedores      ------Proveedores------        Proveedores-->
                 <?php if ($id_rol != "5") { ?>
@@ -226,6 +239,14 @@
                     </ul>
                 </li>
 
+                <!-- Productos Críticos -->
+                <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Vendedor" || $rol_sesion == "Encargado de Compras") { ?>
+                    <li class="nav-item">
+                        <a href="<?php echo $URL ?>/productos_criticos.php" class="nav-link">Productos Críticos</a>
+                    </li>
+                <?php } ?>
+
+                <!-- Más opciones... -->
             </ul>
 
             <!-- Botón Salir -->
@@ -261,6 +282,3 @@
         </div>
     
     </div>
-
-    <!-- Bootstrap JavaScript Bundle con Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
