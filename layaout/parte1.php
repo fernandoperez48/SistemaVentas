@@ -111,9 +111,9 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav flex-grow-1" style="justify-content: space-between;">
                         <!-- Menú de usuarios -->
-                        <li>
+                        <li class="nav-item">
                             <a href="#" class="nav-link" role="button" data-toggle="modal" data-target="#modal-usuario">
-                                <?php echo $nombres_sesion ?>/<?php echo $rol_sesion ?>
+                                <?php echo $nombres_sesion ?> / <?php echo $rol_sesion ?>
                             </a>
                         </li>
 
@@ -238,9 +238,9 @@
             </div>
         </nav>
 
-        <!-- /.n
-         
-                -- Modal -->
+
+
+        <!-- Modal -->
         <div class="modal fade" id="modal-usuario" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
