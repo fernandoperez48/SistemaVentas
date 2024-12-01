@@ -26,7 +26,6 @@ include_once 'Reporte.php';
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
-    <!-- /.content-header -->
 
     <div class="content">
         <div class="container-fluid">
@@ -35,14 +34,11 @@ include_once 'Reporte.php';
                     <div class="card card-outline card-danger">
                         <div class="card-header" style="background-color:orange">
                             <h3 class="card-title">Envios registrados</h3>
-
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                                 </button>
                             </div>
-                            <!-- /.card-tools -->
                         </div>
-                        <!-- /.card-header -->
                         <div class="card-body">
                             <div class="table table-responsive">
                                 <table id="example1" class="table table-bordered table-striped table-sm">
@@ -118,8 +114,6 @@ include_once 'Reporte.php';
                                                 </td>
                                                 <td>
                                                     <center>
-
-
                                                         <div class="btn-group">
                                                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update<?php echo $id_envio; ?>">
                                                                 <i class="fa fa-pencil-alt"></i>
@@ -130,153 +124,152 @@ include_once 'Reporte.php';
                                                             // Renderizar el modal utilizando la clase ModalVerProducto
                                                             echo ModalUpdateEnvio::render($id_envio, $envios_datos);
                                                             ?>
-                                                            </>
+                                                        </div>
 
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete<?php echo $id_envio; ?>">
+                                                                <i class="fa fa-trash"></i>
+                                                                Borrar
+                                                            </button>
 
-                                                            <div class="btn-group">
-                                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-delete<?php echo $id_envio; ?>">
-                                                                    <i class="fa fa-trash"></i>
-                                                                    Borrar
-                                                                </button>
+                                                            <!-- modal para borrar envios-->
+                                                            <?php
+                                                            // Renderizar el modal utilizando la clase ModalVerProducto
+                                                            echo ModalDeleteEnvio::render($id_envio, $envios_datos);
+                                                            ?>
 
-                                                                <!-- modal para borrar envios-->
-                                                                <?php
-                                                                // Renderizar el modal utilizando la clase ModalVerProducto
-                                                                echo ModalDeleteEnvio::render($id_envio, $envios_datos);
-                                                                ?>
+                                                            <!-- modal buscar producto-->
 
-                                                                <!-- modal buscar producto-->
+                                                            <div class="modal fade" id="Modal_productos<?php echo $id_envio; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header" style="background-color: #08c2ec">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">Productos de la venta nro <?php echo $envios_datos['nro_venta']; ?></h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-bordered table-sm table-hover table-striped">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Nro</th>
+                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Producto</th>
+                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Detalle</th>
+                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Cantidad</th>
+                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Unitario</th>
+                                                                                            <th style="background-color: #e7e7e7; text-align:center;">Precio Subtotal</th>
 
-                                                                <div class="modal fade" id="Modal_productos<?php echo $id_envio; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog modal-lg">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header" style="background-color: #08c2ec">
-                                                                                <h5 class="modal-title" id="exampleModalLabel">Productos de la venta nro <?php echo $envios_datos['nro_venta']; ?></h5>
-                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <div class="table-responsive">
-                                                                                    <table class="table table-bordered table-sm table-hover table-striped">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th style="background-color: #e7e7e7; text-align:center;">Nro</th>
-                                                                                                <th style="background-color: #e7e7e7; text-align:center;">Producto</th>
-                                                                                                <th style="background-color: #e7e7e7; text-align:center;">Detalle</th>
-                                                                                                <th style="background-color: #e7e7e7; text-align:center;">Cantidad</th>
-                                                                                                <th style="background-color: #e7e7e7; text-align:center;">Precio Unitario</th>
-                                                                                                <th style="background-color: #e7e7e7; text-align:center;">Precio Subtotal</th>
-
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <?php
-                                                                                            $contador_carrito = 0;
-                                                                                            $cantidad_total = 0;
-                                                                                            $precio_unitario_total = 0;
-                                                                                            $precio_total = 0;
-                                                                                            $nro_venta = $envios_datos['nro_venta'];
-                                                                                            $sql_carrito = "SELECT *, pro.nombre AS nombre_producto, pro.descripcion AS descripcion, pro.precio_venta AS precio_venta, pro.stock AS stock, pro.id_producto AS id_producto 
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <?php
+                                                                                        $contador_carrito = 0;
+                                                                                        $cantidad_total = 0;
+                                                                                        $precio_unitario_total = 0;
+                                                                                        $precio_total = 0;
+                                                                                        $nro_venta = $envios_datos['nro_venta'];
+                                                                                        $sql_carrito = "SELECT *, pro.nombre AS nombre_producto, pro.descripcion AS descripcion, pro.precio_venta AS precio_venta, pro.stock AS stock, pro.id_producto AS id_producto 
                                                                                                                     FROM tb_carrito AS carr 
                                                                                                                     INNER JOIN tb_almacen AS pro ON carr.id_producto = pro.id_producto 
                                                                                                                     WHERE nro_venta = '$nro_venta' 
                                                                                                                     ORDER BY carr.id_carrito";
 
-                                                                                            $resultado_carrito = $mysqli->query($sql_carrito);
+                                                                                        $resultado_carrito = $mysqli->query($sql_carrito);
 
-                                                                                            if ($resultado_carrito) {
-                                                                                                while ($carrito_datos = $resultado_carrito->fetch_assoc()) {
-                                                                                                    $id_carrito = $carrito_datos['id_carrito'];
-                                                                                                    $contador_carrito += 1;
-                                                                                                    $cantidad_total += $carrito_datos['cantidad'];
-                                                                                                    $precio_unitario_total += $carrito_datos['precio_venta'];
-                                                                                                    $precio_total += ($carrito_datos['cantidad'] * $carrito_datos['precio_venta']);
-                                                                                            ?>
-                                                                                                    <tr>
-                                                                                                        <td>
-                                                                                                            <center><?php echo $contador_carrito; ?></center>
-                                                                                                            <input type="text" value="<?php echo $carrito_datos['id_producto']; ?>" id="id_producto<?php echo $contador_carrito; ?>" hidden>
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <center><?php echo $carrito_datos['nombre_producto']; ?></center>
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <center><?php echo $carrito_datos['descripcion']; ?></center>
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <center><span id="cantidad_carrito<?php echo $contador_carrito; ?>"><?php echo $carrito_datos['cantidad']; ?></span></center>
-                                                                                                            <input type="text" id="stock_de_inventario<?php echo $contador_carrito; ?>" value="<?php echo $carrito_datos['stock']; ?>" hidden>
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <center><?php echo $carrito_datos['precio_venta']; ?></center>
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <center>
-                                                                                                                <?php
-                                                                                                                $cantidad = floatval($carrito_datos['cantidad']);
-                                                                                                                $precio_venta = floatval($carrito_datos['precio_venta']);
-                                                                                                                echo $subtotal = $cantidad * $precio_venta;
-                                                                                                                ?>
-                                                                                                            </center>
-                                                                                                        </td>
+                                                                                        if ($resultado_carrito) {
+                                                                                            while ($carrito_datos = $resultado_carrito->fetch_assoc()) {
+                                                                                                $id_carrito = $carrito_datos['id_carrito'];
+                                                                                                $contador_carrito += 1;
+                                                                                                $cantidad_total += $carrito_datos['cantidad'];
+                                                                                                $precio_unitario_total += $carrito_datos['precio_venta'];
+                                                                                                $precio_total += ($carrito_datos['cantidad'] * $carrito_datos['precio_venta']);
+                                                                                        ?>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <center><?php echo $contador_carrito; ?></center>
+                                                                                                        <input type="text" value="<?php echo $carrito_datos['id_producto']; ?>" id="id_producto<?php echo $contador_carrito; ?>" hidden>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <center><?php echo $carrito_datos['nombre_producto']; ?></center>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <center><?php echo $carrito_datos['descripcion']; ?></center>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <center><span id="cantidad_carrito<?php echo $contador_carrito; ?>"><?php echo $carrito_datos['cantidad']; ?></span></center>
+                                                                                                        <input type="text" id="stock_de_inventario<?php echo $contador_carrito; ?>" value="<?php echo $carrito_datos['stock']; ?>" hidden>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <center><?php echo $carrito_datos['precio_venta']; ?></center>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <center>
+                                                                                                            <?php
+                                                                                                            $cantidad = floatval($carrito_datos['cantidad']);
+                                                                                                            $precio_venta = floatval($carrito_datos['precio_venta']);
+                                                                                                            echo $subtotal = $cantidad * $precio_venta;
+                                                                                                            ?>
+                                                                                                        </center>
+                                                                                                    </td>
 
-                                                                                                    </tr>
-                                                                                            <?php
-                                                                                                }
-                                                                                            } else {
-                                                                                                echo "Error al ejecutar la consulta: " . $mysqli->error;
+                                                                                                </tr>
+                                                                                        <?php
                                                                                             }
-                                                                                            ?>
-                                                                                            <tr>
-                                                                                                <th colspan="3" style="background-color: #e7e7e7; text-align:right;">Total</th>
-                                                                                                <th>
-                                                                                                    <center>
-                                                                                                        <?php
-                                                                                                        echo $cantidad_total;
-                                                                                                        ?>
-                                                                                                    </center>
-                                                                                                </th>
-                                                                                                <th>
-                                                                                                    <center>
-                                                                                                        <?php
-                                                                                                        echo $precio_unitario_total;
-                                                                                                        ?>
-                                                                                                    </center>
-                                                                                                </th>
-                                                                                                <th style="background-color: yellow;">
-                                                                                                    <center>
-                                                                                                        <?php
-                                                                                                        echo $precio_total;
-                                                                                                        ?>
-                                                                                                    </center>
-                                                                                                </th>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </div>
+                                                                                        } else {
+                                                                                            echo "Error al ejecutar la consulta: " . $mysqli->error;
+                                                                                        }
+                                                                                        ?>
+                                                                                        <tr>
+                                                                                            <th colspan="3" style="background-color: #e7e7e7; text-align:right;">Total</th>
+                                                                                            <th>
+                                                                                                <center>
+                                                                                                    <?php
+                                                                                                    echo $cantidad_total;
+                                                                                                    ?>
+                                                                                                </center>
+                                                                                            </th>
+                                                                                            <th>
+                                                                                                <center>
+                                                                                                    <?php
+                                                                                                    echo $precio_unitario_total;
+                                                                                                    ?>
+                                                                                                </center>
+                                                                                            </th>
+                                                                                            <th style="background-color: yellow;">
+                                                                                                <center>
+                                                                                                    <?php
+                                                                                                    echo $precio_total;
+                                                                                                    ?>
+                                                                                                </center>
+                                                                                            </th>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
                                                                             </div>
-
                                                                         </div>
+
                                                                     </div>
-                                                                </div> <!-- Button trigger modal -->
+                                                                </div>
+                                                            </div> <!-- Button trigger modal -->
 
-                                                                <!-- fin modal buscar producto -->
+                                                            <!-- fin modal buscar producto -->
 
-                                                                <script>
-                                                                    $('#btn_delete<?php echo $id_envio; ?>').click(function() {
+                                                            <script>
+                                                                $('#btn_delete<?php echo $id_envio; ?>').click(function() {
 
-                                                                        var id_envio = '<?php echo $id_envio; ?>';
+                                                                    var id_envio = '<?php echo $id_envio; ?>';
 
-                                                                        var url2 = "../app/controllers/envios/delete.php";
-                                                                        $.get(url2, {
-                                                                            id_envio: id_envio
-                                                                        }, function(datos) {
-                                                                            $('#respuesta_delete<?php echo $id_envio; ?>').html(datos);
-                                                                        });
+                                                                    var url2 = "../app/controllers/envios/delete.php";
+                                                                    $.get(url2, {
+                                                                        id_envio: id_envio
+                                                                    }, function(datos) {
+                                                                        $('#respuesta_delete<?php echo $id_envio; ?>').html(datos);
                                                                     });
-                                                                </script>
-                                                            </div>
+                                                                });
+                                                            </script>
+                                                        </div>
                                                     </center>
                                                 </td>
 
@@ -289,17 +282,14 @@ include_once 'Reporte.php';
                                 </table>
                             </div>
                         </div>
-                        <!-- /.card-body -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Main content -->
 </div>
 
-</div>
+</>
 <!--  FIN DE WRAAPPER DE PARTE1.PHP -->
 
 <?php include '../layaout/mensajes.php'; ?>

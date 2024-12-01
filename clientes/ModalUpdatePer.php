@@ -46,7 +46,8 @@ class ModalUpdatePer
                                 <div class="form-group">
                                     <label>DNI <b>*</b></label>
                                     <input type="text" id="dniU<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['dni']; ?>" class="form-control">
-                                    <small style="color:red; display:none" id="lbl_dniU<?php echo $id_cliente; ?>">* Este campo es requerido</small>
+                                    <small style="color:red; display:none" id="lbl_dni_invalid">* El dni no es válido, rango entre 6 y 50 millones</small>
+
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -152,9 +153,27 @@ class ModalUpdatePer
                 var id_domicilio = '<?php echo $id_domicilio; ?>';
                 var condicion_iva = $('#condicion_iva<?php echo $id_cliente; ?>').val();
 
+                // Función para validar email
+                function validarEmail(email) {
+                    var re = /\S+@\S+\.\S+/;
+                    return re.test(email);
+                }
+
+                // Función para validar DNI
+                function validarDNI(dni) {
+                    // Verificar que el DNI contiene solo números y está dentro del rango permitido
+                    var numeroDNI = parseInt(dni, 10);
+                    return /^\d+$/.test(dni) && numeroDNI >= 6000000 && numeroDNI <= 50000000;
+                }
+
                 // Verificar si todos los campos requeridos están llenos
                 if (nombre_cliente === '' || apellido_cliente === '' || dni === '' || condicion_iva === '' || pais === '' || provincia === '' || localidad === '' || domicilio === '' || numero === '') {
                     alert('Todos los campos marcados con * son obligatorios.');
+                } else if (!validarEmail(email)) {
+                    alert('Formato invalido de email');
+                } else if (!validarDNI(dni)) {
+                    $('#lbl_dni_invalid').css('display', 'block');
+                    alert('Formato invalido de dni');
                 } else {
                     // Realizar la solicitud AJAX para enviar los datos actualizados
                     $.ajax({
