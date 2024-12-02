@@ -93,6 +93,13 @@
   <script>
     const baseURL = "<?php echo $URL; ?>"; // Pasar la URL desde PHP a JavaScript
 
+    // Capturar evento de tecla Enter en los inputs de email y contraseña
+    $('#email, #password_user').on('keypress', function(event) {
+      if (event.key === "Enter") {
+        $('#btn_ingresar').click(); // Simular clic en el botón ingresar
+      }
+    });
+
     $('#btn_ingresar').click(function() {
       let email = $('#email').val();
       let contraseña = $('#password_user').val();
