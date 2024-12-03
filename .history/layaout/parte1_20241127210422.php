@@ -75,17 +75,6 @@
             min-width: 50px;
         }
 
-        .navbar {
-            display: flex;
-            padding: 0.5rem 1rem; /* Ajusta el espaciado dentro del navbar */
-            justify-content: space-between; /* Distribuye los elementos */
-            align-items: center; /* Alinea verticalmente */
-            flex-wrap: nowrap; /* Evita que los elementos salten a otra línea */
-            }
-         
-
-
-
     </style>
 
     <!-- jQuery -->
@@ -107,7 +96,7 @@
 
     <div class="wrapper">
         <!-- <nav class="main-header navbar navbar-expand navbar-black navbar-dark"> -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-mg navbar-dark bg-dark">
             <!-- Left navbar links -->
             <div class="container-fluid">
 

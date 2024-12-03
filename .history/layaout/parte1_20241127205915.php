@@ -75,17 +75,6 @@
             min-width: 50px;
         }
 
-        .navbar {
-            display: flex;
-            padding: 0.5rem 1rem; /* Ajusta el espaciado dentro del navbar */
-            justify-content: space-between; /* Distribuye los elementos */
-            align-items: center; /* Alinea verticalmente */
-            flex-wrap: nowrap; /* Evita que los elementos salten a otra línea */
-            }
-         
-
-
-
     </style>
 
     <!-- jQuery -->
@@ -102,7 +91,7 @@
     </style>
 </head>
 
-<body class="hold-transition layout-top-nav container-fluid">
+<body class="hold-transition layout-top-nav">
 
 
     <div class="wrapper">
@@ -278,6 +267,6 @@
         </div>
     
     </div>
-    </body>
+
     <!-- Bootstrap JavaScript Bundle con Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

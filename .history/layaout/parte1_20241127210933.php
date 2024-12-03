@@ -77,7 +77,6 @@
 
         .navbar {
             display: flex;
-            padding: 0.5rem 1rem; /* Ajusta el espaciado dentro del navbar */
             justify-content: space-between; /* Distribuye los elementos */
             align-items: center; /* Alinea verticalmente */
             flex-wrap: nowrap; /* Evita que los elementos salten a otra línea */
