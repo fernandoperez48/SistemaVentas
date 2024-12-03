@@ -2,7 +2,7 @@
 
 class Reporte
 {
-    public static function render()
+    public static function render($id_envio, $envios_datos)
     {
         ob_start(); // Iniciar el buffer de salida
 ?>
