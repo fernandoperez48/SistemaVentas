@@ -20,23 +20,23 @@ class ModalUpdateEmp
                         <div class="row justify-content-between">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Nombre empresa</label>
+                                    <label>Nombre empresa<b>*</b></label>
                                     <input type="text" id="nombre_empresa<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['nombre']; ?>" class="form-control text-center">
                                     <small style="color:red; display:none" id="lbl_nombreE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Razon Social</label>
+                                    <label>Razon Social<b>*</b></label>
                                     <input type="text" id="razon_social<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['razon_social']; ?>" class="form-control text-center">
                                     <small style="color:red; display:none" id="lbl_razon_socialE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>CUIT</label>
+                                    <label>CUIT<b>*</b></label>
                                     <input type="text" id="cuitE<?php echo $id_cliente; ?>" value="<?php echo $clientesemp_datos['cuit']; ?>" class="form-control text-center">
-                                    <small style="color:red; display:none" id="lbl_cuitE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
+                                    <small style="color:red; display:none" id="lbl_cuit_invalid">* El cuit no es valido</small>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -49,8 +49,9 @@ class ModalUpdateEmp
                         <div class="row justify-content-between">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Email </label>
+                                    <label>Email<b>*</b></label>
                                     <input type="text" id="emailE<?php echo $id_cliente; ?>" class="form-control text-center" value="<?php echo $clientesemp_datos['email']; ?>">
+                                    <small style="color:red; display:none" id="lbl_email_invalid">* El email no es valido</small>
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -69,7 +70,7 @@ class ModalUpdateEmp
 
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <label>Calle</label>
+                                    <label>Calle<b>*</b></label>
                                     <input type="text" id="domicilioE<?php echo $id_cliente; ?>" class="form-control text-center" value="<?php echo $clientesemp_datos['calle']; ?>">
                                     <small style="color:red; display:none" id="lbl_domicilioE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                 </div>
@@ -77,14 +78,14 @@ class ModalUpdateEmp
 
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>Nro</label>
+                                    <label>Nro<b>*</b></label>
                                     <input type="text" id="numeroE<?php echo $id_cliente; ?>" class="form-control text-center" value="<?php echo $clientesemp_datos['numero']; ?>">
                                     <small style="color:red; display:none" id="lbl_numeroE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>Piso </label>
+                                    <label>Piso</label>
                                     <input type="text" id="pisoE<?php echo $id_cliente; ?>" class="form-control text-center" value="<?php echo $clientesemp_datos['piso']; ?>">
 
                                 </div>
@@ -97,21 +98,21 @@ class ModalUpdateEmp
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Localidad</label>
+                                    <label>Localidad<b>*</b></label>
                                     <input type="text" id="localidadE<?php echo $id_cliente; ?>" class="form-control text-center" value="<?php echo $clientesemp_datos['ciudad']; ?>">
                                     <small style="color:red; display:none" id="lbl_localidadE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Provincia</label>
+                                    <label>Provincia<b>*</b></label>
                                     <input type="text" id="provinciaE<?php echo $id_cliente; ?>" class="form-control text-center" value="<?php echo $clientesemp_datos['provincia']; ?>">
                                     <small style="color:red; display:none" id="lbl_provinciaE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Pais</label>
+                                    <label>Pais<b>*</b></label>
                                     <input type="text" id="paisE<?php echo $id_cliente; ?>" class="form-control text-center" value="<?php echo $clientesemp_datos['pais']; ?>">
                                     <small style="color:red; display:none" id="lbl_paisE<?php echo $id_cliente; ?>">* Este campo es requerido</small>
                                 </div>
@@ -148,11 +149,21 @@ class ModalUpdateEmp
                 var persona_autorizada = $('#persona_autorizada<?php echo $id_cliente; ?>').val();
                 var id_domicilio = '<?php echo $id_domicilio; ?>';
 
-                // Función para validar DNI
-                function validarDNI(dni) {
-                    // Verificar que el DNI contiene solo números y está dentro del rango permitido
+                // Función para validar CUIT
+                function validarCUIT(cuit) {
+                    // Verificar que el formato sea xx-xxxxxxxx-x
+                    var re = /^\d{2}-\d{7,8}-\d$/;
+                    if (!re.test(cuit)) {
+                        return false; // No cumple con el formato
+                    }
+
+                    // Separar las partes del CUIT
+                    var partes = cuit.split('-');
+                    var dni = partes[1]; // Parte central (DNI)
+
+                    // Verificar que el DNI tenga entre 7 y 8 dígitos
                     var numeroDNI = parseInt(dni, 10);
-                    return /^\d+$/.test(dni) && numeroDNI >= 6000000 && numeroDNI <= 50000000;
+                    return numeroDNI >= 6000000 && numeroDNI <= 50000000;
                 }
 
                 // Función para validar email
@@ -162,14 +173,12 @@ class ModalUpdateEmp
                 }
 
                 // Verificar si todos los campos requeridos están llenos
-                if (nombre_cliente === '' || razon_social === '' || cuit === '' || pais === '' || provincia === '' || localidad === '' || domicilio === '' || numero === '') {
+                if (nombre_cliente === '' || razon_social === '' || cuit === '' || email === '' || pais === '' || provincia === '' || localidad === '' || domicilio === '' || numero === '') {
                     alert('Todos los campos marcados con * son obligatorios.');
-                } else if (email == '') {
-                    $('#emailE').focus();
-                    $('#lbl_emailE').css('display', 'block');
                 } else if (!validarEmail(email)) {
-                    $('#emailC').focus();
-                    $('#lbl_email_invalid').css('display', 'block');
+                    alert('Formato invalido de email');
+                } else if (!validarCUIT(cuit)) {
+                    alert('Formato invalido de cuit');
                 } else {
                     // Realizar la solicitud AJAX para enviar los datos actualizados
                     $.ajax({

@@ -150,56 +150,66 @@ class ModalCreatePer
                     return /^\d+$/.test(dni) && numeroDNI >= 6000000 && numeroDNI <= 50000000;
                 }
 
-                  // Reinicia los mensajes de error
-                 $('.form-group small').css('display', 'none');
+                // Reinicia los mensajes de error
+                $('.form-group small').css('display', 'none');
 
-                // Variables de control
-            var hasError = false;
+                // Validaciones locales
+                var hayError = false;
 
-            // Validaciones
-            if (nombre === '') {
-                $('#lbl_nombreC').css('display', 'block');
-                hasError = true;
-            }
-            if (apellido === '') {
-                $('#lbl_apellidoC').css('display', 'block');
-                hasError = true;
-            }
-            if (email === '') {
-                $('#lbl_emailC').css('display', 'block');
-                hasError = true;
-            } else if (!validarEmail(email)) {
-                $('#lbl_email_invalid').css('display', 'block');
-                hasError = true;
-            }
-            if (!validarDNI(dni)) {
-                $('#lbl_dni_invalid').css('display', 'block');
-                hasError = true;
-            }
-
-            // Si no hay errores, realiza la solicitud
-            if (!hasError) {
-                var url = "../app/controllers/clientes/create.php";
-                $.get(url, {
-                    nombre: nombre,
-                    apellido: apellido,
-                    telefono: telefono,
-                    email: email,
-                    dni: dni,
-                    calle: calle,
-                    numero: numero,
-                    piso: piso,
-                    depto: depto,
-                    localidad: localidad,
-                    provincia: provincia,
-                    pais: pais,
-                    condicion_iva: condicion_iva
-                }, function(datos) {
-                    $('#respuesta').html(datos);
-                });
+                // Validaciones
+                if (nombre === '' || apellido === '' || email === '' || telefono === '' || dni === '' || condicion_iva === '' || pais === '' || provincia === '' || localidad === '' || domicilio === '' || numero === '') {
+                    alert('Todos los campos marcados con * son obligatorios.');
+                    hayError = true;
+                } else if (!validarEmail(email)) {
+                    $('#lbl_email_invalid').css('display', 'block');
+                    hayError = true;
+                }
+                if (!validarDNI(dni)) {
+                    $('#lbl_dni_invalid').css('display', 'block');
+                    hayError = true;
                 }
 
+                // Si no hay errores, valido en el servidor
+                if (!hayError) {
+                    $.post('../app/controllers/clientes/verificarEmailDni.php', {
+                        email: email,
+                        dni: dni
+                    }, function(response) {
+                        var result = JSON.parse(response);
 
+                        if (result.email_exists) {
+                            // $('#lbl_email_exists').css('display', 'block'); // Muestra un mensaje personalizado
+                            alert('Email ya existente');
+                            hayError = true;
+                        }
+                        if (result.dni_exists) {
+                            alert('DNI ya existente');
+                            hayError = true;
+                        }
+
+                        // Si no hay errores, realiza la solicitud
+                        if (!hayError) {
+                            var url = "../app/controllers/clientes/create.php";
+                            $.get(url, {
+                                nombre: nombre,
+                                apellido: apellido,
+                                telefono: telefono,
+                                email: email,
+                                dni: dni,
+                                calle: calle,
+                                numero: numero,
+                                piso: piso,
+                                depto: depto,
+                                localidad: localidad,
+                                provincia: provincia,
+                                pais: pais,
+                                condicion_iva: condicion_iva
+                            }, function(datos) {
+                                $('#respuesta').html(datos);
+                            });
+                        }
+                    });
+                }
             });
         </script>
 

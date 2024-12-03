@@ -39,7 +39,7 @@ include_once 'Reporte.php';
                         </div>
                         <div class="card-body">
                             <div class="table table-responsive">
-                                <table id="example1" class="table col-l-12 table-bordered table-striped table-sm">
+                                <table id="example1" class="table table-bordered table-striped table-sm">
                                     <thead style="background-color: gray;">
                                         <tr>
                                             <th>

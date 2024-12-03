@@ -167,7 +167,7 @@
                 <li class="nav-item dropdown dropdown-hover">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Productos</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="background-color:#343a40;">
-                            <li><a href="<?php echo $URL ?>/almacen" class="dropdown-item">Listado de Productos</a></li>
+                        <li><a href="<?php echo $URL ?>/almacen" class="dropdown-item">Listado de Productos</a></li>
                         <?php if ($rol_sesion == "Administrador" || $id_rol == "4") { ?>
                             <li><a href="<?php echo $URL ?>/almacen/create.php" class="dropdown-item">Crear Producto</a></li>
                         <?php } ?>

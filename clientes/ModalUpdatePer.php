@@ -46,7 +46,8 @@ class ModalUpdatePer
                                 <div class="form-group">
                                     <label>DNI <b>*</b></label>
                                     <input type="text" id="dniU<?php echo $id_cliente; ?>" value="<?php echo $clientesper_datos['dni']; ?>" class="form-control">
-                                    <small style="color:red; display:none" id="lbl_dniU<?php echo $id_cliente; ?>">* Este campo es requerido</small>
+                                    <small style="color:red; display:none" id="lbl_dni_invalid">* El dni no es válido, rango entre 6 y 50 millones</small>
+
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -152,40 +153,86 @@ class ModalUpdatePer
                 var id_domicilio = '<?php echo $id_domicilio; ?>';
                 var condicion_iva = $('#condicion_iva<?php echo $id_cliente; ?>').val();
 
+                // Función para validar email
+                function validarEmail(email) {
+                    var re = /\S+@\S+\.\S+/;
+                    return re.test(email);
+                }
+
+                // Función para validar DNI
+                function validarDNI(dni) {
+                    // Verificar que el DNI contiene solo números y está dentro del rango permitido
+                    var numeroDNI = parseInt(dni, 10);
+                    return /^\d+$/.test(dni) && numeroDNI >= 6000000 && numeroDNI <= 50000000;
+                }
+                // Validaciones locales
+                var hayError = false;
                 // Verificar si todos los campos requeridos están llenos
                 if (nombre_cliente === '' || apellido_cliente === '' || dni === '' || condicion_iva === '' || pais === '' || provincia === '' || localidad === '' || domicilio === '' || numero === '') {
                     alert('Todos los campos marcados con * son obligatorios.');
-                } else {
-                    // Realizar la solicitud AJAX para enviar los datos actualizados
-                    $.ajax({
-                        type: "POST", // Cambiar a POST para enviar datos sensibles
-                        url: "../app/controllers/clientes/updateper.php",
-                        data: {
-                            id_cliente: id_cliente,
-                            nombre_cliente: nombre_cliente,
-                            apellido_cliente: apellido_cliente,
-                            telefono: telefono,
-                            dni: dni,
-                            email: email,
-                            pais: pais,
-                            provincia: provincia,
-                            localidad: localidad,
-                            domicilio: domicilio,
-                            numero: numero,
-                            piso: piso,
-                            depto: depto,
-                            id_domicilio: id_domicilio,
-                            condicion_iva: condicion_iva
-                        },
-                        success: function(response) {
-                            // Manejar la respuesta del servidor
-                            $('#respuesta_update<?php echo $id_cliente; ?>').html(response);
-                            console.log("Solicitud AJAX exitosa. Respuesta del servidor:", response);
-                        },
-                        error: function(xhr, textStatus, errorThrown) {
-                            console.log("Error en la solicitud AJAX:", textStatus, errorThrown);
+                    hayError = true;
+                } else if (!validarEmail(email)) {
+                    alert('Formato invalido de email');
+                    hayError = true;
+                } else if (!validarDNI(dni)) {
+                    $('#lbl_dni_invalid').css('display', 'block');
+                    alert('Formato invalido de dni');
+                    hayError = true;
+                }
+
+                // Si no hay errores, valido en el servidor
+                if (!hayError) {
+                    $.post('../app/controllers/clientes/verificarEmailDni.php', {
+                        email: email,
+                        dni: dni,
+                        id_cliente: id_cliente
+                    }, function(response) {
+                        var result = JSON.parse(response);
+
+                        if (result.email_exists) {
+                            // $('#lbl_email_exists').css('display', 'block'); // Muestra un mensaje personalizado
+                            alert('Email ya existente');
+                            hayError = true;
                         }
-                    });
+                        if (result.dni_exists) {
+                            alert('DNI ya existente');
+                            hayError = true;
+                        }
+
+                        if (!hayError) {
+                            // Realizar la solicitud AJAX para enviar los datos actualizados
+                            $.ajax({
+                                type: "POST", // Cambiar a POST para enviar datos sensibles
+                                url: "../app/controllers/clientes/updateper.php",
+                                data: {
+                                    id_cliente: id_cliente,
+                                    nombre_cliente: nombre_cliente,
+                                    apellido_cliente: apellido_cliente,
+                                    telefono: telefono,
+                                    dni: dni,
+                                    email: email,
+                                    pais: pais,
+                                    provincia: provincia,
+                                    localidad: localidad,
+                                    domicilio: domicilio,
+                                    numero: numero,
+                                    piso: piso,
+                                    depto: depto,
+                                    id_domicilio: id_domicilio,
+                                    condicion_iva: condicion_iva
+                                },
+                                success: function(response) {
+                                    // Manejar la respuesta del servidor
+                                    $('#respuesta_update<?php echo $id_cliente; ?>').html(response);
+                                    console.log("Solicitud AJAX exitosa. Respuesta del servidor:", response);
+                                },
+                                error: function(xhr, textStatus, errorThrown) {
+                                    console.log("Error en la solicitud AJAX:", textStatus, errorThrown);
+                                }
+                            });
+                        }
+
+                    })
                 }
             });
         </script>
