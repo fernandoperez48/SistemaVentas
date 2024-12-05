@@ -41,17 +41,15 @@ class Reporte
                             text: 'Reportes',
                             orientation: 'landscape',
                             buttons: [{
-                                text: 'Copiar',
-                                extend: 'copy'
-                            }, {
                                 extend: 'pdf',
                                 exportOptions: {
                                     columns: ':not(:last-child)' // Excluye la última columna
                                 }
                             }, {
-                                extend: 'csv',
-                            }, {
                                 extend: 'excel',
+                                exportOptions: {
+                                    columns: ':not(:last-child)' // Excluye la última columna
+                                }
                             }, {
                                 text: 'Imprimir',
                                 extend: 'print',

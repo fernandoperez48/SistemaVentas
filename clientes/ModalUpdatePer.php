@@ -54,7 +54,7 @@ class ModalUpdatePer
                                 <div class="form-group">
                                     <label>Email </label>
                                     <input type="text" id="emailU<?php echo $id_cliente; ?>" class="form-control" value="<?php echo $clientesper_datos['email']; ?>">
-
+                                    <small style="color:red; display:none" id="lbl_email_invalid">* El email no es válido</small>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -168,15 +168,15 @@ class ModalUpdatePer
                 // Validaciones locales
                 var hayError = false;
                 // Verificar si todos los campos requeridos están llenos
-                if (nombre_cliente === '' || apellido_cliente === '' || dni === '' || condicion_iva === '' || pais === '' || provincia === '' || localidad === '' || domicilio === '' || numero === '') {
+                if (nombre_cliente === '' || apellido_cliente === '' || dni === '' || email === '' || condicion_iva === '' || pais === '' || provincia === '' || localidad === '' || domicilio === '' || numero === '') {
                     alert('Todos los campos marcados con * son obligatorios.');
-                    hayError = true;
-                } else if (!validarEmail(email)) {
-                    alert('Formato invalido de email');
                     hayError = true;
                 } else if (!validarDNI(dni)) {
                     $('#lbl_dni_invalid').css('display', 'block');
-                    alert('Formato invalido de dni');
+                    hayError = true;
+                }
+                if (!validarEmail(email)) {
+                    $('#lbl_email_invalid').css('display', 'block');
                     hayError = true;
                 }
 

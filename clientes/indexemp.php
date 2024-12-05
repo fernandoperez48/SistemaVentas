@@ -3,6 +3,7 @@ include '../app/config.php';
 include '../layaout/sesion.php';
 include '../layaout/parte1.php';
 include '../app/controllers/clientes/listado_de_clientesemp.php';
+include '../app/controllers/clientes/listadoClientesEmpActivos.php';
 
 include_once 'ModalUpdateEmp.php';
 include_once 'ModalCreateEmp.php';
@@ -81,7 +82,7 @@ include_once 'ReporteEmp.php';
                                 <tbody>
                                     <?php
                                     $contador = 0;
-                                    foreach ($clientesemp_datos as $clientesemp_datos) {
+                                    foreach ($clientesempact_datos as $clientesemp_datos) {
                                         $id_cliente = $clientesemp_datos['id_cliente'];
                                         $id_domicilio = $clientesemp_datos['id_domicilio']; ?>
                                         <tr>

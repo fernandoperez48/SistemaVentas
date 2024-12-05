@@ -171,43 +171,68 @@ class ModalUpdateEmp
                     var re = /\S+@\S+\.\S+/;
                     return re.test(email);
                 }
-
+                // Validaciones locales
+                var hayError = false;
                 // Verificar si todos los campos requeridos están llenos
-                if (nombre_cliente === '' || razon_social === '' || cuit === '' || email === '' || pais === '' || provincia === '' || localidad === '' || domicilio === '' || numero === '') {
+                if (nombre_cliente === '' || razon_social === '' || cuit === '' || telefono === '' || email === '' || calle === '' || numero === '' || localidad === '' || provincia === '' || pais === '') {
                     alert('Todos los campos marcados con * son obligatorios.');
+                    hayError = true;
                 } else if (!validarEmail(email)) {
                     alert('Formato invalido de email');
+                    hayError = true;
                 } else if (!validarCUIT(cuit)) {
                     alert('Formato invalido de cuit');
-                } else {
-                    // Realizar la solicitud AJAX para enviar los datos actualizados
-                    $.ajax({
-                        type: "POST", // Cambiar a POST para enviar datos sensibles
-                        url: "../app/controllers/clientes/updateemp.php",
-                        data: {
-                            id_cliente: id_cliente,
-                            nombre_cliente: nombre_cliente,
-                            razon_social: razon_social,
-                            telefono: telefono,
-                            cuit: cuit,
-                            email: email,
-                            pais: pais,
-                            provincia: provincia,
-                            localidad: localidad,
-                            domicilio: domicilio,
-                            numero: numero,
-                            piso: piso,
-                            depto: depto,
-                            persona_autorizada: persona_autorizada,
-                            id_domicilio: id_domicilio
-                        },
-                        success: function(response) {
-                            // Manejar la respuesta del servidor
-                            $('#respuesta_update<?php echo $id_cliente; ?>').html(response);
-                            console.log("Solicitud AJAX exitosa. Respuesta del servidor:", response);
-                        },
-                        error: function(xhr, textStatus, errorThrown) {
-                            console.log("Error en la solicitud AJAX:", textStatus, errorThrown);
+                    hayError = true;
+                }
+                // Si no hay errores, valido en el servidor
+                if (!hayError) {
+                    $.post('../app/controllers/clientes/verificarEmailCuit.php', {
+                        email: email,
+                        cuit: cuit,
+                        id_cliente: id_cliente
+                    }, function(response) {
+                        var result = JSON.parse(response);
+
+                        if (result.email_exists) {
+                            alert('Email ya existente');
+                            hayError = true;
+                        }
+                        if (result.cuit_exists) {
+                            alert('CUIT ya existente');
+                            hayError = true;
+                        }
+
+                        if (!hayError) {
+                            // Realizar la solicitud AJAX para enviar los datos actualizados
+                            $.ajax({
+                                type: "POST", // Cambiar a POST para enviar datos sensibles
+                                url: "../app/controllers/clientes/updateemp.php",
+                                data: {
+                                    id_cliente: id_cliente,
+                                    nombre_cliente: nombre_cliente,
+                                    razon_social: razon_social,
+                                    telefono: telefono,
+                                    cuit: cuit,
+                                    email: email,
+                                    pais: pais,
+                                    provincia: provincia,
+                                    localidad: localidad,
+                                    domicilio: domicilio,
+                                    numero: numero,
+                                    piso: piso,
+                                    depto: depto,
+                                    persona_autorizada: persona_autorizada,
+                                    id_domicilio: id_domicilio
+                                },
+                                success: function(response) {
+                                    // Manejar la respuesta del servidor
+                                    $('#respuesta_update<?php echo $id_cliente; ?>').html(response);
+                                    console.log("Solicitud AJAX exitosa. Respuesta del servidor:", response);
+                                },
+                                error: function(xhr, textStatus, errorThrown) {
+                                    console.log("Error en la solicitud AJAX:", textStatus, errorThrown);
+                                }
+                            });
                         }
                     });
                 }

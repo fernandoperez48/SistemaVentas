@@ -4,6 +4,7 @@ include '../layaout/sesion.php';
 include '../layaout/parte1.php';
 
 include '../app/controllers/clientes/listado_de_clientesper.php';
+include '../app/controllers/clientes/listadoClientesPerActivos.php';
 include '../app/controllers/clientes/listado_condicion_iva.php';
 // Incluir el archivo de la clase del modal
 include_once 'ModalUpdatePer.php';
@@ -73,7 +74,7 @@ include_once 'Reporte.php';
                                 <tbody>
                                     <?php
                                     $contador = 0;
-                                    foreach ($clientesper_datos as $clientesper_datos) {
+                                    foreach ($clientesperact_datos as $clientesper_datos) {
                                         $nombre_iva = $clientesper_datos['nombre_iva'];
                                         $id_cliente = $clientesper_datos['id_cliente'];
                                         $id_domicilio = $clientesper_datos['id_domicilio']; ?>

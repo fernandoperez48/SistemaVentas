@@ -41,17 +41,9 @@ class Reporte
                             text: 'Exportar',
                             orientation: 'landscape',
                             buttons: [{
-                                text: 'Copiar',
-                                extend: 'copy'
-                            }, {
                                 extend: 'pdf',
                                 exportOptions: {
                                     columns: ':not(.actions):not(:nth-child(1))'
-                                }
-                            }, {
-                                extend: 'csv',
-                                exportOptions: {
-                                    columns: ':not(.actions)'
                                 }
                             }, {
                                 extend: 'excel',

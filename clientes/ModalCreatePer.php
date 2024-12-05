@@ -36,7 +36,7 @@ class ModalCreatePer
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Telefono</label>
+                                    <label>Telefono<b>*</b></label>
                                     <input type="number" id="telefonoC" class="form-control" placeholder="Telefono">
                                 </div>
                             </div>
@@ -45,7 +45,7 @@ class ModalCreatePer
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Email</label>
+                                    <label>Email<b>*</b></label>
                                     <input type="email" id="emailC" class="form-control" placeholder="Email">
                                     <small style="color:red; display:none" id="lbl_emailC">* Este campo es requerido</small>
                                     <small style="color:red; display:none" id="lbl_email_invalid">* El email no es válido</small>
@@ -53,7 +53,7 @@ class ModalCreatePer
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>DNI</label>
+                                    <label>DNI<b>*</b></label>
                                     <input type="text" id="dniC" class="form-control" placeholder="XXXXXXXX">
                                     <small style="color:red; display:none" id="lbl_dni_invalid">* El dni no es válido, rango entre 6 y 50 millones</small>
 
@@ -61,7 +61,7 @@ class ModalCreatePer
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">Condicion frente al IVA</label>
+                                    <label for="">Condicion frente al IVA<b>*</b></label>
                                     <select name="condicion_iva" id="condicion_iva" class="form-control" required>
                                         <?php
                                         foreach ($condicion_iva_datos as $condicion_iva_dato) { ?>
@@ -80,10 +80,10 @@ class ModalCreatePer
                                 <label for="">Domicilio</label>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" name="" id="calle" placeholder="Calle">
+                                        <input type="text" class="form-control" name="" id="calle" placeholder="Calle*">
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="number" class="form-control" name="" id="numero" placeholder="Numero">
+                                        <input type="number" class="form-control" name="" id="numero" placeholder="Numero*">
                                     </div>
                                     <div class="col-md-2">
                                         <input type="text" class="form-control" name="" id="piso" placeholder="Piso">
@@ -95,14 +95,14 @@ class ModalCreatePer
                                 <br>
                                 <div class="row">
                                     <div class="col">
-                                        <input type="text" class="form-control" name="" id="localidad" placeholder="Localidad">
+                                        <input type="text" class="form-control" name="" id="localidad" placeholder="Localidad*">
                                     </div>
                                     <div class="col">
-                                        <input type="text" class="form-control" name="" id="provincia" placeholder="Provincia">
+                                        <input type="text" class="form-control" name="" id="provincia" placeholder="Provincia*">
                                     </div>
                                     <br>
                                     <div class="col">
-                                        <input type="text" class="form-control" name="" id="pais" placeholder="Pais">
+                                        <input type="text" class="form-control" name="" id="pais" placeholder="Pais*">
                                     </div>
                                 </div>
                             </div>
@@ -137,6 +137,7 @@ class ModalCreatePer
                 var provincia = $('#provincia').val();
                 var pais = $('#pais').val();
                 var condicion_iva = $('#condicion_iva').val();
+
                 // Función para validar email
                 function validarEmail(email) {
                     var re = /\S+@\S+\.\S+/;
@@ -157,7 +158,7 @@ class ModalCreatePer
                 var hayError = false;
 
                 // Validaciones
-                if (nombre === '' || apellido === '' || email === '' || telefono === '' || dni === '' || condicion_iva === '' || pais === '' || provincia === '' || localidad === '' || domicilio === '' || numero === '') {
+                if (nombre === '' || apellido === '' || email === '' || telefono === '' || dni === '' || condicion_iva === '' || pais === '' || provincia === '' || localidad === '' || calle === '' || numero === '') {
                     alert('Todos los campos marcados con * son obligatorios.');
                     hayError = true;
                 } else if (!validarEmail(email)) {
@@ -171,9 +172,10 @@ class ModalCreatePer
 
                 // Si no hay errores, valido en el servidor
                 if (!hayError) {
-                    $.post('../app/controllers/clientes/verificarEmailDni.php', {
+                    $.post('../app/controllers/clientes/verificarEmailDniCreate.php', {
                         email: email,
                         dni: dni
+
                     }, function(response) {
                         var result = JSON.parse(response);
 

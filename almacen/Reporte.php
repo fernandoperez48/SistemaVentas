@@ -40,15 +40,10 @@ class Reporte
                             text: 'Reportes',
                             orientation: 'landscape',
                             buttons: [{
-                                text: 'Copiar',
-                                extend: 'copy'
-                            }, {
                                 extend: 'pdf',
                                 exportOptions: {
                                     columns: ':not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(5)):not(:nth-child(8)):not(:nth-child(9)):not(:last-child)' // Excluye la última columna
                                 }
-                            }, {
-                                extend: 'csv',
                             }, {
                                 extend: 'excel',
                                 exportOptions: {

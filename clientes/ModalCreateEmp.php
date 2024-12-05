@@ -37,7 +37,7 @@ class ModalCreateEmp
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Telefono</label>
+                                    <label>Telefono<b>*</b></label>
                                     <input type="number" id="telefono" class="form-control" placeholder="Telefono">
                                 </div>
                             </div>
@@ -46,7 +46,7 @@ class ModalCreateEmp
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Email</label>
+                                    <label>Email<b>*</b></label>
                                     <input type="email" id="email" class="form-control" placeholder="Email">
 
                                     <small style="color:red; display:none" id="lbl_email_invalid">* El email no es válido</small>
@@ -54,7 +54,7 @@ class ModalCreateEmp
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>CUIT</label>
+                                    <label>CUIT<b>*</b></label>
                                     <input type="text" id="cuit" class="form-control" placeholder="XX-XXXXXXXX-X">
                                     <small style="color:red; display:none" id="lbl_cuit_vacio">* El cuit es obligatorio</small>
                                     <small style="color:red; display:none" id="lbl_cuit_invalid">* El cuit no es valido</small>
@@ -74,10 +74,10 @@ class ModalCreateEmp
                                 <label for="">Domicilio</label>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" name="" id="calle" placeholder="Calle">
+                                        <input type="text" class="form-control" name="" id="calle" placeholder="Calle*">
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="number" class="form-control" name="" id="numero" placeholder="Numero">
+                                        <input type="number" class="form-control" name="" id="numero" placeholder="Numero*">
                                     </div>
                                     <div class="col-md-2">
                                         <input type="text" class="form-control" name="" id="piso" placeholder="Piso">
@@ -154,48 +154,64 @@ class ModalCreateEmp
                     return numeroDNI >= 6000000 && numeroDNI <= 50000000;
                 }
 
-                if (nombre_empresa == '') {
-                    $('#nombre_empresa').focus();
-                    $('#lbl_nombre').css('display', 'block');
-                } else if (razon_social == '') {
-                    $('#razon_social').focus();
-                    $('#lbl_razon_social').css('display', 'block');
+                // Reinicia los mensajes de error
+                $('.form-group small').css('display', 'none');
+
+                // Validaciones locales
+                var hayError = false;
+
+                if (nombre_empresa === '' || razon_social === '' || telefono === '' || email === '' || cuit === '' || responsable_comercial === '' || calle === '' || numero === '' || localidad === '' || provincia === '' || pais === '') {
+                    alert('Todos los campos marcados con * son obligatorios.');
+                    hayError = true;
                 } else if (!validarEmail(email)) {
                     $('#email').focus();
                     $('#lbl_email_invalid').css('display', 'block');
+                    hayError = true;
                 } else if (!validarCUIT(cuit)) {
                     $('#cuit').focus();
                     $('#lbl_cuit_invalid').css('display', 'block');
-                } else if (cuit == '') {
-                    $('#cuit').focus();
-                    $('#lbl_cuit_vacio').css('display', 'block');
-                } else if (responsable_comercial == '') {
-                    $('#responsable_comercial').focus();
-                    $('#lbl_responsable_comercial').css('display', 'block');
-
-                } else {
-
-                    var url = "../app/controllers/clientes/createemp.php";
-                    $.get(url, {
-                        nombre_empresa: nombre_empresa,
-                        razon_social: razon_social,
-                        telefono: telefono,
+                    hayError = true;
+                }
+                // Si no hay errores, valido en el servidor
+                if (!hayError) {
+                    $.post('../app/controllers/clientes/verificarEmailCuitCreate.php', {
                         email: email,
-                        cuit: cuit,
-                        responsable_comercial: responsable_comercial,
-                        calle: calle,
-                        numero: numero,
-                        piso: piso,
-                        depto: depto,
-                        localidad: localidad,
-                        provincia: provincia,
-                        pais: pais
-                    }, function(datos) {
-                        $('#respuesta').html(datos);
+                        cuit: cuit
+                    }, function(response) {
+                        var result = JSON.parse(response);
+
+                        if (result.email_exists) {
+                            alert('Email ya existente');
+                            hayError = true;
+                        }
+                        if (result.cuit_exists) {
+                            alert('CUIT ya existente');
+                            hayError = true;
+                        }
+
+                        // Si no hay errores, realiza la solicitud
+                        if (!hayError) {
+                            var url = "../app/controllers/clientes/createemp.php";
+                            $.get(url, {
+                                nombre_empresa: nombre_empresa,
+                                razon_social: razon_social,
+                                telefono: telefono,
+                                email: email,
+                                cuit: cuit,
+                                responsable_comercial: responsable_comercial,
+                                calle: calle,
+                                numero: numero,
+                                piso: piso,
+                                depto: depto,
+                                localidad: localidad,
+                                provincia: provincia,
+                                pais: pais
+                            }, function(datos) {
+                                $('#respuesta').html(datos);
+                            });
+                        }
                     });
                 }
-
-
             });
         </script>
 

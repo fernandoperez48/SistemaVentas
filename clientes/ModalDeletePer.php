@@ -118,7 +118,7 @@ class ModalDeletePer
 
                     var id_cliente = '<?php echo $id_cliente; ?>';
 
-                    var url2 = "../app/controllers/clientes/delete.php";
+                    var url2 = "../app/controllers/clientes/deleteper.php";
                     $.get(url2, {
                         id_cliente: id_cliente
                     }, function(datos) {

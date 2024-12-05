@@ -62,7 +62,7 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                 <center>Costo</center>
                                             </th>
                                             <th>
-                                                <center>Usuario de carga</center>
+                                                <center>Usuario efwefde carga</center>
                                             </th>
                                             <th>
                                                 <center>Descuento/recarga</center>
@@ -235,17 +235,12 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                                                     text: 'Reportes',
                                                                                                     orientation: 'landscape',
                                                                                                     buttons: [{
-                                                                                                        text: 'Copiar',
-                                                                                                        extend: 'copy'
-                                                                                                    }, {
                                                                                                         extend: 'pdf',
-                                                                                                    }, {
-                                                                                                        extend: 'csv',
                                                                                                     }, {
                                                                                                         extend: 'excel',
                                                                                                     }, {
                                                                                                         text: 'Imprimir',
-                                                                                                        extend: 'print'
+                                                                                                        extend: 'print',
                                                                                                     }]
                                                                                                 },
                                                                                                 {
@@ -352,17 +347,21 @@ include '../app/controllers/compras/listado_de_compras.php';
                     text: 'Reportes',
                     orientation: 'landscape',
                     buttons: [{
-                        text: 'Copiar',
-                        extend: 'copy'
-                    }, {
                         extend: 'pdf',
-                    }, {
-                        extend: 'csv',
+                        exportOptions: {
+                            columns: ':not(:eq(3))' // Cambia 3 al índice de la columna que contiene el modal
+                        }
                     }, {
                         extend: 'excel',
+                        exportOptions: {
+                            columns: ':not(:eq(3))' // Cambia 3 al índice de la columna que contiene el modal
+                        }
                     }, {
                         text: 'Imprimir',
-                        extend: 'print'
+                        extend: 'print',
+                        exportOptions: {
+                            columns: ':not(:eq(3))' // Cambia 3 al índice de la columna que contiene el modal
+                        }
                     }]
                 },
                 {

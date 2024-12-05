@@ -119,7 +119,7 @@ class ModalDeleteEmp
 
                     var id_cliente = '<?php echo $id_cliente; ?>';
 
-                    var url2 = "../app/controllers/clientes/delete_clienteemp.php";
+                    var url2 = "../app/controllers/clientes/deleteemp.php";
                     $.get(url2, {
                         id_cliente: id_cliente
                     }, function(datos) {
