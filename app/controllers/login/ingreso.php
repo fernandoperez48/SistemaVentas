@@ -15,6 +15,52 @@ function limpiarCarrito($mysqli)
         return false; // Error durante la limpieza
     }
 }
+// Función para limpiar detalles de compras huérfanos
+// Función para limpiar registros huérfanos de compras
+function limpiarCompras($mysqli)
+{
+    // Identificar las compras con 'costo', 'usuario' y 'nro_comprobante' vacíos o nulos
+    $sql_obtener_compras = "
+        SELECT nro_compra 
+        FROM tb_compras 
+        WHERE (costo IS NULL OR costo = '') 
+          AND (id_usuario IS NULL OR id_usuario = '') 
+          AND (nro_comprobante IS NULL OR nro_comprobante = '')";
+    $resultado = $mysqli->query($sql_obtener_compras);
+
+    if ($resultado) {
+        // Recolectar los `nro_compra` que cumplen las condiciones
+        $compras_a_eliminar = [];
+        while ($row = $resultado->fetch_assoc()) {
+            $compras_a_eliminar[] = $row['nro_compra'];
+        }
+
+        if (!empty($compras_a_eliminar)) {
+            // Convertir los números de compra en una lista para la consulta
+            $compras_in = implode(",", $compras_a_eliminar);
+
+            // Eliminar registros en `tb_detalle_compras` correspondientes
+            $sql_eliminar_detalle = "
+                DELETE FROM tb_detalle_compras 
+                WHERE nro_compra IN ($compras_in)
+            ";
+            if (!$mysqli->query($sql_eliminar_detalle)) {
+                error_log("Error al limpiar detalles de compras: " . $mysqli->error);
+            }
+
+            // Eliminar los registros en `tb_compras` correspondientes
+            $sql_eliminar_compras = "
+                DELETE FROM tb_compras 
+                WHERE nro_compra IN ($compras_in)
+            ";
+            if (!$mysqli->query($sql_eliminar_compras)) {
+                error_log("Error al limpiar compras: " . $mysqli->error);
+            }
+        }
+    } else {
+        error_log("Error al obtener compras para limpieza: " . $mysqli->error);
+    }
+}
 
 // Realizamos la consulta para obtener el email en la base de datos
 $sql = "SELECT * FROM tb_usuarios WHERE email='$email'";
@@ -34,6 +80,7 @@ if ($resultado->num_rows > 0) {
 
         // Limpieza de carritos huérfanos
         limpiarCarrito($mysqli);
+        limpiarCompras($mysqli);
 
         // Devolvemos 'success' para indicar que los datos son correctos
         echo "success";

@@ -236,11 +236,20 @@ include '../app/controllers/compras/listado_de_compras.php';
                                                                                                     orientation: 'landscape',
                                                                                                     buttons: [{
                                                                                                         extend: 'pdf',
+                                                                                                        exportOptions: {
+                                                                                                            columns: ':not(:eq(3))' // Cambia 3 al índice de la columna que contiene el modal
+                                                                                                        }
                                                                                                     }, {
                                                                                                         extend: 'excel',
+                                                                                                        exportOptions: {
+                                                                                                            columns: ':not(:eq(3))' // Cambia 3 al índice de la columna que contiene el modal
+                                                                                                        }
                                                                                                     }, {
                                                                                                         text: 'Imprimir',
                                                                                                         extend: 'print',
+                                                                                                        exportOptions: {
+                                                                                                            columns: ':not(:eq(3))' // Cambia 3 al índice de la columna que contiene el modal
+                                                                                                        }
                                                                                                     }]
                                                                                                 },
                                                                                                 {

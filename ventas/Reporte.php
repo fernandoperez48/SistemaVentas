@@ -44,19 +44,20 @@ class Reporte
                             text: 'Reportes',
                             orientation: 'landscape',
                             buttons: [{
-                                text: 'Copiar',
-                                extend: 'copy'
-                            }, {
                                 extend: 'pdf',
-                            }, {
-                                extend: 'csv',
+                                exportOptions: {
+                                    columns: ':not(:nth-child(4)):not(:nth-child(5)):not(:nth-child(7)):not(:nth-child(8))' // Excluir 4ta, 5ta, 7ma y 8va columna
+                                }
                             }, {
                                 extend: 'excel',
+                                exportOptions: {
+                                    columns: ':not(:nth-child(4)):not(:nth-child(5)):not(:nth-child(7)):not(:nth-child(8))' // Excluir 4ta, 5ta, 7ma y 8va columna
+                                }
                             }, {
                                 text: 'Imprimir',
                                 extend: 'print',
                                 exportOptions: {
-                                    columns: ':not(:nth-child(3)):not(:nth-child(4)):not(:nth-child(6)):not(:nth-child(7))' // Excluir 3ra, 4ta y 6ta columna
+                                    columns: ':not(:nth-child(4)):not(:nth-child(5)):not(:nth-child(7)):not(:nth-child(8))' // Excluir 4ta, 5ta, 7ma y 8va columna
                                 }
 
                             }]

@@ -41,12 +41,7 @@ class ReporteDeCreate
                             text: 'Reportes',
                             orientation: 'landscape',
                             buttons: [{
-                                text: 'Copiar',
-                                extend: 'copy'
-                            }, {
                                 extend: 'pdf',
-                            }, {
-                                extend: 'csv',
                             }, {
                                 extend: 'excel',
                             }, {
