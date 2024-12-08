@@ -233,7 +233,6 @@ class ModalEditarProducto
                 let fecha_ingreso = $('#fecha_ingresoupdate<?php echo $id_producto; ?>').val();
                 let file = document.getElementById('fileupdate<?php echo $id_producto; ?>').files[0];
 
-
                 // Verificar si todos los campos requeridos están llenos
                 if (nombre_producto === '' || id_categoria === '' || proveedor === '' || stock === '' || stockminimo === '' || stockmaximo === '' || precio_compra === '' || precio_venta === '' || fecha_ingreso === '') {
                     alert('Todos los campos marcados con * son obligatorios.');

@@ -12,10 +12,10 @@ class ModalBuscarClientePersona
                     <div class="modal-header">
                         <h4 class="modal-title">Busqueda del Cliente persona</h4>
                         <div style="width: 10px;"></div>
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-agregar_cliente">
+                        <!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-agregar_cliente">
                             <i class="fas fa-users"></i>
                             Agregar nuevo cliente
-                        </button>
+                        </button> -->
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -74,6 +74,9 @@ class ModalBuscarClientePersona
                                                                 celular_cliente: "<?php echo $clientesper_datos['telefono']; ?>",
                                                                 email_cliente: "<?php echo $clientesper_datos['email']; ?>"
                                                             }));
+
+                                                            // Cerrar el modal
+                                                            $(".close").click();
                                                         });
                                                     </script>
                                                 </center>

@@ -185,6 +185,7 @@ class Reporte
                 table.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             });
         </script>
+
 <?php
         return ob_get_clean(); // Devolver el contenido del buffer de salida
     }

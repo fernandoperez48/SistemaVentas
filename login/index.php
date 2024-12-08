@@ -116,6 +116,9 @@
         //si contraseña esta vacia
         alert('La contraseña esta vacia');
       } else {
+        // Vaciar el localStorage
+        localStorage.clear();
+
         let formData = new FormData();
         formData.append('email', email);
         formData.append('password_user', contraseña);

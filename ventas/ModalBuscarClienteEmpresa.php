@@ -75,6 +75,7 @@ class ModalBuscarClienteEmpresa
                                                                 celular_cliente: "<?php echo $clientesemp_datos['telefono']; ?>",
                                                                 email_cliente: "<?php echo $clientesemp_datos['email']; ?>"
                                                             }));
+                                                            $(".close").click();
                                                         });
                                                     </script>
                                                 </center>

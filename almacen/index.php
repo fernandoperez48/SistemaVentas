@@ -13,6 +13,9 @@ include_once 'Reporte.php';
 ?>
 
 
+
+
+
 <div class="content-wrapper" style="background-color:gray">
     <div class="content-header">
         <div class="container-fluid">
@@ -180,7 +183,7 @@ include_once 'Reporte.php';
                                                 <td>
                                                     <center>
                                                         <div class="btn-group">
-                                                            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modal-ver<?php echo $id_producto; ?>">
+                                                            <button type="button" id="btn-editar-<?php echo $id_producto; ?>" class="btn btn-outline-info" data-toggle="modal" data-target="#modal-ver<?php echo $id_producto; ?>">
                                                                 <i class="fa fa-eye"></i>
                                                                 Ver
                                                             </button>
@@ -192,7 +195,12 @@ include_once 'Reporte.php';
 
 
                                                             <?php if ($rol_sesion == "Administrador" || $rol_sesion == "Encargado de compras") { ?>
-                                                                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal-update<?php echo $id_producto; ?>">
+
+
+                                                                <button type="button" class="btn btn-outline-success"
+                                                                    data-toggle="modal"
+                                                                    data-target="#modal-update<?php echo $id_producto; ?>"
+
                                                                     <i class="fa fa-pencil-alt"></i>
                                                                     Editar
                                                                 </button>
@@ -235,4 +243,5 @@ include_once 'Reporte.php';
 <?php
 // Llamar al método estático render de la clase Reporte -->
 echo Reporte::render($categorias_datos, $proveedores_datos);
+
 ?>

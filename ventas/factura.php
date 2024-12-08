@@ -67,8 +67,8 @@ $sql_carrito = "SELECT carr.cantidad,
             pro.codigo as codigo_producto, 
             pro.unidad_de_medida as unidad_de_medida, 
             pro.nombre AS nombre_producto,
-         carr.precio_unitario AS precio_unitario
-
+         carr.precio_unitario AS precio_unitario,
+         ven.estadoVenta AS estadoVenta
 
       FROM 
     tb_carrito AS carr
@@ -76,15 +76,12 @@ INNER JOIN
     tb_almacen AS pro ON carr.id_producto = pro.id_producto
 INNER JOIN 
     tb_ventas AS ven ON carr.nro_venta = ven.nro_venta
-
 WHERE 
     carr.nro_venta = '$id_venta'
 ORDER BY 
     carr.id_carrito";
 
 $resultado_carrito = $mysqli->query($sql_carrito);
-
-
 
 if (!$resultado_carrito) {
     die("Error en la consulta: " . $mysqli->error);
@@ -121,6 +118,14 @@ while ($carrito = $resultado_carrito->fetch_assoc()) {
 }
 
 
+$sql_estado = "SELECT estadoVenta FROM tb_ventas WHERE nro_venta = $id_venta";
+$resultado = $mysqli->query($sql_estado);
+
+if ($resultado && $fila = $resultado->fetch_assoc()) {
+    $estadoVenta = $fila['estadoVenta']; // Guardar en la variable
+}
+
+
 class PDF extends FPDF
 {
     private $total_subtotales = 0;
@@ -148,6 +153,7 @@ class PDF extends FPDF
         $this->Cell(0, 10, 'Pagina ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
     }
 
+
     function FacturaDetalle($razon_nombreYapellido, $cuit_dni, $condicion_iva)
     {
         $this->SetY(19);
@@ -160,6 +166,14 @@ class PDF extends FPDF
 
         $this->SetX(118);
         $this->Cell(95, 10, 'FACTURA', 'R', '1', 'L');
+
+
+        global $estadoVenta;
+        if ($estadoVenta == 'anulada') {
+            // Reemplaza 'anulada.png' con la ruta correcta de tu imagen
+            // $x y $y son las coordenadas donde se insertará la imagen, ajusta según tus necesidades.
+            $this->Image('venta_anulada.png', 60, 140, 80);  // Ajusta la ruta y tamaño de la imagen
+        }
 
         $this->SetFont('Arial', 'B', 9);
         $this->SetY(35);
@@ -204,7 +218,7 @@ class PDF extends FPDF
 
         $this->SetFont('Arial', 'B', 9);
         $this->SetY(40);
-        $this->Cell(95, 9, 'asdasdasd', 'LR', '', false);
+        $this->Cell(95, 9, '', 'LR', '', false);
         $this->SetY(44);
         $this->Cell(95, 8, 'Domicilio Comercial:', 'LR', '', false);
 

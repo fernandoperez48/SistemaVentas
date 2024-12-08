@@ -2,6 +2,7 @@
 include '../../config.php';
 include '../../../layaout/sesion.php';
 
+
 // Recibir y sanitizar los datos enviados
 $id_producto = $_POST['id_producto'];
 $nombre_producto = $_POST['nombre_producto'];
@@ -85,9 +86,9 @@ $resultado_producto = $mysqli->query($sql);
 
 if ($resultado_producto) {
     session_start();
-    $_SESSION['mensaje'] = "Se actualizó el usuario correctamente";
+    $_SESSION['mensaje'] = "Se actualizó el producto correctamente";
     $_SESSION['icono'] = "success";
     echo "actualizado";
 } else {
-    echo "No se pudo registrar el usuario correctamente";
+    echo "No se pudo registrar el producto correctamente";
 }

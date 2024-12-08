@@ -31,6 +31,7 @@ class ModalProductos
                                 <thead>
                                     <tr>
                                         <th style="background-color: #e7e7e7; text-align:center;">Nro</th>
+                                        <th style="background-color: #e7e7e7; text-align:center;">Código</th>
                                         <th style="background-color: #e7e7e7; text-align:center;">Producto</th>
                                         <th style="background-color: #e7e7e7; text-align:center;">Detalle</th>
                                         <th style="background-color: #e7e7e7; text-align:center;">Cantidad</th>
@@ -45,7 +46,8 @@ class ModalProductos
                                     $precio_unitario_total = 0;
                                     $precio_total = 0;
                                     $nro_venta = $venta['nro_venta'];
-                                    $sql_carrito = "SELECT carr.*, pro.nombre as nombre_producto, pro.descripcion as descripcion, pro.stock as stock, pro.id_producto as id_producto 
+                                    $sql_carrito = "SELECT carr.*, pro.nombre as nombre_producto, pro.descripcion as descripcion, 
+                                    pro.stock as stock, pro.id_producto as id_producto, pro.codigo as codigo 
                                                                                         FROM tb_carrito as carr 
                                                                                         INNER JOIN tb_almacen as pro ON carr.id_producto = pro.id_producto 
                                                                                         WHERE nro_venta = '$nro_venta' 
@@ -66,6 +68,9 @@ class ModalProductos
                                                 <td>
                                                     <center><?php echo $contador_carrito; ?></center>
                                                     <input type="text" value="<?php echo $carrito['id_producto']; ?>" id="id_producto<?php echo $contador_carrito; ?>" hidden>
+                                                </td>
+                                                <td>
+                                                    <center><?php echo $carrito['codigo']; ?></center>
                                                 </td>
                                                 <td>
                                                     <center><?php echo $carrito['nombre_producto']; ?></center>
@@ -92,7 +97,7 @@ class ModalProductos
                                     ?>
 
                                     <tr class="total-row">
-                                        <th colspan="3" style="background-color: #e7e7e7; text-align:right;">Total</th>
+                                        <th colspan="4" style="background-color: #e7e7e7; text-align:right;">Total</th>
                                         <th>
                                             <center><?php echo $cantidad_total; ?></center>
                                         </th>

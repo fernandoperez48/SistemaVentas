@@ -129,8 +129,10 @@ include_once 'Reporte.php';
                                                         <td>
                                                             <center>
 
-                                                                <?php if ($venta['estado'] != 'anulada') { ?>
-                                                                    <button type="button" class="btn btn-danger" onclick="anularVenta('<?php echo $venta['nro_venta']; ?>')">
+                                                                <?php if ($venta['estadoVenta'] !== 'anulada') { ?>
+                                                                    <button type="button" class="btn btn-danger" onclick="anularVenta('<?php echo $venta['nro_venta']; ?>')" <?php if ($id_rol !== 1 && $id_rol !== 3) {
+                                                                                                                                                                                    echo 'disabled';
+                                                                                                                                                                                }; ?>>
                                                                         <i class="fa fa-ban"></i> Anular
                                                                     </button>
                                                                 <?php } else { ?>
@@ -171,43 +173,6 @@ include_once 'Reporte.php';
                                                                 <input type="hidden" name="id_cliente" value="<?php echo $id_cliente; ?>">
                                                                 <button type="submit" class="btn btn-success">Imprimir</button>
                                                             </form>
-
-
-
-                                                            <!-- <script>
-                                                                $('#btn_imprimir<?php echo $id_venta; ?>').click(function() {
-                                                                    let id_venta = '<?php echo $id_venta ?>';
-                                                                    //lo de factura queda pendiente hasta que le ponga el precio a la tabla venta
-                                                                    let id_cliente = '<?php echo $id_cliente ?>';
-                                                                    // Crear el objeto FormData
-                                                                    let formData = new FormData();
-                                                                    formData.append('id_venta', id_venta);
-                                                                    formData.append('id_cliente', id_cliente);
-
-                                                                    $.ajax({
-                                                                        url: 'factura.php',
-                                                                        type: 'POST',
-                                                                        data: formData,
-                                                                        contentType: false,
-                                                                        processData: false,
-                                                                        success: function(datos) {
-                                                                            if (datos === "success") { // Asegúrate de que factura.php devuelva "success" en caso de éxito
-                                                                                // Redirigir a la página deseada usando la URL base
-                                                                                alert("Factura generada");
-                                                                                // Abre la factura en una nueva pestaña
-                                                                                window.open('factura.php?id_venta=' + id_venta + '&id_cliente=' + id_cliente, '_blank');
-                                                                            } else if (datos === "error") { // Nueva condición para manejar el error
-                                                                                alert("Factura no generada");
-                                                                                location.reload();
-                                                                            } else {
-                                                                                // Mostrar el mensaje de error
-                                                                                alert("Error no detectado");
-                                                                            }
-                                                                        },
-
-                                                                    });
-                                                                });
-                                                            </script> -->
                                                         </td>
                                                     <?php } ?>
                                                 </tr>
