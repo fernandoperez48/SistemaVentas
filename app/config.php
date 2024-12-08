@@ -1,13 +1,13 @@
 <?php
-define('SERVIDOR', 'localhost');
-define('USUARIO', 'root');
-define('PASSWORD', '');
-define('BD', 'sistemadeventas');
+// define('SERVIDOR', 'localhost');
+// define('USUARIO', 'root');
+// define('PASSWORD', '');
+// define('BD', 'sistemadeventas');
 
-/*define('SERVIDOR', 'sql304.infinityfree.com');
+define('SERVIDOR', 'sql304.infinityfree.com');
 define('USUARIO', 'if0_37610250');
 define('PASSWORD', 'rwKVspMR7F');
-define('BD', 'if0_37610250_sistemadeventas');*/
+define('BD', 'if0_37610250_sistemadeventas');
 
 // Crear la conexión con MySQLi
 $mysqli = new mysqli(SERVIDOR, USUARIO, PASSWORD, BD);
@@ -27,10 +27,9 @@ if (!$mysqli->set_charset("utf8")) {
 if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $URL = "http://localhost/SistemaVentas/";
 } else {
-    $URL = "http://fainsumos.000.pe/";
+    $URL = "https://fainsumos.000.pe/";
 }
 $URL2 = "http://localhost/SistemaVentas/";
 
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $fechaHora = date("Y-m-d H:i:s");
-?>
