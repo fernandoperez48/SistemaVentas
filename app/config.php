@@ -27,7 +27,7 @@ if (!$mysqli->set_charset("utf8")) {
 if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $URL = "http://localhost/SistemaVentas/";
 } else {
-    $URL = "https://fainsumos.000.pe/";
+    $URL = "http://fainsumos.000.pe/";
 }
 $URL2 = "http://localhost/SistemaVentas/";
 
