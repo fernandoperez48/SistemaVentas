@@ -1,13 +1,13 @@
 <?php
-// define('SERVIDOR', 'localhost');
-// define('USUARIO', 'root');
-// define('PASSWORD', '');
-// define('BD', 'sistemadeventas');
+define('SERVIDOR', 'localhost');
+define('USUARIO', 'root');
+define('PASSWORD', '');
+define('BD', 'sistemadeventas');
 
-define('SERVIDOR', 'sql304.infinityfree.com');
-define('USUARIO', 'if0_37610250');
-define('PASSWORD', 'rwKVspMR7F');
-define('BD', 'if0_37610250_sistemadeventas');
+// define('SERVIDOR', 'sql304.infinityfree.com');
+// define('USUARIO', 'if0_37610250');
+// define('PASSWORD', 'rwKVspMR7F');
+// define('BD', 'if0_37610250_sistemadeventas');
 
 // Crear la conexión con MySQLi
 $mysqli = new mysqli(SERVIDOR, USUARIO, PASSWORD, BD);
