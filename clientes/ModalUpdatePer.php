@@ -173,10 +173,12 @@ class ModalUpdatePer
                     hayError = true;
                 } else if (!validarDNI(dni)) {
                     $('#lbl_dni_invalid').css('display', 'block');
+                    alert('Formato invalido de DNI.');
                     hayError = true;
                 }
                 if (!validarEmail(email)) {
                     $('#lbl_email_invalid').css('display', 'block');
+                    alert('Formato invalido de email.');
                     hayError = true;
                 }
 
