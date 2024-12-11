@@ -191,6 +191,8 @@
                                             alert("Seleccione un producto");
                                         } else if (precio_unitario == "") {
                                             alert("Falta el precio Unitario");
+                                        } else if (precio_unitario == "0") {
+                                            alert("El precio de venta es 0");
                                         } else if (cantidad == "") {
                                             alert("Ingrese la cantidad");
                                         } else if (cantidad === "0") {

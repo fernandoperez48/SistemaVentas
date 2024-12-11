@@ -4,10 +4,12 @@ include '../../config.php';
 $id_envio = $_GET['id_envio'];
 $direccion = $_GET['direccion'];
 $estado = $_GET['estado'];
+$descripcion = $_GET['descripcion'];
 
 $sql = "UPDATE tb_envios SET 
             Direccion='$direccion',
-            estado='$estado'
+            estado='$estado',
+            descripcion='$descripcion'
          WHERE idVenta='$id_envio'";
 
 if ($mysqli->query($sql) === TRUE) {

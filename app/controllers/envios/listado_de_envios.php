@@ -1,6 +1,6 @@
 <?php
 
-$sql_envios = "SELECT e.IdVenta,COALESCE(emp.nombre, p.nombre) AS nombre,COALESCE(emp.razon_social, p.apellido) AS apellido, e.Direccion, e.nombre_usuario as nombre_usuario, e.estado,c.id_persona,v.total_pagado,v.nro_venta,v.fyh_creacion,d.calle,d.numero
+$sql_envios = "SELECT e.IdVenta,e.descripcion AS descripcion, COALESCE(emp.nombre, p.nombre) AS nombre,COALESCE(emp.razon_social, p.apellido) AS apellido, e.Direccion, e.nombre_usuario as nombre_usuario, e.estado,c.id_persona,v.total_pagado,v.nro_venta,v.fyh_creacion,d.calle,d.numero
                FROM tb_envios as e
                INNER JOIN tb_clientes as c ON c.id_cliente = e.IdCliente
                LEFT JOIN tb_empresas AS emp ON c.id_empresa = emp.id_empresa

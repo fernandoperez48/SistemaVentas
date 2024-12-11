@@ -234,7 +234,7 @@ class ModalEditarProducto
                 let file = document.getElementById('fileupdate<?php echo $id_producto; ?>').files[0];
 
                 // Verificar si todos los campos requeridos están llenos
-                if (nombre_producto === '' || id_categoria === '' || proveedor === '' || stock === '' || stockminimo === '' || stockmaximo === '' || precio_compra === '' || precio_venta === '' || fecha_ingreso === '') {
+                if (nombre_producto === '' || id_categoria === '' || proveedor === '' || stockminimo === '' || stockmaximo === '' || fecha_ingreso === '') {
                     alert('Todos los campos marcados con * son obligatorios.');
                 } else {
                     // Crear un objeto FormData para enviar los datos

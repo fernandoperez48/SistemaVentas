@@ -41,14 +41,6 @@ class ModalUpdateEnvio
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Total Pagado</label>
-                                    <input type="text" id="precio<?php echo $id_envio; ?>" class="form-control" value="<?php echo '$' . $envios_datos['total_pagado']; ?>" disabled>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label for="estado">Estado <b>*</b></label>
                                     <select class="form-control" name="estado" id="estado<?php echo $id_envio; ?>" value="<?php echo $envios_datos['estado']; ?>">
                                         <option value="Pendiente de envio">Pendiente de envío</option>
@@ -56,6 +48,16 @@ class ModalUpdateEnvio
                                         <option value="Entregado">Entregado</option>
                                     </select>
                                     <small style="color:red; display:none" id="lbl_estado<?php echo $id_envio; ?>">* Este campo es requerido</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="">Detalle del envio</label>
+                                        <textarea name="descripcion" id="descripcionupdate<?php echo $id_envio ?>" cols="30" rows="5" class="form-control" value="<?php echo $envios_datos['descripcion']; ?>"><?php echo $envios_datos['descripcion']; ?></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -77,6 +79,7 @@ class ModalUpdateEnvio
                 var id_envio = '<?php echo $id_envio; ?>';
                 var direccion = $('#direccion<?php echo $id_envio; ?>').val();
                 var estado = $('#estado<?php echo $id_envio; ?>').val();
+                var descripcion = $('#descripcionupdate<?php echo $id_envio; ?>').val();
 
                 if (direccion == '') {
                     $('#direccion<?php echo $id_envio; ?>').focus();
@@ -89,13 +92,21 @@ class ModalUpdateEnvio
                     $.get(url, {
                         id_envio: id_envio,
                         direccion: direccion,
-                        estado: estado
+                        estado: estado,
+                        descripcion: descripcion
                     }, function(datos) {
                         $('#respuesta_update').html(datos);
                     });
                 }
 
 
+            });
+
+            $('#direccion<?php echo $id_envio; ?>, #estado<?php echo $id_envio; ?>, #descripcionupdate<?php echo $id_envio; ?>').on('keydown', function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    $('#btn_update<?php echo $id_envio; ?>').click();
+                }
             });
         </script>
 <?php

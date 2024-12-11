@@ -10,7 +10,7 @@ $usuario = $_GET['usuario'];
 
 $mysqli->begin_transaction();
 
-$sql = "INSERT INTO tb_ventas (nro_venta, id_cliente, total_pagado, fyh_creacion, usuario, estado) 
+$sql = "INSERT INTO tb_ventas (nro_venta, id_cliente, total_pagado, fyh_creacion, usuario, estadoVenta) 
         VALUES ('$nro_venta', '$id_cliente', '$total_a_cancelar', '$fechaHora', '$usuario', 'habilitada')";
 
 if ($mysqli->query($sql) === TRUE) {

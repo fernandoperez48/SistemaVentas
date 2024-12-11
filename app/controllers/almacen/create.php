@@ -31,6 +31,8 @@ $descripcion = $_POST['descripcion'];
 $id_proveedor = $_POST['id_proveedor'];
 $stock_minimo = $_POST['stock_minimo'];
 $stock_maximo = $_POST['stock_maximo'];
+$talle = $_POST['talle'];
+$color = $_POST['color'];
 
 $fecha_carga = date('Y-m-d');
 
@@ -62,8 +64,8 @@ if ($stock_minimo < 0 || $stock_maximo < 0) {
 }
 
 // Consulta SQL para insertar el producto
-$sql = "INSERT INTO tb_almacen(codigo, nombre, descripcion, stock_minimo, stock_maximo, fecha_carga, imagen, id_usuario, id_categoria, id_proveedor) 
-        VALUES ('$codigo', '$nombre', '$descripcion', '$stock_minimo', '$stock_maximo', '$fecha_carga', '$filename', '$id_usuario', '$id_categoria', '$id_proveedor')";
+$sql = "INSERT INTO tb_almacen(codigo, nombre, descripcion, stock_minimo, stock_maximo, fecha_carga, imagen, id_usuario, id_categoria, id_proveedor, talle, color) 
+        VALUES ('$codigo', '$nombre', '$descripcion', '$stock_minimo', '$stock_maximo', '$fecha_carga', '$filename', '$id_usuario', '$id_categoria', '$id_proveedor', '$talle', '$color')";
 
 if ($mysqli->query($sql)) {
     session_start();

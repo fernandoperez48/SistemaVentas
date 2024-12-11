@@ -45,7 +45,7 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                     <div class="col-md-12">
                                         <form action="../app/controllers/almacen/create.php" method="post" enctype="multipart/form-data">
                                             <div class="row">
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label for="">Codigo:</label>
                                                         <input type="text" name="codigo" class="form-control" readonly>
@@ -66,51 +66,27 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">Nombre del producto:</label>
                                                         <input type="text" name="nombre" class="form-control" required>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="">Imagen del producto:</label>
-                                                            <input type="file" name="image" class="form-control" id="file">
-                                                            <br>
-                                                            <output id="list"></output>
-                                                            <script>
-                                                                function archivo(evt) {
-                                                                    var files = evt.target.files; // FileList object
-                                                                    // Obtenemos la imagen del campo "file".
-                                                                    for (var i = 0, f; f = files[i]; i++) {
-                                                                        //Solo admitimos imágenes.
-                                                                        if (!f.type.match('image.*')) {
-                                                                            continue;
-                                                                        }
-                                                                        var reader = new FileReader();
-                                                                        reader.onload = (function(theFile) {
-                                                                            return function(e) {
-                                                                                // Insertamos la imagen
-                                                                                document.getElementById("list").innerHTML = ['<img class="thumb thumbnail" src="', e.target.result, '" width="100%" title="', (theFile.name), '"/>'].join('');
-                                                                            };
-                                                                        })(f);
-                                                                        reader.readAsDataURL(f);
-                                                                    }
-                                                                }
-                                                                document.getElementById('file').addEventListener('change', archivo, false);
-                                                            </script>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
+
+
+                                                <div class="col-md-1">
                                                     <div class="form-group">
-                                                        <label for="">Usuario</label>
-                                                        <input type="text" class="form-control" value="<?php echo $email_session ?>" disabled>
-                                                        <input type="text" name="id_usuario" value="<?php echo $id_usuarios_sesion ?>" hidden>
+                                                        <label for="">Talle:</label>
+                                                        <input type="text" name="talle" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="">Color:</label>
+                                                        <input type="text" name="color" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="">Descripcion del producto:</label>
                                                         <textarea name="descripcion" id="" cols="30" rows="3" class="form-control"></textarea>
@@ -155,7 +131,44 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                                         <input type="text" name="fecha_carga" class="form-control" placeholder="<?php echo date('Y-m-d'); ?>" disabled>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-3">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="">Imagen del producto:</label>
+                                                            <input type="file" name="image" class="form-control" id="file">
+                                                            <br>
+                                                            <output id="list"></output>
+                                                            <script>
+                                                                function archivo(evt) {
+                                                                    var files = evt.target.files; // FileList object
+                                                                    // Obtenemos la imagen del campo "file".
+                                                                    for (var i = 0, f; f = files[i]; i++) {
+                                                                        //Solo admitimos imágenes.
+                                                                        if (!f.type.match('image.*')) {
+                                                                            continue;
+                                                                        }
+                                                                        var reader = new FileReader();
+                                                                        reader.onload = (function(theFile) {
+                                                                            return function(e) {
+                                                                                // Insertamos la imagen
+                                                                                document.getElementById("list").innerHTML = ['<img class="thumb thumbnail" src="', e.target.result, '" width="50%" title="', (theFile.name), '"/>'].join('');
+                                                                            };
+                                                                        })(f);
+                                                                        reader.readAsDataURL(f);
+                                                                    }
+                                                                }
+                                                                document.getElementById('file').addEventListener('change', archivo, false);
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
 
+                                                        <input type="text" class="form-control" value="<?php echo $email_session ?>" hidden>
+                                                        <input type="text" name="id_usuario" value="<?php echo $id_usuarios_sesion ?>" hidden>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <br>
@@ -166,14 +179,8 @@ include '../app/controllers/proveedores/listado_de_proveedores.php';
                                         </form>
                                     </div>
                                 </div>
-
-
-
-
-
                             </div>
                         </div>
-
                     </div>
                     <!-- /.card-body -->
                 </div>

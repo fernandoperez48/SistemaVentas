@@ -7,6 +7,7 @@ include '../app/controllers/ventas/listado_de_ventas.php';
 // Incluir el archivo de la clase del modal
 include_once 'ModalUpdateEnvio.php';
 include_once 'ModalDeleteEnvio.php';
+include_once 'ModalDetalleEnvio.php';
 include_once 'Reporte.php';
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -62,9 +63,7 @@ include_once 'Reporte.php';
                                             <th>
                                                 <center>Dirección Envio</center>
                                             </th>
-                                            <th>
-                                                <center>Precio</center>
-                                            </th>
+
                                             <th>
                                                 <center>Estado</center>
                                             </th>
@@ -103,9 +102,7 @@ include_once 'Reporte.php';
                                                 <td>
                                                     <?php echo $envios_datos['Direccion']; ?>
                                                 </td>
-                                                <td>
-                                                    <?php echo '$' . $envios_datos['total_pagado']; ?>
-                                                </td>
+
                                                 <td>
                                                     <?php echo $envios_datos['estado']; ?>
                                                 </td>
@@ -114,6 +111,17 @@ include_once 'Reporte.php';
                                                 </td>
                                                 <td>
                                                     <center>
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-detalle<?php echo $id_envio; ?>">
+                                                                <i class="fa fa-eye"></i>
+                                                                Detalle
+                                                            </button>
+                                                            <!-- modal para ver detalle de envio-->
+                                                            <?php
+                                                            // Renderizar el modal utilizando la clase ModalDetalle
+                                                            echo ModalDetalleEnvio::render($id_envio, $envios_datos);
+                                                            ?>
+                                                        </div>
                                                         <div class="btn-group">
                                                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-update<?php echo $id_envio; ?>">
                                                                 <i class="fa fa-pencil-alt"></i>
